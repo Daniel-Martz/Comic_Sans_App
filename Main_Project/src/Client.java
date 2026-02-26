@@ -16,5 +16,27 @@ public class Client extends User{
 		this.secondHandProducts.add(product);
 	}
 	
-}
+	@Override
+	public String toString() {
+		return "Client [secondHandProducts=" + secondHandProducts + ", getSecondHandProducts()="
+				+ getSecondHandProducts() + ", getUsername()=" + getUsername() + ", getDNI()=" + getDNI()
+				+ ", getPassword()=" + getPassword() + ", toString()=" + super.toString() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + "]";
+	}
+
+	public Set<Notification> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(Set<Notification> notifications) {
+		this.notifications = notifications;
+	}
+
+	public Set<SecondHandProduct> getSecondHandProducts() {
+		return secondHandProducts;
+	}
+
+	public void setSecondHandProducts(Set<SecondHandProduct> secondHandProducts) {
+		this.secondHandProducts = secondHandProducts;
+	}
  
