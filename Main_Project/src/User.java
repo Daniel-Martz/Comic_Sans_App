@@ -16,6 +16,36 @@ public class User {
 	}
 	
 	
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public String getDNI() {
+		return DNI;
+	}
+
+
+	public void setDNI(String dNI) {
+		DNI = dNI;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
 	@Override
 	public String toString() {
 		return "User information: " + "\n" + "\t" + "- Username: " + this.username + "\n" + "\t" + "- DNI: " + this.DNI + "\n" + "\t" + "- Password:" + this.password;
