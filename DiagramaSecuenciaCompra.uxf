@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>222</x>
+      <y>198</y>
+      <w>12</w>
+      <h>684</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>168</x>
+      <y>156</y>
+      <w>96</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>aplicacion: Aplicacion</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>834</x>
+      <y>720</y>
+      <w>18</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=-1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;300.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>276</x>
+      <y>282</y>
+      <w>144</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>halign=left
+break
+--
+[Clase != Cliente]
+
+
+
+
+
+
+
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>300</x>
+      <y>156</y>
+      <w>102</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>usuarioActual: Usuario</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>354</x>
+      <y>198</y>
+      <w>12</w>
+      <h>678</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>228</x>
+      <y>210</y>
+      <w>138</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+realizarCompra(tarjeta)</panel_attributes>
+    <additional_attributes>210.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>252</x>
+      <y>192</y>
+      <w>936</w>
+      <h>600</h>
+    </coordinates>
+    <panel_attributes>critical
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>414</x>
+      <y>156</y>
+      <w>120</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>cliente: ClienteRegistrado</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>462</x>
+      <y>198</y>
+      <w>12</w>
+      <h>570</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>222</y>
+      <w>114</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+getClass()</panel_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>246</y>
+      <w>114</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+Clase</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>228</x>
+      <y>300</y>
+      <w>138</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+FALSE</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>588</x>
+      <y>156</y>
+      <w>84</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>carrito: Carrito</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>636</x>
+      <y>366</y>
+      <w>12</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>468</x>
+      <y>366</y>
+      <w>180</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+getCosteTotal</panel_attributes>
+    <additional_attributes>280.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>552</x>
+      <y>384</y>
+      <w>432</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>halign=left
+loop
+--
+[for each producto]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>684</x>
+      <y>156</y>
+      <w>108</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>producto: Stock</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>720</x>
+      <y>408</y>
+      <w>12</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>642</x>
+      <y>414</y>
+      <w>90</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+getCosteStock()</panel_attributes>
+    <additional_attributes>130.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>804</x>
+      <y>156</y>
+      <w>108</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>unidad: ProductoVenta</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>834</x>
+      <y>432</y>
+      <w>12</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>726</x>
+      <y>438</y>
+      <w>120</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+getPrecio(producto)</panel_attributes>
+    <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>588</x>
+      <y>984</y>
+      <w>198</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>bg=red
+Crear clase Stock y metodo
+getCosteStock que saca el precio
+de todas las unidades de un producto 
+que se vaya a comprar</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>726</x>
+      <y>462</y>
+      <w>120</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+precio</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>642</x>
+      <y>498</y>
+      <w>90</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+costeProducto</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>348</y>
+      <w>114</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+realizarPagoCarrito</panel_attributes>
+    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>468</x>
+      <y>552</y>
+      <w>180</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+costePedido</panel_attributes>
+    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>468</x>
+      <y>606</y>
+      <w>534</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+                                                                                                                                          realizarPago(costePedido, tarjeta)</panel_attributes>
+    <additional_attributes>870.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>264</x>
+      <y>660</y>
+      <w>234</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>halign=left
+break
+--
+[sta==FALSE]
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>666</y>
+      <w>114</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+FALSE</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>228</x>
+      <y>684</y>
+      <w>138</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+FALSE</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>552</x>
+      <y>672</y>
+      <w>330</w>
+      <h>66</h>
+    </coordinates>
+    <panel_attributes>halign=left
+loop
+--
+[for each producto]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>726</x>
+      <y>696</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+reducirStock(unidades)
+</panel_attributes>
+    <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>468</x>
+      <y>636</y>
+      <w>534</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+      sta</panel_attributes>
+    <additional_attributes>10.0;20.0;870.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1110</x>
+      <y>654</y>
+      <w>30</w>
+      <h>0</h>
+    </coordinates>
+    <panel_attributes>:PasarelaPago</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1134</x>
+      <y>666</y>
+      <w>0</w>
+      <h>198</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>936</x>
+      <y>156</y>
+      <w>108</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>:PasarelaPago</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>990</x>
+      <y>600</y>
+      <w>12</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1104</x>
+      <y>156</y>
+      <w>60</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>:Pedido</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1122</x>
+      <y>786</y>
+      <w>12</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>306</x>
+      <y>798</y>
+      <w>882</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+                                                                                                                                                                                                                                                                                                 new(productos: Stock[*])
+                                                                                                                                        </panel_attributes>
+    <additional_attributes>1360.0;20.0;100.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>834</x>
+      <y>696</y>
+      <w>12</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>990</x>
+      <y>654</y>
+      <w>18</w>
+      <h>258</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=-1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;410.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1122</x>
+      <y>822</y>
+      <w>18</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>726</y>
+      <w>18</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;280.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>720</x>
+      <y>684</y>
+      <w>12</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>636</x>
+      <y>732</y>
+      <w>18</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>642</x>
+      <y>690</y>
+      <w>90</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;-
+reducirStock()
+</panel_attributes>
+    <additional_attributes>130.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>636</x>
+      <y>690</y>
+      <w>12</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>360</x>
+      <y>732</y>
+      <w>114</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+TRUE</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>228</x>
+      <y>816</y>
+      <w>138</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+
+
+TRUE</panel_attributes>
+    <additional_attributes>10.0;20.0;210.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>462</x>
+      <y>762</y>
+      <w>18</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>354</x>
+      <y>870</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>222</x>
+      <y>168</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>222</x>
+      <y>876</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>354</x>
+      <y>168</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>462</x>
+      <y>168</y>
+      <w>18</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>636</x>
+      <y>570</y>
+      <w>18</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;200.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>636</x>
+      <y>168</y>
+      <w>18</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;330.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>516</y>
+      <w>18</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;280.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>168</y>
+      <w>18</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;400.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>834</x>
+      <y>480</y>
+      <w>18</w>
+      <h>228</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;360.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>834</x>
+      <y>168</y>
+      <w>18</w>
+      <h>276</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;440.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>990</x>
+      <y>168</y>
+      <w>18</w>
+      <h>444</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=-1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;720.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1122</x>
+      <y>168</y>
+      <w>18</w>
+      <h>630</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=0</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;1030.0</additional_attributes>
+  </element>
+</diagram>
