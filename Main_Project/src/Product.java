@@ -95,10 +95,4 @@ public abstract class Product {
 		this.stock = stock;
 	}
 	
-	@Override
-	public String toString() {
-		return "Product [ID=" + ID + ", name=" + name + ", description=" + description + ", price=" + price + ", photo="
-				+ photo + ", stock=" + stock + ", category=" + category + "]";
-	}
-	
 }
