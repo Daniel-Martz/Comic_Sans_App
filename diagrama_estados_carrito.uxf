@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <help_text/>
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>570</x>
+      <y>230</y>
+      <w>20</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>type=initial</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>380</x>
+      <y>350</y>
+      <w>410</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>PedidoPendienteDePago</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>570</x>
+      <y>240</y>
+      <w>130</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+realizarPedido()</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>380</x>
+      <y>580</y>
+      <w>410</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>PedidoPagado</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>570</x>
+      <y>420</y>
+      <w>460</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+pagarPedido()=True
+
+actualizarEstadoPedido(p: SolicitudPedido, estado: EstadoPedido)
+[estado = PAGADO]</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>380</x>
+      <y>770</y>
+      <w>410</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>PedidoListoParaRecogida</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>570</x>
+      <y>960</y>
+      <w>20</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>type=final</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>160</x>
+      <y>350</y>
+      <w>240</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+pagarPedido()=False
+</panel_attributes>
+    <additional_attributes>220.0;70.0;10.0;70.0;10.0;10.0;220.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>570</x>
+      <y>650</y>
+      <w>460</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+actualizarEstadoPedido(p: SolicitudPedido, estado: EstadoPedido)
+[estado = LISTO_PARA_RECOGIDA]</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>570</x>
+      <y>830</y>
+      <w>460</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+actualizarEstadoPedido(p: SolicitudPedido, estado: EstadoPedido)
+[estado = RECOGIDO]</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>600</x>
+      <y>960</y>
+      <w>150</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>PedidoRecogido</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>780</x>
+      <y>370</y>
+      <w>190</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+cancelarPedido()</panel_attributes>
+    <additional_attributes>10.0;20.0;170.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>950</x>
+      <y>380</y>
+      <w>20</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>type=final</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>950</x>
+      <y>330</y>
+      <w>190</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>PedidoCancelado</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>80</x>
+      <y>60</y>
+      <w>1140</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>Este diagrama representa todos los estados por los que puede pasar un pedido, mostrando cómo avanza desde su creación hasta su entrega al cliente o su cancelación.
+Todo comienza cuando se realiza el pedido, que queda a la espera de ser pagado; si el intento de pago falla, 
+el pedido se mantiene en ese mismo punto, aunque ahora también existe la opción de cancelar el pedido definitivamente en esta fase, 
+terminando ahí su ciclo. Si continúa y el sistema confirma el cobro, el pedido avanza al estado de "pagado". 
+A partir de ahí, el empleado irá actualizando el estado del pedido (cuando esté listo para recogerse y finalmente al ser recogido por el cliente).
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
