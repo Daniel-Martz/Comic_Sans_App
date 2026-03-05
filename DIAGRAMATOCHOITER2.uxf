@@ -1855,6 +1855,9 @@ bg=white
 +eliminarCategoria(c: Categoria): boolean
 +añadirReseña(descripcion: String, puntuacion: double, fecha: Date): boolean
 +eliminarReseña(r: Reseña): boolean
++obtenerPuntuacionMedia(): double
++pasaFiltro(filtro: FiltroVenta, prompt: String): boolean
+
 
 layer=1
 bg=white
@@ -2248,25 +2251,18 @@ bg=MAGENTA</panel_attributes>
 +cambiarContraseña(username: String, oldPassword: String, newPassword: String): boolean
 
 #Métodos exclusivos del gestor
-+crearEmpleado(username: String, dni: String): boolean
++añadirEmpleado(e: Empleado): boolean
 +eliminarEmpleado(e: Empleado): boolean
-
-#Métodos para las estadísticas
-+crearEstadistica(fechaInicio: Date, fechaFin: Date, tipo TipoEstadistica): File;
 
 #Metodos del Cliente Venta
 +buscarProductosNuevos(prompt: String): LineaProductoVenta[*]
 +crearPedidoAPartirDeCarrito(): boolean
-+cancelarPedido(p:SolicitudPedido, u:Usuario): boolean
-
++cancelarPedido(p:SolicitudPedido, u:Usuario): boolean.
 
 #Metodos del Cliente Intercambio
 +buscarProductoIntercambio(prompt: String, u:Usuario): ProductoSegundaMano[*]
 +aceptarOferta(o:Oferta, u:Usuario): boolean
 +rechazarOferta(o:Oferta, u:Usuario): boolean
-
--enviarNotificacion(u: Usuario, notif: NotificacionUsuario): boolean
-#llaman a ella realizarOferta, aceptarOferta, rechazarOferta, validarProducto, pagarPedido y prepararPedido
 
 #Métodos de recomendación
 +getRecomendacion(): Producto[*]
@@ -2287,6 +2283,9 @@ bg=MAGENTA</panel_attributes>
 -crearNotificacionProducto(p: LineaProductoVenta): Notificacion
 -crearNotificacionValidacion(p: ProductoSegundaMano): Notificacion
 -crearNotificacionPedido(s: SolicitudPedido): Notificacion
+
+#Envío de notificaciones
++enviarNotificacion(u: Usuario, notif: NotificacionUsuario): boolean
 
 
 layer=1
@@ -2330,53 +2329,53 @@ bg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>9460</x>
-      <y>1900</y>
+      <y>2020</y>
       <w>140</w>
-      <h>390</h>
+      <h>270</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
 m1=*
 r1=categoriasTienda</panel_attributes>
-    <additional_attributes>10.0;370.0;10.0;90.0;100.0;90.0;100.0;10.0</additional_attributes>
+    <additional_attributes>10.0;250.0;10.0;60.0;100.0;60.0;100.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>9670</x>
-      <y>1900</y>
+      <y>2020</y>
       <w>400</w>
-      <h>290</h>
+      <h>170</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
 r1=productosSegundaMano
 m1=*</panel_attributes>
-    <additional_attributes>220.0;270.0;220.0;120.0;10.0;120.0;10.0;10.0</additional_attributes>
+    <additional_attributes>220.0;150.0;220.0;30.0;10.0;30.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>9630</x>
-      <y>1900</y>
+      <y>2020</y>
       <w>150</w>
-      <h>380</h>
+      <h>260</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 r2=productosNuevos
 m2=*</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;360.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;240.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>9260</x>
-      <y>1900</y>
+      <y>2020</y>
       <w>250</w>
-      <h>380</h>
+      <h>260</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
 m2=*
 r2=descuentos</panel_attributes>
-    <additional_attributes>230.0;10.0;230.0;50.0;10.0;50.0;10.0;360.0</additional_attributes>
+    <additional_attributes>230.0;10.0;230.0;40.0;10.0;40.0;10.0;240.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
@@ -2399,7 +2398,7 @@ m1=0..1</panel_attributes>
       <w>110</w>
       <h>150</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
 r1=intercambios
 m1=*
 m2=</panel_attributes>
@@ -2507,7 +2506,7 @@ bg=white</panel_attributes>
       <x>7940</x>
       <y>0</y>
       <w>2370</w>
-      <h>2310</h>
+      <h>2400</h>
     </coordinates>
     <panel_attributes>core package
 --
@@ -3419,7 +3418,7 @@ r1=sistemaPago</panel_attributes>
       <w>80</w>
       <h>260</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
 r1=pedidos
 m1=*</panel_attributes>
     <additional_attributes>10.0;240.0;10.0;10.0</additional_attributes>
@@ -3522,7 +3521,7 @@ bg=DARK_GRAY</panel_attributes>
       <x>9230</x>
       <y>1560</y>
       <w>710</w>
-      <h>350</h>
+      <h>470</h>
     </coordinates>
     <panel_attributes>Catalogo
 --
@@ -3540,13 +3539,18 @@ bg=DARK_GRAY</panel_attributes>
 #Métodos para los descuentos
 +aplicarDescuento(p: Producto, d: Descuento): boolean
 +eliminarDescuento(p: Producto, d: Descuento): boolean
++aplicarDescuento(p: Producto, c: Categoria): boolean
++eliminarDescuento(p: Producto, c: Categoria): boolean
 
 #Metodos filtros
 +cambiarFiltroVenta(filtro: FiltroVentaCliente): boolean
 +cambiarFiltroGestión(filtro: FiltroVenta): boolean
 +cambiarFiltroIntercambio(filtro: FiltroIntercambio): boolean
 
-
+#Métodos de búsqueda
++obtenerProductosNuevosFiltrados(prompt: String): LineaProductoVenta[*]
++obtenerProductosIntercambioFiltrados(prompt: String): ProductoSegundaMano[*]
++obtenerProductosAModificarFiltrados(prompt: String): LineaProductoVenta[*]
 
 bg=white
 layer=1</panel_attributes>
@@ -3608,7 +3612,7 @@ bg=white</panel_attributes>
       <w>80</w>
       <h>160</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-
+    <panel_attributes>lt=&lt;-&gt;&gt;&gt;&gt;&gt;
 r1=pedidos
 m1=*</panel_attributes>
     <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
@@ -3948,32 +3952,16 @@ bg=white
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>10040</x>
-      <y>2850</y>
-      <w>720</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>PermisoValidacion
---
-+validarProducto(s: SolicitudValidacion, precio: int, estado: EstadoConservacion): boolean
-
-
-layer=1
-bg=white
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
       <x>9680</x>
       <y>2840</y>
-      <w>170</w>
+      <w>740</w>
       <h>140</h>
     </coordinates>
     <panel_attributes>Empleado
 --
-
++aprobarIntercambio(s: SolicitudIntercambio, codigoOfertante: String, codigoDestinatario: String): boolean
++validarProducto(s: SolicitudValidacion, precio: int, estado: EstadoConservacion): boolean
+actualizarEstadoPedido(p: SolicitudPedido, estado: EstadoPedido): boolean
 layer=1
 bg=white
 </panel_attributes>
@@ -3990,20 +3978,21 @@ bg=white
     <panel_attributes>/UsuarioGestion/
 --
 #Métodos para los productos
-+añadirProducto(p: ProductoVenta): boolean
-+añadirPack(pack: ProductoVenta, prods: ProductoVenta[2..*]): boolean
-+eliminarProducto(p: ProductoVenta): boolean
++añadirProducto(p: LineaProductoVenta): boolean
++añadirPack(pack: LineaProductoVenta, prods: ProductoVenta[2..*]): boolean
++eliminarProducto(p: LineaProductoVenta): boolean
 +añadirProductosDesdeFichero(f: File): boolean
-+modificarProducto(p:Producto): boolean
++modificarProducto(p:LineaProducto): boolean
 
 #Métodos para las categorías
 +añadirCategoria(c: Categoria): boolean
 +eliminarCategoria(c: Categoria): boolean
-+modificarCategoria(c: Categoria): boolean
++modificarCategoria(c: Categoria, nuevoNombre: String): boolean
 
 #Métodos para los descuentos
-+aplicarDescuento(p: Producto, d: Descuento): boolean
-+eliminarDescuento(p: Producto, d: Descuento): boolean
++aplicarDescuento(p: LineaProductoVenta, d: Descuento): boolean
++eliminarDescuentoAProducto(p: LineaProductoVenta, d: Descuento): boolean
++eliminarDescuento(d: Descuento): boolean
 
 
 layer=1
@@ -4017,16 +4006,19 @@ bg=white
       <x>9340</x>
       <y>3200</y>
       <w>1150</w>
-      <h>250</h>
+      <h>320</h>
     </coordinates>
     <panel_attributes>Gestor
 --
+#Métodos para la gestión de empleados
 +crearEmpleado(username: String, dni: String): e:empleado
 +eliminarEmpleado(e: Empleado): boolean
 +añadirPermisoEmpleado(e: Empleado, permiso: Permiso): boolean
 +eliminarPermisoEmpleado(e: Empleado, permiso: Permiso): boolean
 
+#Métodos para el sistema de recomendaciones
 +configurarImportancia(interes: int, reseña: int,novedad: int): void
++configurarNProductosRecomendados(nProductos: int): void
 
 #Metodos sobre estadisticas
 +estadisticasRecaudacion(periodoInicio: Date, periodoFin: Date, porMes: boolean, productos: Producto[*]): Map&lt;String, double&gt; 
@@ -4061,19 +4053,6 @@ bg=white
     <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
   </element>
   <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>9840</x>
-      <y>2880</y>
-      <w>220</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=0..1
-r1=permisoValidacion</panel_attributes>
-    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
-  </element>
-  <element>
     <id>UMLClass</id>
     <coordinates>
       <x>7790</x>
@@ -4091,7 +4070,6 @@ r1=permisoValidacion</panel_attributes>
 +añadirProductoACarteraDeIntercambio(p:ProductoIntercambio): boolean
 +eliminarProductoACarteraDeIntercambio(p:ProductoIntercambio): boolean
 
-+añadirOfertaRealizada(of: Oferta): boolean
 +añadirOfertaRecibida(of: Oferta): boolean
 +aceptarOferta(of: Oferta): boolean
 +rechazarOferta(of: Oferta): boolean
@@ -4464,65 +4442,6 @@ r1=interes</panel_attributes>
 --
 bg=CYAN</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>10030</x>
-      <y>2730</y>
-      <w>730</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>PermisoIntercambio
---
-+aprobarIntercambio(s: SolicitudIntercambio, codigoOfertante: String, codigoDestinatario: String): boolean
-
-layer=1
-bg=white
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>10040</x>
-      <y>2960</y>
-      <w>720</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>PermisoPedido
---
-actualizarEstadoPedido(p: SolicitudPedido, estado: EstadoPedido): boolean
-layer=1
-bg=white
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>9840</x>
-      <y>2760</y>
-      <w>210</w>
-      <h>140</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=0..1
-r1=permisoIntercambio</panel_attributes>
-    <additional_attributes>190.0;20.0;50.0;20.0;50.0;120.0;10.0;120.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>9840</x>
-      <y>2930</y>
-      <w>220</w>
-      <h>100</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-m1=0..1
-r1=permisoPedido</panel_attributes>
-    <additional_attributes>200.0;70.0;40.0;70.0;40.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -5178,10 +5097,83 @@ Así, cuando un empleado quiera realizar una validación, podrá solicitar el ar
 
 INTERCAMBIOS
 Las solicitudes de intercambio (SolicitudIntercambio) gestionan el intercambio en tienda de productos de segunda mano.
-Todo intercambio está vinculado a una propuesta previa (Oferta), la cual registra qué cliente es el ofertante, quién es el destinatario, 
+Todo intercambio está vinculado a una propuesta previa (Oferta), la cual registra qué cliente es el ofertante, quién es el destinatario, junto a los códigos que deberán ser presentados en tienda,
 y qué productos de segunda mano se ofrecen y se solicitan. En el momento en el que se acepta una oferta, se crea la solicitud de intercambio y quedan vinculadas. En la solicitud se guardarán:
 los detalles del intercambio, que contiene la información del evento final (DetallesIntercambio), concretando la fecha exacta (fechaIntercambio) y el lugar de encuentro (lugarIntercambio) en caso de que hubiese varias tiendas físicas.
-Los clientes también reciben estos detalles a través de una notificación (NotificacionIntercambio).</panel_attributes>
+Los clientes también reciben estos detalles a través de una notificación (NotificacionIntercambio).
+Cabe mencionar que los clientes no podrán ejecutar los getters de los códigos, solo lo podrá hacer el empleado, garantizando así la seguridad del intercambio.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>9180</x>
+      <y>8760</y>
+      <w>230</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>CodigoIntercambio
+--
+-codigo: String
+
+layer=1
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>9220</x>
+      <y>8650</y>
+      <w>140</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=codigoOfertante</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>9370</x>
+      <y>8650</y>
+      <w>150</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=codigoDestinatario</panel_attributes>
+    <additional_attributes>10.0;110.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>10410</x>
+      <y>2880</y>
+      <w>180</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..3
+r1=permisos</panel_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10570</x>
+      <y>2860</y>
+      <w>170</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Permiso
+--
++VALIDACIONES
++PEDIDOS
++INTERCAMBIOS
+
+layer=1
+bg=white
+</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
