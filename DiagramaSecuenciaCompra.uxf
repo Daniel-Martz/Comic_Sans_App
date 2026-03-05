@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>9</zoom_level>
+  <zoom_level>5</zoom_level>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>81</x>
-      <y>63</y>
-      <w>18</w>
-      <h>1026</h>
+      <x>290</x>
+      <y>195</y>
+      <w>10</w>
+      <h>570</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>0</x>
-      <y>0</y>
-      <w>144</w>
-      <h>27</h>
+      <x>245</x>
+      <y>160</y>
+      <w>80</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>aplicacion: Aplicacion</panel_attributes>
     <additional_attributes/>
@@ -26,10 +26,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>999</x>
-      <y>846</y>
-      <w>27</w>
-      <h>288</h>
+      <x>800</x>
+      <y>630</y>
+      <w>15</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=-1</panel_attributes>
@@ -38,10 +38,10 @@ layer=-1</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>162</x>
-      <y>189</y>
-      <w>216</w>
-      <h>90</h>
+      <x>335</x>
+      <y>265</y>
+      <w>120</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes>halign=left
 break
@@ -63,10 +63,10 @@ break
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>198</x>
-      <y>0</y>
-      <w>153</w>
-      <h>27</h>
+      <x>355</x>
+      <y>160</y>
+      <w>85</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>usuarioActual: Usuario</panel_attributes>
     <additional_attributes/>
@@ -74,10 +74,10 @@ break
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>279</x>
-      <y>63</y>
-      <w>18</w>
-      <h>1017</h>
+      <x>400</x>
+      <y>195</y>
+      <w>10</w>
+      <h>565</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -85,10 +85,10 @@ break
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>90</x>
-      <y>81</y>
-      <w>207</w>
-      <h>36</h>
+      <x>295</x>
+      <y>205</y>
+      <w>115</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 realizarCompra(tarjeta)</panel_attributes>
@@ -97,10 +97,10 @@ realizarCompra(tarjeta)</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>108</x>
-      <y>54</y>
-      <w>1422</w>
-      <h>900</h>
+      <x>305</x>
+      <y>190</y>
+      <w>790</w>
+      <h>500</h>
     </coordinates>
     <panel_attributes>critical
 layer=-1</panel_attributes>
@@ -109,10 +109,10 @@ layer=-1</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>369</x>
-      <y>0</y>
-      <w>180</w>
-      <h>27</h>
+      <x>450</x>
+      <y>160</y>
+      <w>100</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>cliente: ClienteRegistrado</panel_attributes>
     <additional_attributes/>
@@ -120,10 +120,10 @@ layer=-1</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>441</x>
-      <y>63</y>
-      <w>18</w>
-      <h>855</h>
+      <x>490</x>
+      <y>195</y>
+      <w>10</w>
+      <h>475</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -131,10 +131,10 @@ layer=-1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>99</y>
-      <w>171</w>
-      <h>36</h>
+      <x>405</x>
+      <y>215</y>
+      <w>95</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 getClass()</panel_attributes>
@@ -143,10 +143,10 @@ getClass()</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>135</y>
-      <w>171</w>
-      <h>54</h>
+      <x>405</x>
+      <y>235</y>
+      <w>95</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -157,10 +157,10 @@ Clase</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>90</x>
-      <y>216</y>
-      <w>207</w>
-      <h>54</h>
+      <x>295</x>
+      <y>280</y>
+      <w>115</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -171,10 +171,10 @@ FALSE</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>630</x>
-      <y>0</y>
-      <w>126</w>
-      <h>27</h>
+      <x>595</x>
+      <y>160</y>
+      <w>70</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>carrito: Carrito</panel_attributes>
     <additional_attributes/>
@@ -182,10 +182,10 @@ FALSE</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>702</x>
-      <y>315</y>
-      <w>18</w>
-      <h>315</h>
+      <x>635</x>
+      <y>335</y>
+      <w>10</w>
+      <h>175</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -193,10 +193,10 @@ FALSE</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>315</y>
-      <w>270</w>
-      <h>36</h>
+      <x>495</x>
+      <y>335</y>
+      <w>150</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 getCosteTotal</panel_attributes>
@@ -205,10 +205,10 @@ getCosteTotal</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>576</x>
-      <y>342</y>
-      <w>648</w>
-      <h>234</h>
+      <x>565</x>
+      <y>350</y>
+      <w>360</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>halign=left
 loop
@@ -219,10 +219,10 @@ loop
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>774</x>
-      <y>0</y>
-      <w>162</w>
-      <h>27</h>
+      <x>675</x>
+      <y>160</y>
+      <w>90</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>producto: Stock</panel_attributes>
     <additional_attributes/>
@@ -230,10 +230,10 @@ loop
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>828</x>
-      <y>378</y>
-      <w>18</w>
-      <h>171</h>
+      <x>705</x>
+      <y>370</y>
+      <w>10</w>
+      <h>95</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -241,10 +241,10 @@ loop
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>711</x>
-      <y>387</y>
-      <w>135</w>
-      <h>36</h>
+      <x>640</x>
+      <y>375</y>
+      <w>75</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 getCosteStock()</panel_attributes>
@@ -253,10 +253,10 @@ getCosteStock()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>954</x>
-      <y>0</y>
-      <w>162</w>
-      <h>27</h>
+      <x>775</x>
+      <y>160</y>
+      <w>90</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>unidad: ProductoVenta</panel_attributes>
     <additional_attributes/>
@@ -264,10 +264,10 @@ getCosteStock()</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>999</x>
-      <y>414</y>
-      <w>18</w>
-      <h>81</h>
+      <x>800</x>
+      <y>390</y>
+      <w>10</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>
 layer=1</panel_attributes>
@@ -276,10 +276,10 @@ layer=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>837</x>
-      <y>423</y>
-      <w>180</w>
-      <h>36</h>
+      <x>710</x>
+      <y>395</y>
+      <w>100</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 getPrecio(producto)</panel_attributes>
@@ -288,10 +288,10 @@ getPrecio(producto)</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>549</x>
-      <y>1206</y>
-      <w>297</w>
-      <h>108</h>
+      <x>550</x>
+      <y>830</y>
+      <w>165</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>bg=red
 Crear clase Stock y metodo
@@ -303,10 +303,10 @@ que se vaya a comprar</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>837</x>
-      <y>459</y>
-      <w>180</w>
-      <h>54</h>
+      <x>710</x>
+      <y>415</y>
+      <w>100</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -317,10 +317,10 @@ precio</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>711</x>
-      <y>513</y>
-      <w>135</w>
-      <h>54</h>
+      <x>640</x>
+      <y>445</y>
+      <w>75</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -331,10 +331,10 @@ costeProducto</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>288</y>
-      <w>171</w>
-      <h>36</h>
+      <x>405</x>
+      <y>320</y>
+      <w>95</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 realizarPagoCarrito</panel_attributes>
@@ -343,10 +343,10 @@ realizarPagoCarrito</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>594</y>
-      <w>270</w>
-      <h>54</h>
+      <x>495</x>
+      <y>490</y>
+      <w>150</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -357,22 +357,22 @@ costePedido</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>90</x>
-      <y>675</y>
-      <w>1161</w>
-      <h>36</h>
+      <x>495</x>
+      <y>535</y>
+      <w>445</w>
+      <h>20</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 r1= procesarPago(coste pedido, numTarjeta, cvv, mesCaducidad, añoCaducidad)</panel_attributes>
-    <additional_attributes>1270.0;20.0;10.0;10.0</additional_attributes>
+    <additional_attributes>870.0;20.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>144</x>
-      <y>756</y>
-      <w>351</w>
-      <h>99</h>
+      <x>325</x>
+      <y>580</y>
+      <w>195</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>halign=left
 break
@@ -384,10 +384,10 @@ break
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>765</y>
-      <w>171</w>
-      <h>54</h>
+      <x>405</x>
+      <y>585</y>
+      <w>95</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -398,10 +398,10 @@ FALSE</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>90</x>
-      <y>792</y>
-      <w>207</w>
-      <h>54</h>
+      <x>295</x>
+      <y>600</y>
+      <w>115</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -412,10 +412,10 @@ FALSE</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>576</x>
-      <y>774</y>
-      <w>495</w>
-      <h>99</h>
+      <x>565</x>
+      <y>590</y>
+      <w>275</w>
+      <h>55</h>
     </coordinates>
     <panel_attributes>halign=left
 loop
@@ -426,10 +426,10 @@ loop
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>837</x>
-      <y>810</y>
-      <w>180</w>
-      <h>45</h>
+      <x>710</x>
+      <y>610</y>
+      <w>100</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 reducirStock(unidades)
@@ -439,10 +439,10 @@ reducirStock(unidades)
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>720</y>
-      <w>801</w>
-      <h>54</h>
+      <x>495</x>
+      <y>560</y>
+      <w>445</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -453,9 +453,9 @@ reducirStock(unidades)
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1413</x>
-      <y>747</y>
-      <w>45</w>
+      <x>1030</x>
+      <y>575</y>
+      <w>25</w>
       <h>0</h>
     </coordinates>
     <panel_attributes>:PasarelaPago</panel_attributes>
@@ -464,10 +464,10 @@ reducirStock(unidades)
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1449</x>
-      <y>765</y>
+      <x>1050</x>
+      <y>585</y>
       <w>0</w>
-      <h>297</h>
+      <h>165</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -475,10 +475,10 @@ reducirStock(unidades)
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1152</x>
-      <y>0</y>
-      <w>162</w>
-      <h>27</h>
+      <x>885</x>
+      <y>160</y>
+      <w>90</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>:SistemaPago</panel_attributes>
     <additional_attributes/>
@@ -486,10 +486,10 @@ reducirStock(unidades)
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1233</x>
-      <y>666</y>
-      <w>18</w>
-      <h>90</h>
+      <x>930</x>
+      <y>530</y>
+      <w>10</w>
+      <h>50</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -497,10 +497,10 @@ reducirStock(unidades)
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1404</x>
-      <y>0</y>
-      <w>90</w>
-      <h>27</h>
+      <x>1025</x>
+      <y>160</y>
+      <w>50</w>
+      <h>15</h>
     </coordinates>
     <panel_attributes>:Pedido</panel_attributes>
     <additional_attributes/>
@@ -508,10 +508,10 @@ reducirStock(unidades)
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1431</x>
-      <y>945</y>
-      <w>18</w>
-      <h>63</h>
+      <x>1040</x>
+      <y>685</y>
+      <w>10</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -519,10 +519,10 @@ reducirStock(unidades)
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>963</y>
-      <w>1161</w>
-      <h>45</h>
+      <x>405</x>
+      <y>695</y>
+      <w>645</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
                                                                                                                                                                                                                                                new(productos: Stock[*])
@@ -532,10 +532,10 @@ reducirStock(unidades)
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>999</x>
-      <y>810</y>
-      <w>18</w>
-      <h>45</h>
+      <x>800</x>
+      <y>610</y>
+      <w>10</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -543,10 +543,10 @@ reducirStock(unidades)
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1233</x>
-      <y>747</y>
-      <w>27</w>
-      <h>387</h>
+      <x>930</x>
+      <y>575</y>
+      <w>15</w>
+      <h>215</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=-1</panel_attributes>
@@ -555,10 +555,10 @@ layer=-1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1431</x>
-      <y>999</y>
-      <w>27</w>
-      <h>144</h>
+      <x>1040</x>
+      <y>715</y>
+      <w>15</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -567,10 +567,10 @@ layer=0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>828</x>
-      <y>855</y>
-      <w>27</w>
-      <h>270</h>
+      <x>705</x>
+      <y>635</y>
+      <w>15</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -579,10 +579,10 @@ layer=0</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>828</x>
-      <y>792</y>
-      <w>18</w>
-      <h>72</h>
+      <x>705</x>
+      <y>600</y>
+      <w>10</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -590,10 +590,10 @@ layer=0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>702</x>
-      <y>846</y>
-      <w>27</w>
-      <h>279</h>
+      <x>635</x>
+      <y>630</y>
+      <w>15</w>
+      <h>155</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -602,10 +602,10 @@ layer=0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>711</x>
-      <y>801</y>
-      <w>135</w>
-      <h>45</h>
+      <x>640</x>
+      <y>605</y>
+      <w>75</w>
+      <h>25</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;-
 reducirStock()
@@ -615,10 +615,10 @@ reducirStock()
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>702</x>
-      <y>783</y>
-      <w>18</w>
-      <h>72</h>
+      <x>635</x>
+      <y>595</y>
+      <w>10</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -626,10 +626,10 @@ reducirStock()
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>288</x>
-      <y>864</y>
-      <w>171</w>
-      <h>54</h>
+      <x>405</x>
+      <y>640</y>
+      <w>95</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -640,10 +640,10 @@ TRUE</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>90</x>
-      <y>990</y>
-      <w>207</w>
-      <h>54</h>
+      <x>295</x>
+      <y>710</y>
+      <w>115</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;.
 
@@ -654,10 +654,10 @@ TRUE</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>441</x>
-      <y>909</y>
-      <w>27</w>
-      <h>225</h>
+      <x>490</x>
+      <y>665</y>
+      <w>15</w>
+      <h>125</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=1</panel_attributes>
@@ -666,10 +666,10 @@ layer=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>279</x>
-      <y>1071</y>
-      <w>27</w>
-      <h>63</h>
+      <x>400</x>
+      <y>755</y>
+      <w>15</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=1</panel_attributes>
@@ -678,10 +678,10 @@ layer=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>81</x>
-      <y>18</y>
-      <w>27</w>
-      <h>63</h>
+      <x>290</x>
+      <y>170</y>
+      <w>15</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=1</panel_attributes>
@@ -690,10 +690,10 @@ layer=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>81</x>
-      <y>1080</y>
-      <w>27</w>
-      <h>63</h>
+      <x>290</x>
+      <y>760</y>
+      <w>15</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=1</panel_attributes>
@@ -702,10 +702,10 @@ layer=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>279</x>
-      <y>18</y>
-      <w>27</w>
-      <h>63</h>
+      <x>400</x>
+      <y>170</y>
+      <w>15</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=1</panel_attributes>
@@ -714,10 +714,10 @@ layer=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>441</x>
-      <y>18</y>
-      <w>27</w>
-      <h>63</h>
+      <x>490</x>
+      <y>170</y>
+      <w>15</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=1</panel_attributes>
@@ -726,10 +726,10 @@ layer=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>702</x>
-      <y>621</y>
-      <w>27</w>
-      <h>180</h>
+      <x>635</x>
+      <y>505</y>
+      <w>15</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -738,10 +738,10 @@ layer=0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>702</x>
-      <y>18</y>
-      <w>27</w>
-      <h>315</h>
+      <x>635</x>
+      <y>170</y>
+      <w>15</w>
+      <h>175</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -750,10 +750,10 @@ layer=0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>828</x>
-      <y>540</y>
-      <w>27</w>
-      <h>270</h>
+      <x>705</x>
+      <y>460</y>
+      <w>15</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -762,10 +762,10 @@ layer=0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>828</x>
-      <y>18</y>
-      <w>27</w>
-      <h>378</h>
+      <x>705</x>
+      <y>170</y>
+      <w>15</w>
+      <h>210</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -774,10 +774,10 @@ layer=0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>999</x>
-      <y>486</y>
-      <w>27</w>
-      <h>342</h>
+      <x>800</x>
+      <y>430</y>
+      <w>15</w>
+      <h>190</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -786,10 +786,10 @@ layer=0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>999</x>
-      <y>18</y>
-      <w>27</w>
-      <h>414</h>
+      <x>800</x>
+      <y>170</y>
+      <w>15</w>
+      <h>230</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -798,10 +798,10 @@ layer=0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1233</x>
-      <y>18</y>
-      <w>27</w>
-      <h>666</h>
+      <x>930</x>
+      <y>170</y>
+      <w>15</w>
+      <h>370</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=-1</panel_attributes>
@@ -810,10 +810,10 @@ layer=-1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1431</x>
-      <y>18</y>
-      <w>27</w>
-      <h>945</h>
+      <x>1040</x>
+      <y>170</y>
+      <w>15</w>
+      <h>525</h>
     </coordinates>
     <panel_attributes>lt=.
 layer=0</panel_attributes>
@@ -822,13 +822,71 @@ layer=0</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>927</x>
-      <y>1215</y>
-      <w>297</w>
-      <h>108</h>
+      <x>760</x>
+      <y>835</y>
+      <w>165</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>bg=red
 NOTIFICACIÖN?!?!?!??!?!</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>115</x>
+      <y>205</y>
+      <w>230</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;
+pagarPedido(p, numTarjeta, cvv, mesCaducidad, añodCaducidad)</panel_attributes>
+    <additional_attributes>100.0;20.0;350.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>115</x>
+      <y>160</y>
+      <w>100</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>cliente: ClienteRegistrado</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>155</x>
+      <y>195</y>
+      <w>10</w>
+      <h>475</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>155</x>
+      <y>665</y>
+      <w>15</w>
+      <h>125</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>155</x>
+      <y>170</y>
+      <w>15</w>
+      <h>35</h>
+    </coordinates>
+    <panel_attributes>lt=.
+layer=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
   </element>
 </diagram>
