@@ -1,0 +1,35 @@
+\contentsline {section}{\numberline {1}Diagrama de clases}{3}{}%
+\contentsline {subsection}{\numberline {1.1}Explicación del paquete usuario}{3}{}%
+\contentsline {subsection}{\numberline {1.2}Explicación del paquete usuario}{4}{}%
+\contentsline {subsection}{\numberline {1.3}Explicación del paquete producto}{5}{}%
+\contentsline {subsubsection}{\numberline {1.3.1}Productos de venta}{5}{}%
+\contentsline {subsubsection}{\numberline {1.3.2}Productos de segunda mano}{6}{}%
+\contentsline {subsection}{\numberline {1.4}Explicación del paquete descuento}{6}{}%
+\contentsline {subsubsection}{\numberline {1.4.1}Directos}{6}{}%
+\contentsline {subsubsection}{\numberline {1.4.2}Umbral de gasto}{7}{}%
+\contentsline {subsection}{\numberline {1.5}Explicación del paquete categoría}{7}{}%
+\contentsline {subsubsection}{\numberline {1.5.1}Productos}{7}{}%
+\contentsline {subsubsection}{\numberline {1.5.2}Descuentos}{7}{}%
+\contentsline {subsection}{\numberline {1.6}Explicación del paquete notificación}{8}{}%
+\contentsline {subsubsection}{\numberline {1.6.1}Cliente}{8}{}%
+\contentsline {subsubsection}{\numberline {1.6.2}Empleado}{9}{}%
+\contentsline {subsection}{\numberline {1.7}Paquete solicitud}{9}{}%
+\contentsline {subsubsection}{\numberline {1.7.1}Pedidos}{9}{}%
+\contentsline {subsubsection}{\numberline {1.7.2}Validaciones}{10}{}%
+\contentsline {subsubsection}{\numberline {1.7.3}Intercambios}{10}{}%
+\contentsline {subsection}{\numberline {1.8}Paquete filtro}{11}{}%
+\contentsline {subsubsection}{\numberline {1.8.1}Cliente registrado}{11}{}%
+\contentsline {subsubsection}{\numberline {1.8.2}Usuario gestión}{11}{}%
+\contentsline {subsubsection}{\numberline {1.8.3}Cliente}{11}{}%
+\contentsline {section}{\numberline {2}Diagramas de secuencia}{11}{}%
+\contentsline {subsection}{\numberline {2.1}PagarPedido}{11}{}%
+\contentsline {subsubsection}{\numberline {2.1.1}Fase de Cálculo y Procesamiento}{12}{}%
+\contentsline {subsubsection}{\numberline {2.1.2}Gestión de Excepciones y Notificaciones}{12}{}%
+\contentsline {subsubsection}{\numberline {2.1.3}Post-procesamiento}{12}{}%
+\contentsline {subsection}{\numberline {2.2}BuscarProductosNuevos}{12}{}%
+\contentsline {subsubsection}{\numberline {2.2.1}Flujo de Control y Seguridad}{12}{}%
+\contentsline {subsubsection}{\numberline {2.2.2}Lógica de Filtrado Detallada}{13}{}%
+\contentsline {subsubsection}{\numberline {2.2.3}Post-procesamiento}{13}{}%
+\contentsline {section}{\numberline {3}Diagramas de estado}{13}{}%
+\contentsline {subsection}{\numberline {3.1}Intercambio}{13}{}%
+\contentsline {subsection}{\numberline {3.2}Pedido}{14}{}%
