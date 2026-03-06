@@ -1,3 +1,5 @@
+package usuario;
+import norificacion.Notification;
 
 public class User {
 	

@@ -1,8 +1,6 @@
 package usuario;
 import java.util.*;
 
-import User;
-
 
 public class Client extends User{
 

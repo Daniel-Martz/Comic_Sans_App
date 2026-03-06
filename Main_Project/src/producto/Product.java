@@ -1,3 +1,4 @@
+package producto;
 import categoria.Category;
 
 public abstract class Product {

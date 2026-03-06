@@ -1,3 +1,4 @@
+package norificacion;
 
 public abstract class Notification {
 	private String title;

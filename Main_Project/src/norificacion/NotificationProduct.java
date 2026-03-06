@@ -1,3 +1,5 @@
+package norificacion;
+import producto.Product;
 
 public class NotificationProduct extends Notification{
 	private Product p;
