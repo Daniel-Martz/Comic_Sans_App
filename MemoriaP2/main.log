@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.24.0 (TeX Live 2026/Arch Linux)  (format=lualatex 2026.3.5)  6 MAR 2026 11:40
+This is LuaHBTeX, Version 1.24.0 (TeX Live 2026/Arch Linux)  (format=lualatex 2026.3.5)  6 MAR 2026 12:59
  system commands enabled.
  file:line:error style messages enabled.
 **main.tex
@@ -51,34 +51,78 @@ luaotfload | db : Font names database loaded from /home/matteo/.texlive/texmf-va
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen147
+) (/usr/share/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count281
+\float@exts=\toks17
+\float@box=\box53
+\@float@everytoks=\toks18
+\@floatcapt=\box54
+) (/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
+ (/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+) (/usr/share/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
+ (/usr/share/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
+) (/usr/share/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: luatex.def on input line 106.
+ (/usr/share/texmf-dist/tex/latex/graphics-def/luatex.def
+File: luatex.def 2025/09/29 v1.2f Graphics/color driver for luatex
+))
+\Gin@req@height=\dimen148
+\Gin@req@width=\dimen149
 ) (/usr/share/texmf-dist/tex/latex/l3backend/l3backend-luatex.def
 File: l3backend-luatex.def 2025-10-09 L3 backend support: PDF output (LuaTeX)
-\l__color_backend_stack_int=\count281
+\l__color_backend_stack_int=\count282
 Inserting `l3color' in `luaotfload.parse_color'.) (./main.aux)
 \openout1 = main.aux
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+ (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count283
+\scratchdimen=\dimen150
+\scratchbox=\box55
+\nofMPsegments=\count284
+\nofMParguments=\count285
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count286
+\MPscratchDim=\dimen151
+\MPnumerator=\count287
+\makeMPintoPDFobject=\count288
+\everyMPtoPDFconversion=\toks21
+) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (/usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 8.
+(Font)              <12> on input line 10.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 8.
+(Font)              <8> on input line 10.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 8.
+(Font)              <6> on input line 10.
  (./main.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 2.
@@ -91,31 +135,102 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 \openout3 = main.toc
  [2]
-Underfull \hbox (badness 10000) in paragraph at lines 13--14
+<../Diagramas/usuario.jpg, id=14, 3804.2125pt x 1646.15pt>
+File: ../Diagramas/usuario.jpg Graphic file (type jpg)
+<use ../Diagramas/usuario.jpg>
+Package luatex.def Info: ../Diagramas/usuario.jpg  used on input line 17.
+(luatex.def)             Requested size: 345.0pt x 149.27742pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 15--16
+Underfull \hbox (badness 10000) in paragraph at lines 22--23
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 17--18
-
- []
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 46--47
-
- []
-
-[4] [5] [6]
-Underfull \hbox (badness 10000) in paragraph at lines 136--137
+[3<../Diagramas/usuario.jpg>]
+<../Diagramas/aplicacion.jpg, id=18, 2419.0375pt x 2449.15pt>
+File: ../Diagramas/aplicacion.jpg Graphic file (type jpg)
+<use ../Diagramas/aplicacion.jpg>
+Package luatex.def Info: ../Diagramas/aplicacion.jpg  used on input line 53.
+(luatex.def)             Requested size: 345.0pt x 349.2691pt.
+ [4]
+Underfull \hbox (badness 10000) in paragraph at lines 56--57
 
  []
 
-[7] [8] [9] [10] [11] [12] [13] [14] (./main.aux)
+[5<../Diagramas/aplicacion.jpg>]
+Overfull \hbox (8.66002pt too wide) in paragraph at lines 80--82
+\TU/lmr/m/n/10 Los ma-pas an-te-ri-ores serán ac-tu-al-iza-dos cada vez que se re-al-ice una búsqueda
+ []
+
+[6]
+<../Diagramas/producto.jpg, id=28, 2961.0625pt x 1274.7625pt>
+File: ../Diagramas/producto.jpg Graphic file (type jpg)
+<use ../Diagramas/producto.jpg>
+Package luatex.def Info: ../Diagramas/producto.jpg  used on input line 103.
+(luatex.def)             Requested size: 345.0pt x 148.51056pt.
+ [7] [8<../Diagramas/producto.jpg>]
+<../Diagramas/descuento.jpg, id=35, 1375.1375pt x 702.625pt>
+File: ../Diagramas/descuento.jpg Graphic file (type jpg)
+<use ../Diagramas/descuento.jpg>
+Package luatex.def Info: ../Diagramas/descuento.jpg  used on input line 145.
+(luatex.def)             Requested size: 345.0pt x 176.27763pt.
+ [9<../Diagramas/descuento.jpg>]
+<../Diagramas/categoria.jpg, id=39, 1485.55pt x 391.4625pt>
+File: ../Diagramas/categoria.jpg Graphic file (type jpg)
+<use ../Diagramas/categoria.jpg>
+Package luatex.def Info: ../Diagramas/categoria.jpg  used on input line 175.
+(luatex.def)             Requested size: 345.0pt x 90.91254pt.
+ [10<../Diagramas/categoria.jpg>]
+Underfull \hbox (badness 10000) in paragraph at lines 183--184
+
+ []
+
+<../Diagramas/notificacion.jpg, id=43, 1324.95pt x 983.675pt>
+File: ../Diagramas/notificacion.jpg Graphic file (type jpg)
+<use ../Diagramas/notificacion.jpg>
+Package luatex.def Info: ../Diagramas/notificacion.jpg  used on input line 202.
+(luatex.def)             Requested size: 345.0pt x 256.12471pt.
+[11] [12<../Diagramas/notificacion.jpg>]
+<../Diagramas/solictidu.jpg, id=51, 2067.725pt x 1224.575pt>
+File: ../Diagramas/solictidu.jpg Graphic file (type jpg)
+<use ../Diagramas/solictidu.jpg>
+Package luatex.def Info: ../Diagramas/solictidu.jpg  used on input line 243.
+(luatex.def)             Requested size: 345.0pt x 204.3071pt.
+ [13] [14<../Diagramas/solictidu.jpg>]
+<../Diagramas/filtro.jpg, id=58, 1254.6875pt x 722.7pt>
+File: ../Diagramas/filtro.jpg Graphic file (type jpg)
+<use ../Diagramas/filtro.jpg>
+Package luatex.def Info: ../Diagramas/filtro.jpg  used on input line 280.
+(luatex.def)             Requested size: 345.0pt x 198.71555pt.
+ [15] [16<../Diagramas/filtro.jpg>]
+<../Diagramas/DiagramaSecuenciaPagarPedido.jpg, id=65, 2198.2125pt x 1234.6125pt>
+File: ../Diagramas/DiagramaSecuenciaPagarPedido.jpg Graphic file (type jpg)
+<use ../Diagramas/DiagramaSecuenciaPagarPedido.jpg>
+Package luatex.def Info: ../Diagramas/DiagramaSecuenciaPagarPedido.jpg  used on input line 301.
+(luatex.def)             Requested size: 345.0pt x 193.75546pt.
+ [17<../Diagramas/DiagramaSecuenciaPagarPedido.jpg>]
+<../Diagramas/DIagramaSecuenciaBuscarProductosNuevos.jpg, id=69, 2238.3625pt x 2248.4pt>
+File: ../Diagramas/DIagramaSecuenciaBuscarProductosNuevos.jpg Graphic file (type jpg)
+<use ../Diagramas/DIagramaSecuenciaBuscarProductosNuevos.jpg>
+Package luatex.def Info: ../Diagramas/DIagramaSecuenciaBuscarProductosNuevos.jpg  used on input line 326.
+(luatex.def)             Requested size: 345.0pt x 346.54286pt.
+ [18] [19<../Diagramas/DiagramaSecuenciaBuscarProductosNuevos.jpg>]
+<../Diagramas/diagrama_estados_intercambio.jpg, id=76, 1746.525pt x 873.2625pt>
+File: ../Diagramas/diagrama_estados_intercambio.jpg Graphic file (type jpg)
+<use ../Diagramas/diagrama_estados_intercambio.jpg>
+Package luatex.def Info: ../Diagramas/diagrama_estados_intercambio.jpg  used on input line 355.
+(luatex.def)             Requested size: 345.0pt x 172.49077pt.
+ [20<../Diagramas/diagrama_estados_intercambio.jpg>]
+<../Diagramas/diagrama_estados_PEDIDO.jpg, id=80, 1023.825pt x 1003.75pt>
+File: ../Diagramas/diagrama_estados_PEDIDO.jpg Graphic file (type jpg)
+<use ../Diagramas/diagrama_estados_PEDIDO.jpg>
+Package luatex.def Info: ../Diagramas/diagrama_estados_PEDIDO.jpg  used on input line 367.
+(luatex.def)             Requested size: 345.0pt x 338.23793pt.
+ [21] [22<../Diagramas/diagrama_estados_PEDIDO.jpg>] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -123,19 +238,19 @@ L3 programming layer <2026-01-19>
 )
 
 Here is how much of LuaTeX's memory you used:
- 476 strings out of 476076
+ 1530 strings out of 476076
  100000,460012 words of node,token memory allocated
  416 words of node memory still in use:
    3 hlist, 1 vlist, 1 rule, 2 glue, 3 kern, 1 glyph, 4 attribute, 50 glue_spec, 4 attribute_list, 1 write nodes
-   avail lists: 2:614,3:251,4:21,5:339,6:67,7:6586,8:1,9:445,10:15,11:601
- 23001 multiletter control sequences out of 65536+600000
+   avail lists: 2:618,3:243,4:21,5:329,6:65,7:5910,8:1,9:440,10:15,11:524
+ 23969 multiletter control sequences out of 65536+600000
  40 fonts using 2695375 bytes
- 35i,6n,37p,677b,218s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,6n,62p,677b,246s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf></usr/share/texmf-dist/fonts/opentype/public/lm/lmroman10-bold.otf></usr/share/texmf-dist/fonts/opentype/public/lm/lmroman12-bold.otf></usr/share/texmf-dist/fonts/opentype/public/lm/lmroman12-regular.otf></usr/share/texmf-dist/fonts/opentype/public/lm/lmroman17-regular.otf>
-Output written on main.pdf (14 pages, 58653 bytes).
+Output written on main.pdf (22 pages, 2147798 bytes).
 
-PDF statistics: 84 PDF objects out of 1000 (max. 8388607)
- 52 compressed objects within 1 object stream
+PDF statistics: 121 PDF objects out of 1000 (max. 8388607)
+ 69 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 1048576)
  1 words of extra memory for PDF output out of 10000 (max. 100000000)
 

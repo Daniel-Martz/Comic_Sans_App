@@ -1,3 +1,7 @@
+package producto;
+import Product;
+import categoria.Category;
+
 public class Comic extends Product {
 
     //ATRIBUTOS ESPECÍFICOS

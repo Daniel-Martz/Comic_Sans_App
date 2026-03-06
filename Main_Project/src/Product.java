@@ -1,3 +1,5 @@
+import categoria.Category;
+
 public abstract class Product {
 
 	private int ID;

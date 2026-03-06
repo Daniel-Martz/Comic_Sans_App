@@ -3,6 +3,8 @@
 \author{Rodrigo Díaz-Regañón, Daniel Martínez Fernández\\ y Matteo Artuñedo González}
 \date{\today}
 
+\usepackage{float}
+\usepackage{graphicx}
 
 \begin{document}
 \maketitle
@@ -10,7 +12,10 @@
 \newpage
 \section{Diagrama de clases}
 \subsection{Explicación del paquete usuario}
-Todos los usuarios tienen unos atributos comunes: dni, nombre de usuario y contraseña, que aparecen como atributos en la clase abstracta Usuario.\\
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/usuario.jpg}
+\end{figure}
 
 Los usuarios se distinguen en dos grandes grupos, los clientes y los usuarios de gestión, que engloban al gestor y los empleados.\\
 
@@ -41,7 +46,12 @@ El cliente registrado, por su parte, cuenta con varios métodos agrupados por su
 
 
 
-\subsection{Explicación del paquete usuario}
+\subsection{Explicación del paquete aplicación}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/aplicacion.jpg}
+\end{figure}
 
 El paquete de la clase aplicación es el paquete central de la aplicación. La clase Aplicación es la clase que contiene toda la información y, en caso de que se borrase, se borrarían todos los datos (asociación de contención fuerte) de la aplicación.\\
 
@@ -64,7 +74,34 @@ Por último, se encuentra el Catálogo. Esta clase es la que guarda todos los pr
   \item Aplicar descuentos
 \end{itemize}
 
+\subsection{Sistema de recomendaciones}
+A pesar de que el sistema de recomendaciones no es un paquete como tal, estando implementado con clases en varios paquetes, merece un apartado por sí solo. Como bien se sabe, el sistema de recomendación cuenta con 3 críterios cuya importancia es ajustable por el gestor. Estos criterios son:
+\begin{itemize}
+  \item Interés del cliente: para medir los objetos que pueden resultar de interés para un cliente particular hemos creado una clase Interes que irá asociada a cada cliente. En esta clase se guarda un mapa en el que a cada Producto en venta se le asocia un entero, cuanto mayor sea este entero más interés tendrá el cliente en ese producto. También se guarda otro mapa del mismo tipo que el anterior pero para productos de segunda mano. Además contiene otros dos atributos referentes al máximo interés de cada mapa, para evitar posibles problemas con el overflow y realizar compactaciones cuando sea necesario. \\
+Los mapas anteriores serán actualizados cada vez que se realice una búsqueda o se haga una compra, de forma que los productos relacionados con las búsquedas o compras aumenten su interés.
+
+\item Reseñas de productos: también existe un criterio relacionado con la puntuación que tiene cada producto, de forma que cuando se llame al método para obtener un ranking se creará otro mapa en el que a cada producto se le asociará su puntuación media.
+
+\item Novedad productos: por otro lado, otro criterio hace referncia al tiempo en mercado de un producto, de manera que cuanto más nuevo sea más se recomendará. Para ello cuando se quiera obtener los productos recomendados, de manera interna se creará otro mapa que asocie a cada producto su id como entero, este id va creciendo cada vez que se crea un producto de forma que cuanto más nuevo sea un producto mayor id tendrá.
+\end{itemize}
+
+Para unificar los tres criterios, en el método para obtener el ranking en cada uno de los mapas se dividiran todos los valores asociados a productos entre el mayor valor de su respectivo mapa, para obtener doubles entre 0 y 1 y posteriormente se multplicaran por la importancia dependiendo del criterio al que pertenezcan. Por último se sumaran los tres criterios asociados a cada producto, dando lugar a un mapa de productos y doubles, del que tras ordenarlo de mayor a menor se obtendrán los N primeros productos los cuales se recomendarán.
+
+Cabe destacar que para el ranking de productos de segunda mano solo se tendrá en cuenta el criterio del interés.
+
+\subsubsection{Gestor}
+Podrá configurar la importancia de cada criterio, así como el número de productos recomendados
+
+
+\subsubsection{Cliente}
+Cada cliente tendrá su objeto Interes asociado el cuál se irá actualizando tras cada búsqueda, compra o intercambio realizada por el cliente.
+
 \subsection{Explicación del paquete producto}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/producto.jpg}
+\end{figure}
 EL paquete de productos agrupa todos los artículos que se pueden gestionar en la aplicación, ya sean productos 
 destinados a la venta oficial de la tienda o artículos de segunda mano aportados por los clientes para el intercambio.
 Toda clase de producto comparte los atributos:
@@ -102,6 +139,11 @@ clasifican el estado de conservación del artículo (Perfecto, Muy bueno, Uso li
 Estos productos podrán ser ofertados o solicitados por los clientes mediante ofertas.
 
 \subsection{Explicación del paquete descuento}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/descuento.jpg}
+\end{figure}
 EL paquete de descuento agrupa todos los descuentos que pueden aplicarse en la aplicación.
 Todo descuento comparte los atributos:
 \begin{itemize}
@@ -127,6 +169,11 @@ Los descuentos por umbral de gasto (UmbralGasto) tendrán todos un importe míni
 \end{itemize}
 
 \subsection{Explicación del paquete categoría}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/categoria.jpg}
+\end{figure}
 EL paquete de categoría agrupa las diferentes clasificaciones que permiten organizar el catálogo de la aplicación.
 Toda categoría comparte el atributo:
 \begin{itemize}
@@ -150,6 +197,10 @@ La información relativa a estos descuentos se explicó con más detalle en el p
 \end{itemize}
 
 \subsection{Explicación del paquete notificación}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/notificacion.jpg}
+\end{figure}
 EL paquete de notificación agrupa todas las notificaciones que pueden recibir los usuarios de la aplicación.
 Toda notificación comparte los atributos:
 \begin{itemize}
@@ -187,6 +238,10 @@ Las notificaciones de los empleados tendrán todas una solicitud asociada, que  
 La información relativa a las solicitudes se explicará con más detalle en el paquete de las solicitudes.
 
 \subsection{Paquete solicitud}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/solictidu.jpg}
+\end{figure}
 
 EL paquete de solicitud agrupa todas las peticiones y trámites que los usuarios realizan en el sistema.
 
@@ -220,6 +275,10 @@ Cabe mencionar que los clientes no podrán ejecutar los getters de los códigos,
 
 
 \subsection{Paquete filtro}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/filtro.jpg}
+\end{figure}
 El paquete filtro, nace para simplificar el filtrado en las búsquedas tanto de productos de la tienda y productos de intercambio, como productos que se quieran modificar, no contiene métodos especiales más allá de getters y setters, ya quesu función es ir almacenando los filtros que el usuario ha seleccionado durante una sesión y estos se resetearan al terminar la misma.
 Todo filtro comparte un atributo: ordenAscendente, de tipo boolean que determinará si los productos se verán en orden ascendente o descendente, siguiendo un atributo que se especificará en el método de búsqueda.
 
@@ -237,11 +296,15 @@ Existe otro tipo de filtros que hereda de los filtros de venta, estos son los em
 
 \section{Diagramas de secuencia}
 \subsection{PagarPedido}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/DiagramaSecuenciaPagarPedido.jpg}
+\end{figure}
 Este diagrama describe un proceso crítico de negocio que involucra transacciones financieras y gestión de estados de pedidos.
 \subsubsection{Fase de Cálculo y Procesamiento}
 \begin{itemize}
 \item Cálculo de Costes: La Aplicacion interactúa con la SolicitudPedido (p) para obtener el coste total. Esta última recorre sus líneas de producto para sumar los precios individuales, ilustrando una delegación de responsabilidades correcta.
-\item Pasarela de Pago: Se invoca al SistemaPago mediante el método procesarPago(...) pasando los datos de la tarjeta y el coste calculado. El resultado (validez) determina el flujo siguiente.
+\item Pasarela de Pago: Se invoca al SistemaPago Diagramasnte el método procesarPago(...) pasando los datos de la tarjeta y el coste calculado. El resultado (validez) determina el flujo siguiente.
 \end{itemize}
 \subsubsection{Gestión de Excepciones y Notificaciones}
 \begin{itemize}
@@ -258,6 +321,10 @@ Este diagrama describe un proceso crítico de negocio que involucra transaccione
   \item Actualización del Interés: Al igual que en el diagrama de búsqueda, el proceso finaliza actualizando el perfil de interés del cliente basándose en los productos efectivamente comprados. Esto asegura que el sistema "aprenda" de las transacciones finalizadas.
 \end{itemize}
 \subsection{BuscarProductosNuevos}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/DIagramaSecuenciaBuscarProductosNuevos.jpg}
+\end{figure}
 Este diagrama modela la lógica de una búsqueda filtrada, integrando controles de seguridad y personalización del interés del usuario.
 \subsubsection{Flujo de Control y Seguridad}
 \begin{itemize}
@@ -283,16 +350,24 @@ El segundo bloque del diagrama profundiza en el método pasaFiltro de la clase L
 
 \section{Diagramas de estado}
 \subsection{Intercambio}
-Este diagrama representa el ciclo de vida de un intercambio, mostrando su evolución desde que se propone hasta que se completa o se anula. 
-Todo comienza cuando un cliente realiza una oferta, quedando el proceso en estado de solicitud. 
-En esta fase inicial, si la oferta es rechazada, el intercambio se cancela directamente y termina su ciclo. 
-Si, por el contrario, la contraparte acepta la oferta, el proceso avanza al estado de intercambio aceptado. 
-Finalmente, se realiza una aprobación por parte del empleado; si esta validación falla, el intercambio también queda cancelado, pero si se aprueba con éxito, el ciclo concluye de forma quedando el intercambio oficialmente registrado.
-
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/diagrama_estados_intercambio.jpg}
+\end{figure}
+Este diagrama representa el ciclo de vida de un intercambio, mostrando su evolución desde que se propone hasta que se completa o se anula. \\
+Todo comienza cuando un cliente realiza una oferta, quedando el proceso en estado de solicitud. \\
+En esta fase inicial, si la oferta es rechazada, el intercambio se cancela directamente y termina su ciclo. \\
+Si, por el contrario, la contraparte acepta la oferta, el proceso avanza al estado de intercambio aceptado. \\
+Finalmente, se realiza una aprobación por parte del empleado; si esta validación falla, el intercambio también queda cancelado, pero si se aprueba con éxito, el ciclo concluye de forma quedando el intercambio oficialmente registrado.\\
+En todo momento, los clientes tiene notificaciones cuando aceptan o rechazan una oferta y cuando se aprueba el intercambio. \\
+El empleado tambien recibe notificaciones cuando se acepta un intercambio entre dos clientes.
 \subsection{Pedido}
-Este diagrama representa todos los estados por los que puede pasar un pedido, mostrando cómo avanza desde su creación hasta su entrega al cliente o su cancelación.
-Todo comienza cuando se realiza el pedido, que queda a la espera de ser pagado; si el intento de pago falla, 
-el pedido se mantiene en ese mismo punto, aunque ahora también existe la opción de cancelar el pedido definitivamente en esta fase, 
-terminando ahí su ciclo. Si continúa y el sistema confirma el cobro, el pedido avanza al estado de "pagado". 
-A partir de ahí, el empleado irá actualizando el estado del pedido (cuando esté listo para recogerse y finalmente al ser recogido por el cliente).
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{../Diagramas/diagrama_estados_PEDIDO.jpg}
+\end{figure}
+Este diagrama representa todos los estados por los que puede pasar un pedido, mostrando cómo avanza desde su creación hasta su entrega al cliente o su cancelación.\\
+Todo comienza cuando se realiza el pedido, que queda a la espera de ser pagado; si el intento de pago falla,	el pedido se mantiene en ese mismo punto, aunque ahora también existe la opción de cancelar el pedido definitivamente en esta fase, terminando ahí su ciclo. Si continúa y el sistema confirma el cobro, el pedido avanza al estado de "pagado". \\
+A partir de ahí, el empleado irá actualizando el estado del pedido (cuando esté listo para recogerse y finalmente al ser recogido por el cliente).\\
+En todo momento, el cliente recibira notificaciones sobre el estado de su pedido y el empleado recibira otra sobre la gestion de un nuevo pedido.
 \end{document}

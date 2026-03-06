@@ -1,3 +1,4 @@
+package producto;
 
 public class Figure {
 
