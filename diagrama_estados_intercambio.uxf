@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
   <help_text>]</help_text>
-  <zoom_level>8</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>464</x>
-      <y>456</y>
-      <w>248</w>
-      <h>56</h>
+      <x>621</x>
+      <y>450</y>
+      <w>279</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>SolicitudIntercambio</panel_attributes>
     <additional_attributes/>
@@ -16,10 +16,10 @@
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>576</x>
-      <y>328</y>
-      <w>16</w>
-      <h>16</h>
+      <x>747</x>
+      <y>306</y>
+      <w>18</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -27,22 +27,27 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
-      <y>336</y>
-      <w>696</w>
-      <h>136</h>
+      <x>747</x>
+      <y>315</y>
+      <w>783</w>
+      <h>153</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-realizarOferta(productosOfertados: PorductoIntercambio[*], productosRecibidos: PorductoIntercambio[*], destinatario:Usuario)</panel_attributes>
+realizarOferta(productosOfertados: PorductoIntercambio[*], productosRecibidos: PorductoIntercambio[*], destinatario:Usuario)
+
+enviarNotificacion(u: Usuario, notif: NotificacionUsuario)
+[ClienteRegistrado, NotificacionOferta] 		(destinatario)
+
+</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>608</x>
-      <y>800</y>
-      <w>200</w>
-      <h>40</h>
+      <x>783</x>
+      <y>1008</y>
+      <w>225</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>IntercambioRegistrado</panel_attributes>
     <additional_attributes/>
@@ -50,35 +55,48 @@ realizarOferta(productosOfertados: PorductoIntercambio[*], productosRecibidos: P
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
-      <y>664</y>
-      <w>408</w>
-      <h>144</h>
+      <x>747</x>
+      <y>756</y>
+      <w>459</w>
+      <h>261</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 aprobarIntercambio(codigoOfertante: String, codigoDestinatario: String)
-[TRUE]</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+[TRUE]
+
+enviarNotificacion(u: Usuario, notif: NotificacionUsuario)
+[ClienteRegistrado, NotificacionIntercambio] (ofertante)
+
+enviarNotificacion(u: Usuario, notif: NotificacionUsuario)
+[ClienteRegistrado, NotificacionIntercambio] (destinatario)
+
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;270.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>200</x>
-      <y>464</y>
-      <w>280</w>
-      <h>32</h>
+      <x>144</x>
+      <y>459</y>
+      <w>495</w>
+      <h>99</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-rechazarOferta(o:Oferta, u:Usuario)</panel_attributes>
-    <additional_attributes>330.0;20.0;10.0;20.0</additional_attributes>
+rechazarOferta(o:Oferta, u:Usuario) (destinatario)
+
+enviarNotificacion(u: Usuario, notif: NotificacionUsuario) 
+[ClienteRegistrado, NotificacionOferta] (ofertante)
+
+</panel_attributes>
+    <additional_attributes>530.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>192</x>
-      <y>472</y>
-      <w>16</w>
-      <h>16</h>
+      <x>126</x>
+      <y>468</y>
+      <w>18</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>type=final</panel_attributes>
     <additional_attributes/>
@@ -86,10 +104,10 @@ rechazarOferta(o:Oferta, u:Usuario)</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>464</x>
-      <y>616</y>
-      <w>248</w>
-      <h>56</h>
+      <x>621</x>
+      <y>702</y>
+      <w>279</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>IntercambioAceptado</panel_attributes>
     <additional_attributes/>
@@ -97,22 +115,28 @@ rechazarOferta(o:Oferta, u:Usuario)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>576</x>
+      <x>747</x>
       <y>504</y>
-      <w>200</w>
-      <h>128</h>
+      <w>360</w>
+      <h>216</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-aceptarOferta(o:Oferta, u:Usuario)</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+aceptarOferta(o:Oferta, u:Usuario) (destinatario)
+
+enviarNotificacion(u: Usuario, notif: NotificacionUsuario)
+[ClienteRegistrado, NotificacionOferta] (ofertante)
+
+enviarNotificacion(u: Usuario, notif: NotificacionUsuario)
+[Empleado, NotificacionEmpleado]</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
   </element>
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>576</x>
-      <y>792</y>
-      <w>16</w>
-      <h>16</h>
+      <x>747</x>
+      <y>999</y>
+      <w>18</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>type=final</panel_attributes>
     <additional_attributes/>
@@ -120,23 +144,32 @@ aceptarOferta(o:Oferta, u:Usuario)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>56</x>
-      <y>480</y>
-      <w>424</w>
-      <h>192</h>
+      <x>126</x>
+      <y>477</y>
+      <w>513</w>
+      <h>297</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
+
+
+
 aprobarIntercambio(codigoOfertante: String, codigoDestinatario: String)
-[FALSE]</panel_attributes>
-    <additional_attributes>510.0;210.0;180.0;210.0;180.0;10.0</additional_attributes>
+[FALSE]
+
+enviarNotificacion(u: Usuario, notif: NotificacionUsuario)
+[ClienteRegistrado, NotificacionIntercambio] (ofertante)
+
+enviarNotificacion(u: Usuario, notif: NotificacionUsuario)
+[ClienteRegistrado, NotificacionIntercambio] (destinatario)</panel_attributes>
+    <additional_attributes>550.0;290.0;520.0;290.0;520.0;160.0;10.0;160.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>80</x>
-      <y>416</y>
-      <w>200</w>
-      <h>40</h>
+      <x>0</x>
+      <y>414</y>
+      <w>225</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>IntercambioCancelado</panel_attributes>
     <additional_attributes/>
@@ -144,17 +177,19 @@ aprobarIntercambio(codigoOfertante: String, codigoDestinatario: String)
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>200</x>
-      <y>176</y>
-      <w>784</w>
-      <h>120</h>
+      <x>324</x>
+      <y>99</y>
+      <w>1062</w>
+      <h>171</h>
     </coordinates>
     <panel_attributes>Este diagrama representa el ciclo de vida de un intercambio, mostrando su evolución desde que se propone hasta que se completa o se anula. 
 Todo comienza cuando un cliente realiza una oferta, quedando el proceso en estado de solicitud. 
 En esta fase inicial, si la oferta es rechazada, el intercambio se cancela directamente y termina su ciclo. 
 Si, por el contrario, la contraparte acepta la oferta, el proceso avanza al estado de intercambio aceptado. 
 Finalmente, se realiza una aprobación por parte del empleado; si esta validación falla, 
-el intercambio también queda cancelado, pero si se aprueba con éxito, el ciclo concluye de forma quedando el intercambio oficialmente registrado.</panel_attributes>
+el intercambio también queda cancelado, pero si se aprueba con éxito, el ciclo concluye de forma quedando el intercambio oficialmente registrado.
+En todo momento, los clientes tiene notificaciones cuando aceptan o rechazan una oferta y cuando se aprueba el intercambio. 
+El empleado tambien recibe notificaciones cuando se acepta un intercambio entre dos clientes.</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>
