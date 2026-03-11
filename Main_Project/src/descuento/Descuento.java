@@ -34,4 +34,14 @@ public abstract class Descuento {
 		this.productosRebajados.remove(producto);
 	}
 
+
+	public LocalDateTime getFechaInicio() {
+		return fechaInicio;
+	}
+
+
+	public LocalDateTime getFechaFin() {
+		return fechaFin;
+	}
+
 }

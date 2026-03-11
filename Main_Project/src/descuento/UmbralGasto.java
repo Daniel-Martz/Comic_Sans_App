@@ -8,5 +8,8 @@ public abstract class UmbralGasto extends Descuento {
 		super(fechaInicio, fechaFin);
 		this.umbral = umbral;
 	}
+	public double getUmbral() {
+		return umbral;
+	}
 
 }

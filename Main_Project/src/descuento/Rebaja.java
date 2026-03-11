@@ -9,6 +9,10 @@ public class Rebaja extends UmbralGasto {
 		super(fechaInicio, fechaFin, umbral);
 		this.procentajeRebaja = procentajeRebaja;
 	}
-	
+
+	public int getProcentajeRebaja() {
+		return procentajeRebaja;
+	}
+
 	
 }

@@ -10,5 +10,11 @@ public class Cantidad extends Descuento {
 		this.numeroComprados = numeroComprados;
 		this.numeroRecibidos = numeroRecibidos;
 	}
+	public int getNumeroComprados() {
+		return numeroComprados;
+	}
+	public int getNumeroRecibidos() {
+		return numeroRecibidos;
+	}
 
 }
