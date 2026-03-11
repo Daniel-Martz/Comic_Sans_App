@@ -11,11 +11,11 @@ public class FiltroVenta extends Filtro {
 		super(ordenAscendente);
 	}
 	
-	public void añadirCategoria(Category categ) {
+	public void añadirCategoria(Categoria categ) {
 		categoriasFiltradas.add(categ);
 	}
 
-	public void eliminarCategoria(Category categ) {
+	public void eliminarCategoria(Categoria categ) {
 		categoriasFiltradas.remove(categ);
 	}
 	
