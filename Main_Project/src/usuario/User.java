@@ -1,5 +1,5 @@
 package usuario;
-import norificacion.Notification;
+import notificacion.Notification;
 
 public class User {
 	
