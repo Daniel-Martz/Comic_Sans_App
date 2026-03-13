@@ -2,7 +2,7 @@ package producto;
 
 import java.util.*;
 import java.io.File;
-import java.io.File;
+
 
 public abstract class Producto {
 	private static int contadorID = 1;
@@ -21,7 +21,7 @@ public abstract class Producto {
 
 	public String getName() {
 		return nombre;
-	}s
+	}
 
 	public void setName(String nombre) {
 		this.nombre = nombre;
