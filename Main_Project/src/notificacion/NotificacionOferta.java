@@ -1,14 +1,12 @@
 package notificacion;
 
-import java.sql.Date;
 import java.util.*;
 
 public class NotificacionOferta extends NotificacionCliente {
 
-	private ArrayList<Oferta> ofertasAsociadas;
+	private Set<Oferta> ofertasAsociadas = new HashSet<>();;
 	public NotificacionOferta(String mensaje, Date horaEnvio) {
 		super(mensaje, horaEnvio);
-		this.ofertasAsociadas = new ArrayList<>();
 	}
 
 	public void addOferta(Oferta oferta) {
@@ -19,7 +17,7 @@ public class NotificacionOferta extends NotificacionCliente {
 		this.ofertasAsociadas.remove(oferta);
 	}
 
-	public ArrayList<Oferta> getOfertasAsociadas() {
+	public Set<Oferta> getOfertasAsociadas() {
 		return ofertasAsociadas;
 	}
 }

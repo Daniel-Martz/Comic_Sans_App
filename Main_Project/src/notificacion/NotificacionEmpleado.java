@@ -4,13 +4,12 @@ import java.sql.Date;
 import java.util.*;
 
 public class NotificacionEmpleado extends Notificacion {
-	private ArrayList<Solicitud> solicitudes;
+	private Set<Solicitud> solicitudes = new HashSet<>();
 	
 	public NotificacionEmpleado(String mensaje, Date horaEnvio)
 	{
 		//llama al constructor de la clase Notificacion y le paso los datos
 		super(mensaje, horaEnvio);
-		this.solicitudes = new ArrayList<>();
 	}
 
 	// Método para añadir una solicitud 
@@ -24,7 +23,7 @@ public class NotificacionEmpleado extends Notificacion {
 	}
 
 	// Getter para obtener la lista entera
-	public ArrayList<Solicitud> getSolicitudes() {
+	public Set<Solicitud> getSolicitudes() {
 		return solicitudes;
 	}
 }

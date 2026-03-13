@@ -1,6 +1,5 @@
 package notificacion;
 
-import java.sql.Date;
 import java.util.*;
 
 
@@ -23,10 +22,6 @@ public class Notificacion {
 	//Getters and setters
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getMensaje() {

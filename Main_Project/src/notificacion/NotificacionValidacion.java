@@ -1,6 +1,6 @@
 package notificacion;
 
-import java.sql.Date;
+import java.util.*;
 
 public class NotificacionValidacion extends NotificacionCliente {
 	private Producto solicitudProductoSegundaMano; 

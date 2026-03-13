@@ -1,16 +1,17 @@
 package notificacion;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import producto.LineaProductoVenta;
+import java.util.*;
 
 public class NotificacionProducto extends NotificacionCliente {
-	private ArrayList<LineaProductoVenta> productos;
+	
+	private Set<LineaProductoVenta> productos = new HashSet<>();
 
 	public NotificacionProducto(String mensaje, Date horaEnvio) {
 		super(mensaje, horaEnvio);
-		this.productos = new ArrayList<>();
 	}
 
+	
 	public void addProducto(LineaProductoVenta producto) {
 		this.productos.add(producto);
 	}
@@ -19,11 +20,11 @@ public class NotificacionProducto extends NotificacionCliente {
 		this.productos.remove(producto);
 	}
 
-	public ArrayList<LineaProductoVenta> getProductos() {
+	public Set<LineaProductoVenta> getProductos() {
 		return productos;
 	}
 
-	public void setProductos(ArrayList<LineaProductoVenta> productos) {
+	public void setProductos(Set<LineaProductoVenta> productos) {
 		this.productos = productos;
 	}
 }
