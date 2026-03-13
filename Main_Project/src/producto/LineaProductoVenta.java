@@ -1,28 +1,33 @@
 package producto;
 
-<<<<<<< Updated upstream
-public class LineaProductoVenta {
-
-=======
 import java.util.*;
 import java.io.File;
+//import Descuento;
+//import Reseña;
+//import Categoria;
 
 public class LineaProductoVenta extends Producto {
+	private List<Reseña> reseña = new ArrayList<>();
+	private Set<Categoria> categorias = new HashSet<>();
+	private List<ProductoVenta> productos = new ArrayList<>();
+	
 	private int stock;
 	private double precio;
 	private int unidadesVendidas;
-	private List<String> reseña = new ArrayList<String>();
+	private Descuento descuento;
+
 	
-	public LineaProductoVenta(String name, String descripcion, File foto, double precio, int unidadesVendidas)
+	public LineaProductoVenta(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas)
 	{
-		super(name, descripcion, foto);
+		super(nombre, descripcion, foto);
+		this.stock = stock;
 		this.precio = precio;
 		this.unidadesVendidas = unidadesVendidas;
-	}
 	
-	public void añadirCategoria()
-	{
+	}
+
+	public void añadirCategoria(Categoria categoria) {
 		
 	}
->>>>>>> Stashed changes
+	
 }
