@@ -10,10 +10,11 @@ public class ProductoSegundaMano extends Producto{
 	private SolicitudValidacion solicitudValidacion;
 	private DatosValidacion datosValidacion;
 	
-	public ProductoSegundaMano(String nombre, String descripcion, File foto)
+	public ProductoSegundaMano(String nombre, String descripcion, File foto, SolicitudValidacion solicitudValidacion)
 	{
 		super(nombre, descripcion, foto);
 		this.validado = false;
+		this.solicitudValidacion = solicitudValidacion;
 	}
 
 	public boolean isValidado() {
