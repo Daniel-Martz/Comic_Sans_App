@@ -1,5 +1,5 @@
 package notificacion;
-
+import solicitud.*;
 import java.util.*;
 
 public class NotificacionIntercambio extends NotificacionCliente {

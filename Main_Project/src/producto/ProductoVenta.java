@@ -1,5 +1,5 @@
 package producto;
-//import solicitud.*;
+import solicitud.*;
 import java.util.*;
 
 public class ProductoVenta {

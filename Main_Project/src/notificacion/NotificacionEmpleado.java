@@ -1,5 +1,6 @@
 package notificacion;
 
+import solicitud.*;
 import java.util.*;
 
 public class NotificacionEmpleado extends Notificacion {
