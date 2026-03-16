@@ -66,6 +66,14 @@ public class LineaProductoVenta extends Producto {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	public int getStock() {
 		return stock;
 	}

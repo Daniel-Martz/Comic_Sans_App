@@ -5,7 +5,7 @@ import java.util.*;
 public class ProductoVenta {
 	private int unidades;
 	private LineaProductoVenta producto;
-	private List<SolicitudPedido> = new ArrayList<>();
+	private List<SolicitudPedido> pedidos = new ArrayList<>();
 	
 	public ProductoVenta(LineaProductoVenta producto, int unidades) {
 		this.producto = producto;
