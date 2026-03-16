@@ -1,14 +1,14 @@
 package aplicacion; 
 import java.util.*;
 
-public class configuracionRecomendacion {
+public class ConfiguracionRecomendacion {
 	
 	private int importanciaInteres;
 	private int importanciaResena; 
 	private int importanciaNovedad;
 	private int unidadesRecomendadas;
 	
-	public configuracionRecomendacion(int importanciaInteres, int importanciaResena, 
+	public ConfiguracionRecomendacion(int importanciaInteres, int importanciaResena, 
 									  int importanciaNovedad, int unidadesRecomendadas) {
 		this.importanciaInteres = importanciaInteres;
 		this.importanciaResena = importanciaResena;

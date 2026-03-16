@@ -9,11 +9,15 @@ import notificacion.*;
 
 public class Aplicacion {
 	private String nombre;
-	private configuracionRecomendacion criterioRecomendacion;
-	private sistemaPago sistemaPago;
+	private ConfiguracionRecomendacion criterioRecomendacion;
+	private SistemaPago sistemaPago;
+	private SistemaEstadisticas sistemaEstadisticas; 
 	
-	public Aplicacion(String nombre) {
+	public Aplicacion(String nombre, ConfiguracionRecomendacion criterioRecomendacion, SistemaPago sistemaPago, SistemaEstadisticas sistemaEstadisticas) {
 		this.nombre = nombre;
+		this.criterioRecomendacion = criterioRecomendacion; 
+		this.sistemaPago = sistemaPago;
+		this.sistemaEstadisticas = sistemaEstadisticas;
 	}
 
 	// Métodos de inicio y cierre de sesión
