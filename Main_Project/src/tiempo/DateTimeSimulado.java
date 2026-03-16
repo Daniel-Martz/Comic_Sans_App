@@ -2,21 +2,21 @@ package tiempo;
 
 public class DateTimeSimulado {
 
-    private final int año;
-    private final int mes;
-    private final int dia;
-    private final int hora;
-    private final int minuto;
-    private final int segundo;
+	private final int año;
+	private final int mes;
+	private final int dia;
+	private final int hora;
+	private final int minuto;
+	private final int segundo;
 
-    public DateTimeSimulado() {
-        año = TiempoSimulado.getAño();
-        mes = TiempoSimulado.getMes();
-        dia = TiempoSimulado.getDia();
-        hora = TiempoSimulado.getHora();
-        minuto = TiempoSimulado.getMinuto();
-        segundo = TiempoSimulado.getSegundo();
-    }
+	public DateTimeSimulado() {
+		año = TiempoSimulado.getAño();
+		mes = TiempoSimulado.getMes();
+		dia = TiempoSimulado.getDia();
+		hora = TiempoSimulado.getHora();
+		minuto = TiempoSimulado.getMinuto();
+		segundo = TiempoSimulado.getSegundo();
+	}
 
 	/**
 	 * @return el año
@@ -58,5 +58,11 @@ public class DateTimeSimulado {
 	 */
 	public int getSegundo() {
 		return segundo;
+	}
+
+	@Override
+	public String toString() {
+		return "Año: " + año + "\nMes: " + mes + "\nDia: " + dia + "\nHora: " + hora + "\nMinuto: " + minuto
+				+ "\nSegundo: " + segundo;
 	}
 }
