@@ -1,11 +1,11 @@
 package categoria;
 import java.util.ArrayList;
 
-public class Category {
+public class Categoria {
     private String name;
     private ArrayList<String> subcategories; 
 
-    public Category(String name) {
+    public Categoria(String name) {
         this.name = name;
         this.subcategories = new ArrayList<>();
     }

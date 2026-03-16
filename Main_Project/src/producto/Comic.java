@@ -1,5 +1,5 @@
 package producto;
-import categoria.Category;
+import categoria.Categoria;
 
 public class Comic extends Product {
 
@@ -10,7 +10,7 @@ public class Comic extends Product {
     private String publishDate;
 
     public Comic(int id, String name, String description, double price, String photo, int stock, 
-                 String author, int numPages, String editorial, String publishDate, Category category) {
+                 String author, int numPages, String editorial, String publishDate, Categoria category) {
         
         super(id, name, description, price, photo, stock, category);
 

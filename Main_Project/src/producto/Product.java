@@ -1,5 +1,5 @@
 package producto;
-import categoria.Category;
+import categoria.Categoria;
 
 public abstract class Product {
 
@@ -9,9 +9,9 @@ public abstract class Product {
 	private double price;
 	private String photo;
 	private int stock;
-	private Category category;
+	private Categoria category;
 	
-	public Product(int ID, String name, String description, double price, String photo, int stock, Category category)
+	public Product(int ID, String name, String description, double price, String photo, int stock, Categoria category)
 	{
 		this.ID = ID;
 		this.name = name;
@@ -42,11 +42,11 @@ public abstract class Product {
 		return false; 
 	}
 	
-	public Category getCategory() {
+	public Categoria getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(Categoria category) {
 		this.category = category;
 	}
 
