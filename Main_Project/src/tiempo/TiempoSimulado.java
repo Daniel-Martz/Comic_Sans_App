@@ -8,12 +8,12 @@ public class TiempoSimulado {
     private static double velocidad;
 
     private static int diasPorMes;
-    private static int mesesPorAnio;
+    private static int mesesPorAño;
 
-    public static void iniciar(double velocidadInicial, int diasMes, int mesesAnio) {
+    public static void iniciar(double velocidadInicial, int diasMes, int mesesAño) {
         velocidad = velocidadInicial;
         diasPorMes = diasMes;
-        mesesPorAnio = mesesAnio;
+        mesesPorAño = mesesAño;
         ultimoTiempoReal = System.currentTimeMillis();
     }
 
@@ -31,6 +31,7 @@ public class TiempoSimulado {
     }
 
     private static long getSegundosTotales() {
+    	actualizar();
         return milisegundosSimulados / 1000;
     }
 
@@ -54,19 +55,20 @@ public class TiempoSimulado {
     public static int getMes() {
         long diasTotales = getSegundosTotales() / 86400;
         long mesesTotales = diasTotales / diasPorMes;
-        return (int)(mesesTotales % mesesPorAnio);
+        return (int)(mesesTotales % mesesPorAño);
     }
 
-    public static int getAnio() {
+    public static int getAño() {
         long diasTotales = getSegundosTotales() / 86400;
         long mesesTotales = diasTotales / diasPorMes;
-        return (int)(mesesTotales / mesesPorAnio);
+        return (int)(mesesTotales / mesesPorAño);
     }
 
-    public static String getFechaHora() {
+    @Override
+    public String toString() {
         return String.format(
             "Año %d Mes %d Día %d %02d:%02d:%02d",
-            getAnio(),
+            getAño(),
             getMes(),
             getDia(),
             getHora(),
