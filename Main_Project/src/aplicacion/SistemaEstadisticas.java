@@ -1,7 +1,6 @@
 package aplicacion; 
 
 import java.util.*;
-
 import producto.*;
 import producto.*;
 import usuario.*;
