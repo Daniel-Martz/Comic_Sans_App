@@ -1,6 +1,7 @@
 package notificacion;
 
 import java.util.*;
+import producto.*;
 
 public class NotificacionValidacion extends NotificacionCliente {
 	private Producto solicitudProductoSegundaMano; 

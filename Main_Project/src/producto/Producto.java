@@ -3,27 +3,28 @@ package producto;
 import java.util.*;
 import java.io.File;
 
+
 public abstract class Producto {
 	private static int contadorID = 1;
 	private int ID;
-	private String name;
+	private String nombre;
 	private String descripcion;
 	private File foto;
 	
-	public Producto(String name, String descripcion, File foto)
+	public Producto(String nombre, String descripcion, File foto)
 	{
 		this.ID = contadorID++; 
-		this.name = name; 
+		this.nombre = nombre; 
 		this.descripcion = descripcion;
 		this.foto = foto;
 	}
 
 	public String getName() {
-		return name;
+		return nombre;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public String getDescripcion() {

@@ -1,6 +1,6 @@
 package notificacion;
 
-import java.sql.Date;
+import solicitud.*;
 import java.util.*;
 
 public class NotificacionEmpleado extends Notificacion {

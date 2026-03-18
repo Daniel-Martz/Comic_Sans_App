@@ -1,36 +1,24 @@
 package producto;
-import categoria.Categoria;
 
-public class Comic extends Product {
+import java.util.*;
+import java.io.File;
 
-    //ATRIBUTOS ESPECÍFICOS
-    private String author;
-    private int numPages;
-    private String editorial;
-    private String publishDate;
+public class Comic extends LineaProductoVenta {
+	
+	private int numeroPaginas;
+	private String autor;
+	private String editorial;
+	private Date añoPublicacion;
+	
 
-    public Comic(int id, String name, String description, double price, String photo, int stock, 
-                 String author, int numPages, String editorial, String publishDate, Categoria category) {
-        
-        super(id, name, description, price, photo, stock, category);
-
-        this.author = author;
-        this.numPages = numPages;
-        this.editorial = editorial;
-        this.publishDate = publishDate;
-    }
-
-    public String getAuthor() { return author; }
-    public void setAuthor(String author) { this.author = author; }
-
-    public int getNumPages() { return numPages; }
-    public void setNumPages(int numPages) { this.numPages = numPages; }
-
-    public String getEditorial() { return editorial; }
-    public void setEditorial(String editorial) { this.editorial = editorial; }
-
-    public String getPublishDate() { return publishDate; }
-    public void setPublishDate(String publishDate) { this.publishDate = publishDate; }
-
+	public Comic(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas,
+				 int numeroPaginas, String autor, String editorial, Date añoPublicacion) {
+		
+		super(nombre, descripcion, foto, stock, precio, unidadesVendidas);
+		this.numeroPaginas = numeroPaginas;
+		this.autor = autor;
+		this.editorial = editorial;
+		this.añoPublicacion = añoPublicacion;
+	}
 
 }
