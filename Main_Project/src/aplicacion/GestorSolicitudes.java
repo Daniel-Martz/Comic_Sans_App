@@ -4,12 +4,22 @@ import java.util.*;
 import solicitud.*;
 
 public class GestorSolicitudes {
+	
+	private static GestorSolicitudes instancia;
 	private List<SolicitudIntercambio> intercambios = new ArrayList<>();
 	private List<SolicitudPedido> pedidos = new ArrayList<>();
 	private List<SolicitudValidacion> validaciones = new ArrayList<>();
 	
-	public GestorSolicitudes() {
+	private GestorSolicitudes() {
 		
+	}
+	
+	public GestorSolicitudes getInstancia() {
+		if(instancia == null)
+		{
+		instancia = new GestorSolicitudes();	
+		}
+		return instancia;
 	}
 
 	public void añadirPedido(SolicitudPedido p) {

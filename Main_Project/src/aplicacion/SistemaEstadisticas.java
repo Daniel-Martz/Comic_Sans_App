@@ -7,9 +7,16 @@ import usuario.*;
 
 public class SistemaEstadisticas {
 
-	public SistemaEstadisticas() {
+	private static SistemaEstadisticas instancia;
+	private SistemaEstadisticas() {
 	}
-
+	
+	public SistemaEstadisticas getInstancia() {
+		if (instancia == null) {
+			instancia = new SistemaEstadisticas();
+		}
+		return instancia;
+	}
 
 	public Map<String, Double> obtenerRecaudacionMensual(Date periodoInicio, Date periodoFin, List<Producto> productos) {
 	}

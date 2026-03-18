@@ -9,6 +9,8 @@ import filtro.*;
 import java.io.File;
 
 public class Catalogo {
+	
+	private static Catalogo instancia; 
 
 	private Set<Descuento> descuentos = new HashSet<>();
 	private Set<Categoria> categoriasTienda = new HashSet<>();
@@ -19,8 +21,16 @@ public class Catalogo {
 	private FiltroIntercambio filtroProductosSegundaMano;
 	private FiltroVentaCliente filtroProductosVenta;
 
-	public Catalogo() {
+	private Catalogo() {
 
+	}
+	
+	public static Catalogo getInstancia() {
+		if(instancia == null)
+		{
+			instancia = new Catalogo();
+		}
+		return instancia;
 	}
 
 	// Métodos para los productos
