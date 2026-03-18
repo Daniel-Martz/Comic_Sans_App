@@ -1,8 +1,8 @@
 package aplicacion; 
 import solicitud.*;
 
-public class sistemaPago {
-	public sistemaPago() {
+public class SistemaPago {
+	public SistemaPago() {
 	}
 	
 	public Pago procesarPago(int importe, int numTarjeta, int cvv, int mesCaducidad, int añoCaducidad) {
