@@ -1,6 +1,8 @@
 package usuario;
 import java.util.*;
 
+import producto.ProductoVenta;
+
 public class Carrito implements Contenedor<ProductoVenta> {
 	private List<ProductoVenta> productos = new ArrayList<>(); 
 	

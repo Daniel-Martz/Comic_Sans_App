@@ -32,4 +32,11 @@ public class SolicitudPedido extends Solicitud{
 		this.pagoPedido = pagoPedido;
 	}
 	
+	public boolean pagado()	{
+		if(this.pagoPedido == null) {
+			return false;
+		}
+		return true;
+	}
+	
 }
