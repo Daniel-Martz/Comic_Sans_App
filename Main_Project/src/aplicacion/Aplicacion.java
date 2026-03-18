@@ -1,4 +1,4 @@
-package aplicacion; // Recuerda poner tu paquete
+package aplicacion; 
 
 import producto.*;
 import usuario.*;
