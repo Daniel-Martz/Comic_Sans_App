@@ -10,12 +10,13 @@ public class DateTimeSimulado {
 	private final int segundo;
 
 	public DateTimeSimulado() {
-		año = TiempoSimulado.getAño();
-		mes = TiempoSimulado.getMes();
-		dia = TiempoSimulado.getDia();
-		hora = TiempoSimulado.getHora();
-		minuto = TiempoSimulado.getMinuto();
-		segundo = TiempoSimulado.getSegundo();
+		TiempoSimulado Instancia = TiempoSimulado.getInstance();
+		año = Instancia.getAño();
+		mes = Instancia.getMes();
+		dia = Instancia.getDia();
+		hora = Instancia.getHora();
+		minuto = Instancia.getMinuto();
+		segundo = Instancia.getSegundo();
 	}
 
 	/**
