@@ -142,4 +142,36 @@ public class Aplicacion {
 		this.usuarioActual = ususario;
 	}
 	
+	
+	public void crearSolicitudIntercambio(Oferta o) {
+		String codigo1 = generateToken(8);
+		String codigo2 = generateToken(8);
+		ClienteRegistrado ofertante = o.getOfertante();
+		ClienteRegistrado destinatario = o.getDestinatario();
+		
+		//Determinamos los detalles del intercambio
+		String lugarIntercambio = "Tienda física";
+		TiempoSimulado fechaIntercambio = ;
+		DetallesIntercambio detalles = new DetallesIntercambio(fechaIntercambio, lugarIntercambio);
+
+		//Enviamos una notificación a los usuarios con los datos del intercambio
+		String mensajeOfertante = "Su oferta ha sido aceptada por " + o.getDestinatario().getNombreUsuario(); 
+		String mensajeDestinatario = "Has aceptado una oferta de " + o.getOfertante().getNombreUsuario(); 
+		NotificacionIntercambio notifOfertante = new NotificacionIntercambio(detalles)
+		NotificacionIntercambio notifDestinatario = new NotificacionIntercambio(detalles)
+
+		SolicitudIntercambio s = new SolicitudIntercambio(codigo1, codigo2, lugarIntercambio, o);
+		
+	}
+	
+	private String generateToken(int length) {
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		SecureRandom random = new SecureRandom();
+		StringBuilder sb = new StringBuilder(length);
+		for (int i = 0; i < length; i++) {
+			sb.append(chars.charAt(random.nextInt(chars.length())));
+		}
+		return sb.toString();
+	}
+	
 }
