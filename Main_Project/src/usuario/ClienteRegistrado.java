@@ -67,10 +67,10 @@ public class ClienteRegistrado extends Usuario {
 		this.reseñas.remove(r);
 	}
 	
-	public void anadirNotificacionCliente(NotificacionCliente n) {
+	public void anadirNotificacion(Notificacion n) {
 		this.notificaciones.add(n);
 	}
-	public void eliminarNotificacionCliente(NotificacionCliente n) {
+	public void eliminarNotificacion(Notificacion n) {
 		this.notificaciones.remove(n);
 	}
 }
