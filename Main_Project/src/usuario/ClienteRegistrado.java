@@ -1,6 +1,6 @@
 package usuario;
 import java.util.*;
-import notificacion.Notificacion;
+import notificacion.NotificacionCliente;
 import solicitud.SolicitudPedido;
 import producto.Reseña;
 import solicitud.Oferta;
@@ -8,12 +8,13 @@ import producto.ProductoVenta;
 import producto.LineaProductoVenta;
 import producto.ProductoSegundaMano;
 import producto.Reseña;
+import tiempo.DateTimeSimulado;
 
 public class ClienteRegistrado extends Usuario {
-	private Set<NotificacionDeseada> configuracionNotificaciones = new HashSet<NotificacionDeseada>();
+	private Set<NotificacionDeseada> configuracionNotificacionClientees = new HashSet<NotificacionDeseada>();
 	private Cartera cartera;
 	private Carrito carrito;
-	private List<Notificacion> notificaciones = new ArrayList<>();
+	private List<NotificacionCliente> notificaciones = new ArrayList<>();
 	private List<SolicitudPedido> pedidos = new ArrayList<>();
 	private List<Reseña> reseñas = new ArrayList<>();
 	private List<Oferta> ofertasRealizadas = new ArrayList<>();
@@ -55,7 +56,7 @@ public class ClienteRegistrado extends Usuario {
 	public void aceptarOferta(Oferta o) {
 	}
 	
-	public void escribirReseña(LineaProductoVenta p, String descripcion, double puntuacion, Date fecha) {
+	public void escribirReseña(LineaProductoVenta p, String descripcion, double puntuacion, DateTimeSimulado fecha) {
 		Reseña r = new Reseña(descripcion, puntuacion, fecha, p);
 		p.añadirReseña(r);
 		this.reseñas.add(r);
@@ -66,10 +67,10 @@ public class ClienteRegistrado extends Usuario {
 		this.reseñas.remove(r);
 	}
 	
-	public void anadirNotificacion(Notificacion n) {
+	public void anadirNotificacionCliente(NotificacionCliente n) {
 		this.notificaciones.add(n);
 	}
-	public void eliminarNotificacion(Notificacion n) {
+	public void eliminarNotificacionCliente(NotificacionCliente n) {
 		this.notificaciones.remove(n);
 	}
 }

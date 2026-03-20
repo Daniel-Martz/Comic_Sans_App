@@ -1,7 +1,8 @@
 package usuario;
 import java.util.*;
-
+import notificacion.NotificacionEmpleado;
 public class Empleado extends UsuarioGestion {
+	private List<NotificacionEmpleado> notificaciones = new ArrayList<>();
 	public Empleado(String username, String DNI, String password) {
 		super(username, DNI, password);
 	}
@@ -13,6 +14,13 @@ public class Empleado extends UsuarioGestion {
 	
 	public void eliminarPermiso(Permiso permiso) {
 		this.permisos.remove(permiso);
+	}
+	
+	public void anadirNotificacion(NotificacionEmpleado n) {
+		this.notificaciones.add(n);
+	}
+	public void eliminarNotificacion(NotificacionEmpleado n) {
+		this.notificaciones.remove(n);
 	}
 }
 
