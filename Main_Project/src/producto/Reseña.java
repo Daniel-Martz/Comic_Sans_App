@@ -6,10 +6,10 @@ public class Reseña {
 	
 	private String descripcion;
 	private double puntuacion;
-	private Date fecha;
+	private DateTimeSimulado fecha;
 	private LineaProductoVenta producto;
 	
-	public Reseña(String descripcion, double puntuacion, Date fecha, LineaProductoVenta producto) {
+	public Reseña(String descripcion, double puntuacion, DateTimeSimulado fecha, LineaProductoVenta producto) {
 		this.descripcion = descripcion;
 		this.puntuacion = puntuacion;
 		this.fecha = fecha;
@@ -32,11 +32,11 @@ public class Reseña {
 		this.puntuacion = puntuacion;
 	}
 
-	public Date getFecha() {
+	public DateTimeSimulado getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(DateTimeSimulado fecha) {
 		this.fecha = fecha;
 	}
 

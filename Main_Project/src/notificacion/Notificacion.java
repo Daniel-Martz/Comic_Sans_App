@@ -10,9 +10,9 @@ public class Notificacion {
     
 	private int id;
 	private String mensaje;
-	private Date horaEnvio;
+	private DateTimeSimulado horaEnvio;
 	
-	public Notificacion(String mensaje, Date horaEnvio)
+	public Notificacion(String mensaje, DateTimeSimulado horaEnvio)
 	{
 		this.id = contadorID++; 
 		this.mensaje = mensaje;
@@ -32,11 +32,11 @@ public class Notificacion {
 		this.mensaje = mensaje;
 	}
 
-	public Date getHoraEnvio() {
+	public DateTimeSimulado getHoraEnvio() {
 		return horaEnvio;
 	}
 
-	public void setHoraEnvio(Date horaEnvio) {
+	public void setHoraEnvio(DateTimeSimulado horaEnvio) {
 		this.horaEnvio = horaEnvio;
 	}
 

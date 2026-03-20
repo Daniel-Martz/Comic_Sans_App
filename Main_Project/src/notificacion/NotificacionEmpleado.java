@@ -6,7 +6,7 @@ import java.util.*;
 public class NotificacionEmpleado extends Notificacion {
 	private Set<Solicitud> solicitudes = new HashSet<>();
 	
-	public NotificacionEmpleado(String mensaje, Date horaEnvio)
+	public NotificacionEmpleado(String mensaje, DateTimeSimulado horaEnvio)
 	{
 		//llama al constructor de la clase Notificacion y le paso los datos
 		super(mensaje, horaEnvio);

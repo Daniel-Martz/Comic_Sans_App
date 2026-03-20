@@ -4,6 +4,7 @@ import java.util.*;
 import producto.*;
 import producto.*;
 import usuario.*;
+import tiempo.DateTimeSimulado;
 
 public class SistemaEstadisticas {
 
@@ -11,16 +12,16 @@ public class SistemaEstadisticas {
 	}
 
 
-	public Map<String, Double> obtenerRecaudacionMensual(Date periodoInicio, Date periodoFin, List<Producto> productos) {
+	public Map<String, Double> obtenerRecaudacionMensual(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, List<Producto> productos) {
 	}
 
-	public Map<String, Double> obtenerRecaudacionAmbito(Date periodoInicio, Date periodoFin, List<Producto> productos) {
+	public Map<String, Double> obtenerRecaudacionAmbito(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, List<Producto> productos) {
 	}
 
-	public Map<LineaProductoVenta, Integer> obtenerVentasProductos(Date periodoInicio, Date periodoFin, List<LineaProductoVenta> productos) {
+	public Map<LineaProductoVenta, Integer> obtenerVentasProductos(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, List<LineaProductoVenta> productos) {
 	}
 
-	public Map<ClienteRegistrado, Double> obtenerGastoClientes(Date periodoInicio, Date periodoFin, List<ClienteRegistrado> clientes) {
+	public Map<ClienteRegistrado, Double> obtenerGastoClientes(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, List<ClienteRegistrado> clientes) {
 
 	}
 }

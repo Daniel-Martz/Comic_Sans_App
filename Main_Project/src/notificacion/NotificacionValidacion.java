@@ -6,7 +6,7 @@ import producto.*;
 public class NotificacionValidacion extends NotificacionCliente {
 	private Producto solicitudProductoSegundaMano; 
 	
-	public NotificacionValidacion(String mensaje, Date horaEnvio, Producto solicitudProductoSegundaMano) {
+	public NotificacionValidacion(String mensaje, DateTimeSimulado horaEnvio, Producto solicitudProductoSegundaMano) {
 		super(mensaje, horaEnvio);
 		this.solicitudProductoSegundaMano = solicitudProductoSegundaMano;
 	}

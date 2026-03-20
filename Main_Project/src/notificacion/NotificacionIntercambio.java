@@ -7,7 +7,7 @@ public class NotificacionIntercambio extends NotificacionCliente {
 	private String codigoIntercambio;	
 	private Solicitud detallesIntercambio; 
 	
-	public NotificacionIntercambio(String mensaje, Date horaEnvio, String codigoIntercambio, Solicitud detalleIntercambio)
+	public NotificacionIntercambio(String mensaje, DateTimeSimulado horaEnvio, String codigoIntercambio, Solicitud detalleIntercambio)
 	{
 		super(mensaje, horaEnvio); 
 		this.codigoIntercambio = codigoIntercambio;

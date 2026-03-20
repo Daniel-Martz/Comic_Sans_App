@@ -1,18 +1,18 @@
 package descuento;
 
-import java.time.LocalDateTime;
+import java.time.DateTimeSimulado;
 import java.util.Set;
 import java.util.HashSet;
 import categoria.Categoria;
 import producto.LineaProductoVenta;
 
 public abstract class Descuento {
-	private LocalDateTime fechaInicio;
-	private LocalDateTime fechaFin;
+	private DateTimeSimulado fechaInicio;
+	private DateTimeSimulado fechaFin;
 	private Set<Categoria> categoriasRebajadas = new HashSet<Categoria>();
 	private Set<LineaProductoVenta> productosRebajados = new HashSet<LineaProductoVenta>();
 	
-	public Descuento(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+	public Descuento(DateTimeSimulado fechaInicio, DateTimeSimulado fechaFin) {
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 	}
@@ -35,12 +35,12 @@ public abstract class Descuento {
 	}
 
 
-	public LocalDateTime getFechaInicio() {
+	public DateTimeSimulado getFechaInicio() {
 		return fechaInicio;
 	}
 
 
-	public LocalDateTime getFechaFin() {
+	public DateTimeSimulado getFechaFin() {
 		return fechaFin;
 	}
 
