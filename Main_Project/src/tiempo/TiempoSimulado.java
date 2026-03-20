@@ -6,17 +6,15 @@ package tiempo;
  */
 public class TiempoSimulado {
     
-    // 1. La instancia única se mantiene estática
+
     private static TiempoSimulado instance;
 
-    // 2. Los atributos pasan a ser de INSTANCIA (sin static)
     private long milisegundosSimulados = 0;
     private long ultimoTiempoReal;
     private double velocidad;
     private int diasPorMes;
     private int mesesPorAño;
 
-    // 3. El constructor privado inicializa los valores por defecto
     private TiempoSimulado() {
         this.velocidad = 1;
         this.diasPorMes = 30;
@@ -24,7 +22,6 @@ public class TiempoSimulado {
         this.ultimoTiempoReal = System.currentTimeMillis();
     }
     
-    // 4. Método para obtener la instancia única
     public static TiempoSimulado getInstance() {
         if (instance == null) {
             instance = new TiempoSimulado();
@@ -32,7 +29,6 @@ public class TiempoSimulado {
         return instance;
     }
 
-    // 5. Los métodos de lógica pasan a ser de INSTANCIA (sin static)
     public void iniciar(double velocidadInicial, int diasMes, int mesesAño) {
         this.velocidad = velocidadInicial;
         this.diasPorMes = diasMes;
@@ -63,23 +59,37 @@ public class TiempoSimulado {
     public int getHora() { return (int) ((getSegundosTotales() / 3600) % 24); }
 
     public int getDia() {
-        long diasTotales = getSegundosTotales() / 86400;
-        return (int) (diasTotales % diasPorMes);
+        long diasTotales = (getSegundosTotales() / 86400); 
+        return (int) ((diasTotales % diasPorMes)+ 1); //El +1 es para que empiece en 1 y no en 0
     }
 
     public int getMes() {
         long diasTotales = getSegundosTotales() / 86400;
-        long mesesTotales = diasTotales / diasPorMes;
-        return (int) (mesesTotales % mesesPorAño);
+        long mesesTotales = (diasTotales / diasPorMes);
+        return (int) ((mesesTotales % mesesPorAño)+1);//El +1 es para que empiece en 1 y no en 0
     }
 
     public int getAño() {
         long diasTotales = getSegundosTotales() / 86400;
         long mesesTotales = diasTotales / diasPorMes;
-        return (int) (mesesTotales / mesesPorAño);
+        return (int) ((mesesTotales / mesesPorAño)+1);//El +1 es para que empiece en 1 y no en 0
     }
 
-    @Override
+    /**
+	 * @return the mesesPorAño
+	 */
+	public int getMesesPorAño() {
+		return mesesPorAño;
+	}
+	
+	/**
+	 * @return the diasPorMes
+	 */
+	public int getDiasPorMes() {
+		return diasPorMes;
+	}
+
+	@Override
     public String toString() {
         return "Año: " + getAño() + "\nMes: " + getMes() + "\nDia: " + getDia() + 
                "\nHora: " + getHora() + "\nMinuto: " + getMinuto() + "\nSegundo: " + getSegundo();
