@@ -10,7 +10,7 @@ import descuento.*;
 public class LineaProductoVenta extends Producto {
 	private List<Reseña> reseña = new ArrayList<>();
 	private Set<Categoria> categorias = new HashSet<>();
-	private List<ProductoVenta> productos = new ArrayList<>();
+	private Map<ProductoVenta, LineaProductoVenta> productos = new HashMap<>();
 	
 	private int stock;
 	private double precio;
@@ -44,6 +44,23 @@ public class LineaProductoVenta extends Producto {
 	public boolean eliminarReseña(Reseña reseña)
 	{
 		return this.reseña.remove(reseña);
+	}
+	
+	/**
+	 * Este metodo añade una lista de productos al pack, comprobando que no se estén
+	 * introduciendo varias veces la misma Linea de producto
+	 * @param productos
+	 */
+	public void añadirProductosPack(List<ProductoVenta> productos) {
+	    if (productos == null) {
+	        throw new IllegalArgumentException("La lista de productos no puede ser nula");
+	    }
+	    for (ProductoVenta p : productos) {
+	        if (this.productos.containsValue(p.getProducto())) {
+	            throw new IllegalArgumentException("Ya se ha añadido un grupo de productos de la linea: "+ p.getProducto());
+	        }
+	        this.productos.put(p, p.getProducto());
+	    }
 	}
 	
 	public double obtenerPuntuacionMedia()
@@ -106,8 +123,8 @@ public class LineaProductoVenta extends Producto {
 		return categorias;
 	}
 
-	public List<ProductoVenta> getProductos() {
-		return productos;
+	public List<LineaProductoVenta> getLineaProductosPack() {
+	    return new ArrayList<>(productos.values());
 	}
 
 	public int getUnidadesVendidas() {

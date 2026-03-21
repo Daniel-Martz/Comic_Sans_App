@@ -19,4 +19,7 @@ public class ProductoVenta {
 		return 0.0;
 	}
 
+	public LineaProductoVenta getProducto() {
+		return producto;
+	}
 }
