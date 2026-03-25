@@ -10,7 +10,7 @@ public class GestorSolicitudes {
 	private List<SolicitudPedido> pedidos = new ArrayList<>();
 	private List<SolicitudValidacion> validaciones = new ArrayList<>();
 	
-	GestorSolicitudes() {
+	private GestorSolicitudes() {
 		
 	}
 	
