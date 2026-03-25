@@ -20,7 +20,8 @@ public class Aplicacion {
 	private SistemaEstadisticas sistemaEstadisticas;
 	private GestorSolicitudes gestorSolicitud;
 	private Catalogo catalogo;
-	private Usuario usuarioActual;	
+	private Usuario usuarioActual;
+	private List<Usuario> usuariosRegistrados = new ArrayList<>();
 
 	
 	private Aplicacion(String nombre, ConfiguracionRecomendacion criterioRecomendacion, SistemaPago sistemaPago, SistemaEstadisticas sistemaEstadisticas, GestorSolicitudes gestorSolicitud, Catalogo catalogo) {
@@ -41,9 +42,34 @@ public class Aplicacion {
 
 	// Métodos de inicio y cierre de sesión
 	public void crearCuenta(String nombreUsuario, String contraseña) {
+		if(nombreUsuario == null || nombreUsuario.trim().isEmpty())
+		{
+			return;
+		}
+		
+		if(contraseña == null || contraseña.length() < 4)
+		{
+			return; //La contraseña debe tener al menos 4 caracteres
+		}
+		
+		for (Usuario u : usuariosRegistrados)
+		{
+			if(u.getNombreUsuario().equals(nombreUsuario))
+			{
+				return; //El nombre de usuario ya está en uso
+			}
+		}
+		
+		Usuario nuevoUsuario = new(nombreUsuario, contraseña);
+		usuariosRegistrados.add(nuevoUsuario);
+		
+		System.out.println("Nueva cuenta creada con éxito para: " + nombreUsuario);
+		
+		return;
 	}
 
 	public void iniciarSesion(String nombreUsuario, String contraseña) {
+		
 	}
 
 	public void cerrarSesion() {
