@@ -6,6 +6,7 @@ import solicitud.*;
 import notificacion.*;
 
 import java.util.List;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 
 public class Aplicacion {
@@ -31,9 +32,9 @@ public class Aplicacion {
 		this.catalogo = catalogo;
 	}
 
-	public static Aplicacion getInstancia(String nombre, ConfiguracionRecomendacion criterioRecomendacion, SistemaPago sistemaPago, SistemaEstadisticas sistemaEstadisticas, GestorSolicitudes gestorSolicitud, Catalogo catalogo) {
+	public static Aplicacion getInstancia() {
 		if (instancia == null) {
-			instancia = new Aplicacion(nombre, criterioRecomendacion, sistemaPago, sistemaEstadisticas, gestorSolicitud, catalogo);
+			instancia = new Aplicacion("Comic Sans", new ConfiguracionRecomendacion(1,2,3,5), new SistemaPago(), new SistemaEstadisticas(), new GestorSolicitudes(), new Catalogo());
 		}
 		return instancia;
 	}
@@ -140,6 +141,69 @@ public class Aplicacion {
 	public void setUsuarioActual(Usuario ususario)
 	{
 		this.usuarioActual = ususario;
+	}
+	
+	
+	public void crearSolicitudIntercambio(Oferta o) {
+		String codigo1 = generateToken(8);
+		String codigo2 = generateToken(8);
+		ClienteRegistrado ofertante = o.getOfertante();
+		ClienteRegistrado destinatario = o.getDestinatario();
+		
+		//Registramos el momento de creacion de las solicitudes
+		DateTimeSimulado ahora = new DateTimeSimulado();
+		
+		//Determinamos los detalles del intercambio
+		String lugarIntercambio = "Tienda física";
+		DateTimeSimulado fechaIntercambio = new DateTimeSimulado();
+		DetallesIntercambio detalles = new DetallesIntercambio(fechaIntercambio, lugarIntercambio);
+
+		//Creamos la solicitud de intercambio
+		SolicitudIntercambio solicitud = new SolicitudIntercambio(codigo1, codigo2, lugarIntercambio, o);
+
+		//Enviamos una notificación a los usuarios con los datos del intercambio
+		String mensajeOfertante = "Su oferta ha sido aceptada por " + o.getDestinatario().getNombreUsuario(); 
+		String mensajeDestinatario = "Has aceptado una oferta de " + o.getOfertante().getNombreUsuario(); 
+		NotificacionIntercambio notifOfertante = new NotificacionIntercambio(mensajeOfertante, ahora, codigo1, detalles);
+		NotificacionIntercambio notifDestinatario = new NotificacionIntercambio(mensajeDestinatario, ahora, codigo2, detalles);
+		
+		//Enviamos una notificacion al empleado con la solicitud de intercambio
+		NotificacionEmpleado notifEmpleado = new NotificacionEmpleado("Hay una nueva solicitud de intercambio en la tienda", ahora); 
+		notifEmpleado.addSolicitud(solicitud);
+		this.gestorSolicitud.añadirSolicitudIntercambio(solicitud);
+
+		
+		
+		//Enviamos las notificaciones
+		enviarNotificacion(ofertante, notifOfertante);
+		enviarNotificacion(destinatario, notifDestinatario);
+		
+		List<Empleado> lista = this.getEmpleados();
+		for(Empleado e : lista) {
+			e.anadirNotificacion(notifEmpleado);
+		}
+		
+	}
+	
+	private String generateToken(int length) {
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		SecureRandom random = new SecureRandom();
+		StringBuilder sb = new StringBuilder(length);
+		for (int i = 0; i < length; i++) {
+			sb.append(chars.charAt(random.nextInt(chars.length())));
+		}
+		return sb.toString();
+	}
+	
+	private List<Empleado> getEmpleados(){
+		List<Empleado> retorno = new ArrayList<>();
+		for (Usuario u : this.usuariosRegistrados) {
+			if (u instanceof Empleado == true) {
+				retorno.add((Empleado)u);
+			}
+		}
+		List<Empleado> uList = Collections.unmodifiableList(retorno);
+		return uList;
 	}
 	
 }
