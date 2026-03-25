@@ -1,13 +1,14 @@
 package notificacion;
 import solicitud.*;
 import java.util.*;
+import tiempo.DateTimeSimulado;
 
 public class NotificacionIntercambio extends NotificacionCliente {
 
 	private String codigoIntercambio;	
-	private Solicitud detallesIntercambio; 
+	private DetallesIntercambio detallesIntercambio; 
 	
-	public NotificacionIntercambio(String mensaje, DateTimeSimulado horaEnvio, String codigoIntercambio, Solicitud detalleIntercambio)
+	public NotificacionIntercambio(String mensaje, DateTimeSimulado horaEnvio, String codigoIntercambio, DetallesIntercambio detalleIntercambio)
 	{
 		super(mensaje, horaEnvio); 
 		this.codigoIntercambio = codigoIntercambio;
@@ -22,11 +23,11 @@ public class NotificacionIntercambio extends NotificacionCliente {
 		this.codigoIntercambio = codigoIntercambio;
 	}
 
-	public Solicitud getDetallesIntercambio() {
+	public DetallesIntercambio getDetallesIntercambio() {
 		return detallesIntercambio;
 	}
 
-	public void setDetallesIntercambio(Solicitud detallesIntercambio) {
+	public void setDetallesIntercambio(DetallesIntercambio detallesIntercambio) {
 		this.detallesIntercambio = detallesIntercambio;
 	}
 	
