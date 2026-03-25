@@ -10,7 +10,7 @@ import descuento.*;
 public class LineaProductoVenta extends Producto {
 	private List<Reseña> reseña = new ArrayList<>();
 	private Set<Categoria> categorias = new HashSet<>();
-	private Map<ProductoVenta, LineaProductoVenta> productos = new HashMap<>();
+	private Map<LineaProductoVenta, Integer> pack = new HashMap<>();
 	
 	private int stock;
 	private double precio;
@@ -18,12 +18,12 @@ public class LineaProductoVenta extends Producto {
 	private Descuento descuento;
 
 	
-	public LineaProductoVenta(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas)
+	public LineaProductoVenta(String nombre, String descripcion, File foto, int stock, double precio)
 	{
 		super(nombre, descripcion, foto);
 		this.stock = stock;
 		this.precio = precio;
-		this.unidadesVendidas = unidadesVendidas;
+		unidadesVendidas = 0;
 	
 	}
 
@@ -51,16 +51,11 @@ public class LineaProductoVenta extends Producto {
 	 * introduciendo varias veces la misma Linea de producto
 	 * @param productos
 	 */
-	public void añadirProductosPack(List<ProductoVenta> productos) {
+	public void añadirProductosPack(Map<LineaProductoVenta, Integer> productos) {
 	    if (productos == null) {
 	        throw new IllegalArgumentException("La lista de productos no puede ser nula");
 	    }
-	    for (ProductoVenta p : productos) {
-	        if (this.productos.containsValue(p.getProducto())) {
-	            throw new IllegalArgumentException("Ya se ha añadido un grupo de productos de la linea: "+ p.getProducto());
-	        }
-	        this.productos.put(p, p.getProducto());
-	    }
+	    pack=productos;
 	}
 	
 	public double obtenerPuntuacionMedia()
@@ -123,8 +118,11 @@ public class LineaProductoVenta extends Producto {
 		return categorias;
 	}
 
-	public List<LineaProductoVenta> getLineaProductosPack() {
-	    return new ArrayList<>(productos.values());
+	public Map<LineaProductoVenta, Integer> getProductosPack() {
+		if(pack == null) {
+	        throw new IllegalStateException("Este producto no es un pack");
+		}
+	    return pack;
 	}
 
 	public int getUnidadesVendidas() {

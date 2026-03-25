@@ -2,6 +2,7 @@ package usuario;
 
 import producto.*;
 
+import java.io.File;
 import java.util.*;
 
 import aplicacion.*;
@@ -11,12 +12,26 @@ public abstract class UsuarioGestion extends Usuario {
 		super(username, DNI, password);
 	}
 	
-	public void añadirProducto(LineaProductoVenta producto) {
+	public void añadirProducto(String nombre, String descripcion, File foto, Integer stock, Double precio) {
+		LineaProductoVenta producto = new LineaProductoVenta(nombre, descripcion, foto, stock, precio);
 		Aplicacion.getInstancia().getCatalogo().añadirProducto(producto);
 	}
 	
-	public void añadirPack(LineaProductoVenta pack, List<ProductoVenta> prods) {
+	public void añadirPack(String nombre, String descripcion, File foto, Integer stock, Double precio, Map<LineaProductoVenta, Integer> prods) {
+		LineaProductoVenta pack = new LineaProductoVenta(nombre, descripcion, foto, stock, precio);
 		Aplicacion.getInstancia().getCatalogo().añadirPack(pack, prods);
 	}
 	
+	public void eliminarProducto(LineaProductoVenta producto) {
+		Aplicacion.getInstancia().getCatalogo().eliminarProducto(producto);
+	}
+	
+	public void añadirProductosDesdeFichero(File f) {
+		
+	}
+	
+	public void modificarProducto() {
+		
+	}
 }
+

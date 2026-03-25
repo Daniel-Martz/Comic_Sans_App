@@ -32,7 +32,7 @@ public class Catalogo {
 		productosNuevos.add(p);
 	}
 
-	public void añadirPack(LineaProductoVenta pack, List<ProductoVenta> prods) {
+	public void añadirPack(LineaProductoVenta pack, Map<LineaProductoVenta, Integer> prods) {
 		if(pack == null) {
 			throw new IllegalArgumentException("El pack introducido no es valido");
 		}
@@ -46,6 +46,7 @@ public class Catalogo {
 	}
 
 	public void eliminarProducto(Producto p) {
+		productosNuevos.remove(p);
 	}
 
 	public void añadirProductosDesdeFichero(File f) {

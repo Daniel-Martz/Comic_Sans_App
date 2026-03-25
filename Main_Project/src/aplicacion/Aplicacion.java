@@ -33,9 +33,9 @@ public class Aplicacion {
 		this.catalogo = catalogo;
 	}
 
-	public static Aplicacion getInstancia(String nombre, ConfiguracionRecomendacion criterioRecomendacion, SistemaPago sistemaPago, SistemaEstadisticas sistemaEstadisticas, GestorSolicitudes gestorSolicitud, Catalogo catalogo) {
+	public static Aplicacion getInstancia() {
 		if (instancia == null) {
-			instancia = new Aplicacion(nombre, criterioRecomendacion, sistemaPago, sistemaEstadisticas, gestorSolicitud, catalogo);
+			instancia = new Aplicacion();
 		}
 		return instancia;
 	}
