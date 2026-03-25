@@ -61,7 +61,12 @@ public class ClienteRegistrado extends Usuario {
 	}
 	
 	public void rechazarOferta(Oferta o) {
-		
+		this.ofertasRecibidas.remove(o);
+		o.getDestinatario().eliminarOferta(o);
+	}
+	
+	public void eliminarOferta(Oferta o) {
+		this.ofertasRealizadas.remove(o);
 	}
 	
 	public void escribirReseña(LineaProductoVenta p, String descripcion, double puntuacion, DateTimeSimulado fecha) {
@@ -91,6 +96,7 @@ public class ClienteRegistrado extends Usuario {
 	}
 	
 	public void realizarPedido() {
+		SolicitudPedido nuevoPedido = new SolicitudPedido();
 		
 	}
 	
