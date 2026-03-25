@@ -9,6 +9,8 @@ import producto.LineaProductoVenta;
 import producto.ProductoSegundaMano;
 import producto.Reseña;
 import tiempo.DateTimeSimulado;
+import aplicacion.Aplicacion;
+import solicitud.*;
 
 public class ClienteRegistrado extends Usuario {
 	private Set<NotificacionDeseada> configuracionNotificacionClientees = new HashSet<NotificacionDeseada>();
@@ -54,6 +56,12 @@ public class ClienteRegistrado extends Usuario {
 	}
 	
 	public void aceptarOferta(Oferta o) {
+		Aplicacion app = Aplicacion.getInstancia();
+		app.crearSolicitudIntercambio(o);
+	}
+	
+	public void rechazarOferta(Oferta o) {
+		
 	}
 	
 	public void escribirReseña(LineaProductoVenta p, String descripcion, double puntuacion, DateTimeSimulado fecha) {
@@ -67,10 +75,27 @@ public class ClienteRegistrado extends Usuario {
 		this.reseñas.remove(r);
 	}
 	
-	public void anadirNotificacion(Notificacion n) {
+	public void anadirNotificacion(NotificacionCliente n) {
 		this.notificaciones.add(n);
 	}
-	public void eliminarNotificacion(Notificacion n) {
+	public void eliminarNotificacion(NotificacionCliente n) {
 		this.notificaciones.remove(n);
 	}
+	
+	public void cancelarPedido(SolicitudPedido pedido) {
+		this.pedidos.remove(pedido);
+	}
+	
+	public void pagarPedido(SolicitudPedido pedido, int numTarjeta, int cvv, DateTimeSimulado fechaCaducidad) {
+		
+	}
+	
+	public void realizarPedido() {
+		
+	}
+	
+	public void pagarValidacion(SolicitudValidacion validacion, int numTarjeta, int cvv, DateTimeSimulado fechaCaducidad) {
+		
+	}
+	
 }

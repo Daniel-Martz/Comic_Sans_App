@@ -1,5 +1,6 @@
 package solicitud;
 import java.util.*;
+import tiempo.DateTimeSimulado;
 
 public class DetallesIntercambio {
 	private DateTimeSimulado fechaIntercambio;

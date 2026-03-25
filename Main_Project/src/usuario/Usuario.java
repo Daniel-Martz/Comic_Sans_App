@@ -47,18 +47,20 @@ public abstract class Usuario {
 	public String getDNI() {
 		return dni;
 	}
+	
+	public boolean verificarContraseña(String contraseñaIntroducida) {
+		return this.contraseña == contraseñaIntroducida;
+	}
 
 	/**
 	 * Sets the password.
 	 *
 	 * @param password the new password
 	 */
-	public boolean setPassword(String oldPassword, String newPassword) {
-		if(oldPassword == this.contraseña) {
+	public void setPassword(String oldPassword, String newPassword) {
+		if(verificarContraseña(oldPassword)) {
 			this.contraseña = newPassword;
-			return true;
 		}
-		return false;
 	}
 
 }
