@@ -41,6 +41,11 @@ public class Aplicacion {
 		}
 		return instancia;
 	}
+	// Getters y setters
+	
+	public Catalogo getCatalogo() {
+		return catalogo;
+	}
 
 	// Métodos de inicio y cierre de sesión
 	public void crearCuenta(String nombreUsuario, String DNI, String contraseña) {

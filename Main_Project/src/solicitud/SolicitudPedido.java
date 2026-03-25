@@ -1,12 +1,12 @@
 package solicitud;
 import java.util.*;
 
-import producto.ProductoVenta;
+import producto.LineaProductoVenta;
 import usuario.ClienteRegistrado;
 
 public class SolicitudPedido extends Solicitud{
 
-	private Set<ProductoVenta> productosDiferentes = new HashSet<>();
+	private Map<LineaProductoVenta, Integer> productosDiferentes = new HashMap<>();
 	private ClienteRegistrado cliente;
 	private Pago pagoPedido;
 	private EstadoPedido estado;
@@ -17,9 +17,10 @@ public class SolicitudPedido extends Solicitud{
 	}
 
 	public double getCostePedido() {
+		int i;
 		double precioFinal= 0;
-		for (ProductoVenta producto:productosDiferentes){
-			precioFinal += producto.obtenerPrecio();
+		for (LineaProductoVenta p: productosDiferentes.keySet()){
+			precioFinal += p.getPrecio()*productosDiferentes.get(p);
 		}
 		return precioFinal;
 	}

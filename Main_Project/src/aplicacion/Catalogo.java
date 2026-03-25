@@ -34,13 +34,29 @@ public class Catalogo {
 	}
 
 	// Métodos para los productos
-	public void añadirProducto(ProductoVenta p) {
+	public void añadirProducto(LineaProductoVenta p) {
+		if(p == null) {
+			throw new IllegalArgumentException("El producto introducido no es valido");
+		}
+		
+		productosNuevos.add(p);
 	}
 
-	public void añadirPack(ProductoVenta pack, List<ProductoVenta> prods) {
+	public void añadirPack(LineaProductoVenta pack, Map<LineaProductoVenta, Integer> prods) {
+		if(pack == null) {
+			throw new IllegalArgumentException("El pack introducido no es valido");
+		}
+		if(prods == null) {
+			throw new IllegalArgumentException("La lista de productos introducidos no es válida");
+		}
+		
+		pack.añadirProductosPack(prods);
+		
+		productosNuevos.add(pack);
 	}
 
 	public void eliminarProducto(Producto p) {
+		productosNuevos.remove(p);
 	}
 
 	public void añadirProductosDesdeFichero(File f) {
