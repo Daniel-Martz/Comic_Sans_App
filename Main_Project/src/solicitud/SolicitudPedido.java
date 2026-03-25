@@ -12,8 +12,13 @@ public class SolicitudPedido extends Solicitud{
 	private EstadoPedido estado;
 	
 
-	public SolicitudPedido() {
+	public SolicitudPedido(ClienteRegistrado cliente, ProductoVenta...productos) {
 		super();
+		this.cliente = cliente;
+		for(ProductoVenta p : productos) {
+			this.productosDiferentes.add(p);
+		}
+		this.estado = EstadoPedido.PENDIENTE_DE_PAGO;
 	}
 
 	public double getCostePedido() {
