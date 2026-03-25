@@ -1,10 +1,10 @@
 package descuento;
 
-import java.time.LocalDateTime;
+import java.time.DateTimeSimulado;
 
 public abstract class UmbralGasto extends Descuento {
 	private double umbral;
-	public UmbralGasto(LocalDateTime fechaInicio, LocalDateTime fechaFin, double umbral) {
+	public UmbralGasto(DateTimeSimulado fechaInicio, DateTimeSimulado fechaFin, double umbral) {
 		super(fechaInicio, fechaFin);
 		this.umbral = umbral;
 	}

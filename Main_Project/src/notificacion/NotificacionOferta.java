@@ -2,11 +2,12 @@ package notificacion;
 
 import solicitud.*;
 import java.util.*;
+import tiempo.DateTimeSimulado;
 
 public class NotificacionOferta extends NotificacionCliente {
 
 	private Set<Oferta> ofertasAsociadas = new HashSet<>();;
-	public NotificacionOferta(String mensaje, Date horaEnvio) {
+	public NotificacionOferta(String mensaje, DateTimeSimulado horaEnvio) {
 		super(mensaje, horaEnvio);
 	}
 
