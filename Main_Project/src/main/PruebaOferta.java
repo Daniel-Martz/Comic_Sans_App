@@ -2,10 +2,10 @@ package main;
 
 
 import java.io.File;
-import java.util.List;
+import java.util.*;
 
 import aplicacion.*;
-import producto.EstadoConservacion;
+import producto.*;
 import solicitud.SolicitudValidacion;
 import usuario.*;
 
@@ -89,8 +89,8 @@ public class PruebaOferta {
 			return;
 		}
 		
-		
-		cliente.pagarValidacion(null, 0, 0, null);
+		List<ProductoSegundaMano> productosRodrigo = new ArrayList<>(cliente.getCartera().getProductos());
+		cliente.pagarValidacion(productosRodrigo.get(0).getSolicitudValidacion(), 0, 0, null);
 		
 		app.cerrarSesion();
 		app.iniciarSesion("Matteo", "Artunedo");
@@ -103,7 +103,9 @@ public class PruebaOferta {
 			return;
 		}
 		
-		cliente.pagarValidacion(null, 0, 0, null);
+		List<ProductoSegundaMano> productosMatteo = new ArrayList<>(cliente.getCartera().getProductos());
+		cliente.pagarValidacion(productosMatteo.get(0).getSolicitudValidacion(), 0, 0, null);
+		
 		
 		cliente.realizarOferta(cliente.getCartera().getProductos(), app.getCatalogo().get, cliente);
 		
@@ -111,11 +113,13 @@ public class PruebaOferta {
 		app.iniciarSesion("Federico", "Artunedo");
 		
 		usuarioActual = app.getUsuarioActual();
-		if( usuarioActual instanceof ClienteRegistrado) {
-			cliente = (ClienteRegistrado)usuarioActual;
+		if( usuarioActual instanceof Empleado) {
+			empleado = (Empleado)usuarioActual;
 		}
 		else {
 			return;
 		}
+		
+		
 	}
 }
