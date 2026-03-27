@@ -55,6 +55,13 @@ public class ClienteRegistrado extends Usuario {
 		Oferta ofertaRealizada = new Oferta(new DateTimeSimulado(),  destinatario, this, productosOfertados, productosSolicitados);
 		destinatario.recibirOferta(ofertaRealizada);
 		NotificacionOferta notif = new NotificacionOferta("Nueva oferta recibida de " + this.nombreUsuario, new DateTimeSimulado(), ofertaRealizada);
+		destinatario.anadirNotificacion(notif);
+		for(ProductoSegundaMano prod : productosSolicitados) {
+			prod.addOfertaRecibida(ofertaRealizada);
+		}
+		for(ProductoSegundaMano prod : productosOfertados) {
+			prod.addOfertaEnviada(ofertaRealizada);
+		}
 	}
 	
 	public void recibirOferta(Oferta o) {

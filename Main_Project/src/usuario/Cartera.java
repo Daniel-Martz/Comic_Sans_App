@@ -13,5 +13,10 @@ public class Cartera{
 	public void eliminarProducto(ProductoSegundaMano o) {
 		this.productos.remove(o);
 	}
+	@Override
+	public String toString() {
+		String total;
+		return "Cartera [productos=" + productos + "]";
+	}
 
 }

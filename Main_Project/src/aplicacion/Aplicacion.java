@@ -6,7 +6,6 @@ import solicitud.*;
 import tiempo.DateTimeSimulado;
 import notificacion.*;
 
-import java.util.List;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
