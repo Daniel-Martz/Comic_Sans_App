@@ -68,6 +68,13 @@ public class ProductoSegundaMano extends Producto{
 	public boolean estaBloqueado() {
 		return (ofertaRecibida != null || ofertaEnviada != null);
 	}
+
+	@Override
+	public String toString() {
+		return "ProductoSegundaMano [validado=" + validado + ", ofertaRecibida=" + ofertaRecibida + ", ofertaEnviada="
+				+ ofertaEnviada + ", solicitudValidacion=" + solicitudValidacion + ", datosValidacion="
+				+ datosValidacion + "]";
+	}
 	
 	
 	// public boolean pasaFiltro(Filtro filtroIntercambio, String prompt)

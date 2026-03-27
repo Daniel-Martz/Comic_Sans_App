@@ -57,7 +57,7 @@ public abstract class Usuario {
 	 *
 	 * @param password the new password
 	 */
-	public void setConstraseña(String oldPassword, String newPassword) {
+	public void setContraseña(String oldPassword, String newPassword) {
 		if(verificarContraseña(oldPassword)) {
 			this.contraseña = newPassword;
 		}
