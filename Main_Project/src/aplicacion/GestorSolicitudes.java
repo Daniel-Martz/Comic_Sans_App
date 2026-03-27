@@ -62,5 +62,29 @@ public class GestorSolicitudes {
 	{
 		validaciones.remove(s);
 	}
+
+	public List<SolicitudIntercambio> getIntercambios() {
+		return intercambios;
+	}
+
+	public List<SolicitudIntercambio> getIntercambiosPendientes() {
+		List<SolicitudIntercambio> intercambiosPendientes = new ArrayList<>();
+		for(SolicitudIntercambio s: intercambios)
+		{
+			if(s.esAprobado())
+			{
+				intercambiosPendientes.add(s);
+			}
+		}
+		return intercambiosPendientes;
+	}
+	
+	public List<SolicitudPedido> getPedidos() {
+		return pedidos;
+	}
+
+	public List<SolicitudValidacion> getValidaciones() {
+		return validaciones;
+	}
 }
 

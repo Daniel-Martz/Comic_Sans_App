@@ -25,5 +25,10 @@ public class SolicitudIntercambio extends Solicitud{
 	public void addOferta(Oferta o) {
 		this.oferta = o;
 	}
+	
+	public boolean esAprobado()
+	{
+		return aprobado;
+	}
 
 }
