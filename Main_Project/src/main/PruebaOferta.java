@@ -2,9 +2,11 @@ package main;
 
 
 import java.io.File;
+import java.util.List;
 
 import aplicacion.*;
 import producto.EstadoConservacion;
+import solicitud.SolicitudValidacion;
 import usuario.*;
 
 public class PruebaOferta {
@@ -70,8 +72,9 @@ public class PruebaOferta {
 			return;
 		}
 		
-		empleado.validarProducto(null, 2.4, EstadoConservacion.MUY_BUENO);
-		empleado.validarProducto(null, 1, EstadoConservacion.MUY_USADO);
+		List<SolicitudValidacion> solicitudes = GestorSolicitudes.getInstancia().getValidaciones();
+		empleado.validarProducto(solicitudes.get(0), 2.4, EstadoConservacion.MUY_BUENO);
+		empleado.validarProducto(solicitudes.get(1), 1, EstadoConservacion.MUY_USADO);
 		
 		
 		app.cerrarSesion();
