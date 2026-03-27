@@ -15,7 +15,7 @@ public class Figura extends LineaProductoVenta {
 	public Figura(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas,
 			String marca, String material, double dimesionX, double dimesionY, double dimesionZ, TipoJuegoMesa tipo) {
 		
-		super(nombre, descripcion, foto, stock, precio, unidadesVendidas);
+		super(nombre, descripcion, foto, stock, precio);
 		this.marca = marca;
 		this.material = material;
 		this.dimensionX = dimensionX;
@@ -23,4 +23,66 @@ public class Figura extends LineaProductoVenta {
 		this.dimensionZ = dimensionZ;
 		this.tipo = tipo;
 	}
+
+
+	public String getMarca() {
+		return marca;
+	}
+
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+
+	public String getMaterial() {
+		return material;
+	}
+
+
+	public void setMaterial(String material) {
+		this.material = material;
+	}
+
+
+	public double getDimensionX() {
+		return dimensionX;
+	}
+
+
+	public void setDimensionX(double dimensionX) {
+		this.dimensionX = dimensionX;
+	}
+
+
+	public double getDimensionY() {
+		return dimensionY;
+	}
+
+
+	public void setDimensionY(double dimensionY) {
+		this.dimensionY = dimensionY;
+	}
+
+
+	public double getDimensionZ() {
+		return dimensionZ;
+	}
+
+
+	public void setDimensionZ(double dimensionZ) {
+		this.dimensionZ = dimensionZ;
+	}
+
+
+	public TipoJuegoMesa getTipo() {
+		return tipo;
+	}
+
+
+	public void setTipo(TipoJuegoMesa tipo) {
+		this.tipo = tipo;
+	}
+	
+	
 }

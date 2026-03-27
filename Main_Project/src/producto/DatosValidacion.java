@@ -2,8 +2,8 @@ package producto;
 
 public class DatosValidacion {
 	
-	private double precioEstimadoProducto;
-	private EstadoConservacion estadoConservacion;
+	private final double precioEstimadoProducto;
+	private final EstadoConservacion estadoConservacion;
 	
 	public DatosValidacion(double precioEstimadoProducto, EstadoConservacion estadoConservacion) {
 		this.precioEstimadoProducto = precioEstimadoProducto;
@@ -14,16 +14,8 @@ public class DatosValidacion {
 		return precioEstimadoProducto;
 	}
 
-	public void setPrecioEstimadoProducto(double precioEstimadoProducto) {
-		this.precioEstimadoProducto = precioEstimadoProducto;
-	}
-
 	public EstadoConservacion getEstadoConservacion() {
 		return estadoConservacion;
 	}
 
-	public void setEstadoConservacion(EstadoConservacion estadoConservacion) {
-		this.estadoConservacion = estadoConservacion;
-	}
-	
 }
