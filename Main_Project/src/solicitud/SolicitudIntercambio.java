@@ -7,6 +7,7 @@ public class SolicitudIntercambio extends Solicitud{
 	private CodigoIntercambio codigoOfertante;
 	private CodigoIntercambio codigoDestinatario;
 	private Oferta oferta;
+	private boolean aprobado = false;
 	
 	public SolicitudIntercambio(String codigoOfertante, String codigoDestinatario, String lugarIntercambio, Oferta oferta) {
 		this.codigoDestinatario = new CodigoIntercambio(codigoDestinatario);
@@ -15,12 +16,9 @@ public class SolicitudIntercambio extends Solicitud{
 		this.oferta = oferta;
 	}
 	
-	public boolean aprobarIntercambio(String codigoOfertante, String codigoDestinatario) {
+	public void aprobarIntercambio(String codigoOfertante, String codigoDestinatario) {
 		if(this.codigoOfertante.validarCodigo(codigoOfertante) && this.codigoDestinatario.validarCodigo(codigoDestinatario)) {
-			return true;
-		}
-		else {
-			return false;
+			aprobado = true;
 		}
 	}
 	
