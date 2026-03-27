@@ -8,10 +8,10 @@ public class JuegoDeMesa extends LineaProductoVenta {
 	private int edadMinima;
 	private int edadMaxima;
 	
-	public JuegoDeMesa(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas,
+	public JuegoDeMesa(String nombre, String descripcion, File foto, int stock, double precio,
 					   int numeroJugadores, int edadMinima, int edadMaxima, TipoJuegoMesa tipo) {
 		
-		super(nombre, descripcion, foto, stock, precio, unidadesVendidas);
+		super(nombre, descripcion, foto, stock, precio);
 		this.numeroJugadores = numeroJugadores;
 		this.edadMinima = edadMinima;
 		this.edadMaxima = edadMaxima;

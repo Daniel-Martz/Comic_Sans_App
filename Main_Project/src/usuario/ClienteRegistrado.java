@@ -1,17 +1,12 @@
 package usuario;
+
 import java.util.*;
-import notificacion.NotificacionCliente;
-import notificacion.NotificacionOferta;
-import solicitud.SolicitudPedido;
-import producto.Reseña;
-import solicitud.Oferta;
-import producto.ProductoVenta;
-import producto.LineaProductoVenta;
-import producto.ProductoSegundaMano;
-import producto.Reseña;
-import tiempo.DateTimeSimulado;
-import aplicacion.Aplicacion;
+
+import notificacion.*;
+import producto.*;
 import solicitud.*;
+import tiempo.*;
+import aplicacion.*;
 
 public class ClienteRegistrado extends Usuario {
 	private Set<NotificacionDeseada> configuracionNotificacionClientees = new HashSet<NotificacionDeseada>();
@@ -39,12 +34,12 @@ public class ClienteRegistrado extends Usuario {
 		return total;
 	}
 	
-	public void añadirProductoACarrito(ProductoVenta p) {
-		this.carrito.añadirProducto(p);
+	public void añadirProductoACarrito(LineaProductoVenta p, Integer cantidad) {
+		this.carrito.añadirProducto(p, cantidad);
 	}
 
-	public void eliminarProductoDelCarrito(ProductoVenta p) {
-		this.carrito.eliminarProducto(p);
+	public void eliminarProductoDelCarrito(LineaProductoVenta p, Integer cantidad) {
+		this.carrito.eliminarProducto(p, cantidad);
 	}
 	
 	
@@ -107,8 +102,8 @@ public class ClienteRegistrado extends Usuario {
 	}
 	
 	public void realizarPedido() {
-		SolicitudPedido nuevoPedido = new SolicitudPedido();
-		
+		new SolicitudPedido(this, carrito.getProductos());
+		carrito.vaciarCarrito();
 	}
 	
 	public void pagarValidacion(SolicitudValidacion validacion, int numTarjeta, int cvv, DateTimeSimulado fechaCaducidad) {

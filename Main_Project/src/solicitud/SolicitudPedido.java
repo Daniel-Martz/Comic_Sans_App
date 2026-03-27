@@ -12,12 +12,10 @@ public class SolicitudPedido extends Solicitud{
 	private EstadoPedido estado;
 	
 
-	public SolicitudPedido(ClienteRegistrado cliente, ProductoVenta...productos) {
+	public SolicitudPedido(ClienteRegistrado cliente, Map<LineaProductoVenta, Integer> productos) {
 		super();
 		this.cliente = cliente;
-		for(ProductoVenta p : productos) {
-			this.productosDiferentes.add(p);
-		}
+		this.productosDiferentes.putAll(productos);
 		this.estado = EstadoPedido.PENDIENTE_DE_PAGO;
 	}
 
