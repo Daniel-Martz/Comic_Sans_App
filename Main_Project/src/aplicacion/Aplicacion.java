@@ -25,19 +25,20 @@ public class Aplicacion {
 	private List<Usuario> usuariosRegistrados = new ArrayList<>();
 
 	private Aplicacion(String nombre, ConfiguracionRecomendacion criterioRecomendacion, SistemaPago sistemaPago,
-			SistemaEstadisticas sistemaEstadisticas, GestorSolicitudes gestorSolicitud, Catalogo catalogo) {
+			SistemaEstadisticas sistemaEstadisticas, GestorSolicitudes gestorSolicitud, Catalogo catalogo, String username, String DNI, String password) {
 		this.nombre = nombre;
 		this.criterioRecomendacion = criterioRecomendacion;
 		this.sistemaPago = sistemaPago;
 		this.sistemaEstadisticas = sistemaEstadisticas;
 		this.gestorSolicitud = gestorSolicitud;
 		this.catalogo = catalogo;
+		añadirGestor(username, DNI, password);
 	}
 
 	public static Aplicacion getInstancia() {
 		if (instancia == null) {
-			instancia = new Aplicacion("Comic Sans", ConfiguracionRecomendacion.getInstancia(1, 2, 3, 5), SistemaPago.getInstancia(),
-					 SistemaEstadisticas.getInstancia(),  GestorSolicitudes.getInstancia(),  Catalogo.getInstancia());
+			instancia = new Aplicacion("Comic Sans", ConfiguracionRecomendacion.getInstancia(), SistemaPago.getInstancia(),
+					SistemaEstadisticas.getInstancia(), GestorSolicitudes.getInstancia(), Catalogo.getInstancia(), "gestor", "123456789A", "123456");
 		}
 		return instancia;
 	}
@@ -49,7 +50,8 @@ public class Aplicacion {
 
 	// Métodos de inicio y cierre de sesión
 	public void crearCuenta(String nombreUsuario, String DNI, String contraseña) {
-		if (nombreUsuario == null || nombreUsuario.trim().isEmpty()) {
+		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
+		if (nombreUsuario == null || nombreUser.isEmpty()) {
 			return;
 		}
 
@@ -62,15 +64,42 @@ public class Aplicacion {
 		}
 
 		for (Usuario u : usuariosRegistrados) {
-			if (u.getNombreUsuario().equals(nombreUsuario)) {
+			if (u.getNombreUsuario().equals(nombreUser)) {
 				return;
 			}
 		}
 
-		Usuario nuevoUsuario = new Cliente(nombreUsuario, DNI, contraseña);
+		Usuario nuevoUsuario = new Cliente(nombreUser, DNI, contraseña);
 		usuariosRegistrados.add(nuevoUsuario);
 
-		System.out.println("Nueva cuenta creada con éxito para: " + nombreUsuario);
+		System.out.println("Nueva cuenta de cliente creada con éxito para: " + nombreUser);
+		return;
+	}
+	
+	public void añadirGestor(String nombreUsuario, String DNI, String contraseña) {
+		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
+		if (nombreUsuario == null || nombreUser.isEmpty()) {
+			return;
+		}
+
+		if (contraseña == null || contraseña.length() < 4) {
+			return;
+		}
+
+		if (DNI == null || DNI.length() != 10) {
+			return;
+		}
+
+		for (Usuario u : usuariosRegistrados) {
+			if (u.getNombreUsuario().equals(nombreUser)) {
+				return;
+			}
+		}
+
+		Usuario nuevoUsuario = new Gestor(nombreUser, DNI, contraseña);
+		usuariosRegistrados.add(nuevoUsuario);
+
+		System.out.println("Nueva cuenta de gestor creada con éxito para: " + nombreUser);
 		return;
 	}
 
@@ -128,18 +157,30 @@ public class Aplicacion {
 	}
 
 	// Métodos exclusivos del gestor
-	public void añadirEmpleado(Empleado empleado) {
-		if (empleado == null) {
+	public void añadirEmpleado(String nombreUsuario, String DNI, String contraseña) {
+		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
+		if (nombreUsuario == null || nombreUser.isEmpty()) {
+			return;
+		}
+
+		if (contraseña == null || contraseña.length() < 4) {
+			return;
+		}
+
+		if (DNI == null || DNI.length() != 10) {
 			return;
 		}
 
 		for (Usuario u : usuariosRegistrados) {
-			if (u.getNombreUsuario().equals(empleado.getNombreUsuario())) {
+			if (u.getNombreUsuario().equals(nombreUser)) {
 				return;
 			}
 		}
-		usuariosRegistrados.add(empleado);
-		System.out.println("Empleado añadido al sistema: " + empleado.getNombreUsuario());
+
+		Usuario nuevoUsuario = new Empleado(nombreUser, DNI, contraseña);
+		usuariosRegistrados.add(nuevoUsuario);
+
+		System.out.println("Nueva cuenta creada con éxito para: " + nombreUser);
 		return;
 	}
 

@@ -18,11 +18,10 @@ public class ConfiguracionRecomendacion {
 		this.unidadesRecomendadas = unidadesRecomendadas;
 	}
 
-	public static ConfiguracionRecomendacion getInstancia(int importanciaInteres, int importanciaReseña,
-			int importanciaNovedad, int unidadesRecomendadas) {
+	public static ConfiguracionRecomendacion getInstancia() {
 		if (instancia == null) {
-			instancia = new ConfiguracionRecomendacion(importanciaInteres, importanciaReseña, importanciaNovedad,
-					unidadesRecomendadas);
+			instancia = new ConfiguracionRecomendacion(1, 2, 3,
+					5);
 		}
 		return instancia;
 	}

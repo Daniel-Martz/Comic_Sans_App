@@ -24,7 +24,7 @@ public abstract class Usuario {
 	 * @param DNI the dni
 	 * @param password the password
 	 */
-	public Usuario(String username, String DNI, String password) {
+	public Usuario(String nombreUsuario, String dni, String contraseña) {
 		this.nombreUsuario = nombreUsuario;
 		this.dni = dni;
 		this.contraseña = contraseña;
@@ -57,7 +57,7 @@ public abstract class Usuario {
 	 *
 	 * @param password the new password
 	 */
-	public void setPassword(String oldPassword, String newPassword) {
+	public void setConstraseña(String oldPassword, String newPassword) {
 		if(verificarContraseña(oldPassword)) {
 			this.contraseña = newPassword;
 		}
