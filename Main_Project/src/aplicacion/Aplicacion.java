@@ -1,14 +1,14 @@
 package aplicacion;
 
 import producto.*;
-
 import usuario.*;
 import solicitud.*;
+import tiempo.DateTimeSimulado;
 import notificacion.*;
 
 import java.security.SecureRandom;
-import java.util.*;
-import tiempo.DateTimeSimulado;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Aplicacion {
 
@@ -69,7 +69,7 @@ public class Aplicacion {
 			}
 		}
 
-		Usuario nuevoUsuario = new Cliente(nombreUser, DNI, contraseña);
+		Usuario nuevoUsuario = new ClienteRegistrado(nombreUser, DNI, contraseña);
 		usuariosRegistrados.add(nuevoUsuario);
 
 		System.out.println("Nueva cuenta de cliente creada con éxito para: " + nombreUser);
@@ -146,7 +146,7 @@ public class Aplicacion {
 		for (Usuario u : usuariosRegistrados) {
 			if (u.getNombreUsuario().equals(nombreUsuario)) {
 				if (u.verificarContraseña(contraseñaAntigua)) {
-					u.setContraseña(contraseñaAntigua, contraseñaNueva);
+					u.setConstraseña(contraseñaAntigua, contraseñaNueva);
 					System.out.println("Contraseña cambiada con éxito para: " + nombreUsuario);
 					return;
 				} else {
@@ -267,7 +267,23 @@ public class Aplicacion {
 
 	// Envío de notificaciones
 
-	public void enviarNotificacion(Usuario usuario, NotificacionCliente notificacion) {
+	public void enviarNotificacion(Usuario usuario, Notificacion notificacion) {
+		if(usuario == null || notificacion == null)
+		{
+			throw new IllegalArgumentException("La solicitud no es valida");
+		}
+		
+		if(usuario instanceof ClienteRegistrado){
+			ClienteRegistrado cliente = (ClienteRegistrado) usuario;
+			NotificacionCliente notificacionCliente =(NotificacionCliente) notificacion;
+			cliente.anadirNotificacion(notificacionCliente);
+		}
+		if(usuario instanceof Empleado)
+		{
+			Empleado empleado = (Empleado) usuario;
+			NotificacionEmpleado notificacionEmpleado =(NotificacionEmpleado) notificacion;
+			empleado.añadirNotificacion(notificacionEmpleado);
+		}
 	}
 
 	public Usuario getUsuarioActual() {

@@ -37,7 +37,7 @@ public class Empleado extends UsuarioGestion {
 		
 	}
 	
-	public void validarProductos(SolicitudValidacion s, double precio, EstadoConservacion estado) {
+	public void validarProducto(SolicitudValidacion s, double precio, EstadoConservacion estado) {
 		if(!permisos.contains(Permiso.INTERCAMBIOS)){
 	        throw new IllegalStateException("No tienes permisos para aprobar validar productos");
 		}
