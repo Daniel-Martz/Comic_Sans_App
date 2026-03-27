@@ -69,7 +69,7 @@ public class Aplicacion {
 			}
 		}
 
-		Usuario nuevoUsuario = new Cliente(nombreUser, DNI, contraseña);
+		Usuario nuevoUsuario = new ClienteRegistrado(nombreUser, DNI, contraseña);
 		usuariosRegistrados.add(nuevoUsuario);
 
 		System.out.println("Nueva cuenta de cliente creada con éxito para: " + nombreUser);

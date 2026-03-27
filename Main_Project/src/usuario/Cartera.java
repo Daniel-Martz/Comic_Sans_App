@@ -5,7 +5,7 @@ import producto.ProductoSegundaMano;
 
 
 public class Cartera{
-	private List<ProductoSegundaMano> productos = new ArrayList<>(); 
+	private Set<ProductoSegundaMano> productos = new HashSet<>(); 
 	
 	public void añadirProducto(ProductoSegundaMano o) {
 		this.productos.add(o);
@@ -18,5 +18,13 @@ public class Cartera{
 		String total;
 		return "Cartera [productos=" + productos + "]";
 	}
+	/**
+	 * @return the productos
+	 */
+	public Set<ProductoSegundaMano> getProductos() {
+		return productos;
+	}
+	
+	
 
 }
