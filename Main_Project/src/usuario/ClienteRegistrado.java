@@ -117,4 +117,14 @@ public class ClienteRegistrado extends Usuario {
 		
 	}
 	
+	public List<ProductoSegundaMano> getProductosSegundaManoDisponibles(){
+		List<ProductoSegundaMano> prods = new LinkedList<ProductoSegundaMano>();
+		for(ProductoSegundaMano p : this.cartera.getProductosSegundaMano()) {
+			if(!p.estaBloqueado()) {
+				prods.add(p);
+			}
+		}
+		return prods;
+	}
+	
 }

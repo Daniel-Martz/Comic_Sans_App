@@ -13,6 +13,10 @@ public class Cartera{
 	public void eliminarProducto(ProductoSegundaMano o) {
 		this.productos.remove(o);
 	}
+	
+	public List<ProductoSegundaMano> getProductosSegundaMano(){
+		return Collections.unmodifiableList(productos);
+	}
 	@Override
 	public String toString() {
 		String total;
