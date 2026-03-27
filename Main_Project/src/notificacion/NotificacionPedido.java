@@ -1,11 +1,11 @@
 package notificacion;
-
+import solicitud.*;
 import java.util.*;
 
 public class NotificacionPedido extends NotificacionCliente {
 	private Solicitud pedido; 
 	
-	public NotificacionPedido(String mensaje, Date horaEnvio, Solicitud pedido) {
+	public NotificacionPedido(String mensaje, DateTimeSimulado horaEnvio, Solicitud pedido) {
 		super(mensaje, horaEnvio);
 		this.pedido = pedido;
 	}

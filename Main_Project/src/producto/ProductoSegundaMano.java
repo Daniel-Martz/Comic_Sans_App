@@ -1,18 +1,20 @@
 package producto;
-
+import java.io.File;
+import solicitud.*;
 import java.util.*;
 
 public class ProductoSegundaMano extends Producto{
 	private boolean validado;
 	private Oferta ofertaRecibida;
 	private Oferta ofertaEnviada;
-	private Solicitudvalidacion solicitudValidacion;
+	private SolicitudValidacion solicitudValidacion;
 	private DatosValidacion datosValidacion;
 	
-	public ProductoSegundaMano(String nombre, String descripcion, File foto)
+	public ProductoSegundaMano(String nombre, String descripcion, File foto, SolicitudValidacion solicitudValidacion)
 	{
 		super(nombre, descripcion, foto);
 		this.validado = false;
+		this.solicitudValidacion = solicitudValidacion;
 	}
 
 	public boolean isValidado() {
@@ -35,11 +37,11 @@ public class ProductoSegundaMano extends Producto{
 		this.ofertaEnviada = ofertaEnviada;
 	}
 
-	public Solicitudvalidacion getSolicitudValidacion() {
+	public SolicitudValidacion getSolicitudValidacion() {
 		return solicitudValidacion;
 	}
 
-	public void setSolicitudValidacion(Solicitudvalidacion solicitudValidacion) {
+	public void setSolicitudValidacion(SolicitudValidacion solicitudValidacion) {
 		this.solicitudValidacion = solicitudValidacion;
 	}
 

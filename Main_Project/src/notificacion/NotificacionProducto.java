@@ -7,7 +7,7 @@ public class NotificacionProducto extends NotificacionCliente {
 	
 	private Set<LineaProductoVenta> productos = new HashSet<>();
 
-	public NotificacionProducto(String mensaje, Date horaEnvio) {
+	public NotificacionProducto(String mensaje, DateTimeSimulado horaEnvio) {
 		super(mensaje, horaEnvio);
 	}
 

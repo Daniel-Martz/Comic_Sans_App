@@ -1,6 +1,6 @@
 package descuento;
 
-import java.time.LocalDateTime;
+import java.time.DateTimeSimulado;
 
 public class Precio extends Descuento {
 	private int porcentaje;
@@ -9,7 +9,7 @@ public class Precio extends Descuento {
 		return porcentaje;
 	}
 
-	public Precio(LocalDateTime fechaInicio, LocalDateTime fechaFin, int porcentaje) {
+	public Precio(DateTimeSimulado fechaInicio, DateTimeSimulado fechaFin, int porcentaje) {
 		super(fechaInicio, fechaFin);
 		this.porcentaje = porcentaje;
 	}

@@ -1,0 +1,97 @@
+package tiempo;
+
+/**
+ * Clase refactorizada siguiendo el patrón Singleton.
+ * Permite gestionar un tiempo simulado con velocidad variable.
+ */
+public class TiempoSimulado {
+    
+
+    private static TiempoSimulado instance;
+
+    private long milisegundosSimulados = 0;
+    private long ultimoTiempoReal;
+    private double velocidad;
+    private int diasPorMes;
+    private int mesesPorAño;
+
+    private TiempoSimulado() {
+        this.velocidad = 1;
+        this.diasPorMes = 30;
+        this.mesesPorAño = 12;
+        this.ultimoTiempoReal = System.currentTimeMillis();
+    }
+    
+    public static TiempoSimulado getInstance() {
+        if (instance == null) {
+            instance = new TiempoSimulado();
+        }
+        return instance;
+    }
+
+    public void iniciar(double velocidadInicial, int diasMes, int mesesAño) {
+        this.velocidad = velocidadInicial;
+        this.diasPorMes = diasMes;
+        this.mesesPorAño = mesesAño;
+        this.ultimoTiempoReal = System.currentTimeMillis();
+    }
+
+    public void actualizar() {
+        long ahora = System.currentTimeMillis();
+        long diferenciaReal = ahora - ultimoTiempoReal;
+        this.milisegundosSimulados += (long) (diferenciaReal * velocidad);
+        this.ultimoTiempoReal = ahora;
+    }
+
+    // --- Getters y Setters de instancia ---
+
+    public void setVelocidad(double nuevaVelocidad) {
+        this.velocidad = nuevaVelocidad;
+    }
+
+    private long getSegundosTotales() {
+        actualizar();
+        return milisegundosSimulados / 1000;
+    }
+
+    public int getSegundo() { return (int) (getSegundosTotales() % 60); }
+    public int getMinuto() { return (int) ((getSegundosTotales() / 60) % 60); }
+    public int getHora() { return (int) ((getSegundosTotales() / 3600) % 24); }
+
+    public int getDia() {
+        long diasTotales = (getSegundosTotales() / 86400); 
+        return (int) ((diasTotales % diasPorMes)+ 1); //El +1 es para que empiece en 1 y no en 0
+    }
+
+    public int getMes() {
+        long diasTotales = getSegundosTotales() / 86400;
+        long mesesTotales = (diasTotales / diasPorMes);
+        return (int) ((mesesTotales % mesesPorAño)+1);//El +1 es para que empiece en 1 y no en 0
+    }
+
+    public int getAño() {
+        long diasTotales = getSegundosTotales() / 86400;
+        long mesesTotales = diasTotales / diasPorMes;
+        return (int) ((mesesTotales / mesesPorAño)+1);//El +1 es para que empiece en 1 y no en 0
+    }
+
+    /**
+	 * @return the mesesPorAño
+	 */
+	public int getMesesPorAño() {
+		return mesesPorAño;
+	}
+	
+	/**
+	 * @return the diasPorMes
+	 */
+	public int getDiasPorMes() {
+		return diasPorMes;
+	}
+
+	@Override
+    public String toString() {
+        return "Año: " + getAño() + "\nMes: " + getMes() + "\nDia: " + getDia() + 
+               "\nHora: " + getHora() + "\nMinuto: " + getMinuto() + "\nSegundo: " + getSegundo();
+    }
+}

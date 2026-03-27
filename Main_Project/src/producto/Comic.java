@@ -8,11 +8,11 @@ public class Comic extends LineaProductoVenta {
 	private int numeroPaginas;
 	private String autor;
 	private String editorial;
-	private Date añoPublicacion;
+	private DateTimeSimulado añoPublicacion;
 	
 
 	public Comic(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas,
-				 int numeroPaginas, String autor, String editorial, Date añoPublicacion) {
+				 int numeroPaginas, String autor, String editorial, DateTimeSimulado añoPublicacion) {
 		
 		super(nombre, descripcion, foto, stock, precio, unidadesVendidas);
 		this.numeroPaginas = numeroPaginas;
