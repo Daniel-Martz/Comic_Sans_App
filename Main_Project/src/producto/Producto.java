@@ -6,7 +6,7 @@ import java.io.File;
 
 public abstract class Producto {
 	private static int contadorID = 1;
-	private int ID;
+	private final int ID;
 	private String nombre;
 	private String descripcion;
 	private File foto;

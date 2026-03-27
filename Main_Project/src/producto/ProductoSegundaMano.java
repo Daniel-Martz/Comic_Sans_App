@@ -7,14 +7,14 @@ public class ProductoSegundaMano extends Producto{
 	private boolean validado;
 	private Oferta ofertaRecibida;
 	private Oferta ofertaEnviada;
-	private SolicitudValidacion solicitudValidacion;
+	private final SolicitudValidacion solicitudValidacion;
 	private DatosValidacion datosValidacion;
 	
-	public ProductoSegundaMano(String nombre, String descripcion, File foto, SolicitudValidacion solicitudValidacion)
+	public ProductoSegundaMano(String nombre, String descripcion, File foto)
 	{
 		super(nombre, descripcion, foto);
 		this.validado = false;
-		this.solicitudValidacion = solicitudValidacion;
+		this.solicitudValidacion = new SolicitudValidacion(this);
 	}
 
 	public boolean isValidado() {
@@ -25,24 +25,30 @@ public class ProductoSegundaMano extends Producto{
 		return ofertaRecibida;
 	}
 
-	public void setOfertaRecibida(Oferta ofertaRecibida) {
+	public void addOfertaRecibida(Oferta ofertaRecibida) {
+		if (this.estaBloqueado()) return;
 		this.ofertaRecibida = ofertaRecibida;
+	}
+
+	public void eliminarOfertaRecibida() {
+		this.ofertaRecibida = null;
 	}
 
 	public Oferta getOfertaEnviada() {
 		return ofertaEnviada;
 	}
 
-	public void setOfertaEnviada(Oferta ofertaEnviada) {
+	public void addOfertaEnviada(Oferta ofertaEnviada) {
+		if (this.estaBloqueado()) return;
 		this.ofertaEnviada = ofertaEnviada;
+	}
+
+	public void eliminarOfertaEnviada() {
+		this.ofertaEnviada = null;
 	}
 
 	public SolicitudValidacion getSolicitudValidacion() {
 		return solicitudValidacion;
-	}
-
-	public void setSolicitudValidacion(SolicitudValidacion solicitudValidacion) {
-		this.solicitudValidacion = solicitudValidacion;
 	}
 
 	public DatosValidacion getDatosValidacion() {
@@ -53,12 +59,16 @@ public class ProductoSegundaMano extends Producto{
 		this.datosValidacion = datosValidacion;
 	}
 		
-	public boolean validarProducto(int precio, EstadoConservacion estado)
+	public void validarProducto(int precio, EstadoConservacion estado)
 	{
 		this.validado = true;
 		this.datosValidacion = new DatosValidacion(precio, estado);
-		return true;
 	}
+	
+	public boolean estaBloqueado() {
+		return (ofertaRecibida != null || ofertaEnviada != null);
+	}
+	
 	
 	// public boolean pasaFiltro(Filtro filtroIntercambio, String prompt)
 	
