@@ -14,7 +14,7 @@ public class GestorSolicitudes {
 		
 	}
 	
-	public GestorSolicitudes getInstancia() {
+	public static GestorSolicitudes getInstancia() {
 		if(instancia == null)
 		{
 		instancia = new GestorSolicitudes();	

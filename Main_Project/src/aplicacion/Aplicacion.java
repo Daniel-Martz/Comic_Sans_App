@@ -36,8 +36,8 @@ public class Aplicacion {
 
 	public static Aplicacion getInstancia() {
 		if (instancia == null) {
-			instancia = new Aplicacion("Comic Sans", new ConfiguracionRecomendacion(1, 2, 3, 5), new SistemaPago(),
-					new SistemaEstadisticas(), new GestorSolicitudes(), new Catalogo());
+			instancia = new Aplicacion("Comic Sans", ConfiguracionRecomendacion.getInstancia(1, 2, 3, 5), SistemaPago.getInstancia(),
+					 SistemaEstadisticas.getInstancia(),  GestorSolicitudes.getInstancia(),  Catalogo.getInstancia());
 		}
 		return instancia;
 	}
@@ -124,11 +124,30 @@ public class Aplicacion {
 
 	// Métodos exclusivos del gestor
 	public void añadirEmpleado(Empleado empleado) {
-		
+		if (empleado == null) {
+			return;
+		}
+
+		for (Usuario u : usuariosRegistrados) {
+			if (u.getNombreUsuario().equals(empleado.getNombreUsuario())) {
+				return;
+			}
+		}
+		usuariosRegistrados.add(empleado);
+		System.out.println("Empleado añadido al sistema: " + empleado.getNombreUsuario());
+		return;
 	}
 
 	public void eliminarEmpleado(Empleado empleado) {
+		if (empleado == null) {
+			return;
+		}
 
+		if (usuariosRegistrados.contains(empleado)) {
+			usuariosRegistrados.remove(empleado);
+			System.out.println("Empleado eliminado del sistema: " + empleado.getNombreUsuario());
+		}
+		return;
 	}
 
 	// Métodos del Cliente Venta
@@ -138,7 +157,8 @@ public class Aplicacion {
 
 	public void crearPedidoAPartirDeCarrito() {
 	}
-
+	
+	
 	public void cancelarPedido(SolicitudPedido pedido, Usuario usuario) {
 	}
 

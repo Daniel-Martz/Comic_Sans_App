@@ -9,10 +9,11 @@ import tiempo.DateTimeSimulado;
 public class SistemaEstadisticas {
 
 	private static SistemaEstadisticas instancia;
+	
 	private SistemaEstadisticas() {
 	}
 	
-	public SistemaEstadisticas getInstancia() {
+	public static SistemaEstadisticas getInstancia() {
 		if (instancia == null) {
 			instancia = new SistemaEstadisticas();
 		}
