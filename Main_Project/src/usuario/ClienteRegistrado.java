@@ -1,6 +1,7 @@
 package usuario;
 import java.util.*;
 import notificacion.NotificacionCliente;
+import notificacion.NotificacionOferta;
 import solicitud.SolicitudPedido;
 import producto.Reseña;
 import solicitud.Oferta;
@@ -53,6 +54,16 @@ public class ClienteRegistrado extends Usuario {
 
 	public void eliminarProductoDeCarteraDeIntercambio(ProductoSegundaMano p) {
 		this.cartera.eliminarProducto(p);
+	}
+
+	public void realizarOferta(Set<ProductoSegundaMano> productosOfertados, Set<ProductoSegundaMano> productosSolicitados, ClienteRegistrado destinatario) {
+		Oferta ofertaRealizada = new Oferta(new DateTimeSimulado(),  destinatario, this, productosOfertados, productosSolicitados);
+		destinatario.recibirOferta(ofertaRealizada);
+		NotificacionOferta notif = new NotificacionOferta("Nueva oferta recibida de " + this.nombreUsuario, new DateTimeSimulado(), ofertaRealizada);
+	}
+	
+	public void recibirOferta(Oferta o) {
+		this.ofertasRecibidas.add(o);
 	}
 	
 	public void aceptarOferta(Oferta o) {

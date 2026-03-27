@@ -9,7 +9,7 @@ package usuario;
 public abstract class Usuario {
 	
 	/** El nombre de usuario. */
-	private String nombreUsuario;
+	protected String nombreUsuario;
 	
 	/** El dni del usuario. */
 	private String dni;
