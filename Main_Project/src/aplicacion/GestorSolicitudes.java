@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.util.*;
+import producto.*;
 import solicitud.*;
 
 public class GestorSolicitudes {
@@ -23,14 +24,43 @@ public class GestorSolicitudes {
 	}
 
 	public void añadirPedido(SolicitudPedido p) {
+		if(p == null)
+		{
+			throw new IllegalArgumentException("El pedido no es valido");
+		}
+		pedidos.add(p);
 	}
 	
-	public void validarProducto(SolicitudValidacion s, double precio, EstadoConservacion estado) {
-
+	public void eliminarPedido(SolicitudPedido p) {
+		pedidos.remove(p);
 	}
 	
-	public void aprobarIntercambio(SolicitudIntercambio s, String codigoOfertante, String codigoDestinatario) {
+	public void añadirSolicitudIntercambio(SolicitudIntercambio s)
+	{
+		if(s == null)
+		{
+			throw new IllegalArgumentException("La solicitud no es valida");
+		}
+		intercambios.add(s);
 	}
 	
+	public void eliminarSolicitudIntercambio(SolicitudIntercambio s)
+	{
+	 intercambios.remove(s);
+	}
+	
+	public void añadirSolicitudValidacion(SolicitudValidacion s)
+	{
+		if(s == null)
+		{
+			throw new IllegalArgumentException("La solicitud no es valida");
+		}
+		validaciones.add(s);
+	}
+	
+	public void eliminarSolicitudValidacion(SolicitudValidacion s)
+	{
+		validaciones.remove(s);
+	}
 }
 
