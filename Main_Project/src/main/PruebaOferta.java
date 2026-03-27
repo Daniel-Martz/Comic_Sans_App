@@ -1,13 +1,19 @@
 package main;
 
 
+import java.io.File;
+import java.util.List;
+
 import aplicacion.*;
+import producto.EstadoConservacion;
+import solicitud.SolicitudValidacion;
 import usuario.*;
 
 public class PruebaOferta {
 	public static void main(String[] args) {
 		Gestor gestor;
-		Cliente cliente;
+		ClienteRegistrado cliente;
+		Empleado empleado;
 		Usuario usuarioActual;
 		Aplicacion app = Aplicacion.getInstancia();
 		
@@ -31,13 +37,85 @@ public class PruebaOferta {
 		app.iniciarSesion("Matteo", "Artunedo");
 		
 		usuarioActual = app.getUsuarioActual();
-		if( usuarioActual instanceof Cliente) {
-			cliente = (Cliente)usuarioActual;
+		if( usuarioActual instanceof ClienteRegistrado) {
+			cliente = (ClienteRegistrado)usuarioActual;
+		}
+		else {
+			return;
+		}
+		
+		cliente.añadirProductoACarteraDeIntercambio("Peluche de perro", "Es un peluche muy bonito y savecito", null);
+		
+		app.cerrarSesion();
+		
+		app.iniciarSesion("Rodrigo", "Diaz");
+		
+		usuarioActual = app.getUsuarioActual();
+		if( usuarioActual instanceof ClienteRegistrado) {
+			cliente = (ClienteRegistrado)usuarioActual;
+		}
+		else {
+			return;
+		}
+		
+		cliente.añadirProductoACarteraDeIntercambio("Camion de bomberos", "Un camion con 4 ruedas, es increible!", null);
+		
+		app.cerrarSesion();
+		
+		app.iniciarSesion("Federico", "123456");
+		
+		usuarioActual = app.getUsuarioActual();
+		if( usuarioActual instanceof Empleado) {
+			empleado = (Empleado)usuarioActual;
+		}
+		else {
+			return;
+		}
+		
+		List<SolicitudValidacion> solicitudes = GestorSolicitudes.getInstancia().getValidaciones();
+		empleado.validarProducto(solicitudes.get(0), 2.4, EstadoConservacion.MUY_BUENO);
+		empleado.validarProducto(solicitudes.get(1), 1, EstadoConservacion.MUY_USADO);
+		
+		
+		app.cerrarSesion();
+		
+		app.iniciarSesion("Rodrigo", "Diaz");
+		
+		usuarioActual = app.getUsuarioActual();
+		if( usuarioActual instanceof ClienteRegistrado) {
+			cliente = (ClienteRegistrado)usuarioActual;
 		}
 		else {
 			return;
 		}
 		
 		
+		cliente.pagarValidacion(null, 0, 0, null);
+		
+		app.cerrarSesion();
+		app.iniciarSesion("Matteo", "Artunedo");
+		
+		usuarioActual = app.getUsuarioActual();
+		if( usuarioActual instanceof ClienteRegistrado) {
+			cliente = (ClienteRegistrado)usuarioActual;
+		}
+		else {
+			return;
+		}
+		
+		cliente.pagarValidacion(null, 0, 0, null);
+		
+		cliente.realizarOferta(cliente.getCartera().getProductos(), app.getCatalogo().get, cliente);
+		
+		app.cerrarSesion();
+		app.iniciarSesion("Federico", "Artunedo");
+		
+		usuarioActual = app.getUsuarioActual();
+		if( usuarioActual instanceof ClienteRegistrado) {
+			cliente = (ClienteRegistrado)usuarioActual;
+		}
+		else {
+			return;
+		}
 	}
 }

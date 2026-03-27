@@ -1,5 +1,6 @@
 package usuario;
 
+import java.io.File;
 import java.util.*;
 import notificacion.*;
 import producto.*;
@@ -9,8 +10,8 @@ import aplicacion.*;
 
 public class ClienteRegistrado extends Usuario {
 	private Set<NotificacionDeseada> configuracionNotificacionClientees = new HashSet<NotificacionDeseada>();
-	private Cartera cartera;
-	private Carrito carrito;
+	private Cartera cartera = new Cartera();
+	private Carrito carrito = new Carrito();
 	private List<NotificacionCliente> notificaciones = new ArrayList<>();
 	private List<SolicitudPedido> pedidos = new ArrayList<>();
 	private List<Reseña> reseñas = new ArrayList<>();
@@ -42,8 +43,9 @@ public class ClienteRegistrado extends Usuario {
 	}
 	
 	
-	public void añadirProductoACarteraDeIntercambio(ProductoSegundaMano p) {
-		this.cartera.añadirProducto(p);
+	public void añadirProductoACarteraDeIntercambio(String nombre, String descripcion, File imagen) {
+		
+		this.cartera.añadirProducto(new ProductoSegundaMano(nombre, descripcion, imagen));
 	}
 
 	public void eliminarProductoDeCarteraDeIntercambio(ProductoSegundaMano p) {
@@ -72,6 +74,62 @@ public class ClienteRegistrado extends Usuario {
 		app.crearSolicitudIntercambio(o);
 	}
 	
+	/**
+	 * @return the configuracionNotificacionClientees
+	 */
+	public Set<NotificacionDeseada> getConfiguracionNotificacionClientees() {
+		return configuracionNotificacionClientees;
+	}
+
+	/**
+	 * @return the cartera
+	 */
+	public Cartera getCartera() {
+		return cartera;
+	}
+
+	/**
+	 * @return the carrito
+	 */
+	public Carrito getCarrito() {
+		return carrito;
+	}
+
+	/**
+	 * @return the notificaciones
+	 */
+	public List<NotificacionCliente> getNotificaciones() {
+		return notificaciones;
+	}
+
+	/**
+	 * @return the pedidos
+	 */
+	public List<SolicitudPedido> getPedidos() {
+		return pedidos;
+	}
+
+	/**
+	 * @return the reseñas
+	 */
+	public List<Reseña> getReseñas() {
+		return reseñas;
+	}
+
+	/**
+	 * @return the ofertasRealizadas
+	 */
+	public List<Oferta> getOfertasRealizadas() {
+		return ofertasRealizadas;
+	}
+
+	/**
+	 * @return the ofertasRecibidas
+	 */
+	public List<Oferta> getOfertasRecibidas() {
+		return ofertasRecibidas;
+	}
+
 	public void rechazarOferta(Oferta o) {
 		this.ofertasRecibidas.remove(o);
 		o.getDestinatario().eliminarOferta(o);
@@ -132,6 +190,16 @@ public class ClienteRegistrado extends Usuario {
 	    validacion.añadirPagoValidacion(pago);
 
 	    System.out.println("Pago de validación realizado con éxito.");
+	}
+	
+	public List<ProductoSegundaMano> getProductosSegundaManoDisponibles(){
+		List<ProductoSegundaMano> prods = new LinkedList<ProductoSegundaMano>();
+		for(ProductoSegundaMano p : this.cartera.getProductosSegundaMano()) {
+			if(!p.estaBloqueado()) {
+				prods.add(p);
+			}
+		}
+		return prods;
 	}
 	
 }

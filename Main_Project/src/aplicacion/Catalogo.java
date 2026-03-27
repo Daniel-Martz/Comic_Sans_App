@@ -220,4 +220,5 @@ public class Catalogo {
 	public List<LineaProductoVenta> obtenerProductosAModificarFiltrados(String prompt) {
 		return new ArrayList<>();
 	}
+
 }
