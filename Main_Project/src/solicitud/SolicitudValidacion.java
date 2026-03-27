@@ -34,11 +34,11 @@ public class SolicitudValidacion extends Solicitud{
 	 * @param precio el precio
 	 * @param estado el estado
 	 */
-	public boolean validarProducto(int precio, EstadoConservacion estado) {
-		if (productoAValidar.validarProducto(precio, estado) == true) {
-			return true;
+	public void validarProducto(double precio, EstadoConservacion estado) {
+		if(precio < 0) {
+			return;
 		}
-		else return false;
+		productoAValidar.validarProducto(precio, estado);
 	}
 	
 	

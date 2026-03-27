@@ -53,11 +53,10 @@ public class ProductoSegundaMano extends Producto{
 		this.datosValidacion = datosValidacion;
 	}
 		
-	public boolean validarProducto(int precio, EstadoConservacion estado)
+	public void validarProducto(double precio, EstadoConservacion estado)
 	{
 		this.validado = true;
 		this.datosValidacion = new DatosValidacion(precio, estado);
-		return true;
 	}
 	
 	// public boolean pasaFiltro(Filtro filtroIntercambio, String prompt)
