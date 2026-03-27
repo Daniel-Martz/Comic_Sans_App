@@ -1,7 +1,6 @@
 package usuario;
 
 import java.util.*;
-
 import notificacion.*;
 import producto.*;
 import solicitud.*;
@@ -104,7 +103,7 @@ public class ClienteRegistrado extends Usuario {
 		this.pedidos.remove(pedido);
 	}
 	
-	public void pagarPedido(SolicitudPedido pedido, int numTarjeta, int cvv, DateTimeSimulado fechaCaducidad) {
+	public void pagarPedido(SolicitudPedido pedido, String numTarjeta, String cvv, DateTimeSimulado fechaCaducidad) {
 		
 	}
 	
@@ -113,8 +112,26 @@ public class ClienteRegistrado extends Usuario {
 		carrito.vaciarCarrito();
 	}
 	
-	public void pagarValidacion(SolicitudValidacion validacion, int numTarjeta, int cvv, DateTimeSimulado fechaCaducidad) {
+	public void pagarValidacion(SolicitudValidacion validacion, String numTarjeta, String cvv, DateTimeSimulado fechaCaducidad) {
+		if(validacion == null || fechaCaducidad == null)
+		{
+			throw new IllegalArgumentException("La solicitud de validación no puede ser nula.");
+		}
 		
+		if(validacion.getPagoValidacion() != null)
+		{
+			throw new IllegalArgumentException("La solicitud de validación ya tiene un pago asociado.");
+		}
+
+		Pago pago = SistemaPago.getInstancia().procesarPago(validacion.getProductoAValidar().getDatosValidacion().getPrecioEstimadoProducto(), numTarjeta, cvv, fechaCaducidad);
+
+	    if (pago == null) {
+	        throw new IllegalStateException("El pago de la validación no se ha podido procesar.");
+	    }
+		
+	    validacion.añadirPagoValidacion(pago);
+
+	    System.out.println("Pago de validación realizado con éxito.");
 	}
 	
 }

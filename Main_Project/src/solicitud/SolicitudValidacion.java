@@ -51,4 +51,13 @@ public class SolicitudValidacion extends Solicitud{
 	public void añadirPagoValidacion(Pago pagoValidacion) {
 		this.pagoValidacion = pagoValidacion;
 	}
+
+	public ProductoSegundaMano getProductoAValidar() {
+		return productoAValidar;
+	}
+
+	public Pago getPagoValidacion() {
+		return pagoValidacion;
+	}
+	
 }
