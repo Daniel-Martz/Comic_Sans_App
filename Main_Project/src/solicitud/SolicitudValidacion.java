@@ -34,7 +34,10 @@ public class SolicitudValidacion extends Solicitud{
 	 * @param precio el precio
 	 * @param estado el estado
 	 */
-	public void validarProducto(int precio, EstadoConservacion estado) {
+	public void validarProducto(double precio, EstadoConservacion estado) {
+		if(precio < 0) {
+			return;
+		}
 		productoAValidar.validarProducto(precio, estado);
 	}
 	

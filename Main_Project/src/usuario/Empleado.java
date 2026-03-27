@@ -1,12 +1,18 @@
 package usuario;
 import java.util.*;
-import notificacion.NotificacionEmpleado;
+
+import notificacion.*;
+import producto.*;
+import solicitud.*;
 public class Empleado extends UsuarioGestion {
+	
 	private List<NotificacionEmpleado> notificaciones = new ArrayList<>();
+	private Set<Permiso> permisos= new HashSet<Permiso>();
+
+	
 	public Empleado(String username, String DNI, String password) {
 		super(username, DNI, password);
 	}
-	private Set<Permiso> permisos= new HashSet<Permiso>();
 	
 	public void añadirPermiso(Permiso permiso) {
 		this.permisos.add(permiso);
@@ -16,11 +22,26 @@ public class Empleado extends UsuarioGestion {
 		this.permisos.remove(permiso);
 	}
 	
-	public void anadirNotificacion(NotificacionEmpleado n) {
+	public void añadirNotificacion(NotificacionEmpleado n) {
 		this.notificaciones.add(n);
 	}
+	
 	public void eliminarNotificacion(NotificacionEmpleado n) {
 		this.notificaciones.remove(n);
+	}
+	
+	public void aprobarIntercambio(SolicitudIntercambio s, String codigoOfertante, String codigoDestinatario) {
+		if(!permisos.contains(Permiso.INTERCAMBIOS)){
+	        throw new IllegalStateException("No tienes permisos para aprobar intercambios");
+		}
+		
+	}
+	
+	public void validarProductos(SolicitudValidacion s, double precio, EstadoConservacion estado) {
+		if(!permisos.contains(Permiso.INTERCAMBIOS)){
+	        throw new IllegalStateException("No tienes permisos para aprobar validar productos");
+		}
+		s.validarProducto(precio, estado);
 	}
 }
 
