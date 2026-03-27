@@ -43,4 +43,7 @@ public class SolicitudPedido extends Solicitud{
 		return true;
 	}
 	
+	public EstadoPedido getEstado() {
+	    return estado;
+	}
 }
