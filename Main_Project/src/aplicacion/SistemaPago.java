@@ -53,6 +53,7 @@ public class SistemaPago {
 		
 		System.out.println("¡Pago de " + importe + "€ procesado con éxito!");
 		
-		return null;
+		Pago p = new Pago(new DateTimeSimulado(), importe);
+		return p;
 	}
 }

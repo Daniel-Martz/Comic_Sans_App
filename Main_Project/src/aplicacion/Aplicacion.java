@@ -9,6 +9,7 @@ import notificacion.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.*;
 
 public class Aplicacion {
 
@@ -74,6 +75,10 @@ public class Aplicacion {
 
 		System.out.println("Nueva cuenta de cliente creada con éxito para: " + nombreUser);
 		return;
+	}
+	
+	public List<Usuario> getUsuariosRegistrados() {
+		return Collections.unmodifiableList(this.usuariosRegistrados);
 	}
 	
 	public void añadirGestor(String nombreUsuario, String DNI, String contraseña) {
@@ -146,7 +151,7 @@ public class Aplicacion {
 		for (Usuario u : usuariosRegistrados) {
 			if (u.getNombreUsuario().equals(nombreUsuario)) {
 				if (u.verificarContraseña(contraseñaAntigua)) {
-					u.setConstraseña(contraseñaAntigua, contraseñaNueva);
+					u.setContraseña(contraseñaAntigua, contraseñaNueva);
 					System.out.println("Contraseña cambiada con éxito para: " + nombreUsuario);
 					return;
 				} else {

@@ -34,11 +34,13 @@ public class Empleado extends UsuarioGestion {
 		if(!permisos.contains(Permiso.INTERCAMBIOS)){
 	        throw new IllegalStateException("No tienes permisos para aprobar intercambios");
 		}
+		s.aprobarIntercambio(codigoOfertante, codigoDestinatario);
+		System.out.println("Intercambio realizado!");
 		
 	}
 	
 	public void validarProducto(SolicitudValidacion s, double precio, EstadoConservacion estado) {
-		if(!permisos.contains(Permiso.INTERCAMBIOS)){
+		if(!permisos.contains(Permiso.VALIDACIONES)){
 	        throw new IllegalStateException("No tienes permisos para aprobar validar productos");
 		}
 		s.validarProducto(precio, estado);
