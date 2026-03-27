@@ -98,6 +98,13 @@ public class Categoria {
     public Set<LineaProductoVenta> obtenerProductosCategoria() {
     	return this.productosCategoria;
     }
+
+    /**
+     * Establecer el nombre de la categoria. 
+     */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
     
     
     

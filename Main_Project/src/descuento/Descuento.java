@@ -44,4 +44,16 @@ public abstract class Descuento {
 		return fechaFin;
 	}
 
+
+	public Set<LineaProductoVenta> getProductosRebajados() {
+		return productosRebajados;
+	}
+
+
+	public Set<Categoria> getCategoriasRebajadas() {
+		return categoriasRebajadas;
+	}
+	
+
+
 }
