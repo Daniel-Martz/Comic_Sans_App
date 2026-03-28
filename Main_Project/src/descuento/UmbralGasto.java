@@ -1,6 +1,6 @@
 package descuento;
 
-import java.time.DateTimeSimulado;
+import tiempo.*;
 
 public abstract class UmbralGasto extends Descuento {
 	private double umbral;

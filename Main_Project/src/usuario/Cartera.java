@@ -14,8 +14,8 @@ public class Cartera{
 		this.productos.remove(o);
 	}
 	
-	public List<ProductoSegundaMano> getProductosSegundaMano(){
-		return Collections.unmodifiableList(productos);
+	public Set<ProductoSegundaMano> getProductosSegundaMano(){
+		return Collections.unmodifiableSet(productos);
 	}
 	@Override
 	public String toString() {
@@ -30,5 +30,4 @@ public class Cartera{
 	}
 	
 	
-
 }
