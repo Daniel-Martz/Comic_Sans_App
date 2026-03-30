@@ -12,7 +12,7 @@ public class NotificacionOferta extends NotificacionCliente {
 		this.oferta = o;
 	}
 
-	public Oferta getOfertas() {
+	public Oferta getOferta() {
 		return oferta;
 	}
 }

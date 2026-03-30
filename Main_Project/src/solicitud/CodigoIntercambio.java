@@ -11,4 +11,7 @@ public class CodigoIntercambio {
 		return this.codigo == codigo;
 	}
 
-}	
+	public String getCodigo() {
+		return codigo;
+	}
+}
