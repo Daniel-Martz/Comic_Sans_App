@@ -1,0 +1,52 @@
+package producto;
+import java.io.File;
+import java.util.*;
+
+
+public class Pack extends LineaProductoVenta{
+	private Map<LineaProductoVenta, Integer> pack = new HashMap<>();
+
+  public Pack(String nombre, String descripcion, File foto, int stock, double precio){
+    super(nombre, descripcion, foto, stock, precio);
+  }
+
+  public void añadirProductoAPack(LineaProductoVenta l, Integer i){
+    if(l == null || i < 0){
+      throw new IllegalArgumentException("Los argumentos introducidos no son validos");
+    }
+    else if(i * this.stock > l.getStock()){
+      throw new IllegalArgumentException("El stock necesario para el paquete supera el stock actual del producto");
+    }
+	  this.pack.merge(l, i, Integer::sum);
+  }
+
+public void eliminarProductoDePack(LineaProductoVenta l, Integer i){
+    if(l == null || i < 0){
+      throw new IllegalArgumentException("Los argumentos introducidos no son validos");
+    }
+    if(pack.get(l) > i){
+      pack.put(l, pack.get(l) - i);
+    }else{
+      pack.remove(l);
+    }
+  }
+  
+  public void añadirProductosAPack(Map<LineaProductoVenta, Integer> productos) {
+	    if (productos == null) {
+	        throw new IllegalArgumentException("La lista de productos no puede ser nula");
+	    }
+	    
+	    for (Map.Entry<LineaProductoVenta, Integer> entry : productos.entrySet()) {
+	    	this.añadirProductoAPack(entry.getKey(), entry.getValue());
+	    }
+	}
+
+	public Map<LineaProductoVenta, Integer> getProductosPack() {
+		if(pack.isEmpty()) {
+	        throw new IllegalStateException("Este pack no contiene productos");
+		}
+	    return pack;
+	}
+
+
+}
