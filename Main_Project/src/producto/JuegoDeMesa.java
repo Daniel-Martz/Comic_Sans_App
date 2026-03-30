@@ -7,7 +7,7 @@ public class JuegoDeMesa extends LineaProductoVenta {
 	private int numeroJugadores;
 	private int edadMinima;
 	private int edadMaxima;
-	
+  private TipoJuegoMesa tipo;	
 	public JuegoDeMesa(String nombre, String descripcion, File foto, int stock, double precio,
 					   int numeroJugadores, int edadMinima, int edadMaxima, TipoJuegoMesa tipo) {
 		
@@ -15,6 +15,7 @@ public class JuegoDeMesa extends LineaProductoVenta {
 		this.numeroJugadores = numeroJugadores;
 		this.edadMinima = edadMinima;
 		this.edadMaxima = edadMaxima;
+    this.tipo = tipo;
 	}
 
 	public int getNumeroJugadores() {
@@ -40,4 +41,12 @@ public class JuegoDeMesa extends LineaProductoVenta {
 	public void setEdadMaxima(int edadMaxima) {
 		this.edadMaxima = edadMaxima;
 	}
+
+  public TipoJuegoMesa getTipoJuegoDeMesa(){
+    return this.tipo;
+  }
+
+  public void setTipoJuegoDeMesa(TipoJuegoMesa tipo){
+    this.tipo = tipo;
+  }
 }
