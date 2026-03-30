@@ -1,10 +1,12 @@
 package aplicacion;
 
 import producto.*;
+
 import usuario.*;
 import solicitud.*;
 import tiempo.DateTimeSimulado;
 import notificacion.*;
+import categoria.*;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -311,34 +313,98 @@ public class Aplicacion {
 			int añoCaducidad) {
 	}
 
+	
+	
 	// Notificación Empleado
-	private Notificacion crearNotificacionEmpleado(Solicitud solicitud) {
-		return null;
+	//Metodo para cuando se recibe una nueva solicitud que validar
+	private Notificacion crearNotificacionSolicitudEmpleado(Solicitud solicitud) {
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    NotificacionEmpleado notif = new NotificacionEmpleado("Nueva solicitud pendiente de gestión", ahora);
+	    notif.addSolicitud(solicitud);
+	    return notif;
 	}
-
 	// Notificación Cliente
-	private Notificacion crearNotificacionIntercambio(SolicitudIntercambio solicitud) {
-		return null;
+	//He añadido el string codigo porque se tienen que crear una noti para el ofertante y el destinatario
+	private Notificacion crearNotificacionIntercambio(SolicitudIntercambio solicitud, String codigo) {
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    DetallesIntercambio detalles = solicitud.getInformacionIntercambio();
+	    return new NotificacionIntercambio("Tu intercambio ha sido confirmado. Tu código de recogida es: " + codigo, ahora, codigo, detalles);
 	}
 
+	//Metodo para cuando se recibe una oferta
 	private Notificacion crearNotificacionOferta(Oferta oferta) {
-		return null;
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    NotificacionOferta notif = new NotificacionOferta("Has recibido una nueva oferta de " + oferta.getOfertante().getNombreUsuario(), ahora, oferta);
+	    return notif;
 	}
-
-	private Notificacion crearNotificacionProducto(LineaProductoVenta producto) {
-		return null;
+	//Metodo para cuando se añade un producto nuevo
+	private Notificacion crearNotificacionNuevoProducto(LineaProductoVenta producto) {
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    NotificacionProducto notif = new NotificacionProducto("Nuevo producto disponible: " + producto.getNombre(), ahora);
+	    notif.addProducto(producto);
+	    return notif;
 	}
-
+	//Metodo para cuando se rebaja un producto
+	private Notificacion crearNotificacionDescuentoProducto(LineaProductoVenta producto) {
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    NotificacionProducto notif = new NotificacionProducto("¡Nuevo descuento disponible en: " + producto.getNombre() + "!", ahora);
+	    notif.addProducto(producto);
+	    return notif;
+	}
+	//Metodo para cuando se rebaja una categoria
+	private Notificacion crearNotificacionDescuentoCategoria(Categoria categoria) {
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    NotificacionProducto notif = new NotificacionProducto("¡Nueva promoción en la categoría: " + categoria.getNombre() + "!", ahora);
+	    for (LineaProductoVenta p : categoria.obtenerProductosCategoria()) {
+	        notif.addProducto(p);
+	    }
+	    return notif;
+	}
+	//Metodo para cuando se recomienda un producto
+	private Notificacion crearNotificacionRecomendacion(LineaProductoVenta producto) {
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    NotificacionProducto notif = new NotificacionProducto("Te recomendamos este producto: " + producto.getNombre(), ahora);
+	    notif.addProducto(producto);
+	    return notif;
+	}
+	//Metodo para cuando se ha validado un producto
 	private Notificacion crearNotificacionValidacion(ProductoSegundaMano producto) {
-		return null;
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    return new NotificacionValidacion("Tu producto '" + producto.getNombre() + "' ha sido validado", ahora, producto);
 	}
-
-	private Notificacion crearNotificacionPedido(SolicitudPedido solicitud) {
-		return null;
+	//Metodo para cuando se ha pagado correctamente
+	private Notificacion crearNotificacionPagoConfirmado(SolicitudPedido solicitud) {
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    return new NotificacionPedido(
+	        "Tu pago ha sido confirmado con éxito. Tu pedido está siendo preparado.", ahora, solicitud);
+	}
+	//Metodo para cuando se ha rechazado un pago
+	private Notificacion crearNotificacionPagoRechazado(SolicitudPedido solicitud) {
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    return new NotificacionPedido("Tu pago ha sido rechazado. Por favor, revisa los datos de tu tarjeta e inténtalo de nuevo.", ahora, solicitud);
+	}
+	//Metodo para cuando se actualiza el estado del pedido
+	private Notificacion crearNotificacionEstadoPedido(SolicitudPedido solicitud) {
+	    DateTimeSimulado ahora = new DateTimeSimulado();
+	    String mensaje;
+	    switch (solicitud.getEstado()) {
+	        case PENDIENTE_DE_PAGO:
+	            mensaje = "Tu pedido está pendiente de pago. Recuerda completarlo antes de que caduque.";
+	            break;
+	        case LISTO_PARA_RECOGER:
+	            mensaje = "Tu pedido está listo para recoger. Preséntate en la tienda con tu DNI y el código de recogida.";
+	            break;
+	        case RECOGIDO:
+	            mensaje = "Tu pedido ha sido recogido. ¡Gracias por tu compra!";
+	            break;
+	        default:
+	            mensaje = "Tu pedido ha sido actualizado.";
+	            break;
+	    }
+	    return new NotificacionPedido(mensaje, ahora, solicitud);
 	}
 
 	// Envío de notificaciones
-
 	public void enviarNotificacion(Usuario usuario, Notificacion notificacion) {
 		if(usuario == null || notificacion == null)
 		{
