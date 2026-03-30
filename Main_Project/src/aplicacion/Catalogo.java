@@ -6,7 +6,11 @@ import categoria.*;
 import producto.*;
 import solicitud.*;
 import filtro.*;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Catalogo {
 
@@ -90,9 +94,162 @@ public class Catalogo {
 		}
 	}
 
-	// falta
-	// esta::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	public void añadirProductosDesdeFichero(File f) {
+	public void añadirProductosDesdeFichero(File f) throws IOException {
+		if (f == null || !f.exists()) {
+			throw new IllegalArgumentException("El fichero no existe o no es valido.");
+		}
+		try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+
+			// Numero total de productos
+			String lineaNumProductos = br.readLine();
+			if (lineaNumProductos == null) {
+				throw new IllegalArgumentException("Fichero vacio.");
+			}
+			int numProductos;
+			try {
+				numProductos = Integer.parseInt(lineaNumProductos.trim());
+			} catch (NumberFormatException e) {
+				throw new IllegalArgumentException("El número de productos no es válido");
+			}
+
+			for (int i = 0; i < numProductos; i++) {
+
+				// Nombre
+				String nombre = br.readLine();
+				if (nombre == null)
+					throw new IllegalArgumentException("Falta nombre en producto " + (i + 1));
+				nombre = nombre.trim();
+
+				// Descripcion
+				String descripcion = br.readLine();
+				if (descripcion == null)
+					throw new IllegalArgumentException("Falta descripción en producto " + (i + 1));
+				descripcion = descripcion.trim();
+
+				// Precio
+				String lineaPrecio = br.readLine();
+				if (lineaPrecio == null)
+					throw new IllegalArgumentException("Falta precio en producto " + (i + 1));
+				double precio;
+				try {
+					precio = Double.parseDouble(lineaPrecio.trim());
+					if (precio < 0)
+						throw new IllegalArgumentException("El precio no puede ser negativo en producto " + (i + 1));
+				} catch (NumberFormatException e) {
+					throw new IllegalArgumentException("Precio inválido en producto " + (i + 1));
+				}
+
+				// Foto
+				String rutaFoto = br.readLine();
+				if (rutaFoto == null)
+					throw new IllegalArgumentException("Falta la foto en producto " + (i + 1));
+				File foto = new File(rutaFoto.trim());
+
+				// Stock
+				String lineaStock = br.readLine();
+				if (lineaStock == null)
+					throw new IllegalArgumentException("Falta stock en producto " + (i + 1));
+				int stock;
+				try {
+					stock = Integer.parseInt(lineaStock.trim());
+					if (stock < 0)
+						throw new IllegalArgumentException("El stock no puede ser negativo en producto " + (i + 1));
+				} catch (NumberFormatException e) {
+					throw new IllegalArgumentException("Stock inválido en producto " + (i + 1));
+				}
+
+				// Categoria
+				String nombreCategoria = br.readLine();
+				if (nombreCategoria == null)
+					throw new IllegalArgumentException("Falta categoría en producto " + (i + 1));
+				nombreCategoria = nombreCategoria.trim();
+				Categoria categoria = buscarCategoriaPorNombre(nombreCategoria);
+
+				// Tipo de producto
+				String tipo = br.readLine();
+				if (tipo == null)
+					throw new IllegalArgumentException("Falta tipo en producto " + (i + 1));
+				tipo = tipo.trim();
+
+				// Atributos especificos
+				String lineaAtributos = br.readLine();
+				if (lineaAtributos == null)
+					throw new IllegalArgumentException("Faltan atributos en producto " + (i + 1));
+				String[] atributos = lineaAtributos.trim().split(";");
+
+				LineaProductoVenta nuevo;
+				switch (tipo) {
+				case "Comic": {
+					if (atributos.length < 4)
+						throw new IllegalArgumentException("Atributos insuficientes para Comic en producto " + (i + 1));
+					int numeroPaginas;
+					try {
+						numeroPaginas = Integer.parseInt(atributos[0].trim());
+					} catch (NumberFormatException e) {
+						throw new IllegalArgumentException("Número de páginas inválido en producto " + (i + 1));
+					}
+					String autor = atributos[1].trim();
+					String editorial = atributos[2].trim();
+					int añoPublicacion;
+					try {
+						añoPublicacion = Integer.parseInt(atributos[3].trim());
+					} catch (NumberFormatException e) {
+						throw new IllegalArgumentException("Año de publicación inválido en producto " + (i + 1));
+					}
+					nuevo = new Comic(nombre, descripcion, foto, stock, precio, 0, numeroPaginas, autor, editorial,
+							añoPublicacion);
+					break;
+				}
+				case "JuegoDeMesa": {
+					if (atributos.length < 4)
+						throw new IllegalArgumentException(
+								"Atributos insuficientes para JuegoDeMesa en producto " + (i + 1));
+					int numeroJugadores, edadMinima, edadMaxima;
+					try {
+						numeroJugadores = Integer.parseInt(atributos[0].trim());
+						edadMinima = Integer.parseInt(atributos[1].trim());
+						edadMaxima = Integer.parseInt(atributos[2].trim());
+					} catch (NumberFormatException e) {
+						throw new IllegalArgumentException(
+								"Atributos numéricos inválidos en JuegoDeMesa producto " + (i + 1));
+					}
+					TipoJuegoMesa tipoJuego;
+					try {
+						tipoJuego = TipoJuegoMesa.valueOf(atributos[3].trim());
+					} catch (IllegalArgumentException e) {
+						throw new IllegalArgumentException("Tipo de juego inválido en producto " + (i + 1));
+					}
+					nuevo = new JuegoDeMesa(nombre, descripcion, foto, stock, precio, numeroJugadores, edadMinima,
+							edadMaxima, tipoJuego);
+					break;
+				}
+				case "Figura": {
+					if (atributos.length < 5)
+						throw new IllegalArgumentException(
+								"Atributos insuficientes para Figura en producto " + (i + 1));
+					String marca = atributos[0].trim();
+					String material = atributos[1].trim();
+					double dX, dY, dZ;
+					try {
+						dX = Double.parseDouble(atributos[2].trim());
+						dY = Double.parseDouble(atributos[3].trim());
+						dZ = Double.parseDouble(atributos[4].trim());
+					} catch (NumberFormatException e) {
+						throw new IllegalArgumentException("Dimensiones inválidas en Figura producto " + (i + 1));
+					}
+					nuevo = new Figura(nombre, descripcion, foto, stock, precio, 0, marca, material, dX, dY, dZ);
+					break;
+				}
+				default:
+					throw new IllegalArgumentException(
+							"Tipo de producto desconocido: '" + tipo + "' en producto " + (i + 1));
+				}
+
+				nuevo.añadirCategoria(categoria);
+				categoria.añadirProductoACategoria(nuevo);
+				this.productosNuevos.add(nuevo);
+			}
+		}
 	}
 
 	// Métodos para las categorías
@@ -117,6 +274,16 @@ public class Catalogo {
 		if (categoriasTienda.contains(c)) {
 			c.setNombre(nombreNuevo);
 		}
+	}
+
+	// Busca una categoria por nombre exacto
+	public Categoria buscarCategoriaPorNombre(String nombreCategoria) {
+		for (Categoria c : categoriasTienda) {
+			if (c.getNombre().equals(nombreCategoria)) {
+				return c;
+			}
+		}
+		return null;
 	}
 
 	// Métodos para los descuentos
@@ -239,5 +406,13 @@ public class Catalogo {
 	public List<LineaProductoVenta> obtenerProductosAModificarFiltrados(String prompt) {
 		return new ArrayList<>();
 	}
+
+  public String getNombresCategorias(){
+    String total = "";
+    for(Categoria cat : this.categoriasTienda){
+      total += cat.getNombre() + "\n";
+    }
+    return total;
+  }
 
 }

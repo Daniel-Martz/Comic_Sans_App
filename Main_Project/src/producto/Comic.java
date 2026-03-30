@@ -8,11 +8,11 @@ public class Comic extends LineaProductoVenta {
 	private int numeroPaginas;
 	private String autor;
 	private String editorial;
-	private DateTimeSimulado añoPublicacion;
+	private int añoPublicacion;
 	
 
 	public Comic(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas,
-				 int numeroPaginas, String autor, String editorial, DateTimeSimulado añoPublicacion) {
+				 int numeroPaginas, String autor, String editorial, int añoPublicacion) {
 		
 		super(nombre, descripcion, foto, stock, precio);
 		this.numeroPaginas = numeroPaginas;
@@ -50,12 +50,12 @@ public int getNumeroPaginas() {
 	}
 
 
-	public DateTimeSimulado getAñoPublicacion() {
+	public int getAñoPublicacion() {
 		return añoPublicacion;
 	}
 
 
-	public void setAñoPublicacion(DateTimeSimulado añoPublicacion) {
+	public void setAñoPublicacion(int añoPublicacion) {
 		this.añoPublicacion = añoPublicacion;
 	}
 
