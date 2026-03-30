@@ -145,9 +145,6 @@ public class Catalogo {
 					throw new IllegalArgumentException("Falta categoría en producto " + (i + 1));
 				nombreCategoria = nombreCategoria.trim();
 				Categoria categoria = buscarCategoriaPorNombre(nombreCategoria);
-				if (categoria == null)
-					throw new IllegalArgumentException(
-							"Categoría inexistente: '" + nombreCategoria + "' en producto " + (i + 1));
 
 				// Tipo de producto
 				String tipo = br.readLine();
@@ -390,5 +387,13 @@ public class Catalogo {
 	public List<LineaProductoVenta> obtenerProductosAModificarFiltrados(String prompt) {
 		return new ArrayList<>();
 	}
+
+  public String getNombresCategorias(){
+    String total = "";
+    for(Categoria cat : this.categoriasTienda){
+      total += cat.getNombre() + "\n";
+    }
+    return total;
+  }
 
 }
