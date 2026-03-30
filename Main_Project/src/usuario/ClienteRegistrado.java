@@ -192,9 +192,15 @@ public class ClienteRegistrado extends Usuario {
 		System.out.println("Pago del pedido realizado con éxito.");
 	}
 
-	public void realizarPedido() {
-		new SolicitudPedido(this, carrito.getProductos());
+	public SolicitudPedido realizarPedido() {
+		if(this.getCarrito().getProductos().isEmpty())
+		{
+	        throw new IllegalStateException("El carrito está vacío.");
+		}
+		SolicitudPedido pedido = new SolicitudPedido(this, carrito.getProductos());
+		this.pedidos.add(pedido);
 		carrito.vaciarCarrito();
+		return pedido;
 	}
 
 	public void pagarValidacion(SolicitudValidacion validacion, String numTarjeta, String cvv,
