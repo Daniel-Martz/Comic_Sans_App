@@ -56,6 +56,10 @@ public class LineaProductoVenta extends Producto {
 	        throw new IllegalArgumentException("La lista de productos no puede ser nula");
 	    }
 	    pack=productos;
+	    
+	    for (Map.Entry<LineaProductoVenta, Integer> entry : productos.entrySet()) {
+	    	pack.merge(entry.getKey(), entry.getValue(), Integer::sum);
+	    }
 	}
 	
 	public double obtenerPuntuacionMedia()

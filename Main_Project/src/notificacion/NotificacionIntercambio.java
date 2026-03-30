@@ -30,5 +30,11 @@ public class NotificacionIntercambio extends NotificacionCliente {
 	public void setDetallesIntercambio(DetallesIntercambio detallesIntercambio) {
 		this.detallesIntercambio = detallesIntercambio;
 	}
+
+	@Override
+	public String toString() {
+		return "NotificacionIntercambio [codigoIntercambio=" + codigoIntercambio + ", detallesIntercambio="
+				+ detallesIntercambio + "]";
+	}
 	
 }

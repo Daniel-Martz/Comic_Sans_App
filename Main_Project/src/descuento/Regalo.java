@@ -1,20 +1,25 @@
 package descuento;
-import java.time.DateTimeSimulado;
+import tiempo.*;
 import java.util.*;
-import producto.ProductoVenta;
+import producto.*;
 
 public class Regalo extends UmbralGasto {
-	private Set<ProductoVenta> productosRegalo= new HashSet<ProductoVenta>();
+	private Map<LineaProductoVenta, Integer> productosRegalo = new HashMap<>();
 
 	public Regalo(DateTimeSimulado fechaInicio, DateTimeSimulado fechaFin, double umbral) {
 		super(fechaInicio, fechaFin, umbral);
 	}
 	
-	public void añadirProductoRegalo(ProductoVenta prod) {
-		this.productosRegalo.add(prod);
+	public void añadirProductoRegalo(LineaProductoVenta prod, int unidades) {
+		productosRegalo.merge(prod, unidades, Integer::sum);
 	}
 
-	public void eliminarProductoRegalo(ProductoVenta prod) {
-		this.productosRegalo.remove(prod);
+	public void eliminarProductoRegalo(LineaProductoVenta prod, int unidades) {
+	    int unidadesActual = productosRegalo.getOrDefault(prod, 0);
+	    if (unidadesActual <= unidades) {
+	        productosRegalo.remove(prod);
+	    } else {
+	        productosRegalo.put(prod, unidadesActual - unidades);
+	    }
 	}
 }

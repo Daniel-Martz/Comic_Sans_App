@@ -35,6 +35,8 @@ public class Empleado extends UsuarioGestion {
     if (!permisos.contains(Permiso.INTERCAMBIOS)) {
       throw new IllegalStateException("No tienes permisos para aprobar intercambios");
     }
+    s.aprobarIntercambio(codigoOfertante, codigoDestinatario);
+    System.out.println("Intercambio realizado!");
 
   }
 
@@ -46,4 +48,5 @@ public class Empleado extends UsuarioGestion {
     System.out.println("La solicitud " + s + " ha sido validada correctamente. Se le ha asociado un precio " + precio
         + " y un estado " + estado);
   }
+
 }

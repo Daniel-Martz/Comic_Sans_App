@@ -1,5 +1,7 @@
 package notificacion;
 import solicitud.*;
+import tiempo.DateTimeSimulado;
+
 import java.util.*;
 
 public class NotificacionPedido extends NotificacionCliente {

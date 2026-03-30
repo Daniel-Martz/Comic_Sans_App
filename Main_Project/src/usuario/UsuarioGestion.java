@@ -6,12 +6,15 @@ import java.io.File;
 import java.util.*;
 
 import aplicacion.*;
+import categoria.Categoria;
 
 public abstract class UsuarioGestion extends Usuario {
 	public UsuarioGestion(String username, String DNI, String password) {
 		super(username, DNI, password);
 	}
 	
+	
+	//Metodos para productos
 	public void añadirProducto(String nombre, String descripcion, File foto, Integer stock, Double precio) {
 		LineaProductoVenta producto = new LineaProductoVenta(nombre, descripcion, foto, stock, precio);
 		Aplicacion.getInstancia().getCatalogo().añadirProducto(producto);
@@ -33,5 +36,29 @@ public abstract class UsuarioGestion extends Usuario {
 	public void modificarProducto() {
 		
 	}
+	
+	//Metodos para categorias 
+	
+	public void añadirCategoria(Categoria c) {
+		
+	}
+	
+	
+	public void eliminarCategoria(Categoria c) {
+		
+	}
+	
+	public void modificarCategoria(Categoria c) {
+		
+	}
+	
+	public void aplicarDescuento() {
+		
+	}
+	
+	public void eliminarDescuento() {
+		
+	}
+	
 }
 

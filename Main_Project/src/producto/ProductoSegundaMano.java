@@ -3,6 +3,8 @@ import java.io.File;
 import solicitud.*;
 import java.util.*;
 
+import aplicacion.GestorSolicitudes;
+
 public class ProductoSegundaMano extends Producto{
 	private boolean validado;
 	private Oferta ofertaRecibida;
@@ -15,6 +17,7 @@ public class ProductoSegundaMano extends Producto{
 		super(nombre, descripcion, foto);
 		this.validado = false;
 		this.solicitudValidacion = new SolicitudValidacion(this);
+		GestorSolicitudes.getInstancia().añadirSolicitudValidacion(solicitudValidacion);
 	}
 
 	public boolean isValidado() {

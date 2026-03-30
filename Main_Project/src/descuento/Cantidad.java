@@ -1,6 +1,6 @@
 package descuento;
 
-import java.time.DateTimeSimulado;
+import tiempo.*;
 
 public class Cantidad extends Descuento {
 	private int numeroComprados;

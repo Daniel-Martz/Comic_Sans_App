@@ -2,6 +2,7 @@ package notificacion;
 
 import java.util.*;
 import producto.*;
+import tiempo.DateTimeSimulado;
 
 public class NotificacionValidacion extends NotificacionCliente {
 	private Producto solicitudProductoSegundaMano; 
