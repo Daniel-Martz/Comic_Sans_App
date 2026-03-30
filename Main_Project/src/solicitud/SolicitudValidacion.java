@@ -51,4 +51,10 @@ public class SolicitudValidacion extends Solicitud{
 	public void añadirPagoValidacion(Pago pagoValidacion) {
 		this.pagoValidacion = pagoValidacion;
 	}
+
+	@Override
+	public String toString() {
+		return "SolicitudValidacion [pagoValidacion=" + pagoValidacion + ", productoAValidar=" + productoAValidar + "]";
+	}
+
 }
