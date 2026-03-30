@@ -25,4 +25,20 @@ public class ConfiguracionRecomendacion {
 		}
 		return instancia;
 	}
+	
+	public void configurarImportancia(int importanciaInteres, int importanciaResena, int importanciaNovedad) {
+	    if (importanciaInteres < 0 || importanciaResena < 0 || importanciaNovedad < 0) {
+	        throw new IllegalArgumentException("Las importancias no pueden ser negativas");
+	    }
+		this.importanciaInteres = importanciaInteres;				
+		this.importanciaResena = importanciaResena;		
+		this.importanciaNovedad = importanciaNovedad;
+	}
+	
+	public void configurarUnidades(int unidades) {
+		if(unidades <= 0) {
+			throw new IllegalArgumentException("El número de unidades recomendadas no pueden ser menores o iguales");
+		}
+		unidadesRecomendadas = unidades;
+	}
 }

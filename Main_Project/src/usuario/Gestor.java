@@ -24,5 +24,12 @@ public class Gestor extends UsuarioGestion {
 		e.eliminarPermiso(p);
 	}
 	
+	public void configurarImportancia(int interes, int reseña, int novedad) {
+		Aplicacion.getInstancia().getConfiguracionRecomendacion().configurarImportancia(interes, reseña, novedad);
+	}
+	
+	public void configurarUnidadesRecomendadas(int unidades) {
+		Aplicacion.getInstancia().getConfiguracionRecomendacion().configurarUnidades(unidades);
+	}
 	
 }

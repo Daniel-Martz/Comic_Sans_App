@@ -5,6 +5,8 @@ import descuento.*;
 import categoria.*;
 import producto.*;
 import solicitud.*;
+import usuario.ClienteRegistrado;
+import usuario.Usuario;
 import filtro.*;
 
 import java.io.BufferedReader;
@@ -56,6 +58,11 @@ public class Catalogo {
 		}
 
 		productosNuevos.add(p);
+		
+		//Para añadir el producto al ranking de todos los usuarios
+		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+			u.getInteres().actualizarInteresNuevoVenta(p);
+		}
 	}
 
 	public void añadirPack(LineaProductoVenta pack, Map<LineaProductoVenta, Integer> prods) {
@@ -258,6 +265,11 @@ public class Catalogo {
 			return;
 		}
 		categoriasTienda.add(c);
+		
+		//Añadir la categoria al ranking de todos los clientes
+		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+			u.getInteres().actualizarInteresCategoriaNueva(c);
+		}
 	}
 
 	public void eliminarCategoria(Categoria c) {
@@ -414,5 +426,21 @@ public class Catalogo {
     }
     return total;
   }
+
+  /**
+   * @return the categoriasTienda
+   */
+  public Set<Categoria> getCategoriasTienda() {
+	return categoriasTienda;
+  }
+
+  /**
+   * @return the productosNuevos
+   */
+  public Set<LineaProductoVenta> getProductosNuevos() {
+	return productosNuevos;
+  }
+  
+  
 
 }
