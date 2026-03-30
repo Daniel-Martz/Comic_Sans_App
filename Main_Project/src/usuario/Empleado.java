@@ -44,6 +44,13 @@ public class Empleado extends UsuarioGestion {
 	        throw new IllegalStateException("No tienes permisos para aprobar validar productos");
 		}
 		s.validarProducto(precio, estado);
+	}   
+	
+	public void actualizarEstadoPedido(SolicitudPedido p, EstadoPedido nuevoEstado) {
+		if(p == null) {
+			throw new IllegalArgumentException("El pedido no puede ser null");
+		}
+		p.actualizarEstado(nuevoEstado);
 	}
 }
 
