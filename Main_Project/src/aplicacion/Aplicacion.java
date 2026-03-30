@@ -205,23 +205,76 @@ public class Aplicacion {
 	public List<LineaProductoVenta> buscarProductosNuevos(String prompt) {
 		return new ArrayList<>();
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public void crearPedidoAPartirDeCarrito() {
+	//Comprobamos que el usuario actual sea un cliente registrado
+		if(this.usuarioActual == null)
+		{
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+		
+		if(!(this.usuarioActual instanceof ClienteRegistrado))
+		{
+			throw new IllegalStateException("Solo un cliente registrado puede crear un pedido.");
+		}
+		
+		ClienteRegistrado cliente = (ClienteRegistrado) this.usuarioActual;		
+		SolicitudPedido pedido = cliente.realizarPedido();
+		GestorSolicitudes.getInstancia().añadirPedido(pedido);
 	}
 	
 	
-	public void cancelarPedido(SolicitudPedido pedido, Usuario usuario) {
+	public void cancelarPedido(SolicitudPedido pedido) {
+		//Comprobamos que el usuario actual sea un cliente registrado
+		if(this.usuarioActual == null)
+		{
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+		
+		if(!(this.usuarioActual instanceof ClienteRegistrado))
+		{
+			throw new IllegalStateException("Solo un cliente registrado puede cancelar un pedido.");
+		}
+		//Comprobamos que le hemos pasado un pedido.
+		if(pedido == null)
+		{	
+			throw new IllegalArgumentException("No hay ningún pedido.");	
+		}
+		
+		ClienteRegistrado cliente = (ClienteRegistrado) this.usuarioActual;
+		if(!(cliente.getPedidos().contains(pedido)))
+		{
+			throw new IllegalStateException("El cliente no ha realizado ese pedido.");
+		}
+		
+		// Comprobamos que el pedido esté en estado pendiente de pago
+		if(pedido.getEstado() != EstadoPedido.PENDIENTE_DE_PAGO) {
+		    throw new IllegalStateException("Solo se pueden cancelar pedidos en estado pendiente de pago.");
+		}
+		
+		//Reestablcemes el stock
+		for(LineaProductoVenta producto : pedido.getProductosDiferentes().keySet())
+		{
+			int unidades = pedido.getProductosDiferentes().get(producto);
+			producto.setStock(unidades+producto.getStock());
+		}
+		
+		//Eliminamos el pedido tanto en el cliente como en el Gestor de Solicitudes
+		cliente.cancelarPedido(pedido);
+		GestorSolicitudes.getInstancia().eliminarPedido(pedido);
 	}
 
 	// Métodos del Cliente Intercambio
 	public List<ProductoSegundaMano> buscarProductoIntercambio(String prompt, Usuario usuario) {
 		return new ArrayList<>();
-	}
-
-	public void aceptarOferta(Oferta oferta, Usuario usuario) {
-	}
-
-	public void rechazarOferta(Oferta oferta, Usuario usuario) {
 	}
 
 	// Métodos de recomendación

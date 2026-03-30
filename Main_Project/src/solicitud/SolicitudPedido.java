@@ -46,4 +46,14 @@ public class SolicitudPedido extends Solicitud{
 	public EstadoPedido getEstado() {
 	    return estado;
 	}
+
+	public void setCliente(ClienteRegistrado cliente) {
+		this.cliente = cliente;
+	}
+
+	public Map<LineaProductoVenta, Integer> getProductosDiferentes() {
+		return productosDiferentes;
+	}
+	
+	
 }
