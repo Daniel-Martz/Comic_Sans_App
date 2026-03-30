@@ -32,20 +32,19 @@ public class Catalogo {
 		return instancia;
 	}
 
-	//Métodos para los descuentos
-	public void añadirDescuento(Descuento d)
-	{
+	// Métodos para los descuentos
+	public void añadirDescuento(Descuento d) {
 		if (d == null) {
 			throw new IllegalArgumentException("El descuento introducido no es valido");
 		}
 
 		descuentos.add(d);
 	}
-	
+
 	public void eliminarDescuento(Descuento d) {
 		descuentos.remove(d);
 	}
-	
+
 	// Métodos para los productos
 	public void añadirProducto(LineaProductoVenta p) {
 		if (p == null) {
@@ -70,6 +69,25 @@ public class Catalogo {
 
 	public void eliminarProducto(Producto p) {
 		productosNuevos.remove(p);
+	}
+
+	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, Integer nuevoStock,
+	Double nuevoPrecio, File nuevaFoto) {
+		if(nuevoNombre != null) {
+			p.setNombre(nuevoNombre);
+		}
+		if(nuevaDescripcion != null) {
+			p.setDescripcion(nuevaDescripcion);
+		}
+		if(nuevoStock != null) {
+			p.setStock(nuevoStock);
+		}
+		if(nuevoPrecio != null) {
+			p.setPrecio(nuevoPrecio);
+		}
+		if(nuevaFoto != null) {
+			p.setFoto(nuevaFoto);
+		}
 	}
 
 	// falta
@@ -127,7 +145,7 @@ public class Catalogo {
 		d.añadirProductoRebajado(p);
 	}
 
-	public void eliminarDescuento(LineaProductoVenta p, Descuento d) {
+	public void eliminarDescuento(Descuento d, LineaProductoVenta p) {
 		if (p == null || d == null) {
 			throw new IllegalArgumentException("El producto y el descuento no pueden ser nulos.");
 		}
@@ -157,12 +175,13 @@ public class Catalogo {
 		if (!categoriasTienda.contains(c) || !descuentos.contains(d)) {
 			throw new IllegalStateException("El descuento y la categoria debe perternecer al catalogo");
 		}
-		
+
 		if (c.getDescuento() != null) {
 			throw new IllegalStateException("La categoría '" + c.getNombre() + "' ya tiene un descuento activo.");
 		}
 
-		// Comprobamos que ningún producto de la categoría tenga ya un descuento individual
+		// Comprobamos que ningún producto de la categoría tenga ya un descuento
+		// individual
 		for (LineaProductoVenta p : c.obtenerProductosCategoria()) {
 			if (p.getDescuento() != null) {
 				throw new IllegalStateException("El producto '" + p.getNombre() + "' de la categoría '" + c.getNombre()
@@ -181,7 +200,7 @@ public class Catalogo {
 		if (!categoriasTienda.contains(c) || !descuentos.contains(d)) {
 			throw new IllegalStateException("El descuento y la categoria debe perternecer al catalogo");
 		}
-		
+
 		if (c.getDescuento() == null) {
 			throw new IllegalStateException("La categoría '" + c.getNombre() + "' no tiene ningún descuento activo.");
 		}
@@ -193,7 +212,7 @@ public class Catalogo {
 		}
 		c.eliminarDescuento(d);
 		d.eliminarCategoria(c);
-		}
+	}
 
 	// Métodos filtros
 	public void cambiarFiltroVenta(FiltroVentaCliente filtro) {
