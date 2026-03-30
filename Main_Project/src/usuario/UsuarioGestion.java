@@ -4,6 +4,7 @@ import producto.*;
 import tiempo.DateTimeSimulado;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import aplicacion.*;
@@ -31,8 +32,8 @@ public abstract class UsuarioGestion extends Usuario {
 		Aplicacion.getInstancia().getCatalogo().eliminarProducto(producto);
 	}
 
-	public void añadirProductosDesdeFichero(File f) {
-
+	public void añadirProductosDesdeFichero(File f) throws IOException, IllegalArgumentException {
+		Aplicacion.getInstancia().getCatalogo().añadirProductosDesdeFichero(f);
 	}
 
 	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, Integer nuevoStock,
@@ -45,10 +46,6 @@ public abstract class UsuarioGestion extends Usuario {
 
 	public void añadirCategoria(String nombre) {
 		Aplicacion.getInstancia().getCatalogo().añadirCategoria(new Categoria(nombre));
-	}
-
-	public void añadirSubcategoria(Categoria CatPadre, String nombreSubcat) {
-
 	}
 
 	public void eliminarCategoria(Categoria c) {
