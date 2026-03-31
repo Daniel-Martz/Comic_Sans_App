@@ -1,6 +1,9 @@
 package producto;
 
 import java.util.*;
+
+import tiempo.DateTimeSimulado;
+
 import java.io.File;
 
 
@@ -10,6 +13,7 @@ public abstract class Producto {
 	private String nombre;
 	private String descripcion;
 	private File foto;
+	private DateTimeSimulado fechaSubida;
 	
 	public Producto(String nombre, String descripcion, File foto)
 	{
@@ -17,6 +21,7 @@ public abstract class Producto {
 		this.nombre = nombre; 
 		this.descripcion = descripcion;
 		this.foto = foto;
+		fechaSubida = new DateTimeSimulado();
 	}
 
 	public String getNombre() {
@@ -45,6 +50,10 @@ public abstract class Producto {
 
 	public int getID() {
 		return ID;
+	}
+	
+	public DateTimeSimulado getFechaSubida() {
+		return fechaSubida;
 	}
 	
 }

@@ -88,7 +88,18 @@ public class TiempoSimulado {
 	public int getDiasPorMes() {
 		return diasPorMes;
 	}
+	
+	public long dateTimeASegundos(DateTimeSimulado dt) {
+	    long totalDias = (long)(dt.getAño() - 1) * mesesPorAño * diasPorMes
+	                   + (long)(dt.getMes() - 1) * diasPorMes
+	                   + (dt.getDia() - 1);
 
+	    return totalDias * 86400
+	         + dt.getHora() * 3600
+	         + dt.getMinuto() * 60
+	         + dt.getSegundo();
+	}
+	
 	@Override
     public String toString() {
         return "Año: " + getAño() + "\nMes: " + getMes() + "\nDia: " + getDia() + 

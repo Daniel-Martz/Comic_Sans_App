@@ -10,7 +10,7 @@ import producto.LineaProductoVenta;
 public class Interes {
 	public static final int PESO_BUSQUEDA = 5;
 	public static final int PESO_CATEGORIA = 2;
-	public static final int PESO_COMPRA = 50;
+	public static final int PESO_COMPRA = 20;
 	public static final int REAUJESTE_OVERFLOW = 2;
 	private Map<LineaProductoVenta, Integer> rankingInteresBusquedaVenta = new HashMap<>();
 	private Map<Categoria, Integer> rankingInteresCategoriaVenta = new HashMap<>();
@@ -95,8 +95,16 @@ public class Interes {
 		rankingInteresBusquedaVenta.put(producto, rankMinProd());
 	}
 	
+	public void eliminarProductoInteres(LineaProductoVenta producto) {
+		rankingInteresBusquedaVenta.remove(producto);
+	}
+	
 	public void actualizarInteresCategoriaNueva(Categoria categoria) {
 		rankingInteresCategoriaVenta.put(categoria, rankMinCat());
+	}
+	
+	public void eliminarCategoriaInteres(Categoria categoria) {
+		rankingInteresCategoriaVenta.remove(categoria);
 	}
 	
 	private Integer rankMinProd() {
@@ -127,6 +135,44 @@ public class Interes {
 			}
 		}
 		return min;
+	}
+	
+	/**
+	 * Este método es el que devolverá el interés de cada usuario unificado y normalizado
+	 * Para ello se suma el interés de cada categoría a cada producto que la contenga y
+	 * finnalmente se divide entre el máximo ranking para así acotar entre 0 y 1 el interés
+	 * en cada producto. Se controla también un posible Overflow a la hora de unificar los mapas
+	 * 
+	 * @return
+	 */
+	public Map<LineaProductoVenta, Double> obtenerRankingDeInteres(){
+	    Map<LineaProductoVenta, Double> normalizado = new HashMap<>();
+
+		for(Map.Entry<Categoria, Integer> entry : rankingInteresCategoriaVenta.entrySet()) {
+			for(LineaProductoVenta p : entry.getKey().obtenerProductosCategoria()) {
+				int rank = rankingInteresBusquedaVenta.getOrDefault(p, 0);
+				rank += entry.getValue();
+				if(rank > rankMaxProd) {
+					rankMaxProd = rank;
+				}
+				rankingInteresBusquedaVenta.put(p, rank);
+			}
+			
+			//Evitamos OVERFLOW
+			if (rankMaxProd > (Integer.MAX_VALUE - rankMaxCat)) {
+			    for (Map.Entry<LineaProductoVenta, Integer> ent : rankingInteresBusquedaVenta.entrySet()) {
+			        ent.setValue(ent.getValue() / REAUJESTE_OVERFLOW);
+			    }
+			    rankMaxProd /= REAUJESTE_OVERFLOW;
+			}
+		}
+	    //Se devuelve un Empty map si no se ha modificado el interés
+	    if (rankMaxProd == 0) return normalizado;
+		
+	    for (Map.Entry<LineaProductoVenta, Integer> entry : rankingInteresBusquedaVenta.entrySet()) {
+	        normalizado.put(entry.getKey(), (double) entry.getValue() / rankMaxProd);
+	    }
+	    return normalizado;
 	}
 	
 }
