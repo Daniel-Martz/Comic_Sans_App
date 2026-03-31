@@ -461,24 +461,121 @@ public class Catalogo {
 
 	// Métodos de búsqueda
 	public List<LineaProductoVenta> obtenerProductosNuevosFiltrados(String prompt) {
-		return new ArrayList<>();
+		List<LineaProductoVenta> resultado = new ArrayList<>();
+
+		for (LineaProductoVenta p : productosNuevos) {
+			// Filtramos por el prompt: comprobamos el nombre y la descripcion
+			if (prompt != null && !prompt.trim().isEmpty()) {
+				// ponemos en minusculas todo
+				String palabra = prompt.toLowerCase();
+				boolean boolNombre = p.getNombre().toLowerCase().contains(palabra);
+				boolean boolDescripcion = p.getDescripcion().toLowerCase().contains(palabra);
+				// si no hay ninguna relacion entre el prompt con el nombre ni la descripcion
+				// pasamos al siguiente producto
+				if (!boolNombre && !boolDescripcion)
+					continue;
+			}
+			// Filtramos por el filtro que tenga el cliente: categorias, precio, etc
+			if (filtroProductosVenta != null) {
+
+				// Filtramos por tipo de producto
+				Set<TipoProducto> tiposFiltro = filtroProductosVenta.getTipoFiltrado();
+				if (!tiposFiltro.isEmpty()) {
+					boolean coincideTipo = (tiposFiltro.contains(TipoProducto.COMIC) && p instanceof Comic)
+							|| (tiposFiltro.contains(TipoProducto.JUEGO_DE_MESA) && p instanceof JuegoDeMesa)
+							|| (tiposFiltro.contains(TipoProducto.FIGURA) && p instanceof Figura);
+					if (!coincideTipo)
+						continue;
+				}
+				// Filtramos por categoria
+				Set<Categoria> categoriasFiltro = filtroProductosVenta.getCategoriasFiltradas();
+				if (!categoriasFiltro.isEmpty()) {
+					boolean pertenceAAlguna = false;
+					for (Categoria c : p.getCategorias()) {
+						if (categoriasFiltro.contains(c)) {
+							pertenceAAlguna = true;
+							break;
+						}
+					}
+					if (!pertenceAAlguna)
+						continue;
+				}
+
+				// Filtramos por precio
+				if (p.getPrecio() < filtroProductosVenta.getPrecioMin()
+						|| p.getPrecio() > filtroProductosVenta.getPrecioMax())
+					continue;
+
+				// Filtramos por puntacion
+				double puntuacion = p.obtenerPuntuacionMedia();
+				if (puntuacion < filtroProductosVenta.getPuntuacionMin()
+						|| puntuacion > filtroProductosVenta.getPuntuacionMax())
+					continue;
+
+				// Filtramos por descuentos
+				Set<TipoDescuento> filtroDescuentos = filtroProductosVenta.getDescuentoFiltrado();
+				if (!filtroDescuentos.isEmpty()) {
+					Descuento descuentoP = p.getDescuento();
+					if (descuentoP == null)
+						continue;
+					boolean coincideDescuento = (filtroDescuentos.contains(TipoDescuento.CANTIDAD)
+							&& descuentoP instanceof Cantidad)
+							|| (filtroDescuentos.contains(TipoDescuento.PRECIO) && descuentoP instanceof Precio)
+							|| (filtroDescuentos.contains(TipoDescuento.REBAJA) && descuentoP instanceof Rebaja)
+							|| (filtroDescuentos.contains(TipoDescuento.REGALO) && descuentoP instanceof Regalo);
+					if (!coincideDescuento)
+						continue;
+				}
+			}
+			resultado.add(p);
+		}
+
+		// Ordenamos segun el filtro que tenga el cliente
+		if (filtroProductosVenta != null) {
+			boolean asc = filtroProductosVenta.isOrdenAscendente();
+			boolean porPrecio = filtroProductosVenta.isOrdenarPorPrecio();
+			boolean porPuntuacion = filtroProductosVenta.isOrdenarPorPuntuacion();
+
+			if (porPrecio && porPuntuacion) {
+				// Ordena primero por precio, luego por puntuación como desempate
+				resultado.sort((a, b) -> {
+					int cmpPrecio = Double.compare(a.getPrecio(), b.getPrecio());
+					if (cmpPrecio != 0)
+						return asc ? cmpPrecio : -cmpPrecio;
+					int cmpPunt = Double.compare(a.obtenerPuntuacionMedia(), b.obtenerPuntuacionMedia());
+					return asc ? cmpPunt : -cmpPunt;
+				});
+			} else if (porPrecio) {
+				resultado.sort((a, b) -> {
+					int cmp = Double.compare(a.getPrecio(), b.getPrecio());
+					return asc ? cmp : -cmp;
+				});
+			} else if (porPuntuacion) {
+				resultado.sort((a, b) -> {
+					int cmp = Double.compare(a.obtenerPuntuacionMedia(), b.obtenerPuntuacionMedia());
+					return asc ? cmp : -cmp;
+				});
+			}
+			// Si ninguno está activo, se devuelve en el orden natural del Set
+		}
+		return resultado;
 	}
 
 	public List<ProductoSegundaMano> obtenerProductosIntercambioFiltrados(String prompt) {
-		return new ArrayList<>();
+		return null;
 	}
 
 	public List<LineaProductoVenta> obtenerProductosAModificarFiltrados(String prompt) {
 		return new ArrayList<>();
 	}
 
-  public String getNombresCategorias(){
-    String total = "";
-    for(Categoria cat : this.categoriasTienda){
-      total += cat.getNombre() + "\n";
-    }
-    return total;
-  }
+	public String getNombresCategorias() {
+		String total = "";
+		for (Categoria cat : this.categoriasTienda) {
+			total += cat.getNombre() + "\n";
+		}
+		return total;
+	}
 
   /**
    * @return the categoriasTienda

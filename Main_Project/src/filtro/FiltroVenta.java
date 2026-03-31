@@ -26,4 +26,13 @@ public class FiltroVenta extends Filtro {
 	public void eliminarTipoProducto(TipoProducto tipo) {
 		tipoFiltrado.remove(tipo);
 	}
+	
+	public Set<Categoria> getCategoriasFiltradas() {
+	    return categoriasFiltradas;
+	}
+
+	public Set<TipoProducto> getTipoFiltrado() {
+		return tipoFiltrado;
+	}
+	
 }
