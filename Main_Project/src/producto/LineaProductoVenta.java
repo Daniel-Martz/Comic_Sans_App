@@ -92,11 +92,4 @@ public class LineaProductoVenta extends Producto {
 		return unidadesVendidas;
 	}
 
-	public boolean esUnPack() {
-		if (pack.isEmpty()) {
-			return false;
-		} else {
-			return true;
-		}
-	}
 }

@@ -65,15 +65,10 @@ public class Catalogo {
 		}
 	}
 
-	public void añadirPack(LineaProductoVenta pack, Map<LineaProductoVenta, Integer> prods) {
+	public void añadirPack(Pack pack) {
 		if (pack == null) {
 			throw new IllegalArgumentException("El pack introducido no es valido");
 		}
-		if (prods == null) {
-			throw new IllegalArgumentException("La lista de productos introducidos no es válida");
-		}
-
-		pack.añadirProductosPack(prods);
 
 		productosNuevos.add(pack);
 	}

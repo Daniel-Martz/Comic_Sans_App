@@ -24,8 +24,9 @@ public abstract class UsuarioGestion extends Usuario {
 
 	public void añadirPack(String nombre, String descripcion, File foto, Integer stock, Double precio,
 			Map<LineaProductoVenta, Integer> prods) {
-		LineaProductoVenta pack = new LineaProductoVenta(nombre, descripcion, foto, stock, precio);
-		Aplicacion.getInstancia().getCatalogo().añadirPack(pack, prods);
+		Pack pack = new Pack(nombre, descripcion, foto, stock, precio);
+    pack.añadirProductosAPack(prods);
+		Aplicacion.getInstancia().getCatalogo().añadirProducto(pack);
 	}
 
 	public void eliminarProducto(LineaProductoVenta producto) {
