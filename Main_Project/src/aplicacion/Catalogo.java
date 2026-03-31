@@ -5,6 +5,7 @@ import descuento.*;
 import categoria.*;
 import producto.*;
 import solicitud.*;
+import tiempo.DateTimeSimulado;
 import usuario.ClienteRegistrado;
 import usuario.Usuario;
 import filtro.*;
@@ -23,10 +24,17 @@ public class Catalogo {
 	private Set<LineaProductoVenta> productosNuevos = new HashSet<>();
 	private Set<ProductoSegundaMano> productosSegundaMano = new HashSet<>();
 
+	//Parametros para busqueda
 	private FiltroVenta filtroProductosGestion;
 	private FiltroIntercambio filtroProductosSegundaMano;
 	private FiltroVentaCliente filtroProductosVenta;
-
+	
+	//Parametros para recomendacion por novedad
+	private DateTimeSimulado primerLanzamiento = null;
+	private DateTimeSimulado ultimoLanzamiento = null;
+	
+	
+	
 	private Catalogo() {
 
 	}
@@ -59,10 +67,20 @@ public class Catalogo {
 
 		productosNuevos.add(p);
 		
+		//Para el ranking de novedad
+		if(primerLanzamiento == null) {
+			primerLanzamiento = p.getFechaSubida();
+		}
+		ultimoLanzamiento = p.getFechaSubida();
+		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingNovedad(p);
+		
 		//Para añadir el producto al ranking de todos los usuarios
 		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
 			u.getInteres().actualizarInteresNuevoVenta(p);
 		}
+		
+		//Para el ranking de valoracion
+		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingValoracion(p);
 	}
 
 	public void añadirPack(Pack pack) {
@@ -74,7 +92,43 @@ public class Catalogo {
 	}
 
 	public void eliminarProducto(Producto p) {
+		if(productosNuevos.isEmpty() || p == null) {
+			return;
+		}
 		productosNuevos.remove(p);
+		
+		//Para eliminar de los rankings el producto
+		if(p instanceof LineaProductoVenta) {
+			for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+				u.getInteres().eliminarProductoInteres((LineaProductoVenta) p);
+			}
+			Aplicacion.getInstancia().getConfiguracionRecomendacion().eliminarProductoNovedad((LineaProductoVenta) p);
+			Aplicacion.getInstancia().getConfiguracionRecomendacion().eliminarProductoValoracion((LineaProductoVenta) p);
+			
+			//Para actualizar la el primer lanzamiento y ultimo lanzamiento
+		    if (p.getFechaSubida().dateTimeEnSegundos() == ultimoLanzamiento.dateTimeEnSegundos()) {
+		        ultimoLanzamiento = null;
+		        long maxSegundos = -1;
+		        for (LineaProductoVenta prod : productosNuevos) {
+		            long segundos = prod.getFechaSubida().dateTimeEnSegundos();
+		            if (segundos > maxSegundos) {
+		                maxSegundos = segundos;
+		                ultimoLanzamiento = prod.getFechaSubida();
+		            }
+		        }
+		    }
+		    if (p.getFechaSubida().dateTimeEnSegundos() == primerLanzamiento.dateTimeEnSegundos()) {
+		        primerLanzamiento = null;
+		        long minSegundos = Long.MAX_VALUE;
+		        for (LineaProductoVenta prod : productosNuevos) {
+		            long segundos = prod.getFechaSubida().dateTimeEnSegundos();
+		            if (segundos < minSegundos) {
+		                minSegundos = segundos;
+		                primerLanzamiento = prod.getFechaSubida();
+		            }
+		        }
+		    }
+		}
 	}
 
 	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, Integer nuevoStock,
@@ -249,7 +303,7 @@ public class Catalogo {
 
 				nuevo.añadirCategoria(categoria);
 				categoria.añadirProductoACategoria(nuevo);
-				this.productosNuevos.add(nuevo);
+				this.añadirProducto(nuevo);
 			}
 		}
 	}
@@ -272,6 +326,10 @@ public class Catalogo {
 			return;
 		}
 		categoriasTienda.remove(c);
+		//Añadir la categoria al ranking de todos los clientes
+		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+			u.getInteres().eliminarCategoriaInteres(c);
+		}
 	}
 
 	public void modificarCategoria(Categoria c, String nombreNuevo) {
@@ -434,6 +492,20 @@ public class Catalogo {
    */
   public Set<LineaProductoVenta> getProductosNuevos() {
 	return productosNuevos;
+  }
+
+  /**
+   * @return the primerLanzamiento
+   */
+  public DateTimeSimulado getPrimerLanzamiento() {
+	return primerLanzamiento;
+  }
+
+  /**
+   * @return the ultimoLanzamiento
+   */
+  public DateTimeSimulado getUltimoLanzamiento() {
+	return ultimoLanzamiento;
   }
   
   
