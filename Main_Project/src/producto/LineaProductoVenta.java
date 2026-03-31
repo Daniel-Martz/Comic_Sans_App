@@ -8,14 +8,13 @@ import filtro.FiltroVenta;
 import descuento.*;
 
 public class LineaProductoVenta extends Producto {
-	private List<Reseña> reseña = new ArrayList<>();
-	private Set<Categoria> categorias = new HashSet<>();
-	private Map<LineaProductoVenta, Integer> pack = new HashMap<>();
-
-	private int stock;
-	private double precio;
-	private int unidadesVendidas;
-	private Descuento descuento;
+	protected List<Reseña> reseña = new ArrayList<>();
+	protected Set<Categoria> categorias = new HashSet<>();
+	
+	protected int stock;
+	protected double precio;
+	protected int unidadesVendidas;
+	protected Descuento descuento;
 
 	public LineaProductoVenta(String nombre, String descripcion, File foto, int stock, double precio) {
 		super(nombre, descripcion, foto);
@@ -40,26 +39,11 @@ public class LineaProductoVenta extends Producto {
 	public boolean eliminarReseña(Reseña reseña) {
 		return this.reseña.remove(reseña);
 	}
-
-	/**
-	 * Este metodo añade una lista de productos al pack, comprobando que no se estén
-	 * introduciendo varias veces la misma Linea de producto
-	 * 
-	 * @param productos
-	 */
-	public void añadirProductosPack(Map<LineaProductoVenta, Integer> productos) {
-		if (productos == null) {
-			throw new IllegalArgumentException("La lista de productos no puede ser nula");
-		}
-		pack = productos;
-
-		for (Map.Entry<LineaProductoVenta, Integer> entry : productos.entrySet()) {
-			pack.merge(entry.getKey(), entry.getValue(), Integer::sum);
-		}
-	}
-
-	public double obtenerPuntuacionMedia() {
-		if (this.reseña.isEmpty()) {
+	
+	public double obtenerPuntuacionMedia()
+	{
+		if(this.reseña.isEmpty())
+		{
 			return 0.0;
 		}
 
@@ -102,13 +86,6 @@ public class LineaProductoVenta extends Producto {
 
 	public Set<Categoria> getCategorias() {
 		return categorias;
-	}
-
-	public Map<LineaProductoVenta, Integer> getProductosPack() {
-		if (pack == null) {
-			throw new IllegalStateException("Este producto no es un pack");
-		}
-		return pack;
 	}
 
 	public int getUnidadesVendidas() {
