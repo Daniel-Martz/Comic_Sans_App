@@ -205,15 +205,8 @@ public class Aplicacion {
 
 	// Métodos del Cliente Venta
 	public List<LineaProductoVenta> buscarProductosNuevos(String prompt) {
-		return new ArrayList<>();
-	}
-	
-	
-	
-	
-	
-	
-	
+		return catalogo.obtenerProductosNuevosFiltrados(prompt);
+	}	
 	
 
 	public void crearPedidoAPartirDeCarrito() {

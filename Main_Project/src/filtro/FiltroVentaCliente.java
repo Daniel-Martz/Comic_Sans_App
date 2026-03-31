@@ -1,22 +1,24 @@
 package filtro;
 import java.util.*;
 
-public class FiltroVentaCliente {
+public class FiltroVentaCliente extends FiltroVenta {
 	private double puntuacionMin;
 	private double puntuacionMax;
 	private double precioMin;
 	private double precioMax;
 	private boolean ordenarPorPrecio;
+	private boolean ordenarPorPuntuacion;
 	private Set<TipoDescuento> descuentoFiltrado = new HashSet<TipoDescuento>();
 
-	public FiltroVentaCliente(double puntuacionMin, double puntuacionMax, double precioMin, double precioMax,
-		boolean ordenarPorPrecio, Set<TipoDescuento> descuentoFiltrado) {
+	public FiltroVentaCliente(boolean ordenAscendente, double puntuacionMin, double puntuacionMax, double precioMin, double precioMax,
+		boolean ordenarPorPrecio, boolean ordenarPorPuntuacion) {
+		super(ordenAscendente);
 		this.puntuacionMin = puntuacionMin;
 		this.puntuacionMax = puntuacionMax;
 		this.precioMin = precioMin;
 		this.precioMax = precioMax;
 		this.ordenarPorPrecio = ordenarPorPrecio;
-		this.descuentoFiltrado = descuentoFiltrado;
+		this.ordenarPorPuntuacion = ordenarPorPuntuacion;
 	}
 
 	public double getPuntuacionMin() {
@@ -67,5 +69,16 @@ public class FiltroVentaCliente {
 		this.descuentoFiltrado.remove(tipo);
 	}
 
+    public Set<TipoDescuento> getDescuentoFiltrado() { 
+    	return descuentoFiltrado; 
+    	}
 
+	public boolean isOrdenarPorPuntuacion() {
+		return ordenarPorPuntuacion;
+	}
+
+	public void setOrdenarPorPuntuacion(boolean ordenarPorPuntuacion) {
+		this.ordenarPorPuntuacion = ordenarPorPuntuacion;
+	}
+    
 }
