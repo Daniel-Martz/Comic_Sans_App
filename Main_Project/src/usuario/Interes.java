@@ -143,34 +143,36 @@ public class Interes {
 	 * finnalmente se divide entre el máximo ranking para así acotar entre 0 y 1 el interés
 	 * en cada producto. Se controla también un posible Overflow a la hora de unificar los mapas
 	 * 
-	 * @return
+	 * @return el mapa de interés normalizado (valores entre 0 y 1)
 	 */
 	public Map<LineaProductoVenta, Double> obtenerRankingDeInteres(){
 	    Map<LineaProductoVenta, Double> normalizado = new HashMap<>();
-
+	    Map<LineaProductoVenta, Integer> auxiliar = new HashMap<>(rankingInteresBusquedaVenta);
+	    int maxAux = rankMaxProd; // variable local, no toca el atributo
+	    
 		for(Map.Entry<Categoria, Integer> entry : rankingInteresCategoriaVenta.entrySet()) {
 			for(LineaProductoVenta p : entry.getKey().obtenerProductosCategoria()) {
-				int rank = rankingInteresBusquedaVenta.getOrDefault(p, 0);
+				int rank = auxiliar.getOrDefault(p, 0);
 				rank += entry.getValue();
 				if(rank > rankMaxProd) {
-					rankMaxProd = rank;
+					maxAux = rank;
 				}
-				rankingInteresBusquedaVenta.put(p, rank);
+				auxiliar.put(p, rank);
 			}
 			
 			//Evitamos OVERFLOW
-			if (rankMaxProd > (Integer.MAX_VALUE - rankMaxCat)) {
-			    for (Map.Entry<LineaProductoVenta, Integer> ent : rankingInteresBusquedaVenta.entrySet()) {
+			if (maxAux > (Integer.MAX_VALUE - rankMaxCat)) {
+			    for (Map.Entry<LineaProductoVenta, Integer> ent : auxiliar.entrySet()) {
 			        ent.setValue(ent.getValue() / REAUJESTE_OVERFLOW);
 			    }
-			    rankMaxProd /= REAUJESTE_OVERFLOW;
+			    maxAux /= REAUJESTE_OVERFLOW;
 			}
 		}
 	    //Se devuelve un Empty map si no se ha modificado el interés
-	    if (rankMaxProd == 0) return normalizado;
+	    if (maxAux == 0) return normalizado;
 		
-	    for (Map.Entry<LineaProductoVenta, Integer> entry : rankingInteresBusquedaVenta.entrySet()) {
-	        normalizado.put(entry.getKey(), (double) entry.getValue() / rankMaxProd);
+	    for (Map.Entry<LineaProductoVenta, Integer> entry : auxiliar.entrySet()) {
+	        normalizado.put(entry.getKey(), (double) entry.getValue() / maxAux);
 	    }
 	    return normalizado;
 	}
