@@ -45,7 +45,7 @@ public class Empleado extends UsuarioGestion {
       throw new IllegalStateException("No tienes permisos para aprobar validar productos");
     }
     s.validarProducto(precio, estado);
-    System.out.println("La solicitud " + s + " ha sido validada correctamente. Se le ha asociado un precio " + precio
+    System.out.println("La solicitud ha sido validada correctamente. Se le ha asociado un precio " + precio
         + " y un estado " + estado);
   }
 

@@ -37,9 +37,17 @@ public class SolicitudValidacion extends Solicitud {
    */
   public void validarProducto(double precio, EstadoConservacion estado) {
     if (precio < 0) {
-      return;
+      throw new IllegalArgumentException("El precio no puede tener un valor negativo");
     }
     productoAValidar.validarProducto(precio, estado);
+  }
+
+
+  public boolean validado(){
+    if (this.productoAValidar.getDatosValidacion() != null){
+      return true;
+    }
+    return false;
   }
 
   /**

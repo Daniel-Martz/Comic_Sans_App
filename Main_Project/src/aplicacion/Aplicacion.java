@@ -50,31 +50,31 @@ public class Aplicacion {
 	}
 
 	// Métodos de inicio y cierre de sesión
-	public void crearCuenta(String nombreUsuario, String DNI, String contraseña) {
+	public ClienteRegistrado crearCuenta(String nombreUsuario, String DNI, String contraseña) {
 		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
 		if (nombreUsuario == null || nombreUser.isEmpty()) {
-			return;
+      throw new IllegalArgumentException("Nombre de usuario inválido al crear al empleado");
 		}
 
 		if (contraseña == null || contraseña.length() < 4) {
-			return;
+      throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
 		}
 
 		if (DNI == null || DNI.length() != 10) {
-			return;
+      throw new IllegalArgumentException("DNI inválido al crear al empleado");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
 			if (u.getNombreUsuario().equals(nombreUser)) {
-				return;
+        throw new IllegalStateException("Ya existe un usuario con el nombre de usuario introducido");
 			}
 		}
 
-		Usuario nuevoUsuario = new ClienteRegistrado(nombreUser, DNI, contraseña);
+		ClienteRegistrado nuevoUsuario = new ClienteRegistrado(nombreUser, DNI, contraseña);
 		usuariosRegistrados.add(nuevoUsuario);
 
 		System.out.println("Nueva cuenta de cliente creada con éxito para: " + nombreUser);
-		return;
+		return nuevoUsuario;
 	}
 	
 	public List<Usuario> getUsuariosRegistrados() {
@@ -162,31 +162,31 @@ public class Aplicacion {
 	}
 
 	// Métodos exclusivos del gestor
-	public void añadirEmpleado(String nombreUsuario, String DNI, String contraseña) {
+	public Empleado añadirEmpleado(String nombreUsuario, String DNI, String contraseña) {
 		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
 		if (nombreUsuario == null || nombreUser.isEmpty()) {
-			return;
+      throw new IllegalArgumentException("Nombre de usuario inválido al crear al empleado");
 		}
 
 		if (contraseña == null || contraseña.length() < 4) {
-			return;
+      throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
 		}
 
 		if (DNI == null || DNI.length() != 10) {
-			return;
+      throw new IllegalArgumentException("DNI inválido al crear al empleado");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
 			if (u.getNombreUsuario().equals(nombreUser)) {
-				return;
+        throw new IllegalStateException("Ya existe un usuario con el nombre de usuario introducido");
 			}
 		}
 
-		Usuario nuevoUsuario = new Empleado(nombreUser, DNI, contraseña);
+		Empleado nuevoUsuario = new Empleado(nombreUser, DNI, contraseña);
 		usuariosRegistrados.add(nuevoUsuario);
 
 		System.out.println("Nueva cuenta creada con éxito para: " + nombreUser);
-		return;
+		return nuevoUsuario;
 	}
 
 	public void eliminarEmpleado(Empleado empleado) {
