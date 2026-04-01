@@ -19,16 +19,8 @@ public class NotificacionIntercambio extends NotificacionCliente {
 		return codigoIntercambio;
 	}
 
-	public void setCodigoIntercambio(String codigoIntercambio) {
-		this.codigoIntercambio = codigoIntercambio;
-	}
-
 	public DetallesIntercambio getDetallesIntercambio() {
 		return detallesIntercambio;
-	}
-
-	public void setDetallesIntercambio(DetallesIntercambio detallesIntercambio) {
-		this.detallesIntercambio = detallesIntercambio;
 	}
 
 	@Override

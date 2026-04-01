@@ -9,7 +9,7 @@ public class Gestor extends UsuarioGestion {
 	}
 	
 	public Empleado crearEmpleado(String nombre, String dni) {
-		Aplicacion.getInstancia().añadirEmpleado(nombre, dni, "123456");
+		return Aplicacion.getInstancia().añadirEmpleado(nombre, dni, "123456");
 	}
 	
 	public void eliminarEmpleado(Empleado e) {

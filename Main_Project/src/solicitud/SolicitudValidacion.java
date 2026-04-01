@@ -44,6 +44,14 @@ public class SolicitudValidacion extends Solicitud {
     productoAValidar.validarProducto(precioProducto, estadoProducto);
   }
 
+
+  public boolean validado(){
+    if (this.productoAValidar.getDatosValidacion() != null){
+      return true;
+    }
+    return false;
+  }
+
   /**
    * Metodo que asociara a la solicitud de validacion su pago,
    * una vez el cliente haya pagado por la validacion de su producto.
