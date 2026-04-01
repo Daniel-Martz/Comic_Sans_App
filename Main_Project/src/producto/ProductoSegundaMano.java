@@ -29,7 +29,7 @@ public class ProductoSegundaMano extends Producto{
 	}
 
 	public void addOfertaRecibida(Oferta ofertaRecibida) {
-		if (this.estaBloqueado()) return;
+		if (this.estaBloqueado()) throw new IllegalStateException("El producto se encuentra bloqueado");
 		this.ofertaRecibida = ofertaRecibida;
 	}
 
@@ -42,7 +42,7 @@ public class ProductoSegundaMano extends Producto{
 	}
 
 	public void addOfertaEnviada(Oferta ofertaEnviada) {
-		if (this.estaBloqueado()) return;
+		if (this.estaBloqueado()) throw new IllegalStateException("El producto se encuentra bloqueado");
 		this.ofertaEnviada = ofertaEnviada;
 	}
 
@@ -69,7 +69,7 @@ public class ProductoSegundaMano extends Producto{
 	}
 	
 	public boolean estaBloqueado() {
-		return (ofertaRecibida != null || ofertaEnviada != null);
+		return (ofertaRecibida != null || ofertaEnviada != null || this.datosValidacion == null);
 	}
 
 	@Override
