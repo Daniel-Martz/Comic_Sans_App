@@ -7,7 +7,7 @@ import tiempo.DateTimeSimulado;
 import java.io.File;
 
 
-public abstract class Producto {
+public abstract class Producto implements Comparable<Producto>{
 	private static int contadorID = 1;
 	private final int ID;
 	private String nombre;
@@ -56,4 +56,8 @@ public abstract class Producto {
 		return fechaSubida;
 	}
 	
+	@Override
+    public int compareTo(Producto otro) {
+        return Integer.compare(this.ID, otro.ID);
+    }
 }

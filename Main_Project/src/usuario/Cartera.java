@@ -22,12 +22,5 @@ public class Cartera{
 		String total;
 		return "Cartera [productos=" + productos + "]";
 	}
-	/**
-	 * @return the productos
-	 */
-	public Set<ProductoSegundaMano> getProductos() {
-		return productos;
-	}
-	
 	
 }
