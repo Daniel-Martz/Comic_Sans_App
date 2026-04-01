@@ -23,11 +23,21 @@ public class ClienteRegistrado extends Usuario {
 		super(username, DNI, password);
 	}
 
-	public double getGastoTotal() {
+	public double getGastoTotalPedidos() {
 		double total = 0;
 		for (SolicitudPedido sP : this.pedidos) {
 			if (sP.pagado() == true) {
 				total += sP.getCostePedido();
+			}
+		}
+		return total;
+	}
+
+  public double getGastoTotalValidaciones() {
+		double total = 0;
+		for (ProductoSegundaMano p : this.cartera.getProductos()) {
+			if (p.getDatosValidacion() != null) {
+				total += p.getSolicitudValidacion().getPrecioValidacion();
 			}
 		}
 		return total;
@@ -41,19 +51,21 @@ public class ClienteRegistrado extends Usuario {
 		this.carrito.eliminarProducto(p, cantidad);
 	}
 
-	public void añadirProductoACarteraDeIntercambio(String nombre, String descripcion, File imagen) {
-
-		this.cartera.añadirProducto(new ProductoSegundaMano(nombre, descripcion, imagen));
+	public ProductoSegundaMano añadirProductoACarteraDeIntercambio(String nombre, String descripcion, File imagen) {
+    ProductoSegundaMano p = new ProductoSegundaMano(nombre, descripcion, imagen);
+		this.cartera.añadirProducto(p);
+    return p;
 	}
 
 	public void eliminarProductoDeCarteraDeIntercambio(ProductoSegundaMano p) {
 		this.cartera.eliminarProducto(p);
 	}
 
-	public void realizarOferta(Set<ProductoSegundaMano> productosOfertados,
+	public Oferta realizarOferta(Set<ProductoSegundaMano> productosOfertados,
 			Set<ProductoSegundaMano> productosSolicitados, ClienteRegistrado destinatario) {
 		Oferta ofertaRealizada = new Oferta(new DateTimeSimulado(), destinatario, this, productosOfertados,
 				productosSolicitados);
+		this.ofertasRealizadas.add(ofertaRealizada);
 		destinatario.recibirOferta(ofertaRealizada);
 		NotificacionOferta notif = new NotificacionOferta("Nueva oferta recibida de " + this.nombreUsuario,
 				new DateTimeSimulado(), ofertaRealizada);
@@ -64,6 +76,7 @@ public class ClienteRegistrado extends Usuario {
 		for (ProductoSegundaMano prod : productosOfertados) {
 			prod.addOfertaEnviada(ofertaRealizada);
 		}
+    return ofertaRealizada;
 	}
 
 	public void recibirOferta(Oferta o) {
@@ -165,6 +178,7 @@ public class ClienteRegistrado extends Usuario {
 
 	public void cancelarPedido(SolicitudPedido pedido) {
 		this.pedidos.remove(pedido);
+    GestorSolicitudes.getInstancia().eliminarPedido(pedido);
 	}
 
 	public void pagarPedido(SolicitudPedido pedido, String numTarjeta, String cvv, DateTimeSimulado fechaCaducidad) {
@@ -187,16 +201,19 @@ public class ClienteRegistrado extends Usuario {
 		}
 
 		pedido.añadirPagoPedido(pago);
-		pedido.actualizarPagoPedido(EstadoPedido.PAGADO);
+		pedido.actualizarEstado(EstadoPedido.PAGADO);
 		System.out.println("Pago del pedido realizado con éxito.");
 	}
 
-	public void realizarPedido() {
-		new SolicitudPedido(this, carrito.getProductos());
+	public SolicitudPedido realizarPedido() {
+		SolicitudPedido sP = new SolicitudPedido(this, carrito.getProductos());
+    this.pedidos.add(sP);
+    GestorSolicitudes.getInstancia().añadirPedido(sP);
 		carrito.vaciarCarrito();
+    return sP;
 	}
 
-	public void pagarValidacion(SolicitudValidacion validacion, String numTarjeta, String cvv,
+	public Pago pagarValidacion(SolicitudValidacion validacion, String numTarjeta, String cvv,
 			DateTimeSimulado fechaCaducidad) {
 		if (validacion == null || fechaCaducidad == null) {
 			throw new IllegalArgumentException("La solicitud de validación no puede ser nula.");
@@ -207,7 +224,7 @@ public class ClienteRegistrado extends Usuario {
 		}
 
 		Pago pago = SistemaPago.getInstancia().procesarPago(
-				validacion.getProductoAValidar().getDatosValidacion().getPrecioEstimadoProducto(), numTarjeta, cvv,
+				validacion.getPrecioValidacion(), numTarjeta, cvv,
 				fechaCaducidad);
 
 		if (pago == null) {
@@ -217,11 +234,12 @@ public class ClienteRegistrado extends Usuario {
 		validacion.añadirPagoValidacion(pago);
 
 		System.out.println("Pago de validación realizado con éxito.");
+    return pago;
 	}
 
 	public List<ProductoSegundaMano> getProductosSegundaManoDisponibles() {
 		List<ProductoSegundaMano> prods = new LinkedList<ProductoSegundaMano>();
-		for (ProductoSegundaMano p : this.cartera.getProductosSegundaMano()) {
+		for (ProductoSegundaMano p : this.cartera.getProductos()) {
 			if (!p.estaBloqueado()) {
 				prods.add(p);
 			}

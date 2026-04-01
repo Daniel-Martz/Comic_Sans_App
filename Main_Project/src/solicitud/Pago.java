@@ -12,5 +12,12 @@ public class Pago {
 		this.fechaPago = fechaPago;
 		this.importe = importe;
 	}
-	
+  
+  public double getImporte(){
+    return this.importe;
+  }
+
+  public DateTimeSimulado getFechaPago(){
+    return this.fechaPago;
+  }
 }

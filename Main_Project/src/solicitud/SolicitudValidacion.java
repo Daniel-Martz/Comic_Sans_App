@@ -13,6 +13,7 @@ public class SolicitudValidacion extends Solicitud {
 
   /** Pago asociado a la validacion. */
   private Pago pagoValidacion;
+  private double precioValidacion;
 
   /** Producto asociado a la solicitud */
   private ProductoSegundaMano productoAValidar;
@@ -35,11 +36,12 @@ public class SolicitudValidacion extends Solicitud {
    * @param precio el precio
    * @param estado el estado
    */
-  public void validarProducto(double precio, EstadoConservacion estado) {
-    if (precio < 0) {
-      return;
+  public void validarProducto(double precioValidacion, double precioProducto, EstadoConservacion estadoProducto) {
+    if (precioProducto < 0 || precioValidacion < 0 || estadoProducto == null) {
+      throw new IllegalArgumentException("Los argumentos introducidos no son válidos");
     }
-    productoAValidar.validarProducto(precio, estado);
+    this.precioValidacion = precioValidacion;
+    productoAValidar.validarProducto(precioProducto, estadoProducto);
   }
 
   /**
@@ -63,6 +65,10 @@ public class SolicitudValidacion extends Solicitud {
 
   public Pago getPagoValidacion() {
     return pagoValidacion;
+  }
+
+  public double getPrecioValidacion(){
+    return this.precioValidacion;
   }
 
 }

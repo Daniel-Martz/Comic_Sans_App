@@ -8,7 +8,7 @@ public class Gestor extends UsuarioGestion {
 		super(username, DNI, password);
 	}
 	
-	public void crearEmpleado(String nombre, String dni) {
+	public Empleado crearEmpleado(String nombre, String dni) {
 		Aplicacion.getInstancia().añadirEmpleado(nombre, dni, "123456");
 	}
 	

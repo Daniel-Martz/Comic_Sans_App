@@ -14,19 +14,12 @@ public class Cartera{
 		this.productos.remove(o);
 	}
 	
-	public Set<ProductoSegundaMano> getProductosSegundaMano(){
+	public Set<ProductoSegundaMano> getProductos(){
 		return Collections.unmodifiableSet(productos);
 	}
 	@Override
 	public String toString() {
-		String total;
 		return "Cartera [productos=" + productos + "]";
-	}
-	/**
-	 * @return the productos
-	 */
-	public Set<ProductoSegundaMano> getProductos() {
-		return productos;
 	}
 	
 	

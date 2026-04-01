@@ -28,10 +28,6 @@ public class SolicitudPedido extends Solicitud{
 		return precioFinal;
 	}
 	
-	public void actualizarPagoPedido(EstadoPedido estado) {
-		this.estado = estado;
-	}
-		
 	public void añadirPagoPedido(Pago pagoPedido) {
 		this.pagoPedido = pagoPedido;
 	}
@@ -53,4 +49,8 @@ public class SolicitudPedido extends Solicitud{
 	public EstadoPedido getEstado() {
 	    return estado;
 	}
+
+  public Pago getPedido(){
+    return this.pagoPedido;  
+  }
 }
