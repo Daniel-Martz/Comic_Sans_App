@@ -167,4 +167,8 @@ public class DateTimeSimulado {
 		return "Año: " + año + "\nMes: " + mes + "\nDia: " + dia + "\nHora: " + hora + "\nMinuto: " + minuto
 				+ "\nSegundo: " + segundo;
 	}
+	
+	public String toStringFecha() {
+	    return dia + "/" + mes + "/" + año;
+	}
 }

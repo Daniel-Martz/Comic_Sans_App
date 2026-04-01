@@ -1,6 +1,12 @@
 package aplicacion; 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
+
+import jdk.internal.org.jline.terminal.TerminalBuilder.SystemOutput;
 import producto.*;
 import producto.*;
 import usuario.*;
@@ -20,8 +26,12 @@ public class SistemaEstadisticas {
 		return instancia;
 	}
 
-	public Map<String, Double> obtenerRecaudacionMensual(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, List<Producto> productos) {
-		return null;
+	public void obtenerRecaudacionMensual(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, List<Producto> productos, File fichero) throws IOException {
+		
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero))){
+			bw.write("------- INFORME DE RECAUDACIÓN MENSUAL ( " + periodoInicio.toStringFecha() + " - " + periodoFin.toStringFecha() + " ) -------");
+		}
+		
 	}
 
 	public Map<String, Double> obtenerRecaudacionAmbito(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, List<Producto> productos) {
