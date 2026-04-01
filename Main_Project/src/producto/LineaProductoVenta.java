@@ -1,6 +1,9 @@
 package producto;
 
 import java.util.*;
+
+import aplicacion.Aplicacion;
+
 import java.io.File;
 //import Descuento;
 import categoria.Categoria;
@@ -16,33 +19,29 @@ public class LineaProductoVenta extends Producto {
 	protected int unidadesVendidas;
 	protected Descuento descuento;
 
-	
-	public LineaProductoVenta(String nombre, String descripcion, File foto, int stock, double precio)
-	{
+	public LineaProductoVenta(String nombre, String descripcion, File foto, int stock, double precio) {
 		super(nombre, descripcion, foto);
 		this.stock = stock;
 		this.precio = precio;
 		unidadesVendidas = 0;
-	
+
 	}
 
-	public boolean añadirCategoria(Categoria categoria) {
-		return this.categorias.add(categoria);
+	public void añadirCategoria(Categoria categoria) {
+		this.categorias.add(categoria);
 	}
-	
-	public boolean eliminarCategoria(Categoria categoria)
-	{
-		return this.categorias.remove(categoria);
+
+	public void eliminarCategoria(Categoria categoria) {
+		this.categorias.remove(categoria);
 	}
-	
-	public boolean añadirReseña(Reseña reseña)
-	{
-		return this.reseña.add(reseña);
+
+	public void añadirReseña(Reseña reseña) {
+		this.reseña.add(reseña);
+		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingValoracion(this);
 	}
-	
-	public boolean eliminarReseña(Reseña reseña)
-	{
-		return this.reseña.remove(reseña);
+
+	public void eliminarReseña(Reseña reseña) {
+		this.reseña.remove(reseña);
 	}
 	
 	public double obtenerPuntuacionMedia()
@@ -51,28 +50,16 @@ public class LineaProductoVenta extends Producto {
 		{
 			return 0.0;
 		}
-		
+
 		double total = 0;
-		for(Reseña r: reseña)
-		{
+		for (Reseña r : reseña) {
 			total += r.getPuntuacion();
 		}
-		return total/this.reseña.size();
+		return total / this.reseña.size();
 	}
 
 	// public boolean pasaFiltro(Filtro filtro, String prompt)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public int getStock() {
 		return stock;
 	}
@@ -108,4 +95,5 @@ public class LineaProductoVenta extends Producto {
 	public int getUnidadesVendidas() {
 		return unidadesVendidas;
 	}
+
 }

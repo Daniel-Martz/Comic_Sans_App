@@ -4,10 +4,11 @@ import java.util.*;
 import producto.*;
 
 public class Regalo extends UmbralGasto {
-	private Map<LineaProductoVenta, Integer> productosRegalo = new HashMap<>();
+	private Map<LineaProductoVenta, Integer> productosRegalo;
 
-	public Regalo(DateTimeSimulado fechaInicio, DateTimeSimulado fechaFin, double umbral) {
+	public Regalo(DateTimeSimulado fechaInicio, DateTimeSimulado fechaFin, double umbral, Map<LineaProductoVenta, Integer> productosRegalo) {
 		super(fechaInicio, fechaFin, umbral);
+		this.productosRegalo = productosRegalo;
 	}
 	
 	public void añadirProductoRegalo(LineaProductoVenta prod, int unidades) {
