@@ -17,7 +17,8 @@ public class ClienteRegistrado extends Usuario {
 	private List<Reseña> reseñas = new ArrayList<>();
 	private List<Oferta> ofertasRealizadas = new ArrayList<>();
 	private List<Oferta> ofertasRecibidas = new ArrayList<>();
-
+	private Interes interes;
+	
 	public ClienteRegistrado(String username, String DNI, String password) {
 		super(username, DNI, password);
 	}
@@ -122,6 +123,10 @@ public class ClienteRegistrado extends Usuario {
 	public List<Oferta> getOfertasRealizadas() {
 		return ofertasRealizadas;
 	}
+	
+	public Interes getInteres() {
+		return interes;
+	}
 
 	/**
 	 * @return the ofertasRecibidas
@@ -223,5 +228,6 @@ public class ClienteRegistrado extends Usuario {
 		}
 		return prods;
 	}
-
+	
+	
 }

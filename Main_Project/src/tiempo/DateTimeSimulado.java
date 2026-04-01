@@ -22,6 +22,7 @@ public class DateTimeSimulado {
 	
 	/** El segundo. */
 	private final int segundo;
+	
 
 	/**
 	 * Instancia un nuevo date time simulado, con la fecha actual de la apliación.
@@ -157,6 +158,10 @@ public class DateTimeSimulado {
 		return segundo;
 	}
 
+	public long dateTimeEnSegundos() {
+		return TiempoSimulado.getInstance().dateTimeASegundos(this);
+	}
+	
 	/**
 	 * To string.
 	 *

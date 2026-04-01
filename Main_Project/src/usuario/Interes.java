@@ -169,8 +169,7 @@ public class Interes {
 			}
 		}
 	    //Se devuelve un Empty map si no se ha modificado el interés
-		if (maxAux == 0)
-			return normalizado;
+	    if (maxAux == 0) return normalizado;
 		
 	    for (Map.Entry<LineaProductoVenta, Integer> entry : auxiliar.entrySet()) {
 	        normalizado.put(entry.getKey(), (double) entry.getValue() / maxAux);
