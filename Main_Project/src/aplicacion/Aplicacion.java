@@ -81,6 +81,16 @@ public class Aplicacion {
 		return Collections.unmodifiableList(this.usuariosRegistrados);
 	}
 	
+	public List<ClienteRegistrado> getClientesRegistrados() {
+	    List<ClienteRegistrado> clientes = new ArrayList<>();
+	    for (Usuario u : usuariosRegistrados) {
+	        if (u instanceof ClienteRegistrado) {
+	            clientes.add((ClienteRegistrado) u);
+	        }
+	    }
+	    return Collections.unmodifiableList(clientes);
+	}
+	
 	public void añadirGestor(String nombreUsuario, String DNI, String contraseña) {
 		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
 		if (nombreUsuario == null || nombreUser.isEmpty()) {
@@ -227,6 +237,10 @@ public class Aplicacion {
 	// Métodos de recomendación
 	public List<Producto> getRecomendacion() {
 		return new ArrayList<>();
+	}
+	
+	public ConfiguracionRecomendacion getConfiguracionRecomendacion() {
+		return criterioRecomendacion;
 	}
 
 	// Métodos de Usuarios Gestión

@@ -5,6 +5,9 @@ import descuento.*;
 import categoria.*;
 import producto.*;
 import solicitud.*;
+import tiempo.DateTimeSimulado;
+import usuario.ClienteRegistrado;
+import usuario.Usuario;
 import filtro.*;
 
 import java.io.BufferedReader;
@@ -21,10 +24,17 @@ public class Catalogo {
 	private Set<LineaProductoVenta> productosNuevos = new HashSet<>();
 	private Set<ProductoSegundaMano> productosSegundaMano = new HashSet<>();
 
+	//Parametros para busqueda
 	private FiltroVenta filtroProductosGestion;
 	private FiltroIntercambio filtroProductosSegundaMano;
 	private FiltroVentaCliente filtroProductosVenta;
-
+	
+	//Parametros para recomendacion por novedad
+	private DateTimeSimulado primerLanzamiento = null;
+	private DateTimeSimulado ultimoLanzamiento = null;
+	
+	
+	
 	private Catalogo() {
 
 	}
@@ -56,23 +66,88 @@ public class Catalogo {
 		}
 
 		productosNuevos.add(p);
+		
+		//Para el ranking de novedad
+		if(primerLanzamiento == null) {
+			primerLanzamiento = p.getFechaSubida();
+		}
+		ultimoLanzamiento = p.getFechaSubida();
+		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingNovedad(p);
+		
+		//Para añadir el producto al ranking de todos los usuarios
+		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+			u.getInteres().actualizarInteresNuevoVenta(p);
+		}
+		
+		//Para el ranking de valoracion
+		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingValoracion(p);
 	}
 
-	public void añadirPack(LineaProductoVenta pack, Map<LineaProductoVenta, Integer> prods) {
+	public void añadirPack(Pack pack) {
 		if (pack == null) {
 			throw new IllegalArgumentException("El pack introducido no es valido");
 		}
-		if (prods == null) {
-			throw new IllegalArgumentException("La lista de productos introducidos no es válida");
-		}
-
-		pack.añadirProductosPack(prods);
 
 		productosNuevos.add(pack);
 	}
 
 	public void eliminarProducto(Producto p) {
+		if(productosNuevos.isEmpty() || p == null) {
+			return;
+		}
 		productosNuevos.remove(p);
+		
+		//Para eliminar de los rankings el producto
+		if(p instanceof LineaProductoVenta) {
+			for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+				u.getInteres().eliminarProductoInteres((LineaProductoVenta) p);
+			}
+			Aplicacion.getInstancia().getConfiguracionRecomendacion().eliminarProductoNovedad((LineaProductoVenta) p);
+			Aplicacion.getInstancia().getConfiguracionRecomendacion().eliminarProductoValoracion((LineaProductoVenta) p);
+			
+			//Para actualizar la el primer lanzamiento y ultimo lanzamiento
+		    if (p.getFechaSubida().dateTimeEnSegundos() == ultimoLanzamiento.dateTimeEnSegundos()) {
+		        ultimoLanzamiento = null;
+		        long maxSegundos = -1;
+		        for (LineaProductoVenta prod : productosNuevos) {
+		            long segundos = prod.getFechaSubida().dateTimeEnSegundos();
+		            if (segundos > maxSegundos) {
+		                maxSegundos = segundos;
+		                ultimoLanzamiento = prod.getFechaSubida();
+		            }
+		        }
+		    }
+		    if (p.getFechaSubida().dateTimeEnSegundos() == primerLanzamiento.dateTimeEnSegundos()) {
+		        primerLanzamiento = null;
+		        long minSegundos = Long.MAX_VALUE;
+		        for (LineaProductoVenta prod : productosNuevos) {
+		            long segundos = prod.getFechaSubida().dateTimeEnSegundos();
+		            if (segundos < minSegundos) {
+		                minSegundos = segundos;
+		                primerLanzamiento = prod.getFechaSubida();
+		            }
+		        }
+		    }
+		}
+	}
+
+	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, Integer nuevoStock,
+	Double nuevoPrecio, File nuevaFoto) {
+		if(nuevoNombre != null) {
+			p.setNombre(nuevoNombre);
+		}
+		if(nuevaDescripcion != null) {
+			p.setDescripcion(nuevaDescripcion);
+		}
+		if(nuevoStock != null) {
+			p.setStock(nuevoStock);
+		}
+		if(nuevoPrecio != null) {
+			p.setPrecio(nuevoPrecio);
+		}
+		if(nuevaFoto != null) {
+			p.setFoto(nuevaFoto);
+		}
 	}
 
 	public void añadirProductosDesdeFichero(File f) throws IOException {
@@ -228,7 +303,7 @@ public class Catalogo {
 
 				nuevo.añadirCategoria(categoria);
 				categoria.añadirProductoACategoria(nuevo);
-				this.productosNuevos.add(nuevo);
+				this.añadirProducto(nuevo);
 			}
 		}
 	}
@@ -239,6 +314,11 @@ public class Catalogo {
 			return;
 		}
 		categoriasTienda.add(c);
+		
+		//Añadir la categoria al ranking de todos los clientes
+		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+			u.getInteres().actualizarInteresCategoriaNueva(c);
+		}
 	}
 
 	public void eliminarCategoria(Categoria c) {
@@ -246,6 +326,10 @@ public class Catalogo {
 			return;
 		}
 		categoriasTienda.remove(c);
+		//Añadir la categoria al ranking de todos los clientes
+		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+			u.getInteres().eliminarCategoriaInteres(c);
+		}
 	}
 
 	public void modificarCategoria(Categoria c, String nombreNuevo) {
@@ -293,7 +377,7 @@ public class Catalogo {
 		d.añadirProductoRebajado(p);
 	}
 
-	public void eliminarDescuento(LineaProductoVenta p, Descuento d) {
+	public void eliminarDescuento(Descuento d, LineaProductoVenta p) {
 		if (p == null || d == null) {
 			throw new IllegalArgumentException("El producto y el descuento no pueden ser nulos.");
 		}
@@ -395,5 +479,35 @@ public class Catalogo {
     }
     return total;
   }
+
+  /**
+   * @return the categoriasTienda
+   */
+  public Set<Categoria> getCategoriasTienda() {
+	return categoriasTienda;
+  }
+
+  /**
+   * @return the productosNuevos
+   */
+  public Set<LineaProductoVenta> getProductosNuevos() {
+	return productosNuevos;
+  }
+
+  /**
+   * @return the primerLanzamiento
+   */
+  public DateTimeSimulado getPrimerLanzamiento() {
+	return primerLanzamiento;
+  }
+
+  /**
+   * @return the ultimoLanzamiento
+   */
+  public DateTimeSimulado getUltimoLanzamiento() {
+	return ultimoLanzamiento;
+  }
+  
+  
 
 }

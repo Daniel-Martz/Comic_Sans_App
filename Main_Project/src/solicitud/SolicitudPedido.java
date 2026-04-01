@@ -43,6 +43,13 @@ public class SolicitudPedido extends Solicitud{
 		return true;
 	}
 	
+	public void actualizarEstado(EstadoPedido estado) {
+	    if (estado == null) {
+	        throw new IllegalArgumentException("El estado no puede ser null");
+	    }
+	    this.estado = estado;
+	}
+	
 	public EstadoPedido getEstado() {
 	    return estado;
 	}
