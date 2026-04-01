@@ -21,4 +21,20 @@ public class FiltroIntercambio extends Filtro {
 	public void eliminarEstadoConservacion(EstadoConservacion estado) {
 		this.estadosFiltrados.remove(estado);
 	}
+
+
+	public double getValorMin() {
+		return valorMin;
+	}
+
+
+	public double getValorMax() {
+		return valorMax;
+	}
+
+
+	public Set<EstadoConservacion> getEstadosFiltrados() {
+		return estadosFiltrados;
+	}
+	
 }

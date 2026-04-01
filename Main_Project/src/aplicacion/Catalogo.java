@@ -83,10 +83,15 @@ public class Catalogo {
 		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingValoracion(p);
 	}
 
-	public void añadirPack(Pack pack) {
+	public void añadirPack(Pack pack, Map<LineaProductoVenta, Integer> prods) {
 		if (pack == null) {
 			throw new IllegalArgumentException("El pack introducido no es valido");
 		}
+		if (prods == null) {
+			throw new IllegalArgumentException("La lista de productos introducidos no es válida");
+		}
+
+		pack.añadirProductosAPack(prods);
 
 		productosNuevos.add(pack);
 	}
@@ -562,11 +567,58 @@ public class Catalogo {
 	}
 
 	public List<ProductoSegundaMano> obtenerProductosIntercambioFiltrados(String prompt) {
-		return null;
-	}
+		List<ProductoSegundaMano> resultado = new ArrayList<>();
 
-	public List<LineaProductoVenta> obtenerProductosAModificarFiltrados(String prompt) {
-		return new ArrayList<>();
+		for (ProductoSegundaMano p : productosSegundaMano) {
+
+			// Solo mostramos productos validados
+			if (!p.isValidado())
+				continue;
+
+			// Solo mostramos productos disponibles
+			if (p.estaBloqueado())
+				continue;
+
+			// Filtro por prompt (nombre o descripción)
+			if (prompt != null && !prompt.trim().isEmpty()) {
+				String palabra = prompt.toLowerCase();
+				boolean boolNombre = p.getNombre().toLowerCase().contains(palabra);
+				boolean boolDescripcion = p.getDescripcion() != null
+						&& p.getDescripcion().toLowerCase().contains(palabra);
+				if (!boolNombre && !boolDescripcion)
+					continue;
+			}
+
+			if (filtroProductosSegundaMano != null) {
+				// Filtro por valor estimado
+				double precio = p.getDatosValidacion().getPrecioEstimadoProducto();
+				if (precio < filtroProductosSegundaMano.getValorMin())
+					continue;
+				if (precio > filtroProductosSegundaMano.getValorMax())
+					continue;
+
+				// Filtro por estado de conservación
+				Set<EstadoConservacion> estadosFiltro = filtroProductosSegundaMano.getEstadosFiltrados();
+				if (!estadosFiltro.isEmpty()) {
+					EstadoConservacion estadoProducto = p.getDatosValidacion().getEstadoConservacion();
+					if (!estadosFiltro.contains(estadoProducto))
+						continue;
+				}
+			}
+			resultado.add(p);
+		}
+
+		// Ordenación por valor estimado
+		if (filtroProductosSegundaMano != null) {
+			boolean asc = filtroProductosSegundaMano.isOrdenAscendente();
+			resultado.sort((a, b) -> {
+				double precioA = a.getDatosValidacion().getPrecioEstimadoProducto();
+				double precioB = b.getDatosValidacion().getPrecioEstimadoProducto();
+				int cmp = Double.compare(precioA, precioB);
+				return asc ? cmp : -cmp;
+			});
+		}
+		return resultado;
 	}
 
 	public String getNombresCategorias() {
@@ -607,4 +659,74 @@ public class Catalogo {
   
   
 
+	public LineaProductoVenta buscarProductoNuevo(int promptId) {
+		for (LineaProductoVenta p : productosNuevos) {
+			if (p.getID() == promptId) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public ProductoSegundaMano buscarProductoIntercambio(int promptId) {
+		for (ProductoSegundaMano p : productosSegundaMano) {
+			if (p.getID() == promptId) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public List<LineaProductoVenta> obtenerProductosNuevosGestion(String prompt) {
+		List<LineaProductoVenta> resultado = new ArrayList<>();
+
+		for (LineaProductoVenta p : productosNuevos) {
+			// Filtramos por el prompt (nombre y descripcion)
+			if (prompt != null && !prompt.trim().isEmpty()) {
+				String palabra = prompt.toLowerCase();
+				boolean boolNombre = p.getNombre().toLowerCase().contains(palabra);
+				boolean boolDescripcion = p.getDescripcion() != null
+						&& p.getDescripcion().toLowerCase().contains(palabra);
+				if (!boolNombre && !boolDescripcion)
+					continue;
+			}
+
+			if (filtroProductosGestion != null) {
+				// Filtramos por tipo de producto
+				Set<TipoProducto> tiposFiltro = filtroProductosGestion.getTipoFiltrado();
+				if (!tiposFiltro.isEmpty()) {
+					boolean coincideTipo = (tiposFiltro.contains(TipoProducto.COMIC) && p instanceof Comic)
+							|| (tiposFiltro.contains(TipoProducto.FIGURA) && p instanceof Figura)
+							|| (tiposFiltro.contains(TipoProducto.JUEGO_DE_MESA) && p instanceof JuegoDeMesa);
+					if (!coincideTipo)
+						continue;
+				}
+
+				// Filtramos por categoria
+				Set<Categoria> categoriasFiltro = filtroProductosGestion.getCategoriasFiltradas();
+				if (!categoriasFiltro.isEmpty()) {
+					boolean perteneceAAlguna = false;
+					for (Categoria c : p.getCategorias()) {
+						if (categoriasFiltro.contains(c)) {
+							perteneceAAlguna = true;
+							break;
+						}
+					}
+					if (!perteneceAAlguna)
+						continue;
+				}
+			}
+			resultado.add(p);
+		}
+		// Ordenacion
+		if (filtroProductosGestion != null) {
+			boolean asc = filtroProductosGestion.isOrdenAscendente();
+			resultado.sort((a, b) -> {
+				int cmp = a.getNombre().compareToIgnoreCase(b.getNombre());
+				return asc ? cmp : -cmp;
+			});
+		}
+		return resultado;
+	}
+	
 }
