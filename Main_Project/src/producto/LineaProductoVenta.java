@@ -59,19 +59,6 @@ public class LineaProductoVenta extends Producto {
 		}
 		return total/this.reseña.size();
 	}
-
-	// public boolean pasaFiltro(Filtro filtro, String prompt)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	public int getStock() {
 		return stock;
