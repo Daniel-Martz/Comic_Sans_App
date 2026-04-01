@@ -48,5 +48,10 @@ public class Empleado extends UsuarioGestion {
     System.out.println("La solicitud " + s + " ha sido validada correctamente. Se le ha asociado un precio " + precio
         + " y un estado " + estado);
   }
-
+	public void actualizarEstadoPedido(SolicitudPedido p, EstadoPedido nuevoEstado) {
+		if(p == null) {
+			throw new IllegalArgumentException("El pedido no puede ser null");
+		}
+		p.actualizarEstado(nuevoEstado);
+	}
 }
