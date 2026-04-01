@@ -1,5 +1,8 @@
 package tiempo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Clase refactorizada siguiendo el patrón Singleton.
  * Permite gestionar un tiempo simulado con velocidad variable.
@@ -105,4 +108,26 @@ public class TiempoSimulado {
         return "Año: " + getAño() + "\nMes: " + getMes() + "\nDia: " + getDia() + 
                "\nHora: " + getHora() + "\nMinuto: " + getMinuto() + "\nSegundo: " + getSegundo();
     }
+	
+	//Metodo para fraccionar dos fechas en sus meses
+	public List<String> periodoAMeses(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin) {
+	    List<String> meses = new ArrayList<>();
+	    
+	    if (periodoInicio == null || periodoFin == null) {
+	        return meses;
+	    }
+	    
+	    int mes = periodoInicio.getMes();
+	    int año = periodoInicio.getAño();
+	    
+	    while (año < periodoFin.getAño() || (año == periodoFin.getAño() && mes <= periodoFin.getMes())) {
+	        meses.add(mes + "/" + año);
+	        mes++;
+	        if (mes > mesesPorAño) {
+	            mes = 1;
+	            año++;
+	        }
+	    }
+	    return meses;
+	}
 }

@@ -1,5 +1,8 @@
 package tiempo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The Class DateTimeSimulado.
  */
@@ -176,4 +179,5 @@ public class DateTimeSimulado {
 	public String toStringFecha() {
 	    return dia + "/" + mes + "/" + año;
 	}
+	
 }

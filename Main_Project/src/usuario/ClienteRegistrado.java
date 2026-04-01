@@ -180,13 +180,14 @@ public class ClienteRegistrado extends Usuario {
 			throw new IllegalStateException("El pedido no está en estado pendiente de pago.");
 		}
 
-		Pago pago = SistemaPago.getInstancia().procesarPago(pedido.getCostePedido(), numTarjeta, cvv, fechaCaducidad);
+		Pago pago = SistemaPago.getInstancia().procesarPago(pedido.getCostePedido(), numTarjeta, cvv, fechaCaducidad, pedido);
 
 		if (pago == null) {
 			throw new IllegalStateException("El pago del pedido no se ha podido procesar.");
 		}
 
 		pedido.añadirPagoPedido(pago);
+		Aplicacion.getInstancia().getSistemaEstadisticas().añadirPago(pago);
 		pedido.actualizarPagoPedido(EstadoPedido.PAGADO);
 		System.out.println("Pago del pedido realizado con éxito.");
 	}
@@ -208,14 +209,15 @@ public class ClienteRegistrado extends Usuario {
 
 		Pago pago = SistemaPago.getInstancia().procesarPago(
 				validacion.getProductoAValidar().getDatosValidacion().getPrecioEstimadoProducto(), numTarjeta, cvv,
-				fechaCaducidad);
+				fechaCaducidad, validacion);
 
 		if (pago == null) {
 			throw new IllegalStateException("El pago de la validación no se ha podido procesar.");
 		}
 
 		validacion.añadirPagoValidacion(pago);
-
+		Aplicacion.getInstancia().getSistemaEstadisticas().añadirPago(pago);
+		
 		System.out.println("Pago de validación realizado con éxito.");
 	}
 

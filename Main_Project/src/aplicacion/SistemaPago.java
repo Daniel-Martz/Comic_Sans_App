@@ -19,7 +19,7 @@ public class SistemaPago {
 	}
 
 	//faltan excepciones
-	public Pago procesarPago(double importe, String numTarjeta, String cvv, DateTimeSimulado fechaCaducidad) {
+	public Pago procesarPago(double importe, String numTarjeta, String cvv, DateTimeSimulado fechaCaducidad, Solicitud objetoPagado) {
 		if (importe <= 0) {
 			return null;
 		}
@@ -53,7 +53,7 @@ public class SistemaPago {
 		
 		System.out.println("¡Pago de " + importe + "€ procesado con éxito!");
 		
-		Pago p = new Pago(new DateTimeSimulado(), importe);
+		Pago p = new Pago(new DateTimeSimulado(), importe, objetoPagado);
 		return p;
 	}
 }
