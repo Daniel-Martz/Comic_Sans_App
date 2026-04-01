@@ -6,20 +6,13 @@ import tiempo.DateTimeSimulado;
 
 public class NotificacionOferta extends NotificacionCliente {
 
-	private Set<Oferta> ofertasAsociadas = new HashSet<>();;
-	public NotificacionOferta(String mensaje, DateTimeSimulado horaEnvio) {
+	private Oferta oferta;
+	public NotificacionOferta(String mensaje, DateTimeSimulado horaEnvio, Oferta o) {
 		super(mensaje, horaEnvio);
+		this.oferta = o;
 	}
 
-	public void addOferta(Oferta oferta) {
-		this.ofertasAsociadas.add(oferta);
-	}
-
-	public void removeOferta(Oferta oferta) {
-		this.ofertasAsociadas.remove(oferta);
-	}
-
-	public Set<Oferta> getOfertasAsociadas() {
-		return ofertasAsociadas;
+	public Oferta getOfertas() {
+		return oferta;
 	}
 }

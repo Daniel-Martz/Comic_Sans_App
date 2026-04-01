@@ -7,24 +7,28 @@ public class SolicitudIntercambio extends Solicitud{
 	private CodigoIntercambio codigoOfertante;
 	private CodigoIntercambio codigoDestinatario;
 	private Oferta oferta;
+	private boolean aprobado = false;
 	
 	public SolicitudIntercambio(String codigoOfertante, String codigoDestinatario, String lugarIntercambio, Oferta oferta) {
 		this.codigoDestinatario = new CodigoIntercambio(codigoDestinatario);
 		this.codigoOfertante = new CodigoIntercambio(codigoOfertante);
-		this.informacionIntercambio = new DetallesIntercambio(lugarIntercambio);
+		this.informacionIntercambio = new DetallesIntercambio(new DateTimeSimulado(), lugarIntercambio);
 		this.oferta = oferta;
 	}
 	
-	public boolean aprobarIntercambio(String codigoOfertante, String codigoDestinatario) {
-		if(codigoOfertante != this.codigoOfertante.getCodigo() || codigoDestinatario != this.codigoDestinatario.getCodigo()) {
-			return false;
-		}
-		else {
-			return true;
+	public void aprobarIntercambio(String codigoOfertante, String codigoDestinatario) {
+		if(this.codigoOfertante.validarCodigo(codigoOfertante) && this.codigoDestinatario.validarCodigo(codigoDestinatario)) {
+			aprobado = true;
 		}
 	}
 	
 	public void addOferta(Oferta o) {
-		this.oferta = oferta;
+		this.oferta = o;
 	}
+	
+	public boolean esAprobado()
+	{
+		return aprobado;
+	}
+
 }

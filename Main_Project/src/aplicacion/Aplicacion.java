@@ -1,14 +1,15 @@
 package aplicacion;
 
 import producto.*;
-
 import usuario.*;
 import solicitud.*;
+import tiempo.DateTimeSimulado;
 import notificacion.*;
 
-import java.util.List;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.*;
 
 public class Aplicacion {
 
@@ -25,19 +26,20 @@ public class Aplicacion {
 	private List<Usuario> usuariosRegistrados = new ArrayList<>();
 
 	private Aplicacion(String nombre, ConfiguracionRecomendacion criterioRecomendacion, SistemaPago sistemaPago,
-			SistemaEstadisticas sistemaEstadisticas, GestorSolicitudes gestorSolicitud, Catalogo catalogo) {
+			SistemaEstadisticas sistemaEstadisticas, GestorSolicitudes gestorSolicitud, Catalogo catalogo, String username, String DNI, String password) {
 		this.nombre = nombre;
 		this.criterioRecomendacion = criterioRecomendacion;
 		this.sistemaPago = sistemaPago;
 		this.sistemaEstadisticas = sistemaEstadisticas;
 		this.gestorSolicitud = gestorSolicitud;
 		this.catalogo = catalogo;
+		añadirGestor(username, DNI, password);
 	}
 
 	public static Aplicacion getInstancia() {
 		if (instancia == null) {
-			instancia = new Aplicacion("Comic Sans", new ConfiguracionRecomendacion(1, 2, 3, 5), new SistemaPago(),
-					new SistemaEstadisticas(), new GestorSolicitudes(), new Catalogo());
+			instancia = new Aplicacion("Comic Sans", ConfiguracionRecomendacion.getInstancia(), SistemaPago.getInstancia(),
+					SistemaEstadisticas.getInstancia(), GestorSolicitudes.getInstancia(), Catalogo.getInstancia(), "gestor", "123456789A", "123456");
 		}
 		return instancia;
 	}
@@ -49,7 +51,8 @@ public class Aplicacion {
 
 	// Métodos de inicio y cierre de sesión
 	public void crearCuenta(String nombreUsuario, String DNI, String contraseña) {
-		if (nombreUsuario == null || nombreUsuario.trim().isEmpty()) {
+		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
+		if (nombreUsuario == null || nombreUser.isEmpty()) {
 			return;
 		}
 
@@ -62,15 +65,46 @@ public class Aplicacion {
 		}
 
 		for (Usuario u : usuariosRegistrados) {
-			if (u.getNombreUsuario().equals(nombreUsuario)) {
+			if (u.getNombreUsuario().equals(nombreUser)) {
 				return;
 			}
 		}
 
-		Usuario nuevoUsuario = new Cliente(nombreUsuario, DNI, contraseña);
+		Usuario nuevoUsuario = new ClienteRegistrado(nombreUser, DNI, contraseña);
 		usuariosRegistrados.add(nuevoUsuario);
 
-		System.out.println("Nueva cuenta creada con éxito para: " + nombreUsuario);
+		System.out.println("Nueva cuenta de cliente creada con éxito para: " + nombreUser);
+		return;
+	}
+	
+	public List<Usuario> getUsuariosRegistrados() {
+		return Collections.unmodifiableList(this.usuariosRegistrados);
+	}
+	
+	public void añadirGestor(String nombreUsuario, String DNI, String contraseña) {
+		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
+		if (nombreUsuario == null || nombreUser.isEmpty()) {
+			return;
+		}
+
+		if (contraseña == null || contraseña.length() < 4) {
+			return;
+		}
+
+		if (DNI == null || DNI.length() != 10) {
+			return;
+		}
+
+		for (Usuario u : usuariosRegistrados) {
+			if (u.getNombreUsuario().equals(nombreUser)) {
+				return;
+			}
+		}
+
+		Usuario nuevoUsuario = new Gestor(nombreUser, DNI, contraseña);
+		usuariosRegistrados.add(nuevoUsuario);
+
+		System.out.println("Nueva cuenta de gestor creada con éxito para: " + nombreUser);
 		return;
 	}
 
@@ -117,7 +151,7 @@ public class Aplicacion {
 		for (Usuario u : usuariosRegistrados) {
 			if (u.getNombreUsuario().equals(nombreUsuario)) {
 				if (u.verificarContraseña(contraseñaAntigua)) {
-					u.setPassword(contraseñaAntigua, contraseñaNueva);
+					u.setContraseña(contraseñaAntigua, contraseñaNueva);
 					System.out.println("Contraseña cambiada con éxito para: " + nombreUsuario);
 					return;
 				} else {
@@ -128,12 +162,43 @@ public class Aplicacion {
 	}
 
 	// Métodos exclusivos del gestor
-	public void añadirEmpleado(Empleado empleado) {
-		
+	public void añadirEmpleado(String nombreUsuario, String DNI, String contraseña) {
+		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
+		if (nombreUsuario == null || nombreUser.isEmpty()) {
+			return;
+		}
+
+		if (contraseña == null || contraseña.length() < 4) {
+			return;
+		}
+
+		if (DNI == null || DNI.length() != 10) {
+			return;
+		}
+
+		for (Usuario u : usuariosRegistrados) {
+			if (u.getNombreUsuario().equals(nombreUser)) {
+				return;
+			}
+		}
+
+		Usuario nuevoUsuario = new Empleado(nombreUser, DNI, contraseña);
+		usuariosRegistrados.add(nuevoUsuario);
+
+		System.out.println("Nueva cuenta creada con éxito para: " + nombreUser);
+		return;
 	}
 
 	public void eliminarEmpleado(Empleado empleado) {
+		if (empleado == null) {
+			return;
+		}
 
+		if (usuariosRegistrados.contains(empleado)) {
+			usuariosRegistrados.remove(empleado);
+			System.out.println("Empleado eliminado del sistema: " + empleado.getNombreUsuario());
+		}
+		return;
 	}
 
 	// Métodos del Cliente Venta
@@ -143,7 +208,8 @@ public class Aplicacion {
 
 	public void crearPedidoAPartirDeCarrito() {
 	}
-
+	
+	
 	public void cancelarPedido(SolicitudPedido pedido, Usuario usuario) {
 	}
 
@@ -206,7 +272,23 @@ public class Aplicacion {
 
 	// Envío de notificaciones
 
-	public void enviarNotificacion(Usuario usuario, NotificacionUsuario notificacion) {
+	public void enviarNotificacion(Usuario usuario, Notificacion notificacion) {
+		if(usuario == null || notificacion == null)
+		{
+			throw new IllegalArgumentException("La solicitud no es valida");
+		}
+		
+		if(usuario instanceof ClienteRegistrado){
+			ClienteRegistrado cliente = (ClienteRegistrado) usuario;
+			NotificacionCliente notificacionCliente =(NotificacionCliente) notificacion;
+			cliente.anadirNotificacion(notificacionCliente);
+		}
+		if(usuario instanceof Empleado)
+		{
+			Empleado empleado = (Empleado) usuario;
+			NotificacionEmpleado notificacionEmpleado =(NotificacionEmpleado) notificacion;
+			empleado.añadirNotificacion(notificacionEmpleado);
+		}
 	}
 
 	public Usuario getUsuarioActual() {
@@ -254,7 +336,7 @@ public class Aplicacion {
 
 		List<Empleado> lista = this.getEmpleados();
 		for (Empleado e : lista) {
-			e.anadirNotificacion(notifEmpleado);
+			e.añadirNotificacion(notifEmpleado);
 		}
 
 	}

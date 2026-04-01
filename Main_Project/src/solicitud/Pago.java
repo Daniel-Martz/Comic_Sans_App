@@ -5,9 +5,9 @@ import tiempo.DateTimeSimulado;
 
 public class Pago {
 	private DateTimeSimulado fechaPago;
-	private int importe;
+	private final double importe;
 	
-	public Pago(DateTimeSimulado fechaPago, int importe) {
+	public Pago(DateTimeSimulado fechaPago, double importe) {
 		super();
 		this.fechaPago = fechaPago;
 		this.importe = importe;

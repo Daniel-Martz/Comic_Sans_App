@@ -1,6 +1,6 @@
 package descuento;
 
-import java.time.DateTimeSimulado;
+import tiempo.*;
 import java.util.Set;
 import java.util.HashSet;
 import categoria.Categoria;
@@ -43,5 +43,17 @@ public abstract class Descuento {
 	public DateTimeSimulado getFechaFin() {
 		return fechaFin;
 	}
+
+
+	public Set<LineaProductoVenta> getProductosRebajados() {
+		return productosRebajados;
+	}
+
+
+	public Set<Categoria> getCategoriasRebajadas() {
+		return categoriasRebajadas;
+	}
+	
+
 
 }

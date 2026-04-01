@@ -7,8 +7,8 @@ public class CodigoIntercambio {
 		this.codigo = codigo;
 	}
 
-	public String getCodigo() {
-		return codigo;
+	public boolean validarCodigo(String codigo) {
+		return this.codigo == codigo;
 	}
 
 }	

@@ -1,6 +1,8 @@
 package notificacion;
 
 import producto.LineaProductoVenta;
+import tiempo.DateTimeSimulado;
+
 import java.util.*;
 
 public class NotificacionProducto extends NotificacionCliente {
