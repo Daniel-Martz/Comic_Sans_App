@@ -1,6 +1,10 @@
 package usuario;
 
+import java.io.File;
+import java.io.IOException;
+
 import aplicacion.Aplicacion;
+import tiempo.DateTimeSimulado;
 
 public class Gestor extends UsuarioGestion {
 	
@@ -32,4 +36,20 @@ public class Gestor extends UsuarioGestion {
 		Aplicacion.getInstancia().getConfiguracionRecomendacion().configurarUnidades(unidades);
 	}
 	
+	public void estadisticasRecaudacion(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, boolean porMes, File ficheroSalida) throws IOException {
+		if(porMes) {
+			Aplicacion.getInstancia().getSistemaEstadisticas().obtenerRecaudacionMensual (periodoInicio, periodoFin, ficheroSalida);
+		}
+		else {
+			Aplicacion.getInstancia().getSistemaEstadisticas().obtenerRecaudacionAmbito(periodoInicio, periodoFin, ficheroSalida);
+		}
+	}
+	
+	public void estadisticasVentasProductos(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, boolean porId, File ficheroSalida) throws IOException {
+		Aplicacion.getInstancia().getSistemaEstadisticas().obtenerVentasProductos(periodoInicio, periodoFin, porId, ficheroSalida);
+	}
+	
+	public void estadisticasGastoClientes(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, File ficheroSalida) throws IOException {
+		Aplicacion.getInstancia().getSistemaEstadisticas().obtenerGastoClientes(periodoInicio, periodoFin, ficheroSalida);
+	}
 }
