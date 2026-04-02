@@ -90,7 +90,7 @@ public class DateTimeSimulado {
 	 * @param dias the dias
 	 * @return the date time simulado
 	 */
-	static DateTimeSimulado DateTimeDiasDespues(int dias) {
+	public static DateTimeSimulado DateTimeDiasDespues(int dias) {
 		DateTimeSimulado DateTime = new DateTimeSimulado();
 		
 		int diaPorMes = TiempoSimulado.getInstance().getDiasPorMes();

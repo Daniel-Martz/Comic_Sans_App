@@ -5,6 +5,7 @@ import producto.*;
 
 public class Carrito implements Contenedor<LineaProductoVenta> {
 	private Map<LineaProductoVenta, Integer> productos = new HashMap<>(); 
+	private Map<LineaProductoVenta, Double> recaudacionProductos = new HashMap<>(); 
 	
 	@Override
 	public void añadirProducto(LineaProductoVenta p, Integer cantidad) {
