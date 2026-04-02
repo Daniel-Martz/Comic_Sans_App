@@ -376,4 +376,11 @@ public class Aplicacion {
 		return uList;
 	}
 
+	/**
+	 * @return the sistemaEstadisticas
+	 */
+	public SistemaEstadisticas getSistemaEstadisticas() {
+		return sistemaEstadisticas;
+	}
+
 }

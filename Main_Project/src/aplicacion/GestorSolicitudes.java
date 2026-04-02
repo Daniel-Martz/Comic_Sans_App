@@ -86,5 +86,6 @@ public class GestorSolicitudes {
 	public List<SolicitudValidacion> getValidaciones() {
 		return validaciones;
 	}
+	
 }
 

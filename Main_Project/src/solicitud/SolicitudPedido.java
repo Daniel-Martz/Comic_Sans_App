@@ -7,6 +7,7 @@ import usuario.ClienteRegistrado;
 public class SolicitudPedido extends Solicitud{
 
 	private Map<LineaProductoVenta, Integer> productosDiferentes = new HashMap<>();
+	private Map<LineaProductoVenta, Double> recaudacionProducto = new HashMap<>();
 	private ClienteRegistrado cliente;
 	private Pago pagoPedido;
 	private EstadoPedido estado;
@@ -53,4 +54,20 @@ public class SolicitudPedido extends Solicitud{
 	public EstadoPedido getEstado() {
 	    return estado;
 	}
+
+	/**
+	 * @return the recaudacionProducto
+	 */
+	public Map<LineaProductoVenta, Double> getRecaudacionProducto() {
+		return recaudacionProducto;
+	}
+
+	/**
+	 * @return the pagoPedido
+	 */
+	public Pago getPagoPedido() {
+		return pagoPedido;
+	}
+	
+	
 }
