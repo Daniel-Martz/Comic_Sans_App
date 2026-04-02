@@ -70,17 +70,15 @@ public class SistemaEstadisticas {
 			bw.newLine();
 			bw.write("--------------------------------");
 			bw.newLine();
-
+			double total = 0.0;
 			for (Map.Entry<String, Double> entry : recaudacion.entrySet()) {
-				bw.write(String.format("%-15s %.2f €", entry.getKey(), entry.getValue()));
+				double valor = entry.getValue();
+				total += valor;
+				bw.write(String.format("%-15s %.2f €", entry.getKey(), valor));
 				bw.newLine();
 			}
 
 			// Total al final
-			double total = 0.0;
-			for (double valor : recaudacion.values()) {
-				total += valor;
-			}
 			bw.write("--------------------------------");
 			bw.newLine();
 			bw.write(String.format("%-15s %.2f €", "TOTAL", total));
