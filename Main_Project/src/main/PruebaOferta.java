@@ -87,8 +87,8 @@ public class PruebaOferta {
 		}
 		
 		List<SolicitudValidacion> solicitudes = GestorSolicitudes.getInstancia().getValidaciones();
-		empleado.validarProducto(solicitudes.get(0), 2.4, EstadoConservacion.MUY_BUENO);
-		empleado.validarProducto(solicitudes.get(1), 1, EstadoConservacion.MUY_USADO);
+		empleado.validarProducto(solicitudes.get(0), 2.4, 10.0, EstadoConservacion.MUY_BUENO);
+		empleado.validarProducto(solicitudes.get(1), 1.0, 15.0, EstadoConservacion.MUY_USADO);
 		
 		
 		app.cerrarSesion();

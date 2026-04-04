@@ -11,6 +11,9 @@ public class Reseña {
 	private LineaProductoVenta producto;
 	
 	public Reseña(String descripcion, double puntuacion, DateTimeSimulado fecha, LineaProductoVenta producto) {
+    if(puntuacion < 0 || puntuacion > 5){
+      throw new IllegalArgumentException("La puntuación debe ser un real entre 0.00 y 5.00");
+    }
 		this.descripcion = descripcion;
 		this.puntuacion = puntuacion;
 		this.fecha = fecha;

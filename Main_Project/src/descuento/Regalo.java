@@ -23,4 +23,8 @@ public class Regalo extends UmbralGasto {
 	        productosRegalo.put(prod, unidadesActual - unidades);
 	    }
 	}
+
+  public Map<LineaProductoVenta, Integer> getProductosRegalo(){
+    return Collections.unmodifiableMap(productosRegalo);
+  }
 }

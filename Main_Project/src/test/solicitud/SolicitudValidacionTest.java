@@ -14,13 +14,13 @@ class SolicitudValidacionTest {
 
 	@Test
 	void testValidarProductoError() {
-    Exception e = assertThrowsExactly(IllegalArgumentException.class, ()->{solValidacion.validarProducto(-1, EstadoConservacion.MUY_BUENO);}); 
+    Exception e = assertThrowsExactly(IllegalArgumentException.class, ()->{solValidacion.validarProducto(5, -1.0, EstadoConservacion.MUY_BUENO);}); 
     assertEquals(e.getMessage(), "El precio no puede tener un valor negativo");
 	}
 
 	@Test
 	void testValidarProducto() {
-    solValidacion.validarProducto(10, EstadoConservacion.MUY_BUENO);
+    solValidacion.validarProducto(5, 10.0, EstadoConservacion.MUY_BUENO);
     assertTrue(solValidacion.validado());
 	}
 }

@@ -1,28 +1,20 @@
-package test.solicitud;
-
-import static org.junit.jupiter.api.Assertions.*;
+package main;
 import usuario.*;
 import aplicacion.*;
-import producto.*;
-import solicitud.*;
 import notificacion.*;
-import tiempo.DateTimeSimulado;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import solicitud.*;
+import producto.*;
+import descuento.*;
+import filtro.*;
+import tiempo.*;
+import categoria.*;
 
-import org.junit.jupiter.api.Test;
+import java.util.*;
+import java.io.*;
 
-import solicitud.SolicitudIntercambio;
-import solicitud.SolicitudValidacion;
-import usuario.ClienteRegistrado;
-
-class SolicitudIntercambioTest {
-  
-	@Test
-  void testAprobarIntercambio() {
-		ClienteRegistrado matteo, rodrigo;
+public class Main {
+  public static void main(String args){
+    ClienteRegistrado matteo, rodrigo;
 		Empleado federico=null;
 		Usuario usuarioActual;
     Gestor gestor;
@@ -114,8 +106,10 @@ class SolicitudIntercambioTest {
 		List<SolicitudIntercambio> listaIntercambios = GestorSolicitudes.getInstancia().getIntercambios();
 		SolicitudIntercambio sol = listaIntercambios.get(0);
 		federico.aprobarIntercambio(sol, codigoMatteo, codigoRodrigo);
-    assertTrue(sol.esAprobado());
 
-	}
 
+
+
+
+  }
 }

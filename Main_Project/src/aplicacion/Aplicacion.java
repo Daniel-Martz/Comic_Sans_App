@@ -462,7 +462,7 @@ public class Aplicacion {
 		NotificacionEmpleado notifEmpleado = new NotificacionEmpleado(
 				"Hay una nueva solicitud de intercambio en la tienda", ahora);
 		notifEmpleado.addSolicitud(solicitud);
-		this.gestorSolicitud.añadirSolicitudIntercambio(solicitud);
+		GestorSolicitudes.getInstancia().añadirSolicitudIntercambio(solicitud);
 
 		// Enviamos las notificaciones
 		enviarNotificacion(ofertante, notifOfertante);

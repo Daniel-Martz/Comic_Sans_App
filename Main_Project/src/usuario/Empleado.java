@@ -42,17 +42,16 @@ public class Empleado extends UsuarioGestion {
 
   }
 
-  public void validarProducto(SolicitudValidacion s, double precio, EstadoConservacion estado) {
-    if (!permisos.contains(Permiso.INTERCAMBIOS)) {
+  public void validarProducto(SolicitudValidacion s, double precioValidacion, double precioProducto, EstadoConservacion estadoProducto) {
+    if (!permisos.contains(Permiso.VALIDACIONES)) {
       throw new IllegalStateException("No tienes permisos para aprobar validar productos");
     }
-    s.validarProducto(precio, estado);
-    System.out.println("La solicitud ha sido validada correctamente. Se le ha asociado un precio " + precio
-        + " y un estado " + estado);
     
+    s.validarProducto(precioValidacion, precioProducto, estadoProducto);
+    System.out.println("La solicitud ha sido validada correctamente. Se le ha asociado un precio " + precioProducto
+        + " y un estado " + estadoProducto);
     NotificacionValidacion noti = new NotificacionValidacion("La solicitud ha sido validada correctamente", new DateTimeSimulado(),s);
     s.getCliente().anadirNotificacion(noti);
-    
   }
 	public void actualizarEstadoPedido(SolicitudPedido p, EstadoPedido nuevoEstado) {
 		if(p == null) {
