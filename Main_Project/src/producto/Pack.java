@@ -20,16 +20,19 @@ public class Pack extends LineaProductoVenta{
 	  this.pack.merge(l, i, Integer::sum);
   }
 
-public void eliminarProductoDePack(LineaProductoVenta l, Integer i){
-    if(l == null || i < 0){
-      throw new IllegalArgumentException("Los argumentos introducidos no son validos");
-    }
-    if(pack.get(l) > i){
-      pack.put(l, pack.get(l) - i);
-    }else{
-      pack.remove(l);
-    }
-  }
+  public void eliminarProductoDePack(LineaProductoVenta l, Integer i) {
+	    if (l == null || i < 0) {
+	        throw new IllegalArgumentException("Los argumentos introducidos no son validos");
+	    }
+	    if (!pack.containsKey(l)) {
+	        throw new IllegalArgumentException("El producto no existe en el pack");
+	    }
+	    if (pack.get(l) > i) {
+	        pack.put(l, pack.get(l) - i);
+	    } else {
+	        pack.remove(l);
+	    }
+	}
   
   public void añadirProductosAPack(Map<LineaProductoVenta, Integer> productos) {
 	    if (productos == null) {
