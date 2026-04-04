@@ -53,8 +53,9 @@ public class SolicitudPedido extends Solicitud{
       if(descuentoProducto instanceof Precio){
         productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l) * ((Precio)descuentoProducto).getPorcentajeRebaja() / 100);
       }else if(descuentoProducto instanceof Cantidad){
-        productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * 
-          (productosDiferentes.get(l) + productosDiferentes.get(l) * ((Cantidad)descuentoProducto).getNumeroRecibidos() / ((Cantidad)descuentoProducto).getNumeroComprados()));
+    	int unidadesRegaladas = (productosDiferentes.get(l)  / ((Cantidad)descuentoProducto).getNumeroComprados()) * ((Cantidad)descuentoProducto).getNumeroRecibidos();
+        productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, ((productosDiferentes.get(l)%2) + unidadesRegaladas)), 
+        		l.getPrecio() * productosDiferentes.get(l)); 
       } else if(descuentoProducto instanceof Regalo || descuentoProducto instanceof RebajaUmbral){
         //Nos guardamos en un mapa el descuento asociado a los productos que lo tienen para tratar el descuento posteriormente
         LinkedList<LineaProductoVenta> productosConDescuento = descuentosPendientes.computeIfAbsent(descuentoProducto, k -> new LinkedList<>());
