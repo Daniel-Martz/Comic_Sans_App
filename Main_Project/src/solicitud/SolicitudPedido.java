@@ -64,7 +64,7 @@ public class SolicitudPedido extends Solicitud{
     } 
     //Vamos a tratar aquellos descuentos que no se han aplicado todavía por ser grupales
     for(Descuento d : descuentosPendientes.keySet()){
-      if(d instanceof Regalo){
+      if(d instanceof RebajaUmbral){
         RebajaUmbral r = (RebajaUmbral)d;
         //Obtenemos qué umbral tienen que sobrepasar los productos para que se aplique el descuento
         double umbral = r.getUmbral();
@@ -78,12 +78,24 @@ public class SolicitudPedido extends Solicitud{
           for(LineaProductoVenta l : descuentosPendientes.get(d)){
             productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l) * ((RebajaUmbral)d).getPorcentajeRebaja() / 100);
           }
+        }else 
+        //Si no hemos superado el umbral, guardamos los productos con su precio normal
+        {
+        	for(LineaProductoVenta l : descuentosPendientes.get(d)){
+            productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l));
+        	}
         }
-      }else if(d instanceof RebajaUmbral){
+      }else if(d instanceof Regalo){
         Regalo r = (Regalo)d;
         //Obtenemos qué umbral tienen que sobrepasar los productos para que se aplique el descuento
         double umbral = r.getUmbral();
         double total = 0;
+       
+        //Añadimos los productos independientemente de que superen el umbral para el regalo o no
+        for(LineaProductoVenta l : descuentosPendientes.get(d)){
+            productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l));
+          }
+        
         //Calculamos cuanto suman los productos que tienen el descuento para ver si alcanzan el umbral
         for(LineaProductoVenta l : descuentosPendientes.get(d)){
           total += l.getPrecio() * productosDiferentes.get(l);
@@ -91,10 +103,6 @@ public class SolicitudPedido extends Solicitud{
         //Si hemos superado el umbral, aplicamos la rebaja a los productos
         if(total >= umbral){
           
-          //Si hemos superado el umbral, añadimos los productos al mapa de recaudación con su precio normal 
-          for(LineaProductoVenta l : descuentosPendientes.get(d)){
-            productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l));
-          }
           //Añadimos los regalos
           for(LineaProductoVenta l : r.getProductosRegalo().keySet()){
             //r.getProductosRegalo devuelve un mapa con cada LineaproductoVenta y la cantidad de productos regalados 

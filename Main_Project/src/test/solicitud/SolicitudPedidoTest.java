@@ -67,7 +67,7 @@ class SolicitudPedidoTest {
     solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
     double val1 = solicitudPedido.getCostePedido();
     boolean cond2 = (val1 == 20.0);
-    boolean cond1 = solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod1, 3)) != null;
+    boolean cond1 = solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod1, 3)) == null;
     assertTrue(cond1 && cond2);
 	}
 
@@ -198,7 +198,8 @@ class SolicitudPedidoTest {
     prods.put(pack1, 1);
     solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
     //Confirmamos que se han pagado 2 productos y se han recibido 3
-    assertTrue(solicitudPedido.getCostePedido() == 50 && solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod3, 2)) == null);
+    boolean cond1 = solicitudPedido.getCostePedido() == 50;
+    assertTrue(cond1 && solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod3, 2)) == null);
 	}
 
 
