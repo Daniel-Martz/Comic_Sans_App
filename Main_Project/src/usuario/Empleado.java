@@ -2,9 +2,11 @@ package usuario;
 
 import java.util.*;
 
+
 import notificacion.*;
 import producto.*;
 import solicitud.*;
+import tiempo.DateTimeSimulado;
 
 public class Empleado extends UsuarioGestion {
 
@@ -21,7 +23,7 @@ public class Empleado extends UsuarioGestion {
 
   public void eliminarPermiso(Permiso permiso) {
     this.permisos.remove(permiso);
-  }
+  } 
 
   public void añadirNotificacion(NotificacionEmpleado n) {
     this.notificaciones.add(n);
@@ -47,11 +49,17 @@ public class Empleado extends UsuarioGestion {
     s.validarProducto(precio, estado);
     System.out.println("La solicitud ha sido validada correctamente. Se le ha asociado un precio " + precio
         + " y un estado " + estado);
+    
+    NotificacionValidacion noti = new NotificacionValidacion("La solicitud ha sido validada correctamente", new DateTimeSimulado(),s);
+    s.getCliente().anadirNotificacion(noti);
+    
   }
 	public void actualizarEstadoPedido(SolicitudPedido p, EstadoPedido nuevoEstado) {
 		if(p == null) {
 			throw new IllegalArgumentException("El pedido no puede ser null");
 		}
 		p.actualizarEstado(nuevoEstado);
+	    NotificacionPedido noti = new NotificacionPedido("El estado del pedido se ha actualizado a" + nuevoEstado, new DateTimeSimulado(),p);
+	    p.getCliente().anadirNotificacion(noti);
 	}
 }

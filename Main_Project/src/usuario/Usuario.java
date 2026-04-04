@@ -49,7 +49,7 @@ public abstract class Usuario {
 	}
 	
 	public boolean verificarContraseña(String contraseñaIntroducida) {
-		return this.contraseña == contraseñaIntroducida;
+		return this.contraseña.equals(contraseñaIntroducida);
 	}
 
 	/**

@@ -14,7 +14,7 @@ public class ClienteRegistrado extends Usuario {
 	private Carrito carrito = new Carrito();
 	private List<NotificacionCliente> notificaciones = new ArrayList<>();
 	private List<SolicitudPedido> pedidos = new ArrayList<>();
-	private List<Reseña> reseñas = new ArrayList<>();
+	private List<Reseña> reseñas = new ArrayList<>(); 
 	private List<Oferta> ofertasRealizadas = new ArrayList<>();
 	private List<Oferta> ofertasRecibidas = new ArrayList<>();
 	private Interes interes;
@@ -136,7 +136,7 @@ public class ClienteRegistrado extends Usuario {
 	}
 
 	public void rechazarOferta(Oferta o) {
-		this.ofertasRecibidas.remove(o);
+		eliminarOferta(o);
 		o.getDestinatario().eliminarOferta(o);
 	}
 
@@ -183,11 +183,16 @@ public class ClienteRegistrado extends Usuario {
 		Pago pago = SistemaPago.getInstancia().procesarPago(pedido.getCostePedido(), numTarjeta, cvv, fechaCaducidad, pedido);
 
 		if (pago == null) {
+			NotificacionPedido noti = new NotificacionPedido("¡Error en el pago del pedidio!", new DateTimeSimulado(),pedido);
+			anadirNotificacion(noti);
 			throw new IllegalStateException("El pago del pedido no se ha podido procesar.");
 		}
 
 		pedido.añadirPagoPedido(pago);
 		Aplicacion.getInstancia().getSistemaEstadisticas().añadirPago(pago);
+		//Añadimos la notificacion
+		NotificacionPedido noti = new NotificacionPedido("¡Pago procesado con éxito!", new DateTimeSimulado(),pedido);
+		anadirNotificacion(noti);
 		pedido.actualizarPagoPedido(EstadoPedido.PAGADO);
 		System.out.println("Pago del pedido realizado con éxito.");
 	}
@@ -197,9 +202,17 @@ public class ClienteRegistrado extends Usuario {
 		{
 	        throw new IllegalStateException("El carrito está vacío.");
 		}
+		
+		for (LineaProductoVenta prod : carrito.getProductos().keySet()) {
+		    int cantidad = carrito.getProductos().get(prod);
+		    prod.setStock(prod.getStock() - cantidad);
+		}
+		
 		SolicitudPedido pedido = new SolicitudPedido(this, carrito.getProductos());
 		this.pedidos.add(pedido);
 		carrito.vaciarCarrito();
+		NotificacionPedido noti = new NotificacionPedido("¡Pedido realizado con éxito!", new DateTimeSimulado(),pedido);
+		anadirNotificacion(noti);
 		return pedido;
 	}
 
@@ -218,13 +231,17 @@ public class ClienteRegistrado extends Usuario {
 				fechaCaducidad, validacion);
 
 		if (pago == null) {
+			NotificacionValidacion noti = new NotificacionValidacion("!Error en el pago de la valoración!", new DateTimeSimulado(), validacion);
+			anadirNotificacion(noti);
+
 			throw new IllegalStateException("El pago de la validación no se ha podido procesar.");
 		}
 
 		validacion.añadirPagoValidacion(pago);
 		Aplicacion.getInstancia().getSistemaEstadisticas().añadirPago(pago);
 		
-		System.out.println("Pago de validación realizado con éxito.");
+		NotificacionValidacion noti = new NotificacionValidacion("¡Valoración pagada con éxito!", new DateTimeSimulado(), validacion);
+		anadirNotificacion(noti);
 	}
 
 	public List<ProductoSegundaMano> getProductosSegundaManoDisponibles() {

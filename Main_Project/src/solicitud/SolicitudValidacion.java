@@ -3,6 +3,7 @@ package solicitud;
 
 import producto.EstadoConservacion;
 import producto.ProductoSegundaMano;
+import usuario.ClienteRegistrado;
 
 /**
  * @author Dani
@@ -16,6 +17,8 @@ public class SolicitudValidacion extends Solicitud {
 
   /** Producto asociado a la solicitud */
   private ProductoSegundaMano productoAValidar;
+  
+  private ClienteRegistrado cliente;
 
   /**
    * Instancia un objeto del tipo SolicitudValidacion, con el producto asociado.
@@ -73,4 +76,8 @@ public class SolicitudValidacion extends Solicitud {
     return pagoValidacion;
   }
 
+  public ClienteRegistrado getCliente() {
+	return cliente;
+  }
+  
 }

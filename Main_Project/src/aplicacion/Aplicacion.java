@@ -1,6 +1,6 @@
 package aplicacion;
 
-import producto.*;
+import producto.*; 
 
 import usuario.*;
 import solicitud.*;
@@ -15,7 +15,7 @@ import java.util.*;
 
 public class Aplicacion {
 
-	// Uso de Singleton
+	// Uso de Singleton 
 	private static Aplicacion instancia;
 
 	private String nombre;
@@ -35,7 +35,7 @@ public class Aplicacion {
 		this.sistemaPago = sistemaPago;
 		this.sistemaEstadisticas = sistemaEstadisticas;
 		this.gestorSolicitud = gestorSolicitud;
-		this.catalogo = catalogo;
+		this.catalogo = catalogo; 
 		añadirGestor(username, DNI, password);
 	}
 
@@ -55,23 +55,27 @@ public class Aplicacion {
 
 	// Métodos de inicio y cierre de sesión
 	public ClienteRegistrado crearCuenta(String nombreUsuario, String DNI, String contraseña) {
-		String nombreUser = nombreUsuario.trim();// Hago esto para no guardar nombres iguales pero con espacios (en la
-													// vida real se ponen "_"
-		if (nombreUsuario == null || nombreUser.isEmpty()) {
-      throw new IllegalArgumentException("Nombre de usuario inválido al crear al empleado");
+		if (nombreUsuario == null) {
+			throw new IllegalArgumentException("Nombre de usuario inválido");
+		}
+
+		String nombreUser = nombreUsuario.trim();
+
+		if (nombreUser.isEmpty()) {
+			throw new IllegalArgumentException("Nombre de usuario inválido");
 		}
 
 		if (contraseña == null || contraseña.length() < 4) {
-      throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
+			throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
 		}
 
 		if (DNI == null || DNI.length() != 10) {
-      throw new IllegalArgumentException("DNI inválido al crear al empleado");
+			throw new IllegalArgumentException("DNI inválido al crear al empleado");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
 			if (u.getNombreUsuario().equals(nombreUser)) {
-        throw new IllegalStateException("Ya existe un usuario con el nombre de usuario introducido");
+				throw new IllegalStateException("Ya existe un usuario con el nombre de usuario introducido");
 			}
 		}
 
@@ -85,24 +89,23 @@ public class Aplicacion {
 	public List<Usuario> getUsuariosRegistrados() {
 		return Collections.unmodifiableList(this.usuariosRegistrados);
 	}
-	
+
 	public List<ClienteRegistrado> getClientesRegistrados() {
-	    List<ClienteRegistrado> clientes = new ArrayList<>();
-	    for (Usuario u : usuariosRegistrados) {
-	        if (u instanceof ClienteRegistrado) {
-	            clientes.add((ClienteRegistrado) u);
-	        }
-	    }
-	    return Collections.unmodifiableList(clientes);
+		List<ClienteRegistrado> clientes = new ArrayList<>();
+		for (Usuario u : usuariosRegistrados) {
+			if (u instanceof ClienteRegistrado) {
+				clientes.add((ClienteRegistrado) u);
+			}
+		}
+		return Collections.unmodifiableList(clientes);
 	}
-	
 
 	public void añadirGestor(String nombreUsuario, String DNI, String contraseña) {
 		String nombreUser = nombreUsuario.trim();// Hago esto para no guardar nombres iguales pero con espacios (en la
 													// vida real se ponen "_"
 		if (nombreUsuario == null || nombreUser.isEmpty()) {
 			return;
-		}
+		} 
 
 		if (contraseña == null || contraseña.length() < 4) {
 			return;
@@ -126,12 +129,13 @@ public class Aplicacion {
 	}
 
 	public void iniciarSesion(String nombreUsuario, String contraseña) {
+
 		if (this.usuarioActual != null) {
-			return;
+			throw new IllegalStateException("Ya hay una sesión activa. Cierra sesión primero.");
 		}
 
 		if (nombreUsuario == null || contraseña == null) {
-			return;
+			throw new IllegalArgumentException("Usuario o contraseña no pueden ser nulos.");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
@@ -142,12 +146,12 @@ public class Aplicacion {
 			}
 		}
 
-		System.out.println("Error: Usuario o contraseña incorrectos.");
+		throw new IllegalArgumentException("Usuario o contraseña incorrectos.");
 	}
 
-	public void cerrarSesion() {
+	public void cerrarSesion() {	
 		if (this.usuarioActual == null) {
-			return;
+			throw new IllegalStateException("No hay ninguna sesión activa.");
 		}
 
 		System.out.println("Sesión cerrada con éxito para: " + this.usuarioActual.getNombreUsuario());
@@ -158,11 +162,11 @@ public class Aplicacion {
 	public void cambiarContraseña(String nombreUsuario, String contraseñaAntigua, String contraseñaNueva) {
 
 		if (nombreUsuario == null || contraseñaAntigua == null || contraseñaNueva == null) {
-			return;
+			throw new IllegalArgumentException("Los parámetros no pueden ser nulos.");
 		}
 
 		if (contraseñaNueva.length() < 4) {
-			return;
+			throw new IllegalArgumentException("La nueva contraseña debe tener al menos 4 caracteres.");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
@@ -172,10 +176,12 @@ public class Aplicacion {
 					System.out.println("Contraseña cambiada con éxito para: " + nombreUsuario);
 					return;
 				} else {
-					return;
+					throw new IllegalArgumentException("La contraseña antigua es incorrecta.");
 				}
 			}
 		}
+		
+		throw new IllegalArgumentException("El usuario no existe.");
 	}
 
 	// Métodos exclusivos del gestor
@@ -192,20 +198,20 @@ public class Aplicacion {
 		String nombreUser = nombreUsuario.trim();
 
 		if (nombreUsuario == null || nombreUser.isEmpty()) {
-      throw new IllegalArgumentException("Nombre de usuario inválido al crear al empleado");
+			throw new IllegalArgumentException("Nombre de usuario inválido al crear al empleado");
 		}
 
 		if (contraseña == null || contraseña.length() < 4) {
-      throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
+			throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
 		}
 
 		if (DNI == null || DNI.length() != 10) {
-      throw new IllegalArgumentException("DNI inválido al crear al empleado");
+			throw new IllegalArgumentException("DNI inválido al crear al empleado");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
 			if (u.getNombreUsuario().equals(nombreUser)) {
-        throw new IllegalStateException("Ya existe un usuario con el nombre de usuario introducido");
+				throw new IllegalStateException("Ya existe un usuario con el nombre de usuario introducido");
 			}
 		}
 
@@ -236,7 +242,7 @@ public class Aplicacion {
 		}
 		return;
 	}
-
+ 
 	// Métodos del Cliente Venta
 	public List<LineaProductoVenta> buscarProductosNuevos(String prompt) {
 		// Comprobamos que el usuario actual sea un cliente registrado
@@ -312,7 +318,7 @@ public class Aplicacion {
 		}
 		return catalogo.obtenerProductosIntercambioFiltrados(prompt);
 	}
-	
+
 	public ConfiguracionRecomendacion getConfiguracionRecomendacion() {
 		return criterioRecomendacion;
 	}
@@ -359,7 +365,7 @@ public class Aplicacion {
 		if (!(this.usuarioActual instanceof Gestor) && !(this.usuarioActual instanceof Empleado)) {
 			throw new IllegalStateException("Solo el gestor o empleado pueden buscar productos.");
 		}
-		
+
 		return Catalogo.getInstancia().obtenerProductosNuevosGestion(prompt);
 	}
 
@@ -399,114 +405,6 @@ public class Aplicacion {
 		ClienteRegistrado cliente = (ClienteRegistrado) this.usuarioActual;
 
 		cliente.pagarValidacion(solicitud, numTarjeta, cvv, caducidad);
-	}
-
-	// Notificación Empleado
-	// Metodo para cuando se recibe una nueva solicitud que validar
-	private Notificacion crearNotificacionSolicitudEmpleado(Solicitud solicitud) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		NotificacionEmpleado notif = new NotificacionEmpleado("Nueva solicitud pendiente de gestión", ahora);
-		notif.addSolicitud(solicitud);
-		return notif;
-	}
-
-	// Notificación Cliente
-	// He añadido el string codigo porque se tienen que crear una noti para el
-	// ofertante y el destinatario
-	private Notificacion crearNotificacionIntercambio(SolicitudIntercambio solicitud, String codigo) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		DetallesIntercambio detalles = solicitud.getInformacionIntercambio();
-		return new NotificacionIntercambio("Tu intercambio ha sido confirmado. Tu código de recogida es: " + codigo,
-				ahora, codigo, detalles);
-	}
-
-	// Metodo para cuando se recibe una oferta
-	private Notificacion crearNotificacionOferta(Oferta oferta) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		NotificacionOferta notif = new NotificacionOferta(
-				"Has recibido una nueva oferta de " + oferta.getOfertante().getNombreUsuario(), ahora, oferta);
-		return notif;
-	}
-
-	// Metodo para cuando se añade un producto nuevo
-	private Notificacion crearNotificacionNuevoProducto(LineaProductoVenta producto) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		NotificacionProducto notif = new NotificacionProducto("Nuevo producto disponible: " + producto.getNombre(),
-				ahora);
-		notif.addProducto(producto);
-		return notif;
-	}
-
-	// Metodo para cuando se rebaja un producto
-	private Notificacion crearNotificacionDescuentoProducto(LineaProductoVenta producto) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		NotificacionProducto notif = new NotificacionProducto(
-				"¡Nuevo descuento disponible en: " + producto.getNombre() + "!", ahora);
-		notif.addProducto(producto);
-		return notif;
-	}
-
-	// Metodo para cuando se rebaja una categoria
-	private Notificacion crearNotificacionDescuentoCategoria(Categoria categoria) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		NotificacionProducto notif = new NotificacionProducto(
-				"¡Nueva promoción en la categoría: " + categoria.getNombre() + "!", ahora);
-		for (LineaProductoVenta p : categoria.obtenerProductosCategoria()) {
-			notif.addProducto(p);
-		}
-		return notif;
-	}
-
-	// Metodo para cuando se recomienda un producto
-	private Notificacion crearNotificacionRecomendacion(LineaProductoVenta producto) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		NotificacionProducto notif = new NotificacionProducto("Te recomendamos este producto: " + producto.getNombre(),
-				ahora);
-		notif.addProducto(producto);
-		return notif;
-	}
-
-	// Metodo para cuando se ha validado un producto
-	private Notificacion crearNotificacionValidacion(ProductoSegundaMano producto) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		return new NotificacionValidacion("Tu producto '" + producto.getNombre() + "' ha sido validado", ahora,
-				producto);
-	}
-
-	// Metodo para cuando se ha pagado correctamente
-	private Notificacion crearNotificacionPagoConfirmado(SolicitudPedido solicitud) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		return new NotificacionPedido("Tu pago ha sido confirmado con éxito. Tu pedido está siendo preparado.", ahora,
-				solicitud);
-	}
-
-	// Metodo para cuando se ha rechazado un pago
-	private Notificacion crearNotificacionPagoRechazado(SolicitudPedido solicitud) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		return new NotificacionPedido(
-				"Tu pago ha sido rechazado. Por favor, revisa los datos de tu tarjeta e inténtalo de nuevo.", ahora,
-				solicitud);
-	}
-
-	// Metodo para cuando se actualiza el estado del pedido
-	private Notificacion crearNotificacionEstadoPedido(SolicitudPedido solicitud) {
-		DateTimeSimulado ahora = new DateTimeSimulado();
-		String mensaje;
-		switch (solicitud.getEstado()) {
-		case PENDIENTE_DE_PAGO:
-			mensaje = "Tu pedido está pendiente de pago. Recuerda completarlo antes de que caduque.";
-			break;
-		case LISTO_PARA_RECOGER:
-			mensaje = "Tu pedido está listo para recoger. Preséntate en la tienda con tu DNI y el código de recogida.";
-			break;
-		case RECOGIDO:
-			mensaje = "Tu pedido ha sido recogido. ¡Gracias por tu compra!";
-			break;
-		default:
-			mensaje = "Tu pedido ha sido actualizado.";
-			break;
-		}
-		return new NotificacionPedido(mensaje, ahora, solicitud);
 	}
 
 	// Envío de notificaciones
