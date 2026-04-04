@@ -19,4 +19,10 @@ public class NotificacionPedido extends NotificacionCliente {
 	public void setPedido(Solicitud pedido) {
 		this.pedido = pedido;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\nPedido = " + pedido;
+	}
 }

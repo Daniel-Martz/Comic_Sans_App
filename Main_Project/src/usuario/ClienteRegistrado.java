@@ -52,7 +52,7 @@ public class ClienteRegistrado extends Usuario {
 	}
 
 	public ProductoSegundaMano añadirProductoACarteraDeIntercambio(String nombre, String descripcion, File imagen) {
-    ProductoSegundaMano p = new ProductoSegundaMano(nombre, descripcion, imagen);
+    ProductoSegundaMano p = new ProductoSegundaMano(nombre, descripcion, imagen, this);
 		this.cartera.añadirProducto(p);
     return p;
 	}
@@ -174,6 +174,14 @@ public class ClienteRegistrado extends Usuario {
 
 	public void eliminarNotificacion(NotificacionCliente n) {
 		this.notificaciones.remove(n);
+	}
+
+	public void eliminarNotificacionPorId(Integer id) {
+    for(Notificacion notif : notificaciones){
+      if(notif.getId() == id){
+        this.notificaciones.remove(notif);
+      }
+    }
 	}
 
 	public void cancelarPedido(SolicitudPedido pedido) {

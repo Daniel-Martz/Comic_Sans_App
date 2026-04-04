@@ -15,4 +15,9 @@ public class NotificacionOferta extends NotificacionCliente {
 	public Oferta getOferta() {
 		return oferta;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\nOferta = " + oferta;
+	}
 }

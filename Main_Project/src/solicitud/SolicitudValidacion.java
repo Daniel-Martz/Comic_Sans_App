@@ -26,9 +26,10 @@ public class SolicitudValidacion extends Solicitud {
    *
    * @param productoAValidar el producto a validar
    */
-  public SolicitudValidacion(ProductoSegundaMano productoAValidar) {
+  public SolicitudValidacion(ProductoSegundaMano productoAValidar, ClienteRegistrado cliente) {
     super();
     this.productoAValidar = productoAValidar;
+    this.cliente = cliente;
   }
 
   /**

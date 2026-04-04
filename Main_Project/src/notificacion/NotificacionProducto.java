@@ -29,4 +29,11 @@ public class NotificacionProducto extends NotificacionCliente {
 	public void setProductos(Set<LineaProductoVenta> productos) {
 		this.productos = productos;
 	}
+	
+	
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\nProductos: = " + productos;
+	}
 }

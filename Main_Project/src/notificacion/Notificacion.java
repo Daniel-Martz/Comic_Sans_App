@@ -42,6 +42,6 @@ public class Notificacion {
 
 	@Override
 	public String toString() {
-		return "Notificacion [id=" + id + ", mensaje=" + mensaje + ", horaEnvio=" + horaEnvio + "]";
+		return "\n\nNotificacion a las " + horaEnvio + "\nid=" + id + ", mensaje=" + mensaje;
 	}
 }

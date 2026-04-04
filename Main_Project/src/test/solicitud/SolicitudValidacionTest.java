@@ -15,7 +15,7 @@ class SolicitudValidacionTest {
 	@Test
 	void testValidarProductoError() {
     Exception e = assertThrowsExactly(IllegalArgumentException.class, ()->{solValidacion.validarProducto(5, -1.0, EstadoConservacion.MUY_BUENO);}); 
-    assertEquals(e.getMessage(), "El precio no puede tener un valor negativo");
+    assertEquals(e.getMessage(), "Los argumentos introducidos no son válidos");
 	}
 
 	@Test

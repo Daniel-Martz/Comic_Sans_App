@@ -13,7 +13,7 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-  public static void main(String args){
+  public static void main(String[] args){
     ClienteRegistrado matteo, rodrigo;
 		Empleado federico=null;
 		Usuario usuarioActual;
@@ -106,10 +106,6 @@ public class Main {
 		List<SolicitudIntercambio> listaIntercambios = GestorSolicitudes.getInstancia().getIntercambios();
 		SolicitudIntercambio sol = listaIntercambios.get(0);
 		federico.aprobarIntercambio(sol, codigoMatteo, codigoRodrigo);
-
-
-
-
 
   }
 }

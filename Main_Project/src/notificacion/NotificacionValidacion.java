@@ -21,5 +21,10 @@ public class NotificacionValidacion extends NotificacionCliente {
 	public void setSolicitudProductoSegundaMano(SolicitudValidacion solicitudProductoSegundaMano) {
 		this.solicitudProductoSegundaMano = solicitudProductoSegundaMano;
 	}
-
+	
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\nSolicitud de validación = " + solicitudProductoSegundaMano;
+	}
 }

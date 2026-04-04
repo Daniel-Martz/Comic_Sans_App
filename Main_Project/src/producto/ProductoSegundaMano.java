@@ -2,6 +2,7 @@ package producto;
 import java.io.File;
 import solicitud.*;
 import java.util.*;
+import usuario.ClienteRegistrado;
 
 import aplicacion.GestorSolicitudes;
 
@@ -11,13 +12,19 @@ public class ProductoSegundaMano extends Producto{
 	private Oferta ofertaEnviada;
 	private final SolicitudValidacion solicitudValidacion;
 	private DatosValidacion datosValidacion;
+	private ClienteRegistrado clienteProducto;
 	
-	public ProductoSegundaMano(String nombre, String descripcion, File foto)
+	public ProductoSegundaMano(String nombre, String descripcion, File foto, ClienteRegistrado cliente)
 	{
 		super(nombre, descripcion, foto);
 		this.validado = false;
-		this.solicitudValidacion = new SolicitudValidacion(this);
+		this.clienteProducto = cliente;
+		this.solicitudValidacion = new SolicitudValidacion(this, cliente);
 		GestorSolicitudes.getInstancia().añadirSolicitudValidacion(solicitudValidacion);
+	}
+
+	public ClienteRegistrado getClienteProducto() {
+		return clienteProducto;
 	}
 
 	public boolean isValidado() {
@@ -75,7 +82,7 @@ public class ProductoSegundaMano extends Producto{
 	@Override
 	public String toString() {
 		return "ProductoSegundaMano [validado=" + validado + ", ofertaRecibida=" + ofertaRecibida + ", ofertaEnviada="
-				+ ofertaEnviada + ", solicitudValidacion=" + solicitudValidacion + ", datosValidacion="
+				+ ofertaEnviada + ", datosValidacion=" 
 				+ datosValidacion + "]";
 	}
 	

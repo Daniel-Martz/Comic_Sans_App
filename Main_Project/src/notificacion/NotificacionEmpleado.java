@@ -27,4 +27,9 @@ public class NotificacionEmpleado extends Notificacion {
 	public Set<Solicitud> getSolicitudes() {
 		return solicitudes;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "\nSolicitudes = " + solicitudes;
+	}
 }

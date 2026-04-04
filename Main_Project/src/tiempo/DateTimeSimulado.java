@@ -172,8 +172,8 @@ public class DateTimeSimulado {
 	 */
 	@Override
 	public String toString() {
-		return "Año: " + año + "\nMes: " + mes + "\nDia: " + dia + "\nHora: " + hora + "\nMinuto: " + minuto
-				+ "\nSegundo: " + segundo;
+		return "Año: " + año + "-Mes: " + mes + "-Dia: " + dia + "-Hora: " + hora + "-Minuto: " + minuto
+				+ "-Segundo: " + segundo;
 	}
 	
 	public String toStringFecha() {
