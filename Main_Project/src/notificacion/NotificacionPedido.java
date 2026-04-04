@@ -12,7 +12,7 @@ public class NotificacionPedido extends NotificacionCliente {
 		this.pedido = pedido;
 	}
 
-	public Solicitud getPedido() {
+	public Solicitud getPedido() { 
 		return pedido;
 	}
 

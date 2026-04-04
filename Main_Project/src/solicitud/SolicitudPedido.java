@@ -69,5 +69,17 @@ public class SolicitudPedido extends Solicitud{
 		return pagoPedido;
 	}
 	
+	public void setCliente(ClienteRegistrado cliente) {
+		this.cliente = cliente;
+	}
+
+	public Map<LineaProductoVenta, Integer> getProductosDiferentes() {
+		return productosDiferentes;
+	}
+
+	public ClienteRegistrado getCliente() {
+		return cliente;
+	}
+	
 	
 }

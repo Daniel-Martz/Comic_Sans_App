@@ -1,10 +1,12 @@
 package aplicacion;
 
-import producto.*;
+import producto.*; 
+
 import usuario.*;
 import solicitud.*;
 import tiempo.DateTimeSimulado;
 import notificacion.*;
+import categoria.*;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.*;
 
 public class Aplicacion {
 
-	// Uso de Singleton
+	// Uso de Singleton 
 	private static Aplicacion instancia;
 
 	private String nombre;
@@ -26,76 +28,84 @@ public class Aplicacion {
 	private List<Usuario> usuariosRegistrados = new ArrayList<>();
 
 	private Aplicacion(String nombre, ConfiguracionRecomendacion criterioRecomendacion, SistemaPago sistemaPago,
-			SistemaEstadisticas sistemaEstadisticas, GestorSolicitudes gestorSolicitud, Catalogo catalogo, String username, String DNI, String password) {
+			SistemaEstadisticas sistemaEstadisticas, GestorSolicitudes gestorSolicitud, Catalogo catalogo,
+			String username, String DNI, String password) {
 		this.nombre = nombre;
 		this.criterioRecomendacion = criterioRecomendacion;
 		this.sistemaPago = sistemaPago;
 		this.sistemaEstadisticas = sistemaEstadisticas;
 		this.gestorSolicitud = gestorSolicitud;
-		this.catalogo = catalogo;
+		this.catalogo = catalogo; 
 		añadirGestor(username, DNI, password);
 	}
 
 	public static Aplicacion getInstancia() {
 		if (instancia == null) {
-			instancia = new Aplicacion("Comic Sans", ConfiguracionRecomendacion.getInstancia(), SistemaPago.getInstancia(),
-					SistemaEstadisticas.getInstancia(), GestorSolicitudes.getInstancia(), Catalogo.getInstancia(), "gestor", "123456789A", "123456");
+			instancia = new Aplicacion("Comic Sans", ConfiguracionRecomendacion.getInstancia(),
+					SistemaPago.getInstancia(), SistemaEstadisticas.getInstancia(), GestorSolicitudes.getInstancia(),
+					Catalogo.getInstancia(), "gestor", "123456789A", "123456");
 		}
 		return instancia;
 	}
 	// Getters y setters
-	
+
 	public Catalogo getCatalogo() {
 		return catalogo;
 	}
 
 	// Métodos de inicio y cierre de sesión
-	public void crearCuenta(String nombreUsuario, String DNI, String contraseña) {
-		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
-		if (nombreUsuario == null || nombreUser.isEmpty()) {
-			return;
+	public ClienteRegistrado crearCuenta(String nombreUsuario, String DNI, String contraseña) {
+		if (nombreUsuario == null) {
+			throw new IllegalArgumentException("Nombre de usuario inválido");
+		}
+
+		String nombreUser = nombreUsuario.trim();
+
+		if (nombreUser.isEmpty()) {
+			throw new IllegalArgumentException("Nombre de usuario inválido");
 		}
 
 		if (contraseña == null || contraseña.length() < 4) {
-			return;
+			throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
 		}
 
 		if (DNI == null || DNI.length() != 10) {
-			return;
+			throw new IllegalArgumentException("DNI inválido al crear al empleado");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
 			if (u.getNombreUsuario().equals(nombreUser)) {
-				return;
+				throw new IllegalStateException("Ya existe un usuario con el nombre de usuario introducido");
 			}
 		}
 
-		Usuario nuevoUsuario = new ClienteRegistrado(nombreUser, DNI, contraseña);
+		ClienteRegistrado nuevoUsuario = new ClienteRegistrado(nombreUser, DNI, contraseña);
 		usuariosRegistrados.add(nuevoUsuario);
 
 		System.out.println("Nueva cuenta de cliente creada con éxito para: " + nombreUser);
-		return;
+		return nuevoUsuario;
 	}
-	
+
 	public List<Usuario> getUsuariosRegistrados() {
 		return Collections.unmodifiableList(this.usuariosRegistrados);
 	}
-	
+
 	public List<ClienteRegistrado> getClientesRegistrados() {
-	    List<ClienteRegistrado> clientes = new ArrayList<>();
-	    for (Usuario u : usuariosRegistrados) {
-	        if (u instanceof ClienteRegistrado) {
-	            clientes.add((ClienteRegistrado) u);
-	        }
-	    }
-	    return Collections.unmodifiableList(clientes);
+		List<ClienteRegistrado> clientes = new ArrayList<>();
+		for (Usuario u : usuariosRegistrados) {
+			if (u instanceof ClienteRegistrado) {
+				clientes.add((ClienteRegistrado) u);
+			}
+		}
+		return Collections.unmodifiableList(clientes);
 	}
-	
+
 	public void añadirGestor(String nombreUsuario, String DNI, String contraseña) {
-		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
+		String nombreUser = nombreUsuario.trim();// Hago esto para no guardar nombres iguales pero con espacios (en la
+													// vida real se ponen "_"
 		if (nombreUsuario == null || nombreUser.isEmpty()) {
 			return;
-		}
+		} 
 
 		if (contraseña == null || contraseña.length() < 4) {
 			return;
@@ -119,12 +129,13 @@ public class Aplicacion {
 	}
 
 	public void iniciarSesion(String nombreUsuario, String contraseña) {
+
 		if (this.usuarioActual != null) {
-			return;
+			throw new IllegalStateException("Ya hay una sesión activa. Cierra sesión primero.");
 		}
 
 		if (nombreUsuario == null || contraseña == null) {
-			return;
+			throw new IllegalArgumentException("Usuario o contraseña no pueden ser nulos.");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
@@ -135,12 +146,12 @@ public class Aplicacion {
 			}
 		}
 
-		System.out.println("Error: Usuario o contraseña incorrectos.");
+		throw new IllegalArgumentException("Usuario o contraseña incorrectos.");
 	}
 
-	public void cerrarSesion() {
+	public void cerrarSesion() {	
 		if (this.usuarioActual == null) {
-			return;
+			throw new IllegalStateException("No hay ninguna sesión activa.");
 		}
 
 		System.out.println("Sesión cerrada con éxito para: " + this.usuarioActual.getNombreUsuario());
@@ -151,11 +162,11 @@ public class Aplicacion {
 	public void cambiarContraseña(String nombreUsuario, String contraseñaAntigua, String contraseñaNueva) {
 
 		if (nombreUsuario == null || contraseñaAntigua == null || contraseñaNueva == null) {
-			return;
+			throw new IllegalArgumentException("Los parámetros no pueden ser nulos.");
 		}
 
 		if (contraseñaNueva.length() < 4) {
-			return;
+			throw new IllegalArgumentException("La nueva contraseña debe tener al menos 4 caracteres.");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
@@ -165,41 +176,62 @@ public class Aplicacion {
 					System.out.println("Contraseña cambiada con éxito para: " + nombreUsuario);
 					return;
 				} else {
-					return;
+					throw new IllegalArgumentException("La contraseña antigua es incorrecta.");
 				}
 			}
 		}
+		
+		throw new IllegalArgumentException("El usuario no existe.");
 	}
 
 	// Métodos exclusivos del gestor
-	public void añadirEmpleado(String nombreUsuario, String DNI, String contraseña) {
-		String nombreUser = nombreUsuario.trim();//Hago esto para no guardar nombres iguales pero con espacios (en la vida real se ponen "_"
+	public Empleado añadirEmpleado(String nombreUsuario, String DNI, String contraseña) {
+		// Comprobamos que el usuario actual sea el gestor
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+
+		if (!(this.usuarioActual instanceof Gestor)) {
+			throw new IllegalStateException("Solo el gestor puede añadir un empleado.");
+		}
+
+		String nombreUser = nombreUsuario.trim();
+
 		if (nombreUsuario == null || nombreUser.isEmpty()) {
-			return;
+			throw new IllegalArgumentException("Nombre de usuario inválido al crear al empleado");
 		}
 
 		if (contraseña == null || contraseña.length() < 4) {
-			return;
+			throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
 		}
 
 		if (DNI == null || DNI.length() != 10) {
-			return;
+			throw new IllegalArgumentException("DNI inválido al crear al empleado");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
 			if (u.getNombreUsuario().equals(nombreUser)) {
-				return;
+				throw new IllegalStateException("Ya existe un usuario con el nombre de usuario introducido");
 			}
 		}
 
-		Usuario nuevoUsuario = new Empleado(nombreUser, DNI, contraseña);
+		Empleado nuevoUsuario = new Empleado(nombreUser, DNI, contraseña);
 		usuariosRegistrados.add(nuevoUsuario);
 
 		System.out.println("Nueva cuenta creada con éxito para: " + nombreUser);
-		return;
+		return nuevoUsuario;
 	}
 
 	public void eliminarEmpleado(Empleado empleado) {
+		// Comprobamos que el usuario actual sea el gestor
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+
+		if (!(this.usuarioActual instanceof Gestor)) {
+			throw new IllegalStateException("Solo el gestor puede eliminar un empleado.");
+		}
+
 		if (empleado == null) {
 			return;
 		}
@@ -210,97 +242,185 @@ public class Aplicacion {
 		}
 		return;
 	}
-
+ 
 	// Métodos del Cliente Venta
 	public List<LineaProductoVenta> buscarProductosNuevos(String prompt) {
-		return new ArrayList<>();
+		// Comprobamos que el usuario actual sea un cliente registrado
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+
+		if (!(this.usuarioActual instanceof ClienteRegistrado)) {
+			throw new IllegalStateException("Solo un cliente registrado puede cancelar un pedido.");
+		}
+		return catalogo.obtenerProductosNuevosFiltrados(prompt);
 	}
 
 	public void crearPedidoAPartirDeCarrito() {
+		// Comprobamos que el usuario actual sea un cliente registrado
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+
+		if (!(this.usuarioActual instanceof ClienteRegistrado)) {
+			throw new IllegalStateException("Solo un cliente registrado puede crear un pedido.");
+		}
+
+		ClienteRegistrado cliente = (ClienteRegistrado) this.usuarioActual;
+		SolicitudPedido pedido = cliente.realizarPedido();
+		GestorSolicitudes.getInstancia().añadirPedido(pedido);
 	}
-	
-	
-	public void cancelarPedido(SolicitudPedido pedido, Usuario usuario) {
+
+	public void cancelarPedido(SolicitudPedido pedido) {
+		// Comprobamos que el usuario actual sea un cliente registrado
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+
+		if (!(this.usuarioActual instanceof ClienteRegistrado)) {
+			throw new IllegalStateException("Solo un cliente registrado puede cancelar un pedido.");
+		}
+		// Comprobamos que le hemos pasado un pedido.
+		if (pedido == null) {
+			throw new IllegalArgumentException("No hay ningún pedido.");
+		}
+
+		ClienteRegistrado cliente = (ClienteRegistrado) this.usuarioActual;
+		if (!(cliente.getPedidos().contains(pedido))) {
+			throw new IllegalStateException("El cliente no ha realizado ese pedido.");
+		}
+
+		// Comprobamos que el pedido esté en estado pendiente de pago
+		if (pedido.getEstado() != EstadoPedido.PENDIENTE_DE_PAGO) {
+			throw new IllegalStateException("Solo se pueden cancelar pedidos en estado pendiente de pago.");
+		}
+
+		// Reestablcemes el stock
+		for (LineaProductoVenta producto : pedido.getProductosDiferentes().keySet()) {
+			int unidades = pedido.getProductosDiferentes().get(producto);
+			producto.setStock(unidades + producto.getStock());
+		}
+
+		// Eliminamos el pedido tanto en el cliente como en el Gestor de Solicitudes
+		cliente.cancelarPedido(pedido);
+		GestorSolicitudes.getInstancia().eliminarPedido(pedido);
 	}
 
 	// Métodos del Cliente Intercambio
-	public List<ProductoSegundaMano> buscarProductoIntercambio(String prompt, Usuario usuario) {
-		return new ArrayList<>();
+	public List<ProductoSegundaMano> buscarProductoIntercambio(String prompt) {
+		// Comprobamos que el usuario actual sea un cliente registrado
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+
+		if (!(this.usuarioActual instanceof ClienteRegistrado)) {
+			throw new IllegalStateException("Solo un cliente registrado puede cancelar un pedido.");
+		}
+		return catalogo.obtenerProductosIntercambioFiltrados(prompt);
 	}
 
-	public void aceptarOferta(Oferta oferta, Usuario usuario) {
-	}
-
-	public void rechazarOferta(Oferta oferta, Usuario usuario) {
-	}
-
-	// Métodos de recomendación
-	public List<Producto> getRecomendacion() {
-		return new ArrayList<>();
-	}
-	
 	public ConfiguracionRecomendacion getConfiguracionRecomendacion() {
 		return criterioRecomendacion;
 	}
 
 	// Métodos de Usuarios Gestión
+	public LineaProductoVenta buscarProductoNuevo(int promptId) {
+		// Comprobamos que el usuario actual sea del tipo UsuarioGestion
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
 
-	public List<LineaProductoVenta> buscarProductoAGestionar(int promptId) {
-		return new ArrayList<>();
+		if (!(this.usuarioActual instanceof Gestor) && !(this.usuarioActual instanceof Empleado)) {
+			throw new IllegalStateException("Solo el gestor o empleado puede buscar un producto por ID.");
+		}
+
+		if (promptId < 0) {
+			throw new IllegalArgumentException("No se ha pasado un ID valido");
+		}
+		return Catalogo.getInstancia().buscarProductoNuevo(promptId);
+	}
+
+	public ProductoSegundaMano buscarProductoIntercambio(int promptId) {
+		// Comprobamos que el usuario actual sea del tipo UsuarioGestion
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+
+		if (!(this.usuarioActual instanceof Gestor) && !(this.usuarioActual instanceof Empleado)) {
+			throw new IllegalStateException("Solo el gestor o empleado puede buscar un producto por ID.");
+		}
+
+		if (promptId < 0) {
+			throw new IllegalArgumentException("No se ha pasado un ID valido");
+		}
+		return Catalogo.getInstancia().buscarProductoIntercambio(promptId);
+	}
+
+	public List<LineaProductoVenta> buscarProductosNuevosGestion(String prompt) {
+		// Comprobamos que el usuario actual sea del tipo UsuarioGestion
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+
+		if (!(this.usuarioActual instanceof Gestor) && !(this.usuarioActual instanceof Empleado)) {
+			throw new IllegalStateException("Solo el gestor o empleado pueden buscar productos.");
+		}
+
+		return Catalogo.getInstancia().obtenerProductosNuevosGestion(prompt);
 	}
 
 	// Métodos de pagos
-	public void gestionarPagoPedido(SolicitudPedido pedido, int numTarjeta, int cvv, int mesCaducidad,
-			int añoCaducidad) {
+	public void gestionarPagoPedido(SolicitudPedido pedido, String numTarjeta, String cvv, DateTimeSimulado caducidad) {
+		if (this.usuarioActual == null) {
+			throw new IllegalStateException("No hay ningún usuario logueado.");
+		}
+		if (!(this.usuarioActual instanceof ClienteRegistrado)) {
+			throw new IllegalStateException("Solo un cliente registrado puede pagar un pedido.");
+		}
+		if (pedido == null || numTarjeta == null || cvv == null || caducidad == null) {
+			throw new IllegalArgumentException("Ningún parámetro puede ser nulo.");
+		}
+
+		ClienteRegistrado cliente = (ClienteRegistrado) this.usuarioActual;
+
+		if (!cliente.getPedidos().contains(pedido)) {
+			throw new IllegalStateException("El pedido no pertenece al cliente actual.");
+		}
+
+		cliente.pagarPedido(pedido, numTarjeta, cvv, caducidad);
 	}
 
-	public void gestionarPagoValidacion(SolicitudValidacion solicitud, int numTarjeta, int cvv, int mesCaducidad,
-			int añoCaducidad) {
-	}
+	public void gestionarPagoValidacion(SolicitudValidacion solicitud, String numTarjeta, String cvv,
+			DateTimeSimulado caducidad) {
+		if (this.usuarioActual == null) {
+			throw new IllegalStateException("No hay ningún usuario logueado.");
+		}
+		if (!(this.usuarioActual instanceof ClienteRegistrado)) {
+			throw new IllegalStateException("Solo un cliente registrado puede pagar una validación.");
+		}
+		if (solicitud == null || numTarjeta == null || cvv == null || caducidad == null) {
+			throw new IllegalArgumentException("Ningún parámetro puede ser nulo.");
+		}
 
-	// Notificación Empleado
-	private Notificacion crearNotificacionEmpleado(Solicitud solicitud) {
-		return null;
-	}
+		ClienteRegistrado cliente = (ClienteRegistrado) this.usuarioActual;
 
-	// Notificación Cliente
-	private Notificacion crearNotificacionIntercambio(SolicitudIntercambio solicitud) {
-		return null;
-	}
-
-	private Notificacion crearNotificacionOferta(Oferta oferta) {
-		return null;
-	}
-
-	private Notificacion crearNotificacionProducto(LineaProductoVenta producto) {
-		return null;
-	}
-
-	private Notificacion crearNotificacionValidacion(ProductoSegundaMano producto) {
-		return null;
-	}
-
-	private Notificacion crearNotificacionPedido(SolicitudPedido solicitud) {
-		return null;
+		cliente.pagarValidacion(solicitud, numTarjeta, cvv, caducidad);
 	}
 
 	// Envío de notificaciones
-
 	public void enviarNotificacion(Usuario usuario, Notificacion notificacion) {
-		if(usuario == null || notificacion == null)
-		{
+		if (usuario == null || notificacion == null) {
 			throw new IllegalArgumentException("La solicitud no es valida");
 		}
-		
-		if(usuario instanceof ClienteRegistrado){
+
+		if (usuario instanceof ClienteRegistrado) {
 			ClienteRegistrado cliente = (ClienteRegistrado) usuario;
-			NotificacionCliente notificacionCliente =(NotificacionCliente) notificacion;
+			NotificacionCliente notificacionCliente = (NotificacionCliente) notificacion;
 			cliente.anadirNotificacion(notificacionCliente);
 		}
-		if(usuario instanceof Empleado)
-		{
+		if (usuario instanceof Empleado) {
 			Empleado empleado = (Empleado) usuario;
-			NotificacionEmpleado notificacionEmpleado =(NotificacionEmpleado) notificacion;
+			NotificacionEmpleado notificacionEmpleado = (NotificacionEmpleado) notificacion;
 			empleado.añadirNotificacion(notificacionEmpleado);
 		}
 	}

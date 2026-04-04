@@ -7,4 +7,8 @@ public abstract class Filtro {
 		super();
 		this.ordenAscendente = ordenAscendente;
 	}
+	
+	public boolean isOrdenAscendente() {
+	    return ordenAscendente;
+	}
 }

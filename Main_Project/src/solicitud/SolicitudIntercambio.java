@@ -31,4 +31,12 @@ public class SolicitudIntercambio extends Solicitud{
 		return aprobado;
 	}
 
+	public DetallesIntercambio getInformacionIntercambio() {
+		return informacionIntercambio;
+	}
+
+	public CodigoIntercambio getCodigoOfertante() {
+		return codigoOfertante;
+	}
+
 }
