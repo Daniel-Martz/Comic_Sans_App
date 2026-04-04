@@ -526,7 +526,7 @@ public class Catalogo {
 					boolean coincideDescuento = (filtroDescuentos.contains(TipoDescuento.CANTIDAD)
 							&& descuentoP instanceof Cantidad)
 							|| (filtroDescuentos.contains(TipoDescuento.PRECIO) && descuentoP instanceof Precio)
-							|| (filtroDescuentos.contains(TipoDescuento.REBAJA) && descuentoP instanceof Rebaja)
+							|| (filtroDescuentos.contains(TipoDescuento.REBAJA) && descuentoP instanceof RebajaUmbral)
 							|| (filtroDescuentos.contains(TipoDescuento.REGALO) && descuentoP instanceof Regalo);
 					if (!coincideDescuento)
 						continue;

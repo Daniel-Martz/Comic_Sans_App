@@ -207,7 +207,7 @@ public class ClienteRegistrado extends Usuario {
 		//Añadimos la notificacion
 		NotificacionPedido noti = new NotificacionPedido("¡Pago procesado con éxito!", new DateTimeSimulado(),pedido);
 		anadirNotificacion(noti);
-		pedido.actualizarPagoPedido(EstadoPedido.PAGADO);
+		pedido.actualizarEstado(EstadoPedido.PAGADO);
 		System.out.println("Pago del pedido realizado con éxito.");
 	}
 

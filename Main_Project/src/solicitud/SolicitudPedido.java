@@ -142,12 +142,6 @@ public class SolicitudPedido extends Solicitud{
 	    return estado;
 	}
 
-	/**
-	 * @return the recaudacionProducto
-	 */
-	public Map<LineaProductoVenta, Double> getRecaudacionProducto() {
-		return recaudacionProducto;
-	}
 
 	/**
 	 * @return the pagoPedido

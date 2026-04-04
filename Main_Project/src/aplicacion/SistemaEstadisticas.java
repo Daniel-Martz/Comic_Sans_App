@@ -315,7 +315,7 @@ public class SistemaEstadisticas {
 			}
 			
 			//Gasto en validaciones
-			for(ProductoSegundaMano p : c.getCartera().getProductosSegundaMano()) {
+			for(ProductoSegundaMano p : c.getCartera().getProductos()) {
 				if(p.isValidado()) {
 					Pago pago = p.getSolicitudValidacion().getPagoValidacion();
 					DateTimeSimulado fecha = pago.getFechaPago();

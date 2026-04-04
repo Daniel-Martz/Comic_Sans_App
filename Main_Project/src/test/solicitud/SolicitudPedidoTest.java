@@ -278,7 +278,7 @@ class SolicitudPedidoTest {
     prods.put(prod2, 2);
     prods.put(pack1, 1);
     solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
-    solicitudPedido.añadirPagoPedido(new Pago(new DateTimeSimulado(), 10));
+    solicitudPedido.añadirPagoPedido(new Pago(new DateTimeSimulado(), 10, solicitudPedido));
     assertTrue(solicitudPedido.pagado());
 	}
 

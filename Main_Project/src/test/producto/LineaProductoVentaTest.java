@@ -26,6 +26,7 @@ class LineaProductoVentaTest {
     assertTrue(cats.contains(c1) && cats.contains(c2) && cats.contains(c3));
 	}
 
+	@Test
   void testAñadirMismaCateogira(){
     Categoria c1 = new Categoria("Romance");
     l.añadirCategoria(c1);
