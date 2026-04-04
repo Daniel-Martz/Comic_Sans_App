@@ -22,7 +22,7 @@ public class SolicitudPedido extends Solicitud{
 		super();
 		this.cliente = cliente;
 		this.productosDiferentes.putAll(productos);
-    calcularRecaudaciones(productos);
+		calcularRecaudaciones(productos);
 		this.estado = EstadoPedido.PENDIENTE_DE_PAGO;
 	}
 
