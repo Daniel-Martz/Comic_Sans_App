@@ -2,7 +2,7 @@ package descuento;
 
 import tiempo.*;
 
-public class Precio extends Descuento implements DePorcentaje{
+public class Precio extends Descuento{
 	private int porcentaje;
 
 	public int getPorcentajeRebaja() {

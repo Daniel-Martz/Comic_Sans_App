@@ -5,13 +5,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
 
 import producto.*;
 import solicitud.Pago;
 import solicitud.Solicitud;
 import solicitud.SolicitudPedido;
 import solicitud.SolicitudValidacion;
-import producto.*;
 import usuario.*;
 import tiempo.DateTimeSimulado;
 import tiempo.TiempoSimulado;
@@ -142,61 +142,6 @@ public class SistemaEstadisticas {
 		}
 	}
 
-	public void obtenerVentasProductosPorId(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, File fichero)
-			throws IOException {
-
-		if (periodoInicio == null || periodoFin == null || fichero == null) {
-			throw new IllegalArgumentException("Los parámetros no pueden ser nulos");
-		}
-		if (periodoInicio.dateTimeEnSegundos() > periodoFin.dateTimeEnSegundos()) {
-			throw new IllegalArgumentException("El periodo de inicio no puede ser posterior al periodo de fin");
-		}
-
-		Map<LineaProductoVenta, Double> recaudacion = new TreeMap<>();
-
-		// Inicializamos el mapa de productos (es un treeMap porque quiero asegurarme de
-		// que esté ordenado por ID)
-		for (LineaProductoVenta p : Aplicacion.getInstancia().getCatalogo().getProductosNuevos()) {
-			recaudacion.put(p, 0.0);
-		}
-
-		for (Pago p : pagos) {
-			Solicitud solicitudPago = p.getObjetoPagado();
-			DateTimeSimulado fecha = p.getFechaPago();
-			if ((solicitudPago instanceof SolicitudPedido)
-					&& fecha.dateTimeEnSegundos() >= periodoInicio.dateTimeEnSegundos()
-					&& fecha.dateTimeEnSegundos() <= periodoFin.dateTimeEnSegundos()) {
-				for (Map.Entry<LineaProductoVenta, Double> entry : ((SolicitudPedido) solicitudPago)
-						.getRecaudacionProducto().entrySet()) {
-					recaudacion.merge(entry.getKey(), entry.getValue(), Double::sum);
-				}
-			}
-		}
-
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero))) {
-			bw.write("------- INFORME DE RECAUDACION POR PRODUCTOS ( " + periodoInicio.toStringFecha() + " - "
-					+ periodoFin.toStringFecha() + " ) -------");
-			bw.newLine();
-			bw.write(String.format("%-5s %-35s %12s", "ID", "NOMBRE DEL PRODUCTO", "RECAUDACION"));
-			bw.newLine();
-			bw.write("----------------------------------------------------------------------");
-			bw.newLine();
-
-			double totalAcumulado = 0.0;
-			for (Map.Entry<LineaProductoVenta, Double> entry : recaudacion.entrySet()) {
-				LineaProductoVenta producto = entry.getKey();
-				Double valor = entry.getValue();
-				bw.write(String.format("%-5d %-35.35s %10.2f €", producto.getID(), producto.getNombre(), valor));
-				bw.newLine();
-				totalAcumulado += valor;
-			}
-			bw.write("----------------------------------------------------------------------");
-			bw.newLine();
-			bw.write(String.format("%-41s %10.2f €", "TOTAL RECAUDADO:", totalAcumulado));
-			bw.newLine();
-		}
-	}
-	
 	public void obtenerVentasProductos(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, boolean porIds, File fichero)
 			throws IOException {
 
@@ -221,32 +166,39 @@ public class SistemaEstadisticas {
 		}
 
 		for (Pago p : pagos) {
-			Solicitud solicitudPago = p.getObjetoPagado();
-			DateTimeSimulado fecha = p.getFechaPago();
-			if ((solicitudPago instanceof SolicitudPedido)
-					&& fecha.dateTimeEnSegundos() >= periodoInicio.dateTimeEnSegundos()
-					&& fecha.dateTimeEnSegundos() <= periodoFin.dateTimeEnSegundos()) {
-				for (Map.Entry<LineaProductoVenta, Double> entry : ((SolicitudPedido) solicitudPago)
-						.getRecaudacionProducto().entrySet()) {
-					double clave = mapaAuxiliar.getOrDefault(entry.getKey(), 0.0);
-					double nuevaClave = clave + entry.getValue();
-					//Elimino el producto de la lista con recaudacion anterior
-					Set<LineaProductoVenta> SetAntiguo = recaudacion.getOrDefault(clave, null);
-					if (SetAntiguo != null) {
-					    SetAntiguo.remove(entry.getKey());
-					    if (SetAntiguo.isEmpty()) {
-					        recaudacion.remove(clave);
-					    }
-					}
-					//Añado producto a la lista con nueva recaudacion
-					Set<LineaProductoVenta> SetNuevo = recaudacion.getOrDefault(nuevaClave, new LinkedHashSet<>());
-					SetNuevo.add(entry.getKey());
-					recaudacion.put(nuevaClave, SetNuevo);
-					
-					//Actualizo mapa auxiliar
-					mapaAuxiliar.put(entry.getKey(), nuevaClave);
-				}
-			}
+		    Solicitud solicitudPago = p.getObjetoPagado();
+		    DateTimeSimulado fecha = p.getFechaPago();
+		    if ((solicitudPago instanceof SolicitudPedido)
+		            && fecha.dateTimeEnSegundos() >= periodoInicio.dateTimeEnSegundos()
+		            && fecha.dateTimeEnSegundos() <= periodoFin.dateTimeEnSegundos()) {
+		        
+		        for (Map.Entry<SimpleEntry<LineaProductoVenta, Integer>, Double> entry : 
+		                ((SolicitudPedido) solicitudPago).getRecaudacionProductos().entrySet()) {
+		            
+		            LineaProductoVenta producto = entry.getKey().getKey(); // extraemos el producto del SimpleEntry
+		            double recaudacion_valor = entry.getValue();
+		            
+		            double clave = mapaAuxiliar.getOrDefault(producto, 0.0);
+		            double nuevaClave = clave + recaudacion_valor;
+		            
+		            // Elimino el producto de la lista con recaudacion anterior
+		            Set<LineaProductoVenta> setAntiguo = recaudacion.getOrDefault(clave, null);
+		            if (setAntiguo != null) {
+		                setAntiguo.remove(producto);
+		                if (setAntiguo.isEmpty()) {
+		                    recaudacion.remove(clave);
+		                }
+		            }
+		            
+		            // Añado producto a la lista con nueva recaudacion
+		            Set<LineaProductoVenta> setNuevo = recaudacion.getOrDefault(nuevaClave, new LinkedHashSet<>());
+		            setNuevo.add(producto);
+		            recaudacion.put(nuevaClave, setNuevo);
+		            
+		            // Actualizo mapa auxiliar
+		            mapaAuxiliar.put(producto, nuevaClave);
+		        }
+		    }
 		}
 		
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(fichero))) {
