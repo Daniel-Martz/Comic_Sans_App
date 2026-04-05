@@ -1,6 +1,7 @@
 package usuario;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import aplicacion.Aplicacion;
@@ -9,8 +10,9 @@ import producto.LineaProductoVenta;
 
 public class Interes {
 	public static final int PESO_BUSQUEDA = 5;
-	public static final int PESO_CATEGORIA = 2;
 	public static final int PESO_COMPRA = 20;
+	public static final int PESO_PEDIDO = 15;
+	public static final int PESO_CARRITO = 10;
 	public static final int REAUJESTE_OVERFLOW = 2;
 	private Map<LineaProductoVenta, Integer> rankingInteresBusquedaVenta = new HashMap<>();
 	private Map<Categoria, Integer> rankingInteresCategoriaVenta = new HashMap<>();
@@ -30,7 +32,7 @@ public class Interes {
 	}
 	
 	//Se actualiza el interés por ser filtrado tras una búsqueda
-	public void actualizarInteresBusquedaVenta(LineaProductoVenta... productos) {
+	public void actualizarInteresBusquedaVenta(List<LineaProductoVenta> productos) {
 		for(LineaProductoVenta p : productos) {
 			int rank = rankingInteresBusquedaVenta.getOrDefault(p, 0);
 			rank += PESO_BUSQUEDA;
@@ -70,11 +72,30 @@ public class Interes {
 		}
 	}
 	
-	//Se actualiza el interés por ser filtrado tras una búsqueda
-	public void actualizarInteresPinchaProducto(LineaProductoVenta producto) {
+	//Tras realizar un pedido el interés se atualizará mediante las categorias asociadas a dicho producto
+	public void actualizarInteresPedidoCategorias(LineaProductoVenta producto) {
 		for(Categoria c : producto.getCategorias()) {
 			int rank = rankingInteresCategoriaVenta.getOrDefault(c, 0);
-			rank += PESO_CATEGORIA;
+			rank += PESO_PEDIDO;
+			if(rank > rankMaxCat) {
+				rankMaxCat = rank;
+			}
+			rankingInteresCategoriaVenta.put(c, rank);
+		}
+		
+		//Evitamos OVERFLOW
+		if (rankMaxCat > (Integer.MAX_VALUE - PESO_COMPRA)) {
+		    for (Map.Entry<Categoria, Integer> entry : rankingInteresCategoriaVenta.entrySet()) {
+		        entry.setValue(entry.getValue() / REAUJESTE_OVERFLOW);
+		    }
+		    rankMaxCat /= REAUJESTE_OVERFLOW;
+		}
+	}
+	
+	public void actualizarInteresCarritoCategorias(LineaProductoVenta producto) {
+		for(Categoria c : producto.getCategorias()) {
+			int rank = rankingInteresCategoriaVenta.getOrDefault(c, 0);
+			rank += PESO_CARRITO;
 			if(rank > rankMaxCat) {
 				rankMaxCat = rank;
 			}

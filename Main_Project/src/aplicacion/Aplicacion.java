@@ -253,7 +253,12 @@ public class Aplicacion {
 		if (!(this.usuarioActual instanceof ClienteRegistrado)) {
 			throw new IllegalStateException("Solo un cliente registrado puede cancelar un pedido.");
 		}
-		return catalogo.obtenerProductosNuevosFiltrados(prompt);
+		List<LineaProductoVenta> productosBuscados = catalogo.obtenerProductosNuevosFiltrados(prompt);
+		Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual();
+		if(usuarioActual instanceof ClienteRegistrado) {
+			((ClienteRegistrado)usuarioActual).getInteres().actualizarInteresBusquedaVenta(productosBuscados);
+		}
+		return productosBuscados;
 	}
 
 	public void crearPedidoAPartirDeCarrito() {

@@ -34,6 +34,7 @@ public class ClienteRegistrado extends Usuario {
 	}
 
 	public void añadirProductoACarrito(LineaProductoVenta p, Integer cantidad) {
+		this.getInteres().actualizarInteresCarritoCategorias(p);
 		this.carrito.añadirProducto(p, cantidad);
 	}
 
@@ -194,6 +195,10 @@ public class ClienteRegistrado extends Usuario {
 		NotificacionPedido noti = new NotificacionPedido("¡Pago procesado con éxito!", new DateTimeSimulado(),pedido);
 		anadirNotificacion(noti);
 		pedido.actualizarPagoPedido(EstadoPedido.PAGADO);
+		//Actualizamos el interés
+		for(LineaProductoVenta p : pedido.getProductosDiferentes().keySet()) {
+			this.getInteres().actualizarInteresCompraCategorias(p);
+		}
 		System.out.println("Pago del pedido realizado con éxito.");
 	}
 
@@ -204,8 +209,15 @@ public class ClienteRegistrado extends Usuario {
 		}
 		
 		for (LineaProductoVenta prod : carrito.getProductos().keySet()) {
+			this.interes.actualizarInteresPedidoCategorias(prod);
 		    int cantidad = carrito.getProductos().get(prod);
-		    prod.setStock(prod.getStock() - cantidad);
+		    if(cantidad > prod.getStock()) {
+		    	carrito.eliminarProducto(prod, cantidad);
+		    	System.out.println("No se añadió el producto " + prod.getNombre() + " al pedido por falta de stock");
+		    }
+		    else {
+		    	prod.setStock(prod.getStock() - cantidad);
+		    }
 		}
 		
 		SolicitudPedido pedido = new SolicitudPedido(this, carrito.getProductos());

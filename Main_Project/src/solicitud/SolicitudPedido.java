@@ -1,17 +1,17 @@
 package solicitud;
+
 import java.util.*;
 
 import producto.LineaProductoVenta;
 import usuario.ClienteRegistrado;
 
-public class SolicitudPedido extends Solicitud{
+public class SolicitudPedido extends Solicitud {
 
 	private Map<LineaProductoVenta, Integer> productosDiferentes = new HashMap<>();
 	private Map<LineaProductoVenta, Double> recaudacionProducto = new HashMap<>();
 	private ClienteRegistrado cliente;
 	private Pago pagoPedido;
 	private EstadoPedido estado;
-	
 
 	public SolicitudPedido(ClienteRegistrado cliente, Map<LineaProductoVenta, Integer> productos) {
 		super();
@@ -22,37 +22,37 @@ public class SolicitudPedido extends Solicitud{
 
 	public double getCostePedido() {
 		int i;
-		double precioFinal= 0;
-		for (LineaProductoVenta p: productosDiferentes.keySet()){
-			precioFinal += p.getPrecio()*productosDiferentes.get(p);
+		double precioFinal = 0;
+		for (LineaProductoVenta p : productosDiferentes.keySet()) {
+			precioFinal += p.getPrecio() * productosDiferentes.get(p);
 		}
 		return precioFinal;
 	}
-	
+
 	public void actualizarPagoPedido(EstadoPedido estado) {
 		this.estado = estado;
 	}
-		
+
 	public void añadirPagoPedido(Pago pagoPedido) {
 		this.pagoPedido = pagoPedido;
 	}
-	
-	public boolean pagado()	{
-		if(this.pagoPedido == null) {
+
+	public boolean pagado() {
+		if (this.pagoPedido == null) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	public void actualizarEstado(EstadoPedido estado) {
-	    if (estado == null) {
-	        throw new IllegalArgumentException("El estado no puede ser null");
-	    }
-	    this.estado = estado;
+		if (estado == null) {
+			throw new IllegalArgumentException("El estado no puede ser null");
+		}
+		this.estado = estado;
 	}
-	
+
 	public EstadoPedido getEstado() {
-	    return estado;
+		return estado;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class SolicitudPedido extends Solicitud{
 	public Pago getPagoPedido() {
 		return pagoPedido;
 	}
-	
+
 	public void setCliente(ClienteRegistrado cliente) {
 		this.cliente = cliente;
 	}
@@ -80,6 +80,5 @@ public class SolicitudPedido extends Solicitud{
 	public ClienteRegistrado getCliente() {
 		return cliente;
 	}
-	
-	
+
 }

@@ -8,6 +8,9 @@ public class Carrito implements Contenedor<LineaProductoVenta> {
 	
 	@Override
 	public void añadirProducto(LineaProductoVenta o, Integer cantidad) {
+		if(cantidad > o.getStock()) {
+			throw new IllegalStateException("No hay suficiente stock de ese producto");
+		}
 		//Usando esta función si existe la clave ya suma la cantidad, si no existe la crea
 	    this.productos.merge(o, cantidad, Integer::sum);
 	}
