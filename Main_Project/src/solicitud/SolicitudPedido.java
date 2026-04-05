@@ -56,7 +56,7 @@ public class SolicitudPedido extends Solicitud{
     	int unidadesRegaladas = (productosDiferentes.get(l)  / ((Cantidad)descuentoProducto).getNumeroComprados()) * ((Cantidad)descuentoProducto).getNumeroRecibidos();
         productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, ((productosDiferentes.get(l)%2) + unidadesRegaladas)), 
         		l.getPrecio() * productosDiferentes.get(l)); 
-      } else if(descuentoProducto instanceof Regalo || descuentoProducto instanceof RebajaUmbral){
+      } else if(descuentoProducto instanceof Regalo || descuentoProducto instanceof UmbralGasto){
         //Nos guardamos en un mapa el descuento asociado a los productos que lo tienen para tratar el descuento posteriormente
         LinkedList<LineaProductoVenta> productosConDescuento = descuentosPendientes.computeIfAbsent(descuentoProducto, k -> new LinkedList<>());
         productosConDescuento.add(l);
@@ -64,8 +64,8 @@ public class SolicitudPedido extends Solicitud{
     } 
     //Vamos a tratar aquellos descuentos que no se han aplicado todavía por ser grupales
     for(Descuento d : descuentosPendientes.keySet()){
-      if(d instanceof RebajaUmbral){
-        RebajaUmbral r = (RebajaUmbral)d;
+      if(d instanceof UmbralGasto){
+    	  UmbralGasto r = (UmbralGasto)d;
         //Obtenemos qué umbral tienen que sobrepasar los productos para que se aplique el descuento
         double umbral = r.getUmbral();
         double total = 0;
@@ -76,7 +76,7 @@ public class SolicitudPedido extends Solicitud{
         //Si hemos superado el umbral, aplicamos la rebaja a los productos
         if(total >= umbral){
           for(LineaProductoVenta l : descuentosPendientes.get(d)){
-            productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l) * ((RebajaUmbral)d).getPorcentajeRebaja() / 100);
+            productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l) * ((Precio)d).getPorcentajeRebaja() / 100);
           }
         }else 
         //Si no hemos superado el umbral, guardamos los productos con su precio normal
