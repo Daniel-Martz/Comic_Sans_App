@@ -71,7 +71,7 @@ public class GestorSolicitudes {
 		List<SolicitudIntercambio> intercambiosPendientes = new ArrayList<>();
 		for(SolicitudIntercambio s: intercambios)
 		{
-			if(s.esAprobado())
+			if(!s.esAprobado())
 			{
 				intercambiosPendientes.add(s);
 			}
@@ -86,5 +86,6 @@ public class GestorSolicitudes {
 	public List<SolicitudValidacion> getValidaciones() {
 		return validaciones;
 	}
+	
 }
 
