@@ -136,8 +136,8 @@ public class Catalogo {
 		}
 	}
 
-	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, Integer nuevoStock,
-	Double nuevoPrecio, File nuevaFoto) {
+	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, File nuevaFoto, Integer nuevoStock,
+	Double nuevoPrecio) {
 		if(nuevoNombre != null) {
 			p.setNombre(nuevoNombre);
 		}

@@ -19,8 +19,15 @@ public class Main {
 		Usuario usuarioActual;
     Gestor gestor;
 		Aplicacion app = Aplicacion.getInstancia();
+
+    //*********************************************************************************************************
+    //PRUEBA DE LA GESTION DE CUENTAS 
 		
 		app.iniciarSesion("gestor", "123456");
+
+    app.cambiarContraseña("gestor", "123456", "@soyElGestor1234!");
+    app.cerrarSesion();
+    app.iniciarSesion("gestor", "@soyElGestor1234!");
 		
 		usuarioActual = app.getUsuarioActual();
 		if( usuarioActual instanceof Gestor) {
@@ -38,6 +45,10 @@ public class Main {
 		
 		matteo = app.crearCuenta("Matteo", "123456789B", "1111");
 		rodrigo = app.crearCuenta("Rodrigo", "123456789C", "2222");
+
+
+    //*********************************************************************************************************
+    //PRUEBA DE SOLICITUD VALIDACION Y SOLICITUD INTETRCAMBIO
 		
 		app.iniciarSesion("Matteo", "1111");
 		matteo.añadirProductoACarteraDeIntercambio("Peluche de perro", "Es un peluche muy bonito y suavecito", null);
@@ -106,6 +117,68 @@ public class Main {
 		List<SolicitudIntercambio> listaIntercambios = GestorSolicitudes.getInstancia().getIntercambios();
 		SolicitudIntercambio sol = listaIntercambios.get(0);
 		federico.aprobarIntercambio(sol, codigoMatteo, codigoRodrigo);
+    app.cerrarSesion();
+    
 
+    //*********************************************************************************************************
+    //PRUEBA DE SOLICITUD PEDIDO
+    
+    //Introducimos productos nuevos en la aplicación 
+    Catalogo cat = app.getCatalogo();
+    app.iniciarSesion("gestor", "@soyElGestor1234!");
+    gestor.añadirProducto("Comic de Spiderman Adventures, Volumen 3", "Un cómic de auténtico colleccionista, preservado en el envoltorio original. Parte de la colección Spiderman Adventures tan valorada por los fans del personaje.", new File("/images/SpidermanAdventures2.jpg"), 20, 19.99);   
+    gestor.añadirProducto("Comic de Spiderman Chronicles, Volumen 5", "Un cómic de auténtico colleccionista, preservado en el envoltorio original. Parte de la colección Spiderman Adventures tan valorada por los fans del personaje.", new File("/images/SpidermanChronicles5.jpg"), 20, 19.99);   
+    
+    
+    //Añadimos algunas categorías adicionales
+    cat.añadirCategoria(new Categoria("Fantasía"));
+    cat.añadirCategoria(new Categoria("Thriller"));
+    cat.añadirCategoria(new Categoria("Anime"));
+    cat.añadirCategoria(new Categoria("Estrategia"));
+    
+    
+    //Añadimos productos a través de un fichero, así como sus categorías
+    try{
+      gestor.añadirProductosDesdeFichero(new File("txt/cargarDesdeFichero1.txt"));
+    }catch(IOException excepcionFichero){
+      System.out.println(excepcionFichero);
+    }
+
+    System.out.println("Categorías de la tienda");
+    System.out.println(cat.getCategoriasTienda());
+
+    //Modificamos una categoria
+    Categoria catThriller = cat.buscarCategoriaPorNombre("Thriller");
+    cat.modificarCategoria(catThriller, "Suspense");
+
+    System.out.println("Categorías (con modificación de la tienda");
+    System.out.println(cat.getCategoriasTienda());
+
+
+    //Modificamos los datos de un producto
+    List<LineaProductoVenta> prod = cat.obtenerProductosNuevosGestion("Comic de Spiderman Adventures");
+    System.out.println("Lista de productos obtenidos como resultado al buscar con el prompt: Comic de Spiderman Adventures");
+    //Modificamos el producto que más se ajuste al resultado, aumentando su stock
+    cat.modificarProducto(prod.get(0), "Comic de Spiderman Adventures, Volumen 3", "Un cómic de auténtico colleccionista, preservado en el envoltorio original. Parte de la colección Spiderman Adventures tan valorada por los fans del personaje.", new File("/images/SpidermanAdventures2.jpg"), 30, 19.99);
+
+    //Creamos un pack de comics de Spiderman
+    List<LineaProductoVenta> comicsSpidermanProds = cat.obtenerProductosNuevosGestion("Comic Spiderman");
+    Pack comicsSpidermanPack = new Pack("Pack de comics de Spiderman", "Dos comics sumamente valiosos y valorados dentro de la comunidad de amantes de Spiderman", new File("/dosComicsSpiderman.jpg"), 5, 34.99);
+    //Añadimos primero 10 comics a cada pack, lo que producirá un error por insuficiencia de stock
+    try{
+      comicsSpidermanPack.añadirProductoAPack(prod.get(0), 10);
+    }catch(IllegalArgumentException errorStock){
+      System.out.println(errorStock);
+    }
+    for(LineaProductoVenta p : prod){
+      comicsSpidermanPack.añadirProductoAPack(p, 1);
+    }
+
+    
+    System.out.println("Los productos de la tienda son");
+    System.out.println(cat.getProductosNuevos());
+
+    cat.cambiarFiltroVenta(new FiltroVentaCliente(true, 0, 5, 0, 20, true, false));
+    System.out.println(cat.obtenerProductosNuevosFiltrados("Comic"));
   }
 }

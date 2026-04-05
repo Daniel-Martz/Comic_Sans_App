@@ -39,8 +39,8 @@ public abstract class UsuarioGestion extends Usuario {
 
 	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, Integer nuevoStock,
 			Double nuevoPrecio, File nuevaFoto) {
-		Aplicacion.getInstancia().getCatalogo().modificarProducto(p, nuevoNombre, nuevaDescripcion, nuevoStock,
-				nuevoPrecio, nuevaFoto);
+		Aplicacion.getInstancia().getCatalogo().modificarProducto(p, nuevoNombre, nuevaDescripcion, nuevaFoto, nuevoStock,
+				nuevoPrecio );
 	}
 
 	// Metodos para categorias
