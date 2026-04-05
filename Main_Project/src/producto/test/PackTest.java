@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test.producto;
+package producto.test;
 import producto.LineaProductoVenta;
 import producto.Pack;
 import java.io.File;

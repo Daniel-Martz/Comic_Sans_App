@@ -1,4 +1,4 @@
-package test.usuario;
+package usuario.test;
 import usuario.*;
 import producto.*;
 import java.util.*;
