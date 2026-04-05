@@ -15,10 +15,10 @@ import tiempo.DateTimeSimulado;
 import usuario.ClienteRegistrado;
 
 class ProductoSegundaManoTest {
-
+  ClienteRegistrado cliente = new ClienteRegistrado("Matt", "01122233A", "123456");
 	@Test
 	void testValidarProducto() {
-    ProductoSegundaMano p = new ProductoSegundaMano("Pelota", "Una maravillosa pelota", new File("/pelota.jpg"));
+    ProductoSegundaMano p = new ProductoSegundaMano("Pelota", "Una maravillosa pelota", new File("/pelota.jpg"), cliente);
     p.validarProducto(9.99, EstadoConservacion.MUY_BUENO);
     DatosValidacion d1 = new DatosValidacion(9.99, EstadoConservacion.MUY_BUENO);
     DatosValidacion d2 = p.getDatosValidacion();
@@ -28,7 +28,7 @@ class ProductoSegundaManoTest {
 
 	@Test
 	void testAddOfertaRecibida() {
-    ProductoSegundaMano p = new ProductoSegundaMano("Pelota", "Una maravillosa pelota", new File("/pelota.jpg"));
+    ProductoSegundaMano p = new ProductoSegundaMano("Pelota", "Una maravillosa pelota", new File("/pelota.jpg"), cliente);
     Set<ProductoSegundaMano> productosOfertados = new HashSet<>();
     Set<ProductoSegundaMano> productosSolicitados = new HashSet<>();
     p.validarProducto(9.99, EstadoConservacion.MUY_BUENO);
@@ -41,7 +41,7 @@ class ProductoSegundaManoTest {
 
 	@Test
 	void testAddOfertaEnviada() {
-    ProductoSegundaMano p = new ProductoSegundaMano("Pelota", "Una maravillosa pelota", new File("/pelota.jpg"));
+    ProductoSegundaMano p = new ProductoSegundaMano("Pelota", "Una maravillosa pelota", new File("/pelota.jpg"), cliente);
     Set<ProductoSegundaMano> productosOfertados = new HashSet<>();
     Set<ProductoSegundaMano> productosSolicitados = new HashSet<>();
     p.validarProducto(9.99, EstadoConservacion.MUY_BUENO);
