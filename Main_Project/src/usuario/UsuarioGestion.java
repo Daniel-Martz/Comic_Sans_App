@@ -40,8 +40,10 @@ public abstract class UsuarioGestion extends Usuario {
 	 * @param foto        la foto
 	 * @param stock       el stock
 	 * @param precio      el precio
+	 * @return el producto añadido
 	 */
-	public LineaProductoVenta añadirProducto(String nombre, String descripcion, File foto, Integer stock, Double precio) {
+	public LineaProductoVenta añadirProducto(String nombre, String descripcion, File foto, Integer stock,
+			Double precio) {
 		LineaProductoVenta producto = new LineaProductoVenta(nombre, descripcion, foto, stock, precio);
 		Aplicacion.getInstancia().getCatalogo().añadirProducto(producto);
 		System.out.println("Producto añadido al catálogo: " + nombre);
@@ -57,6 +59,7 @@ public abstract class UsuarioGestion extends Usuario {
 	 * @param stock       el stock
 	 * @param precio      el precio
 	 * @param prods       los productos
+	 * @return el pack añadido
 	 */
 	public Pack añadirPack(String nombre, String descripcion, File foto, Integer stock, Double precio,
 			Map<LineaProductoVenta, Integer> prods) {
@@ -81,6 +84,7 @@ public abstract class UsuarioGestion extends Usuario {
 	 * Añade productos desde fichero.
 	 *
 	 * @param f el fichero
+	 * @return la lista de productos importados
 	 * @throws IOException              si hay un error de entrada/salida
 	 * @throws IllegalArgumentException si el argumento no es válido
 	 */
@@ -195,5 +199,4 @@ public abstract class UsuarioGestion extends Usuario {
 		Aplicacion.getInstancia().getCatalogo().eliminarDescuento(d, categoria);
 		System.out.println("Descuento eliminado de la categoría.");
 	}
-
 }

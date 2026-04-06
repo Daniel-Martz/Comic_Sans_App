@@ -461,6 +461,10 @@ public class ClienteRegistrado extends Usuario {
 			System.out.println("No se añadió el producto " + prod.getNombre() + " al pedido por falta de stock");
 		}
 
+		if (this.getCarrito().getProductos().isEmpty()) {
+	        throw new IllegalStateException("El carrito está vacío.");
+	    }
+		
 		SolicitudPedido pedido = new SolicitudPedido(this, carrito.getProductos());
 		this.pedidos.add(pedido);
 		Aplicacion.getInstancia().getGestorSolicitud().añadirPedido(pedido);
