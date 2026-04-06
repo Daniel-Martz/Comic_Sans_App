@@ -121,10 +121,9 @@ public class SolicitudPedido extends Solicitud {
   }
 
 	public double getCostePedido() {
-		int i;
-		double precioFinal = 0;
-		for (LineaProductoVenta p : productosDiferentes.keySet()) {
-			precioFinal += p.getPrecio() * productosDiferentes.get(p);
+		double precioFinal= 0;
+		for (LineaProductoVenta p: productosDiferentes.keySet()){
+			precioFinal += p.getPrecio()*productosDiferentes.get(p);
 		}
 		return precioFinal;
 	}

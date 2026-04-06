@@ -5,10 +5,10 @@ import java.io.File;
 import tiempo.DateTimeSimulado;
 
 public class Comic extends LineaProductoVenta {
-	private int numeroPaginas;
-	private String autor;
-	private String editorial;
-	private int añoPublicacion;
+	private final int numeroPaginas;
+	private final String autor;
+	private final String editorial;
+	private final int añoPublicacion;
 	
 
 	public Comic(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas,
@@ -25,18 +25,8 @@ public int getNumeroPaginas() {
 	}
 
 
-	public void setNumeroPaginas(int numeroPaginas) {
-		this.numeroPaginas = numeroPaginas;
-	}
-
-
 	public String getAutor() {
 		return autor;
-	}
-
-
-	public void setAutor(String autor) {
-		this.autor = autor;
 	}
 
 
@@ -45,18 +35,8 @@ public int getNumeroPaginas() {
 	}
 
 
-	public void setEditorial(String editorial) {
-		this.editorial = editorial;
-	}
-
-
 	public int getAñoPublicacion() {
 		return añoPublicacion;
-	}
-
-
-	public void setAñoPublicacion(int añoPublicacion) {
-		this.añoPublicacion = añoPublicacion;
 	}
 
 }
