@@ -34,7 +34,7 @@ public class Comic extends LineaProductoVenta {
 	 * @param editorial       Sello editorial.
 	 * @param añoPublicacion  Año de edición.
 	 */
-	public Comic(String nombre, String descripcion, File foto, int stock, double precio,
+	public Comic(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas,
 				 int numeroPaginas, String autor, String editorial, int añoPublicacion) {
 		
 		super(nombre, descripcion, foto, stock, precio);
