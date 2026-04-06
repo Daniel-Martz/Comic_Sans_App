@@ -104,7 +104,7 @@ public class LineaProductoVenta extends Producto {
 	           "Valoración media: " + String.format("%.1f/5.0", obtenerPuntuacionMedia()) + 
 	           " (" + reseña.size() + " reseñas)\n" +
 	           "Ventas: " + unidadesVendidas + " unidades\n" +
-	           "Fecha de subida: " + getFechaSubida().toStringFecha();
+	           "Fecha de subida: " + getFechaSubida().toStringFecha() + "\n";
 	}
 
 }

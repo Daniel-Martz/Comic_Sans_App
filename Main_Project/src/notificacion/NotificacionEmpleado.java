@@ -30,6 +30,7 @@ public class NotificacionEmpleado extends Notificacion {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "\nSolicitudes = " + solicitudes;
+	    return super.toString() + 
+	           "\nSolicitudes pendientes: " + solicitudes.size();
 	}
 }

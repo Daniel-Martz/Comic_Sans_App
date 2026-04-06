@@ -31,9 +31,13 @@ public class NotificacionProducto extends NotificacionCliente {
 	}
 	
 	
-	
 	@Override
 	public String toString() {
-		return super.toString() + "\nProductos: = " + productos;
+	    StringBuilder sb = new StringBuilder(super.toString());
+	    sb.append("\nProductos: ");
+	    for (LineaProductoVenta p : productos) {
+	        sb.append("\n  - " + p.getNombre() + " (" + p.getPrecio() + " €)");
+	    }
+	    return sb.toString();
 	}
 }

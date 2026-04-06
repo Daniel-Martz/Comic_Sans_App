@@ -23,10 +23,9 @@ public class NotificacionIntercambio extends NotificacionCliente {
 		return detallesIntercambio;
 	}
 
-	@Override
-	public String toString() {
-		return super.toString() + "\ncodigoIntercambio=" + codigoIntercambio + ", detallesIntercambio="
-				+ detallesIntercambio;
-	}
-	
+    @Override
+    public String toString() {
+        return super.toString() + "\ncodigoIntercambio=" + codigoIntercambio + ", detallesIntercambio="
+                + detallesIntercambio;
+    }
 }

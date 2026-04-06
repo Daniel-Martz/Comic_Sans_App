@@ -154,25 +154,34 @@ public class Main {
 		Categoria catThriller = cat.buscarCategoriaPorNombre("Thriller");
 		cat.modificarCategoria(catThriller, "Suspense");
 
-		System.out.println("Categorías (con modificación de la tienda");
+		System.out.println("Categorías (con modificación) de la tienda");
 		System.out.println(cat.getCategoriasTienda());
 
 		// Modificamos los datos de un producto
 		List<LineaProductoVenta> prod = cat.obtenerProductosNuevosGestion("Comic de Spiderman Adventures");
 		System.out.println(
 				"Lista de productos obtenidos como resultado al buscar con el prompt: Comic de Spiderman Adventures");
+
+		for (LineaProductoVenta p : prod) {
+			System.out.println(p);
+			System.out.println("----------------------------------------------------");
+		}
 		// Modificamos el producto que más se ajuste al resultado, aumentando su stock
-		cat.modificarProducto(prod.get(0), "Comic de Spiderman Adventures, Volumen 3",
-				"Un cómic de auténtico colleccionista, preservado en el envoltorio original. Parte de la colección Spiderman Adventures tan valorada por los fans del personaje.",
-				new File("/images/SpidermanAdventures2.jpg"), 30, 19.99);
+		LineaProductoVenta productoAux = prod.get(0);
+		cat.modificarProducto(prod.get(0), productoAux.getNombre(), productoAux.getDescripcion(), productoAux.getFoto(),
+				30, 19.99);
 
 		// Creamos un pack de comics de Spiderman
 		List<LineaProductoVenta> comicsSpidermanProds = cat.obtenerProductosNuevosGestion("Comic Spiderman");
-		Pack comicsSpidermanPack = new Pack("Pack de comics de Spiderman",
-				"Dos comics sumamente valiosos y valorados dentro de la comunidad de amantes de Spiderman",
-				new File("/dosComicsSpiderman.jpg"), 5, 34.99);
+		
+		Pack comicsSpidermanPack = gestor.añadirPack("Pack de comics de Spiderman",
+					"Dos comics sumamente valiosos y valorados dentro de la comunidad de amantes de Spiderman",
+					new File("/dosComicsSpiderman.jpg"), 5, 34.99, new HashMap<>());
+
+		
 		// Añadimos primero 10 comics a cada pack, lo que producirá un error por
 		// insuficiencia de stock
+		System.out.println(comicsSpidermanPack);
 		try {
 			comicsSpidermanPack.añadirProductoAPack(prod.get(0), 10);
 		} catch (IllegalArgumentException errorStock) {
@@ -181,47 +190,169 @@ public class Main {
 		for (LineaProductoVenta p : prod) {
 			comicsSpidermanPack.añadirProductoAPack(p, 1);
 		}
+		System.out.println(comicsSpidermanPack);
+
+		System.out.println("\n====================================================");
+		System.out.println("       PRODUCTOS DISPONIBLES EN LA TIENDA");
+		System.out.println("====================================================");
+		for (LineaProductoVenta p : cat.getProductosNuevos()) {
+			System.out.println(p);
+			System.out.println("----------------------------------------------------");
+		}
+		cat.cambiarFiltroVenta(true, null, null, 0, 5, 0, 20, true, false, null);
+
+		List<LineaProductoVenta> filtrados = cat.obtenerProductosNuevosFiltrados("Comic");
+		System.out.println("\n>>> PRODUCTOS FILTRADOS (Puntuación: 0-5 | Precio: 0-20€ | Texto: 'Comic')");
+		if (filtrados.isEmpty()) {
+			System.out.println("No se han encontrado productos que coincidan con los criterios.");
+		} else {
+			for (LineaProductoVenta p : filtrados) {
+				System.out.println(p);
+				System.out.println("----------------------------------------------------");
+			}
+		}
+
+		// Veamos una primera demostración del sistema de recomendación, si un cliente
+		// busca un producto, aumenta el interés en este
+		System.out.println("\n[Configurando sistema de recomendación: 1 unidad, prioridad Interés]");
+		gestor.configurarUnidadesRecomendadas(1);
+		gestor.configurarImportancia(1, 0, 0);
+
+		System.out.println("\n[Cerrando sesión de Gestor...]");
+		app.cerrarSesion();
+
+		// Comprobemos que el interés de un cliente funciona correctamente tras las
+		// búsquedas de productos
+		System.out.println("[Iniciando sesión como Rodrigo...]");
+		app.iniciarSesion("Rodrigo", "2222");
+
+		System.out.println("\nRodrigo busca: 'Comic Spiderman'");
+		app.buscarProductosNuevos("Comic de Spiderman Chronicles, Volumen 5");
+
+		System.out.println("\nProducto recomendado a Rodrigo: ");
+		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
+			System.out.println(p);
+		}
 		
-	    System.out.println("\n====================================================");
-	    System.out.println("       PRODUCTOS DISPONIBLES EN LA TIENDA");
-	    System.out.println("====================================================");
-	    for (LineaProductoVenta p : cat.getProductosNuevos()) {
-	        System.out.println(p);
-	        System.out.println("----------------------------------------------------");
-	    }
-	    cat.cambiarFiltroVenta(true, null, null, 0, 5, 0, 20, true, false, null);
-	    
-	    List<LineaProductoVenta> filtrados = cat.obtenerProductosNuevosFiltrados("Comic");
-	    System.out.println("\n>>> PRODUCTOS FILTRADOS (Puntuación: 0-5 | Precio: 0-20€ | Texto: 'Comic')");
-	    if (filtrados.isEmpty()) {
-	        System.out.println("No se han encontrado productos que coincidan con los criterios.");
-	    } else {
-	        for (LineaProductoVenta p : filtrados) {
-	            System.out.println(p);
-	            System.out.println("----------------------------------------------------");
-	        }
-	    }
+		app.cerrarSesion();
 
-	    //Veamos una primera demostración del sistema de recomendación, si un cliente busca un producto, aumenta el interés en este
-	    System.out.println("\n[Configurando sistema de recomendación: 1 unidad, prioridad Interés]");
-	    gestor.configurarUnidadesRecomendadas(1); 
-	    gestor.configurarImportancia(1, 0, 0); 
+		// *********************************************************************************************************
+		// PRUEBA DE SOLICITUD PEDIDO
 
-	    System.out.println("\n[Cerrando sesión de Gestor...]");
-	    app.cerrarSesion();
-	    
-	    //Comprobemos que el interés de un cliente funciona correctamente tras las búsquedas de productos
-	    System.out.println("[Iniciando sesión como Rodrigo...]");
-	    app.iniciarSesion("Rodrigo", "2222"); 
-	    
-	    System.out.println("\nRodrigo busca: 'Comic Spiderman'");
-	    app.buscarProductosNuevos("Comic de Spiderman Chronicles, Volumen 5");
-	    
-	    System.out.println("\nProducto recomendado a Rodrigo: ");
-	    for(LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
-	    	System.out.println(p);
-	    }
-	    
-	   
+		// Rodrigo inicia sesión para hacer un pedido
+		System.out.println("\n====================================================");
+		System.out.println("           PRUEBA DE PEDIDO Y PAGO");
+		System.out.println("====================================================");
+
+		app.iniciarSesion("Rodrigo", "2222");
+
+		// Rodrigo añade productos al carrito
+		List<LineaProductoVenta> productosDisponibles = new ArrayList<>(cat.getProductosNuevos());
+		LineaProductoVenta productoParaPedido1 = productosDisponibles.get(0);
+		LineaProductoVenta productoParaPedido2 = productosDisponibles.get(1);
+
+		rodrigo.añadirProductoACarrito(productoParaPedido1, 1);
+		rodrigo.añadirProductoACarrito(productoParaPedido2, 2);
+
+		System.out.println("\nCarrito de Rodrigo:");
+		System.out.println(rodrigo.getCarrito());
+
+		// Rodrigo crea el pedido a partir del carrito
+		SolicitudPedido pedidoRodrigo = rodrigo.realizarPedido();
+		System.out.println("\nPedido creado:");
+		System.out.println(pedidoRodrigo);
+		System.out.println("Estado del pedido: " + pedidoRodrigo.getEstado());
+
+		// Rodrigo paga el pedido
+		rodrigo.pagarPedido(pedidoRodrigo, "1234567890123456", "123", new DateTimeSimulado());
+		System.out.println("\nEstado del pedido tras el pago: " + pedidoRodrigo.getEstado());
+
+		app.cerrarSesion();
+
+		// *********************************************************************************************************
+		// PRUEBA DE VALIDACIÓN DE PEDIDO POR UN EMPLEADO CON PERMISOS
+
+		System.out.println("\n====================================================");
+		System.out.println("       PRUEBA DE VALIDACIÓN DE PEDIDO");
+		System.out.println("====================================================");
+
+		// Federico inicia sesión para validar el pedido
+		app.iniciarSesion("Federico", "123456");
+
+		List<SolicitudPedido> pedidosPendientes = GestorSolicitudes.getInstancia().getPedidos();
+		System.out.println("\nPedidos pendientes de validar: " + pedidosPendientes.size());
+
+		if (!pedidosPendientes.isEmpty()) {
+			SolicitudPedido pedidoAValidar = pedidosPendientes.get(0);
+			System.out.println("\nPedido a validar:");
+			System.out.println(pedidoAValidar);
+			System.out.println("Estado antes de validar: " + pedidoAValidar.getEstado());
+
+			// Federico marca el pedido como listo para recoger
+			federico.actualizarEstadoPedido(pedidoAValidar, EstadoPedido.LISTO_PARA_RECOGER);
+			System.out.println("Estado tras validación: " + pedidoAValidar.getEstado());
+		} else {
+			System.out.println("No hay pedidos pendientes de validar.");
+		}
+
+		app.cerrarSesion();
+
+		// *********************************************************************************************************
+		// PRUEBA DE RECOGIDA DEL PEDIDO
+
+		System.out.println("\n====================================================");
+		System.out.println("          PRUEBA DE RECOGIDA DEL PEDIDO");
+		System.out.println("====================================================");
+
+		// Rodrigo inicia sesión para recoger el pedido
+		app.iniciarSesion("Rodrigo", "2222");
+
+		List<NotificacionCliente> notifsRodrigoPedido = rodrigo.getNotificaciones();
+		System.out.println("\nNotificaciones de Rodrigo tras la validación:");
+		for (NotificacionCliente notif : notifsRodrigoPedido) {
+			System.out.println(notif);
+		}
+
+		app.cerrarSesion();
+
+		// *********************************************************************************************************
+		// PRUEBA DE ESTADÍSTICAS TRAS EL PEDIDO
+
+		System.out.println("\n====================================================");
+		System.out.println("         PRUEBA DE ESTADÍSTICAS");
+		System.out.println("====================================================");
+
+		app.iniciarSesion("gestor", "@soyElGestor1234!");
+
+		File ficheroEstadisticas = new File("txt/estadisticas.txt");
+		DateTimeSimulado inicio = new DateTimeSimulado(1, 1, 1, 0, 0, 0);
+		DateTimeSimulado fin    = new DateTimeSimulado(1, 12, 30, 23, 59, 59);
+
+		try {
+			app.getSistemaEstadisticas().obtenerRecaudacionMensual(inicio, fin, ficheroEstadisticas);
+			System.out.println("\nInforme de recaudación mensual generado en: " + ficheroEstadisticas.getAbsolutePath());
+
+			File ficheroAmbito = new File("txt/estadisticas_ambito.txt");
+			app.getSistemaEstadisticas().obtenerRecaudacionAmbito(inicio, fin, ficheroAmbito);
+			System.out.println("Informe de recaudación por ámbito generado en: " + ficheroAmbito.getAbsolutePath());
+
+			File ficheroProductos = new File("txt/estadisticas_productos.txt");
+			app.getSistemaEstadisticas().obtenerVentasProductos(inicio, fin, false, ficheroProductos);
+			System.out.println("Informe de ventas por producto generado en: " + ficheroProductos.getAbsolutePath());
+
+			File ficheroClientes = new File("txt/estadisticas_clientes.txt");
+			app.getSistemaEstadisticas().obtenerGastoClientes(inicio, fin, ficheroClientes);
+			System.out.println("Informe de gasto por cliente generado en: " + ficheroClientes.getAbsolutePath());
+
+		} catch (IOException e) {
+			System.out.println("Error al generar estadísticas: " + e.getMessage());
+		}
+
+		app.cerrarSesion();
+
+		System.out.println("\n====================================================");
+		System.out.println("           FIN DE LA DEMOSTRACIÓN");
+		System.out.println("====================================================");
 	}
+
 }

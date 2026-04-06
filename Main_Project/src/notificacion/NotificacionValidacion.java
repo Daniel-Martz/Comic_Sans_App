@@ -25,6 +25,8 @@ public class NotificacionValidacion extends NotificacionCliente {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "\nSolicitud de validación = " + solicitudProductoSegundaMano;
+	    return super.toString() + 
+	           "\nProducto a validar: " + 
+	           solicitudProductoSegundaMano.getProductoAValidar().getNombre();
 	}
 }

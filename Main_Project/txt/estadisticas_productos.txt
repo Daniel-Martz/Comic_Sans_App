@@ -1,0 +1,11 @@
+------- INFORME DE RECAUDACION POR PRODUCTOS ( 1/1/1 - 30/12/1 ) -------
+ID    NOMBRE DEL PRODUCTO                  RECAUDACION
+----------------------------------------------------------------------
+5     Manga Attack on Titan                    25,98 €
+7     Figura Goku Super Saiyan                 24,99 €
+3     Comic de Spiderman Adventures, Volu       0,00 €
+6     Catan                                     0,00 €
+4     Comic de Spiderman Chronicles, Volu       0,00 €
+8     Pack de comics de Spiderman               0,00 €
+----------------------------------------------------------------------
+TOTAL RECAUDADO:                               50,97 €

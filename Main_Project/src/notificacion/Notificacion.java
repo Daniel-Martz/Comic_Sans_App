@@ -42,6 +42,8 @@ public class Notificacion {
 
 	@Override
 	public String toString() {
-		return "\n\nNotificacion a las " + horaEnvio + "\nid=" + id + ", mensaje=" + mensaje;
+	    return "Notificacion [id=" + id + 
+	           ", mensaje=" + mensaje + 
+	           ", horaEnvio=" + horaEnvio.toStringFecha() + "]";
 	}
 }

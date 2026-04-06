@@ -23,6 +23,7 @@ public class NotificacionPedido extends NotificacionCliente {
 	
 	@Override
 	public String toString() {
-		return super.toString() + "\nPedido = " + pedido;
+	    return super.toString() + 
+	           "\nPedido: " + pedido;
 	}
 }

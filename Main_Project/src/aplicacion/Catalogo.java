@@ -152,7 +152,8 @@ public class Catalogo {
 		}
 	}
 
-	public void añadirProductosDesdeFichero(File f) throws IOException {
+	public List<LineaProductoVenta> añadirProductosDesdeFichero(File f) throws IOException {
+		List<LineaProductoVenta> productos = new LinkedList<>();
 		if (f == null || !f.exists()) {
 			throw new IllegalArgumentException("El fichero no existe o no es valido.");
 		}
@@ -306,8 +307,10 @@ public class Catalogo {
 				nuevo.añadirCategoria(categoria);
 				categoria.añadirProductoACategoria(nuevo);
 				this.añadirProducto(nuevo);
+				productos.add(nuevo);
 			}
 		}
+		return productos;
 	}
 
 	// Métodos para las categorías

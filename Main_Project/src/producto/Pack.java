@@ -50,6 +50,34 @@ public class Pack extends LineaProductoVenta{
 		}
 	    return pack;
 	}
+	
+
+	@Override
+	public String toString() {
+	    // 1. Usamos StringBuilder para construir la cadena de forma eficiente
+	    StringBuilder sb = new StringBuilder();
+	    
+	    // 2. Información básica del Pack (heredada de LineaProductoVenta y Producto)
+	    sb.append("=== DETALLES DEL PACK ===\n");
+	    sb.append(super.toString()); // Aprovechamos el toString() de la clase padre
+	    sb.append("\nCONTENIDO DEL PACK:");
+	    
+	    // 3. Verificamos si el pack tiene productos antes de iterar
+	    if (pack.isEmpty()) {
+	        sb.append("\n  (Este pack está vacío)");
+	    } else {
+	        // 4. Recorremos el mapa para mostrar nombre y cantidad
+	        for (Map.Entry<LineaProductoVenta, Integer> entry : pack.entrySet()) {
+	            sb.append("\n  - ")
+	              .append(entry.getKey().getNombre()) // Solo el nombre del producto
+	              .append(" (x")
+	              .append(entry.getValue())
+	              .append(")");
+	        }
+	    }
+	    
+	    return sb.toString();
+	}
 
 
 }
