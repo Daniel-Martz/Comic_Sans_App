@@ -1,38 +1,83 @@
 package producto;
 
-import java.util.*;
 import java.io.File;
 
+/**
+ * Representa un juego de mesa disponible para venta.
+ * 
+ * Incluye información específica como:
+ * - número de jugadores
+ * - rango de edad recomendado
+ * - tipo de juego
+ *
+ * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
+ * @version 1.0
+ * @date 06-04-2026
+ */
 public class JuegoDeMesa extends LineaProductoVenta {
+
 	private final int numeroJugadores;
 	private final int edadMinima;
 	private final int edadMaxima;
 	private final TipoJuegoMesa tipo;
 
-	public JuegoDeMesa(String nombre, String descripcion, File foto, int stock, double precio, int numeroJugadores,
-			int edadMinima, int edadMaxima, TipoJuegoMesa tipo) {
+	/**
+	 * Construye un juego de mesa.
+	 *
+	 * @param nombre nombre del producto
+	 * @param descripcion descripción
+	 * @param foto imagen asociada
+	 * @param stock unidades disponibles
+	 * @param precio precio unitario
+	 * @param numeroJugadores número recomendado de jugadores
+	 * @param edadMinima edad mínima recomendada
+	 * @param edadMaxima edad máxima recomendada
+	 * @param tipo tipo de juego de mesa
+	 */
+	public JuegoDeMesa(String nombre, String descripcion, File foto, int stock, double precio,
+			int numeroJugadores, int edadMinima, int edadMaxima, TipoJuegoMesa tipo) {
 
 		super(nombre, descripcion, foto, stock, precio);
+
 		this.numeroJugadores = numeroJugadores;
 		this.edadMinima = edadMinima;
 		this.edadMaxima = edadMaxima;
 		this.tipo = tipo;
 	}
 
+	/**
+	 * Devuelve el número recomendado de jugadores.
+	 *
+	 * @return número de jugadores
+	 */
 	public int getNumeroJugadores() {
 		return numeroJugadores;
 	}
 
+	/**
+	 * Devuelve la edad mínima recomendada.
+	 *
+	 * @return edad mínima
+	 */
 	public int getEdadMinima() {
 		return edadMinima;
 	}
 
+	/**
+	 * Devuelve la edad máxima recomendada.
+	 *
+	 * @return edad máxima
+	 */
 	public int getEdadMaxima() {
 		return edadMaxima;
 	}
 
+	/**
+	 * Devuelve el tipo de juego de mesa.
+	 *
+	 * @return tipo de juego
+	 */
 	public TipoJuegoMesa getTipoJuegoDeMesa() {
 		return this.tipo;
 	}
-
 }
