@@ -3,8 +3,6 @@ package solicitud;
 import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
 
-import org.junit.jupiter.api.DisplayNameGenerator.Simple;
-
 import aplicacion.Aplicacion;
 import categoria.Categoria;
 import descuento.*;
@@ -12,15 +10,53 @@ import producto.LineaProductoVenta;
 import usuario.ClienteRegistrado;
 import tiempo.DateTimeSimulado;
 
-public class SolicitudPedido extends Solicitud implements Caducable{
+/**
+ * Clase que representa una solicitud de pedido realizada por un cliente registrado.
+ * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
+ * @version 1.0
+ * @date 06-04-2026
+ */
+public class SolicitudPedido extends Solicitud implements Caducable {
 
+    /**
+     * Mapa que almacena los productos distintos del pedido y la cantidad de cada uno.
+     */
 	private Map<LineaProductoVenta, Integer> productosDiferentes = new HashMap<>();
-	private Map<SimpleEntry<LineaProductoVenta, Integer>, Double> productosRecaudacion = new HashMap<>();
-	private ClienteRegistrado cliente;
-	private Pago pagoPedido;
-	private EstadoPedido estado;
-  private DateTimeSimulado fechaRealizacion;
 
+    /**
+     * Mapa que almacena las entradas de productos con su cantidad y la recaudación calculada
+     * después de aplicar los descuentos correspondientes.
+     */
+	private Map<SimpleEntry<LineaProductoVenta, Integer>, Double> productosRecaudacion = new HashMap<>();
+
+    /**
+     * Cliente que realiza el pedido.
+     */
+	private ClienteRegistrado cliente;
+
+    /**
+     * Objeto que representa el pago asociado al pedido.
+     */
+	private Pago pagoPedido;
+
+    /**
+     * Estado actual del pedido.
+     */
+	private EstadoPedido estado;
+
+    /**
+     * Fecha de realización del pedido.
+     */
+    private DateTimeSimulado fechaRealizacion;
+
+    /**
+     * Constructor de la clase.
+     * Inicializa el pedido con un cliente, los productos seleccionados,
+     * calcula las recaudaciones y establece el estado inicial.
+     * 
+     * @param cliente Cliente que realiza el pedido.
+     * @param productos Mapa de productos y sus cantidades solicitadas.
+     */
 	public SolicitudPedido(ClienteRegistrado cliente, Map<LineaProductoVenta, Integer> productos) {
 		super();
 		this.cliente = cliente;
@@ -30,6 +66,12 @@ public class SolicitudPedido extends Solicitud implements Caducable{
 		this.fechaRealizacion = new DateTimeSimulado();
 	}
 
+    /**
+     * Calcula la recaudación de los productos del pedido aplicando los descuentos vigentes.
+     * Diferencia entre descuentos individuales y grupales, y gestiona los productos con descuentos caducados.
+     * 
+     * @param productos Mapa de productos y sus cantidades.
+     */
   private void calcularRecaudaciones(Map<LineaProductoVenta, Integer> productos){
     Map<Descuento, LinkedList<LineaProductoVenta>> descuentosPendientes = new HashMap<>();
     //Recorremos los descuentos de cada producto, tratando los que sean individuales
@@ -54,7 +96,7 @@ public class SolicitudPedido extends Solicitud implements Caducable{
       //Si la cateogría no tiene descuento, pasamos a analizar el descuento del producto
       //Nos aseguramos de que los descuentos no hayan caducado a la hora de valorarlos
       }else if(l.getDescuento() != null && l.getDescuento().haCaducado() == true){
-          //Si el descuento ha caducado, lo borramos e insertamos el producto en productowsRecaudacion con su precio normal
+          //Si el descuento ha caducado, lo borramos e insertamos el producto en productosRecaudacion con su precio normal
           Aplicacion.getInstancia().getCatalogo().eliminarDescuento(l.getDescuento(), l);
           productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l));
           continue;
@@ -132,10 +174,20 @@ public class SolicitudPedido extends Solicitud implements Caducable{
     }
   }
 
+    /**
+     * Devuelve un mapa inmutable con la recaudación calculada de cada producto del pedido.
+     * 
+     * @return Mapa de productos con cantidad y recaudación aplicada.
+     */
   public Map<SimpleEntry<LineaProductoVenta, Integer>, Double> getRecaudacionProductos(){
     return Collections.unmodifiableMap(productosRecaudacion);
   }
 
+    /**
+     * Calcula el coste total del pedido sumando la recaudación de todos los productos.
+     * 
+     * @return Precio total del pedido.
+     */
 	public double getCostePedido() {
 		double precioFinal= 0;
 		for(Double precioPorProducto : productosRecaudacion.values()) {
@@ -144,14 +196,29 @@ public class SolicitudPedido extends Solicitud implements Caducable{
 		return precioFinal;
 	}
 
+    /**
+     * Actualiza el estado del pago del pedido.
+     * 
+     * @param estado Nuevo estado del pedido.
+     */
 	public void actualizarPagoPedido(EstadoPedido estado) {
 		this.estado = estado;
 	}
 
+    /**
+     * Añade un pago al pedido.
+     * 
+     * @param pagoPedido Objeto Pago asociado al pedido.
+     */
 	public void añadirPagoPedido(Pago pagoPedido) {
 		this.pagoPedido = pagoPedido;
 	}
 
+    /**
+     * Comprueba si el pedido ya ha sido pagado.
+     * 
+     * @return true si el pedido tiene un pago asociado, false en caso contrario.
+     */
 	public boolean pagado() {
 		if (this.pagoPedido == null) {
 			return false;
@@ -159,6 +226,14 @@ public class SolicitudPedido extends Solicitud implements Caducable{
 		return true;
 	}
 
+    /**
+     * Actualiza el estado del pedido, validando que no sea nulo ni
+     * que se intente procesar un pedido pendiente de pago.
+     * 
+     * @param estado Nuevo estado a asignar.
+     * @throws IllegalArgumentException si el estado es null.
+     * @throws IllegalStateException si el pedido está pendiente de pago.
+     */
 	public void actualizarEstado(EstadoPedido estado) {
 		if (estado == null) {
 			throw new IllegalArgumentException("El estado no puede ser null");
@@ -169,31 +244,58 @@ public class SolicitudPedido extends Solicitud implements Caducable{
 		this.estado = estado;
 	}
 
+    /**
+     * Devuelve el estado actual del pedido.
+     * 
+     * @return Estado del pedido.
+     */
 	public EstadoPedido getEstado() {
 		return estado;
 	}
 
-
-	/**
-	 * @return the pagoPedido
-	 */
+    /**
+     * Devuelve el pago asociado al pedido.
+     * 
+     * @return Objeto Pago del pedido.
+     */
 	public Pago getPagoPedido() {
 		return pagoPedido;
 	}
 
+    /**
+     * Asigna un nuevo cliente al pedido.
+     * 
+     * @param cliente Cliente registrado que realiza el pedido.
+     */
 	public void setCliente(ClienteRegistrado cliente) {
 		this.cliente = cliente;
 	}
 
+    /**
+     * Devuelve los productos distintos del pedido junto con su cantidad.
+     * 
+     * @return Mapa de productos y cantidades.
+     */
 	public Map<LineaProductoVenta, Integer> getProductosDiferentes() {
 		return productosDiferentes;
 	}
 
+    /**
+     * Devuelve el cliente que realizó el pedido.
+     * 
+     * @return Cliente registrado del pedido.
+     */
 	public ClienteRegistrado getCliente() {
 		return cliente;
 	}
 
-
+    /**
+     * Comprueba si el pedido ha caducado.
+     * Un pedido caduca si han pasado 7 días desde su realización
+     * y todavía no se ha efectuado el pago.
+     * 
+     * @return true si el pedido ha caducado, false en caso contrario.
+     */
   public boolean haCaducado(){
     //Si la fecha de realización de la oferta + 7 días es anterior a la fecha actual, la oferta ha caducado. 
     //Se tiene que cumplir también que no haya ya un intercambio confirmado para el producto

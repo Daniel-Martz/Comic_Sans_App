@@ -1,4 +1,3 @@
-
 package solicitud;
 
 import producto.EstadoConservacion;
@@ -6,25 +5,32 @@ import producto.ProductoSegundaMano;
 import usuario.ClienteRegistrado;
 
 /**
- * @author Dani
+ * Representa una solicitud para que un empleado valide un producto de segunda mano.
+ * Contiene la información del producto, el cliente solicitante y el pago asociado
+ * al proceso de validación.
+ * @author Dani, Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 13/03
+ * @date 06-04-2026
  */
 public class SolicitudValidacion extends Solicitud {
 
   /** Pago asociado a la validacion. */
   private Pago pagoValidacion;
+  
+  /** Coste del servicio de validación. */
   private double precioValidacion;
 
-  /** Producto asociado a la solicitud */
+  /** Producto que debe ser revisado por el empleado. */
   private ProductoSegundaMano productoAValidar;
   
+  /** Cliente que solicita la validación. */
   private ClienteRegistrado cliente;
 
   /**
-   * Instancia un objeto del tipo SolicitudValidacion, con el producto asociado.
+   * Instancia un objeto del tipo SolicitudValidacion con el producto y cliente asociados.
    *
-   * @param productoAValidar el producto a validar
+   * @param productoAValidar el producto que se pretende validar.
+   * @param cliente el usuario dueño del producto.
    */
   public SolicitudValidacion(ProductoSegundaMano productoAValidar, ClienteRegistrado cliente) {
     super();
@@ -33,12 +39,13 @@ public class SolicitudValidacion extends Solicitud {
   }
 
   /**
-   * Metodo que hace referencia a la accion de validar el producto de una
-   * solicitud,
-   * que llamara al metodo que validara al producto.
+   * Procesa la validación técnica del producto asociado a esta solicitud.
+   * Actualiza el precio del servicio y delega la validación de estado y tasación al producto.
    *
-   * @param precio el precio
-   * @param estado el estado
+   * @param precioValidacion el coste del servicio de validación.
+   * @param precioProducto el precio de mercado asignado al producto tras la revisión.
+   * @param estadoProducto el estado de conservación detectado por el empleado.
+   * @throws IllegalArgumentException si los precios son negativos o el estado es nulo.
    */
   public void validarProducto(double precioValidacion, double precioProducto, EstadoConservacion estadoProducto) {
     if (precioProducto < 0 || precioValidacion < 0 || estadoProducto == null) {
@@ -48,7 +55,10 @@ public class SolicitudValidacion extends Solicitud {
     productoAValidar.validarProducto(precioProducto, estadoProducto);
   }
 
-
+  /**
+   * Comprueba si el proceso de validación ha finalizado correctamente.
+   * * @return true si el producto ya cuenta con datos de validación, false en caso contrario.
+   */
   public boolean validado(){
     if (this.productoAValidar.getDatosValidacion() != null){
       return true;
@@ -57,32 +67,51 @@ public class SolicitudValidacion extends Solicitud {
   }
 
   /**
-   * Metodo que asociara a la solicitud de validacion su pago,
-   * una vez el cliente haya pagado por la validacion de su producto.
+   * Asocia el comprobante de pago a la solicitud de validación.
    *
-   * @param pagoValidacion el pago correspodiente a la validacion del producto
+   * @param pagoValidacion el pago realizado por el cliente para procesar la validación.
    */
   public void añadirPagoValidacion(Pago pagoValidacion) {
     this.pagoValidacion = pagoValidacion;
   }
 
+  /**
+   * Devuelve una representación textual de la solicitud.
+   * * @return cadena con la información del pago y el producto.
+   */
   @Override
   public String toString() {
     return "SolicitudValidacion [pagoValidacion=" + pagoValidacion + ", productoAValidar=" + productoAValidar + "]";
   }
 
+  /**
+   * Obtiene el producto vinculado a esta solicitud.
+   * * @return el objeto ProductoSegundaMano.
+   */
   public ProductoSegundaMano getProductoAValidar() {
     return productoAValidar;
   }
 
+  /**
+   * Obtiene el registro de pago de la validación.
+   * * @return el objeto Pago o null si aún no se ha pagado.
+   */
   public Pago getPagoValidacion() {
     return pagoValidacion;
   }
 
+  /**
+   * Obtiene el cliente propietario de la solicitud.
+   * * @return el cliente registrado.
+   */
   public ClienteRegistrado getCliente() {
 	return cliente;
   }
   
+  /**
+   * Obtiene el precio estipulado por realizar la validación.
+   * * @return coste de la validación.
+   */
   public double getPrecioValidacion(){
     return this.precioValidacion;
   }
