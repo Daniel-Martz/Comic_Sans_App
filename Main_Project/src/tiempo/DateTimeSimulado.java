@@ -165,6 +165,10 @@ public class DateTimeSimulado {
 		return TiempoSimulado.getInstance().dateTimeASegundos(this);
 	}
 	
+	public void avanzarDias(int dias) {
+		
+	}
+	
 	/**
 	 * To string.
 	 *
