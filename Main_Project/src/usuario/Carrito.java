@@ -85,4 +85,31 @@ public class Carrito {
 		return productos;
 	}
 	
+	@Override
+	public String toString() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("========== CARRITO DE COMPRA ==========\n");
+	    
+	    if (productos.isEmpty()) {
+	        sb.append("El carrito está vacío.\n");
+	    } else {
+	        // Recorremos el mapa de productos para listar cada ítem
+	        for (Map.Entry<LineaProductoVenta, Integer> entrada : productos.entrySet()) {
+	            LineaProductoVenta p = entrada.getKey();
+	            int cantidad = entrada.getValue();
+	            double subtotal = p.getPrecio() * cantidad;
+
+	            sb.append(String.format("- %-20s | Cantidad: %2d | Precio Un.: %6.2f € | Subtotal: %6.2f €\n", 
+	                      p.getNombre(), cantidad, p.getPrecio(), subtotal));
+	        }
+	        
+	        sb.append("---------------------------------------\n");
+	        // Mostramos el precio total calculado
+	        sb.append(String.format("TOTAL CARRITO: %29.2f €\n", getPrecioProductos()));
+	    }
+	    sb.append("=======================================");
+	    
+	    return sb.toString();
+	}
+	
 }
