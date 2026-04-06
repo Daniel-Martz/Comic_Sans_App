@@ -1,246 +1,272 @@
 package filtro.test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
-
 import categoria.Categoria;
-import filtro.*;
+import filtro.FiltroIntercambio;
+import filtro.FiltroVenta;
+import filtro.FiltroVentaCliente;
+import filtro.TipoDescuento;
+import filtro.TipoProducto;
 import producto.EstadoConservacion;
 
 class FiltroTest {
 
-	private FiltroVentaCliente filtroVentaCliente;
-	private FiltroIntercambio filtroIntercambio;
-	private FiltroVenta filtroVenta;
-	private Categoria cat1;
-	private Categoria cat2;
+    // =========================================================
+    // FiltroVenta
+    // =========================================================
 
-	@BeforeEach
-	void setUp() {
-		filtroVentaCliente = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
-		filtroIntercambio = new FiltroIntercambio(true, 0.0, 50.0);
-		filtroVenta = new FiltroVenta(true);
-		cat1 = new Categoria("Comics");
-		cat2 = new Categoria("Figuras");
-	}
+    @Test
+    void testFiltroVentaCreadoAscendente() {
+        FiltroVenta filtro = new FiltroVenta(true);
+        assertTrue(filtro.isOrdenAscendente());
+    }
 
-	// ===================================================
-	// Tests de Filtro (base)
-	// ===================================================
+    @Test
+    void testFiltroVentaCreadoDescendente() {
+        FiltroVenta filtro = new FiltroVenta(false);
+        assertFalse(filtro.isOrdenAscendente());
+    }
 
-	@Test
-	void testOrdenAscendente() {
-		assertTrue(filtroVenta.isOrdenAscendente());
-	}
+    @Test
+    void testFiltroVentaCategoriasFiltroVacio() {
+        FiltroVenta filtro = new FiltroVenta(true);
+        assertTrue(filtro.getCategoriasFiltradas().isEmpty());
+    }
 
-	@Test
-	void testOrdenDescendente() {
-		FiltroVenta filtroDesc = new FiltroVenta(false);
-		assertFalse(filtroDesc.isOrdenAscendente());
-	}
+    @Test
+    void testFiltroVentaTiposFiltroVacio() {
+        FiltroVenta filtro = new FiltroVenta(true);
+        assertTrue(filtro.getTipoFiltrado().isEmpty());
+    }
 
-	// ===================================================
-	// Tests de FiltroVenta
-	// ===================================================
+    @Test
+    void testFiltroVentaCambiarFiltroConCategorias() {
+        FiltroVenta filtro = new FiltroVenta(true);
+        Set<Categoria> categorias = new HashSet<>();
+        categorias.add(new Categoria("Accion"));
+        categorias.add(new Categoria("Romance"));
+        filtro.cambiarFiltro(false, categorias, null);
+        assertEquals(2, filtro.getCategoriasFiltradas().size());
+        assertFalse(filtro.isOrdenAscendente());
+    }
 
-	@Test
-	void testAñadirCategoria() {
-		filtroVenta.añadirCategoria(cat1);
-		assertTrue(filtroVenta.getCategoriasFiltradas().contains(cat1));
-	}
+    @Test
+    void testFiltroVentaCambiarFiltroConTipos() {
+        FiltroVenta filtro = new FiltroVenta(false);
+        Set<TipoProducto> tipos = new HashSet<>();
+        tipos.add(TipoProducto.COMIC);
+        tipos.add(TipoProducto.FIGURA);
+        filtro.cambiarFiltro(true, null, tipos);
+        assertEquals(2, filtro.getTipoFiltrado().size());
+        assertTrue(filtro.getTipoFiltrado().contains(TipoProducto.COMIC));
+        assertTrue(filtro.getTipoFiltrado().contains(TipoProducto.FIGURA));
+    }
 
-	@Test
-	void testEliminarCategoria() {
-		filtroVenta.añadirCategoria(cat1);
-		filtroVenta.eliminarCategoria(cat1);
-		assertFalse(filtroVenta.getCategoriasFiltradas().contains(cat1));
-	}
+    @Test
+    void testFiltroVentaCambiarFiltroNulos() {
+        FiltroVenta filtro = new FiltroVenta(true);
+        assertDoesNotThrow(() -> filtro.cambiarFiltro(false, null, null));
+        assertTrue(filtro.getCategoriasFiltradas().isEmpty());
+        assertTrue(filtro.getTipoFiltrado().isEmpty());
+    }
 
-	@Test
-	void testAñadirVariasCategorias() {
-		filtroVenta.añadirCategoria(cat1);
-		filtroVenta.añadirCategoria(cat2);
-		assertEquals(2, filtroVenta.getCategoriasFiltradas().size());
-	}
+    @Test
+    void testFiltroVentaLimpiarFiltro() {
+        FiltroVenta filtro = new FiltroVenta(true);
+        Set<Categoria> cats = new HashSet<>();
+        cats.add(new Categoria("Terror"));
+        Set<TipoProducto> tipos = new HashSet<>();
+        tipos.add(TipoProducto.JUEGO_DE_MESA);
+        filtro.cambiarFiltro(true, cats, tipos);
+        filtro.limpiarFiltro();
+        assertTrue(filtro.getCategoriasFiltradas().isEmpty());
+        assertTrue(filtro.getTipoFiltrado().isEmpty());
+        assertFalse(filtro.isOrdenAscendente());
+    }
 
-	@Test
-	void testAñadirCategoriaDuplicada() {
-		filtroVenta.añadirCategoria(cat1);
-		filtroVenta.añadirCategoria(cat1); // duplicado
-		assertEquals(1, filtroVenta.getCategoriasFiltradas().size()); // set no permite duplicados
-	}
+    // =========================================================
+    // FiltroVentaCliente
+    // =========================================================
 
-	@Test
-	void testAñadirTipoProducto() {
-		filtroVenta.añadirTipoProducto(TipoProducto.COMIC);
-		assertTrue(filtroVenta.getTipoFiltrado().contains(TipoProducto.COMIC));
-	}
+    @Test
+    void testFiltroVentaClienteCreacion() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
+        assertEquals(0.0, filtro.getPuntuacionMin());
+        assertEquals(5.0, filtro.getPuntuacionMax());
+        assertEquals(0.0, filtro.getPrecioMin());
+        assertEquals(100.0, filtro.getPrecioMax());
+        assertFalse(filtro.isOrdenarPorPrecio());
+        assertFalse(filtro.isOrdenarPorPuntuacion());
+    }
 
-	@Test
-	void testEliminarTipoProducto() {
-		filtroVenta.añadirTipoProducto(TipoProducto.COMIC);
-		filtroVenta.eliminarTipoProducto(TipoProducto.COMIC);
-		assertFalse(filtroVenta.getTipoFiltrado().contains(TipoProducto.COMIC));
-	}
+    @Test
+    void testFiltroVentaClienteCambiarFiltroValido() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
+        filtro.cambiarFiltro(false, null, null, 2.0, 4.5, 10.0, 50.0, true, false, null);
+        assertEquals(2.0, filtro.getPuntuacionMin());
+        assertEquals(4.5, filtro.getPuntuacionMax());
+        assertEquals(10.0, filtro.getPrecioMin());
+        assertEquals(50.0, filtro.getPrecioMax());
+        assertTrue(filtro.isOrdenarPorPrecio());
+        assertFalse(filtro.isOrdenarPorPuntuacion());
+        assertFalse(filtro.isOrdenAscendente());
+    }
 
-	@Test
-	void testAñadirTodosLosTiposProducto() {
-		filtroVenta.añadirTipoProducto(TipoProducto.COMIC);
-		filtroVenta.añadirTipoProducto(TipoProducto.FIGURA);
-		filtroVenta.añadirTipoProducto(TipoProducto.JUEGO_DE_MESA);
-		assertEquals(3, filtroVenta.getTipoFiltrado().size());
-	}
+    @Test
+    void testFiltroVentaClientePuntuacionMinNegativaLanzaExcepcion() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
+        assertThrows(IllegalArgumentException.class,
+            () -> filtro.cambiarFiltro(true, null, null, -1.0, 5.0, 0.0, 100.0, false, false, null));
+    }
 
-	// ===================================================
-	// Tests de FiltroVentaCliente
-	// ===================================================
+    @Test
+    void testFiltroVentaClientePuntuacionMaxSuperior5LanzaExcepcion() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
+        assertThrows(IllegalArgumentException.class,
+            () -> filtro.cambiarFiltro(true, null, null, 0.0, 6.0, 0.0, 100.0, false, false, null));
+    }
 
-	@Test
-	void testGetPuntuacionMin() {
-		assertEquals(0.0, filtroVentaCliente.getPuntuacionMin());
-	}
+    @Test
+    void testFiltroVentaClientePuntuacionMinMayorQueMaxLanzaExcepcion() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
+        assertThrows(IllegalArgumentException.class,
+            () -> filtro.cambiarFiltro(true, null, null, 4.0, 2.0, 0.0, 100.0, false, false, null));
+    }
 
-	@Test
-	void testGetPuntuacionMax() {
-		assertEquals(5.0, filtroVentaCliente.getPuntuacionMax());
-	}
+    @Test
+    void testFiltroVentaClientePrecioMinNegativoLanzaExcepcion() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
+        assertThrows(IllegalArgumentException.class,
+            () -> filtro.cambiarFiltro(true, null, null, 0.0, 5.0, -5.0, 100.0, false, false, null));
+    }
 
-	@Test
-	void testGetPrecioMin() {
-		assertEquals(0.0, filtroVentaCliente.getPrecioMin());
-	}
+    @Test
+    void testFiltroVentaClientePrecioMinMayorQueMaxLanzaExcepcion() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
+        assertThrows(IllegalArgumentException.class,
+            () -> filtro.cambiarFiltro(true, null, null, 0.0, 5.0, 200.0, 100.0, false, false, null));
+    }
 
-	@Test
-	void testGetPrecioMax() {
-		assertEquals(100.0, filtroVentaCliente.getPrecioMax());
-	}
+    @Test
+    void testFiltroVentaClienteCambiarFiltroConDescuentos() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
+        Set<TipoDescuento> descuentos = new HashSet<>();
+        descuentos.add(TipoDescuento.REBAJA);
+        descuentos.add(TipoDescuento.REGALO);
+        filtro.cambiarFiltro(true, null, null, 0.0, 5.0, 0.0, 100.0, false, false, descuentos);
+        assertTrue(filtro.getDescuentoFiltrado().contains(TipoDescuento.REBAJA));
+        assertTrue(filtro.getDescuentoFiltrado().contains(TipoDescuento.REGALO));
+    }
 
-	@Test
-	void testSetPuntuacionMin() {
-		filtroVentaCliente.setPuntuacionMin(1.0);
-		assertEquals(1.0, filtroVentaCliente.getPuntuacionMin());
-	}
+    @Test
+    void testFiltroVentaClienteLimpiarFiltro() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 2.0, 4.0, 5.0, 50.0, true, true);
+        filtro.limpiarFiltro();
+        assertEquals(0.0, filtro.getPuntuacionMin());
+        assertEquals(5.0, filtro.getPuntuacionMax());
+        assertEquals(0.0, filtro.getPrecioMin());
+        assertEquals(Double.MAX_VALUE, filtro.getPrecioMax());
+        assertFalse(filtro.isOrdenarPorPrecio());
+        assertFalse(filtro.isOrdenarPorPuntuacion());
+        assertTrue(filtro.getDescuentoFiltrado().isEmpty());
+        assertTrue(filtro.getCategoriasFiltradas().isEmpty());
+        assertTrue(filtro.getTipoFiltrado().isEmpty());
+        assertFalse(filtro.isOrdenAscendente());
+    }
 
-	@Test
-	void testSetPuntuacionMax() {
-		filtroVentaCliente.setPuntuacionMax(4.5);
-		assertEquals(4.5, filtroVentaCliente.getPuntuacionMax());
-	}
+    @Test
+    void testFiltroVentaClienteSetters() {
+        FiltroVentaCliente filtro = new FiltroVentaCliente(true, 0.0, 5.0, 0.0, 100.0, false, false);
+        filtro.setPuntuacionMin(1.0);
+        filtro.setPuntuacionMax(4.0);
+        filtro.setPrecioMin(5.0);
+        filtro.setPrecioMax(200.0);
+        filtro.setOrdenarPorPrecio(true);
+        filtro.setOrdenarPorPuntuacion(true);
+        assertEquals(1.0, filtro.getPuntuacionMin());
+        assertEquals(4.0, filtro.getPuntuacionMax());
+        assertEquals(5.0, filtro.getPrecioMin());
+        assertEquals(200.0, filtro.getPrecioMax());
+        assertTrue(filtro.isOrdenarPorPrecio());
+        assertTrue(filtro.isOrdenarPorPuntuacion());
+    }
 
-	@Test
-	void testSetPrecioMin() {
-		filtroVentaCliente.setPrecioMin(10.0);
-		assertEquals(10.0, filtroVentaCliente.getPrecioMin());
-	}
+    // =========================================================
+    // FiltroIntercambio
+    // =========================================================
 
-	@Test
-	void testSetPrecioMax() {
-		filtroVentaCliente.setPrecioMax(200.0);
-		assertEquals(200.0, filtroVentaCliente.getPrecioMax());
-	}
+    @Test
+    void testFiltroIntercambioCreacionValida() {
+        FiltroIntercambio filtro = new FiltroIntercambio(true, 0.0, 50.0);
+        assertEquals(0.0, filtro.getValorMin());
+        assertEquals(50.0, filtro.getValorMax());
+        assertTrue(filtro.isOrdenAscendente());
+    }
 
-	@Test
-	void testOrdenarPorPrecioFalseInicial() {
-		assertFalse(filtroVentaCliente.isOrdenarPorPrecio());
-	}
+    @Test
+    void testFiltroIntercambioValorMinNegativoLanzaExcepcion() {
+        assertThrows(IllegalArgumentException.class, () -> new FiltroIntercambio(true, -1.0, 50.0));
+    }
 
-	@Test
-	void testSetOrdenarPorPrecio() {
-		filtroVentaCliente.setOrdenarPorPrecio(true);
-		assertTrue(filtroVentaCliente.isOrdenarPorPrecio());
-	}
+    @Test
+    void testFiltroIntercambioValorMaxMenorQueMinLanzaExcepcion() {
+        assertThrows(IllegalArgumentException.class, () -> new FiltroIntercambio(true, 30.0, 10.0));
+    }
 
-	@Test
-	void testOrdenarPorPuntuacionFalseInicial() {
-		assertFalse(filtroVentaCliente.isOrdenarPorPuntuacion());
-	}
+    @Test
+    void testFiltroIntercambioEstadosVaciosInicialmente() {
+        FiltroIntercambio filtro = new FiltroIntercambio(true, 0.0, 100.0);
+        assertTrue(filtro.getEstadosFiltrados().isEmpty());
+    }
 
-	@Test
-	void testSetOrdenarPorPuntuacion() {
-		filtroVentaCliente.setOrdenarPorPuntuacion(true);
-		assertTrue(filtroVentaCliente.isOrdenarPorPuntuacion());
-	}
+    @Test
+    void testFiltroIntercambioCambiarFiltroConEstados() {
+        FiltroIntercambio filtro = new FiltroIntercambio(true, 0.0, 100.0);
+        Set<EstadoConservacion> estados = new HashSet<>();
+        estados.add(EstadoConservacion.PERFECTO);
+        estados.add(EstadoConservacion.MUY_BUENO);
+        filtro.cambiarFiltro(false, 5.0, 80.0, estados);
+        assertEquals(5.0, filtro.getValorMin());
+        assertEquals(80.0, filtro.getValorMax());
+        assertTrue(filtro.getEstadosFiltrados().contains(EstadoConservacion.PERFECTO));
+        assertTrue(filtro.getEstadosFiltrados().contains(EstadoConservacion.MUY_BUENO));
+        assertFalse(filtro.isOrdenAscendente());
+    }
 
-	@Test
-	void testAñadirTipoDescuento() {
-		filtroVentaCliente.añadirTipodescuento(TipoDescuento.PRECIO);
-		assertTrue(filtroVentaCliente.getDescuentoFiltrado().contains(TipoDescuento.PRECIO));
-	}
+    @Test
+    void testFiltroIntercambioCambiarFiltroValorMinNegativoLanzaExcepcion() {
+        FiltroIntercambio filtro = new FiltroIntercambio(true, 0.0, 100.0);
+        assertThrows(IllegalArgumentException.class,
+            () -> filtro.cambiarFiltro(true, -5.0, 100.0, null));
+    }
 
-	@Test
-	void testEliminarTipoDescuento() {
-		filtroVentaCliente.añadirTipodescuento(TipoDescuento.PRECIO);
-		filtroVentaCliente.eliminarTipodescuento(TipoDescuento.PRECIO);
-		assertFalse(filtroVentaCliente.getDescuentoFiltrado().contains(TipoDescuento.PRECIO));
-	}
+    @Test
+    void testFiltroIntercambioCambiarFiltroValorMaxMenorQueMinLanzaExcepcion() {
+        FiltroIntercambio filtro = new FiltroIntercambio(true, 0.0, 100.0);
+        assertThrows(IllegalArgumentException.class,
+            () -> filtro.cambiarFiltro(true, 60.0, 10.0, null));
+    }
 
-	@Test
-	void testAñadirTodosLosTiposDescuento() {
-		filtroVentaCliente.añadirTipodescuento(TipoDescuento.CANTIDAD);
-		filtroVentaCliente.añadirTipodescuento(TipoDescuento.PRECIO);
-		filtroVentaCliente.añadirTipodescuento(TipoDescuento.REBAJA);
-		filtroVentaCliente.añadirTipodescuento(TipoDescuento.REGALO);
-		assertEquals(4, filtroVentaCliente.getDescuentoFiltrado().size());
-	}
+    @Test
+    void testFiltroIntercambioCambiarFiltroConEstadosNulos() {
+        FiltroIntercambio filtro = new FiltroIntercambio(true, 0.0, 100.0);
+        assertDoesNotThrow(() -> filtro.cambiarFiltro(true, 0.0, 50.0, null));
+        assertTrue(filtro.getEstadosFiltrados().isEmpty());
+    }
 
-	@Test
-	void testDescuentoDuplicadoNoSeAñade() {
-		filtroVentaCliente.añadirTipodescuento(TipoDescuento.PRECIO);
-		filtroVentaCliente.añadirTipodescuento(TipoDescuento.PRECIO);
-		assertEquals(1, filtroVentaCliente.getDescuentoFiltrado().size());
-	}
-
-	// ===================================================
-	// Tests de FiltroIntercambio
-	// ===================================================
-
-	@Test
-	void testGetValorMin() {
-		assertEquals(0.0, filtroIntercambio.getValorMin());
-	}
-
-	@Test
-	void testGetValorMax() {
-		assertEquals(50.0, filtroIntercambio.getValorMax());
-	}
-
-	@Test
-	void testAñadirEstadoConservacion() {
-		filtroIntercambio.añadirEstadoConservacion(EstadoConservacion.MUY_BUENO);
-		assertTrue(filtroIntercambio.getEstadosFiltrados().contains(EstadoConservacion.MUY_BUENO));
-	}
-
-	@Test
-	void testEliminarEstadoConservacion() {
-		filtroIntercambio.añadirEstadoConservacion(EstadoConservacion.MUY_BUENO);
-		filtroIntercambio.eliminarEstadoConservacion(EstadoConservacion.MUY_BUENO);
-		assertFalse(filtroIntercambio.getEstadosFiltrados().contains(EstadoConservacion.MUY_BUENO));
-	}
-
-	@Test
-	void testAñadirTodosLosEstados() {
-		for (EstadoConservacion estado : EstadoConservacion.values()) {
-			filtroIntercambio.añadirEstadoConservacion(estado);
-		}
-		assertEquals(EstadoConservacion.values().length, filtroIntercambio.getEstadosFiltrados().size());
-	}
-
-	@Test
-	void testEstadoDuplicadoNoSeAñade() {
-		filtroIntercambio.añadirEstadoConservacion(EstadoConservacion.MUY_BUENO);
-		filtroIntercambio.añadirEstadoConservacion(EstadoConservacion.MUY_BUENO);
-		assertEquals(1, filtroIntercambio.getEstadosFiltrados().size());
-	}
-
-	@Test
-	void testFiltroIntercambioOrdenAscendente() {
-		assertTrue(filtroIntercambio.isOrdenAscendente());
-	}
-
-	@Test
-	void testFiltroIntercambioOrdenDescendente() {
-		FiltroIntercambio filtroDesc = new FiltroIntercambio(false, 0.0, 50.0);
-		assertFalse(filtroDesc.isOrdenAscendente());
-	}
+    @Test
+    void testFiltroIntercambioLimpiarFiltro() {
+        FiltroIntercambio filtro = new FiltroIntercambio(true, 10.0, 80.0);
+        Set<EstadoConservacion> estados = new HashSet<>();
+        estados.add(EstadoConservacion.USO_EVIDENTE);
+        filtro.cambiarFiltro(true, 10.0, 80.0, estados);
+        filtro.limpiarFiltro();
+        assertEquals(0.0, filtro.getValorMin());
+        assertEquals(Double.MAX_VALUE, filtro.getValorMax());
+        assertTrue(filtro.getEstadosFiltrados().isEmpty());
+        assertFalse(filtro.isOrdenAscendente());
+    }
 }

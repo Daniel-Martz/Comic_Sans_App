@@ -9,10 +9,10 @@ public class FiltroIntercambio extends Filtro {
 	private Set<EstadoConservacion> estadosFiltrados = new HashSet<EstadoConservacion>();
 	
 	public FiltroIntercambio(boolean ordenAscendente, double valorMin, double valorMax) {
+		super(ordenAscendente);
 		if(valorMin < 0 || valorMax < valorMin) {
 			throw new IllegalArgumentException("Los valores minimo y máximo deben de ser positivos y el máximo mayor que el mínimo");
 		}
-		super(ordenAscendente);
 		this.valorMin = valorMin;
 		this.valorMax = valorMax;
 	}
