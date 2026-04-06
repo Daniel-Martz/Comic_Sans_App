@@ -181,23 +181,47 @@ public class Main {
 		for (LineaProductoVenta p : prod) {
 			comicsSpidermanPack.añadirProductoAPack(p, 1);
 		}
+		
+	    System.out.println("\n====================================================");
+	    System.out.println("       PRODUCTOS DISPONIBLES EN LA TIENDA");
+	    System.out.println("====================================================");
+	    for (LineaProductoVenta p : cat.getProductosNuevos()) {
+	        System.out.println(p);
+	        System.out.println("----------------------------------------------------");
+	    }
+	    cat.cambiarFiltroVenta(true, null, null, 0, 5, 0, 20, true, false, null);
+	    
+	    List<LineaProductoVenta> filtrados = cat.obtenerProductosNuevosFiltrados("Comic");
+	    System.out.println("\n>>> PRODUCTOS FILTRADOS (Puntuación: 0-5 | Precio: 0-20€ | Texto: 'Comic')");
+	    if (filtrados.isEmpty()) {
+	        System.out.println("No se han encontrado productos que coincidan con los criterios.");
+	    } else {
+	        for (LineaProductoVenta p : filtrados) {
+	            System.out.println(p);
+	            System.out.println("----------------------------------------------------");
+	        }
+	    }
 
-		System.out.println("Los productos de la tienda son:");
-		System.out.println(cat.getProductosNuevos());
+	    //Veamos una primera demostración del sistema de recomendación, si un cliente busca un producto, aumenta el interés en este
+	    System.out.println("\n[Configurando sistema de recomendación: 1 unidad, prioridad Interés]");
+	    gestor.configurarUnidadesRecomendadas(1); 
+	    gestor.configurarImportancia(1, 0, 0); 
 
-		cat.cambiarFiltroVenta(new FiltroVentaCliente(true, 0, 5, 0, 20, true, false));
-		System.out.println("Los productos de la tienda filtrados con puntuación entre 0 y 5, y precio entre 0 y 20 son:");
-		System.out.println(cat.obtenerProductosNuevosFiltrados("Comic"));
-		
-		//Vamos a ajustar el sistema de recomendacion a un único producto y modificamos importancia para darle prioridad a la busqueda
-		gestor.configurarUnidadesRecomendadas(1);
-		gestor.configurarImportancia(1, 0, 0);
-		
-		//Cerramos sesion y iniciamos con un cliente. Vamos a hacer busquedas y compras para ver que funciona el sistema de recomendacion
-		app.cerrarSesion();
-		app.iniciarSesion("Rodrigo", "2222");
-		//app.buscarProductosNuevos()
-		
-		
+	    System.out.println("\n[Cerrando sesión de Gestor...]");
+	    app.cerrarSesion();
+	    
+	    //Comprobemos que el interés de un cliente funciona correctamente tras las búsquedas de productos
+	    System.out.println("[Iniciando sesión como Rodrigo...]");
+	    app.iniciarSesion("Rodrigo", "2222"); 
+	    
+	    System.out.println("\nRodrigo busca: 'Comic Spiderman'");
+	    app.buscarProductosNuevos("Comic de Spiderman Chronicles, Volumen 5");
+	    
+	    System.out.println("\nProducto recomendado a Rodrigo: ");
+	    for(LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
+	    	System.out.println(p);
+	    }
+	    
+	   
 	}
 }
