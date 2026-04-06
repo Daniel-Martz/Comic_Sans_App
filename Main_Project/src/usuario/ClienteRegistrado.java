@@ -252,23 +252,24 @@ public class ClienteRegistrado extends Usuario {
       if(o.haCaducado() == false){
         temp.add(o);
       }else{
-        o.getOfertante().eliminarOferta(o);
-        o.getDestinatario().eliminarOferta(o);
+    	//Se rechaza la oferta automáticamente si caduca
+        o.getOfertante().rechazarOferta(o);
+        o.getDestinatario().rechazarOferta(o);
       }
     }
     this.ofertasRecibidas = temp;
 
     //Actualizamos las ofertas realizadas, eliminando las caducadas
-    temp.clear();
+    List<Oferta> temp2 = new ArrayList<>();
     for(Oferta o : ofertasRealizadas){
       if(o.haCaducado() == false){
-        temp.add(o);
+        temp2.add(o);
       }else{
         o.getOfertante().eliminarOferta(o);
         o.getDestinatario().eliminarOferta(o);
       }
     }
-    this.ofertasRealizadas = temp;
+    this.ofertasRealizadas = temp2;
 
   }
 
