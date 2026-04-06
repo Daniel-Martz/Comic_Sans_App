@@ -31,7 +31,6 @@ public abstract class UsuarioGestion extends Usuario {
 	}
 
 	// Metodos para productos
-<<<<<<< Updated upstream
 
 	/**
 	 * Añade un producto.
@@ -41,18 +40,15 @@ public abstract class UsuarioGestion extends Usuario {
 	 * @param foto        la foto
 	 * @param stock       el stock
 	 * @param precio      el precio
+	 * @return el producto añadido
 	 */
-	public void añadirProducto(String nombre, String descripcion, File foto, Integer stock, Double precio) {
-=======
 	public LineaProductoVenta añadirProducto(String nombre, String descripcion, File foto, Integer stock, Double precio) {
->>>>>>> Stashed changes
 		LineaProductoVenta producto = new LineaProductoVenta(nombre, descripcion, foto, stock, precio);
 		Aplicacion.getInstancia().getCatalogo().añadirProducto(producto);
 		System.out.println("Producto añadido al catálogo: " + nombre);
 		return producto;
 	}
 
-<<<<<<< Updated upstream
 	/**
 	 * Añade un pack.
 	 *
@@ -62,11 +58,9 @@ public abstract class UsuarioGestion extends Usuario {
 	 * @param stock       el stock
 	 * @param precio      el precio
 	 * @param prods       los productos
+	 * @return el pack añadido
 	 */
-	public void añadirPack(String nombre, String descripcion, File foto, Integer stock, Double precio,
-=======
 	public Pack añadirPack(String nombre, String descripcion, File foto, Integer stock, Double precio,
->>>>>>> Stashed changes
 			Map<LineaProductoVenta, Integer> prods) {
 		Pack pack = new Pack(nombre, descripcion, foto, stock, precio);
 		pack.añadirProductosAPack(prods);
@@ -85,20 +79,16 @@ public abstract class UsuarioGestion extends Usuario {
 		System.out.println("Producto eliminado del catálogo.");
 	}
 
-<<<<<<< Updated upstream
 	/**
 	 * Añade productos desde fichero.
 	 *
 	 * @param f el fichero
+	 * @return la lista de productos importados
 	 * @throws IOException              si hay un error de entrada/salida
 	 * @throws IllegalArgumentException si el argumento no es válido
 	 */
-	public void añadirProductosDesdeFichero(File f) throws IOException, IllegalArgumentException {
-		Aplicacion.getInstancia().getCatalogo().añadirProductosDesdeFichero(f);
-=======
 	public List<LineaProductoVenta> añadirProductosDesdeFichero(File f) throws IOException, IllegalArgumentException {
 		List<LineaProductoVenta> productos = Aplicacion.getInstancia().getCatalogo().añadirProductosDesdeFichero(f);
->>>>>>> Stashed changes
 		System.out.println("Productos importados desde fichero correctamente.");
 		return productos;
 	}
@@ -208,5 +198,4 @@ public abstract class UsuarioGestion extends Usuario {
 		Aplicacion.getInstancia().getCatalogo().eliminarDescuento(d, categoria);
 		System.out.println("Descuento eliminado de la categoría.");
 	}
-
 }
