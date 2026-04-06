@@ -11,7 +11,8 @@ public class TiempoSimulado {
     
 
     private static TiempoSimulado instance;
-
+    private static long MS_POR_DIA = 24L * 60 * 60 * 1000;
+    
     private long milisegundosSimulados = 0;
     private long ultimoTiempoReal;
     private double velocidad;
@@ -45,6 +46,14 @@ public class TiempoSimulado {
         this.milisegundosSimulados += (long) (diferenciaReal * velocidad);
         this.ultimoTiempoReal = ahora;
     }
+    
+	public void avanzarDias(int dias) {
+		if (dias < 0) {
+	        throw new IllegalArgumentException("No se puede avanzar un número negativo de días.");
+	    }
+		actualizar();
+		this.milisegundosSimulados += (long) dias * MS_POR_DIA;
+	}
 
     // --- Getters y Setters de instancia ---
 

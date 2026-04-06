@@ -173,12 +173,11 @@ public class Main {
 
 		// Creamos un pack de comics de Spiderman
 		List<LineaProductoVenta> comicsSpidermanProds = cat.obtenerProductosNuevosGestion("Comic Spiderman");
-		
-		Pack comicsSpidermanPack = gestor.añadirPack("Pack de comics de Spiderman",
-					"Dos comics sumamente valiosos y valorados dentro de la comunidad de amantes de Spiderman",
-					new File("/dosComicsSpiderman.jpg"), 5, 34.99, new HashMap<>());
 
-		
+		Pack comicsSpidermanPack = gestor.añadirPack("Pack de comics de Spiderman",
+				"Dos comics sumamente valiosos y valorados dentro de la comunidad de amantes de Spiderman",
+				new File("/dosComicsSpiderman.jpg"), 5, 34.99, new HashMap<>());
+
 		// Añadimos primero 10 comics a cada pack, lo que producirá un error por
 		// insuficiencia de stock
 		System.out.println(comicsSpidermanPack);
@@ -233,7 +232,7 @@ public class Main {
 		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
 			System.out.println(p);
 		}
-		
+
 		app.cerrarSesion();
 
 		// *********************************************************************************************************
@@ -288,10 +287,24 @@ public class Main {
 			System.out.println(pedidoAValidar);
 			System.out.println("Estado antes de validar: " + pedidoAValidar.getEstado());
 
-			// Federico marca el pedido como listo para recoger
+			// Federico marca el pedido como listo para recoger pero no tiene el permiso
+			try {
+				federico.actualizarEstadoPedido(pedidoAValidar, EstadoPedido.LISTO_PARA_RECOGER);
+			} catch (IllegalStateException e) {
+				System.out.println(e);
+			}
+			app.cerrarSesion();
+			//El gestor le da el permiso
+			app.iniciarSesion("gestor", "@soyElGestor1234!");
+			gestor.añadirPermiso(federico, Permiso.PEDIDOS);
+			app.cerrarSesion();
+			// Federico inicia sesión para validar el pedido
+			app.iniciarSesion("Federico", "123456");
 			federico.actualizarEstadoPedido(pedidoAValidar, EstadoPedido.LISTO_PARA_RECOGER);
+			
 			System.out.println("Estado tras validación: " + pedidoAValidar.getEstado());
-		} else {
+		} 
+		else {
 			System.out.println("No hay pedidos pendientes de validar.");
 		}
 
@@ -326,11 +339,12 @@ public class Main {
 
 		File ficheroEstadisticas = new File("txt/estadisticas.txt");
 		DateTimeSimulado inicio = new DateTimeSimulado(1, 1, 1, 0, 0, 0);
-		DateTimeSimulado fin    = new DateTimeSimulado(1, 12, 30, 23, 59, 59);
+		DateTimeSimulado fin = new DateTimeSimulado(1, 12, 30, 23, 59, 59);
 
 		try {
 			app.getSistemaEstadisticas().obtenerRecaudacionMensual(inicio, fin, ficheroEstadisticas);
-			System.out.println("\nInforme de recaudación mensual generado en: " + ficheroEstadisticas.getAbsolutePath());
+			System.out
+					.println("\nInforme de recaudación mensual generado en: " + ficheroEstadisticas.getAbsolutePath());
 
 			File ficheroAmbito = new File("txt/estadisticas_ambito.txt");
 			app.getSistemaEstadisticas().obtenerRecaudacionAmbito(inicio, fin, ficheroAmbito);

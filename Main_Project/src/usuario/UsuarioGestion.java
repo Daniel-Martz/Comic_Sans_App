@@ -42,7 +42,8 @@ public abstract class UsuarioGestion extends Usuario {
 	 * @param precio      el precio
 	 * @return el producto añadido
 	 */
-	public LineaProductoVenta añadirProducto(String nombre, String descripcion, File foto, Integer stock, Double precio) {
+	public LineaProductoVenta añadirProducto(String nombre, String descripcion, File foto, Integer stock,
+			Double precio) {
 		LineaProductoVenta producto = new LineaProductoVenta(nombre, descripcion, foto, stock, precio);
 		Aplicacion.getInstancia().getCatalogo().añadirProducto(producto);
 		System.out.println("Producto añadido al catálogo: " + nombre);
