@@ -1,7 +1,7 @@
 package filtro;
 
 public abstract class Filtro {
-	private boolean ordenAscendente;
+	protected boolean ordenAscendente;
 
 	public Filtro(boolean ordenAscendente) {
 		super();
@@ -11,4 +11,9 @@ public abstract class Filtro {
 	public boolean isOrdenAscendente() {
 	    return ordenAscendente;
 	}
+	
+	public void limpiarFiltro() {
+		ordenAscendente = false;
+	}
+	
 }

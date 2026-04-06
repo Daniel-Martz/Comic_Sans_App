@@ -3,7 +3,7 @@ import java.io.File;
 import solicitud.*;
 import java.util.*;
 import usuario.ClienteRegistrado;
-
+import aplicacion.Aplicacion;
 import aplicacion.GestorSolicitudes;
 
 public class ProductoSegundaMano extends Producto{
@@ -20,7 +20,7 @@ public class ProductoSegundaMano extends Producto{
 		this.validado = false;
 		this.clienteProducto = cliente;
 		this.solicitudValidacion = new SolicitudValidacion(this, cliente);
-		GestorSolicitudes.getInstancia().añadirSolicitudValidacion(solicitudValidacion);
+		Aplicacion.getInstancia().getGestorSolicitud().añadirSolicitudValidacion(solicitudValidacion);
 	}
 
 	public ClienteRegistrado getClienteProducto() {

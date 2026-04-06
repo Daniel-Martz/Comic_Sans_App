@@ -157,6 +157,7 @@ public class Aplicacion {
 		System.out.println("Sesión cerrada con éxito para: " + this.usuarioActual.getNombreUsuario());
 
 		this.usuarioActual = null;
+		catalogo.limpiarFiltros();
 	}
 
 	public void cambiarContraseña(String nombreUsuario, String contraseñaAntigua, String contraseñaNueva) {
@@ -507,5 +508,35 @@ public class Aplicacion {
 	public SistemaEstadisticas getSistemaEstadisticas() {
 		return sistemaEstadisticas;
 	}
+
+	/**
+	 * @return the nombre
+	 */
+	public String getNombre() {
+		return nombre;
+	}
+
+	/**
+	 * @return the criterioRecomendacion
+	 */
+	public ConfiguracionRecomendacion getCriterioRecomendacion() {
+		return criterioRecomendacion;
+	}
+
+	/**
+	 * @return the sistemaPago
+	 */
+	public SistemaPago getSistemaPago() {
+		return sistemaPago;
+	}
+
+	/**
+	 * @return the gestorSolicitud
+	 */
+	public GestorSolicitudes getGestorSolicitud() {
+		return gestorSolicitud;
+	}
+	
+	
 
 }

@@ -187,7 +187,7 @@ public class ClienteRegistrado extends Usuario {
 
 	public void cancelarPedido(SolicitudPedido pedido) {
 		this.pedidos.remove(pedido);
-    GestorSolicitudes.getInstancia().eliminarPedido(pedido);
+    Aplicacion.getInstancia().getGestorSolicitud().eliminarPedido(pedido);
 	}
 
 	public void pagarPedido(SolicitudPedido pedido, String numTarjeta, String cvv, DateTimeSimulado fechaCaducidad) {
@@ -203,7 +203,7 @@ public class ClienteRegistrado extends Usuario {
 			throw new IllegalStateException("El pedido no está en estado pendiente de pago.");
 		}
 
-		Pago pago = SistemaPago.getInstancia().procesarPago(pedido.getCostePedido(), numTarjeta, cvv, fechaCaducidad, pedido);
+		Pago pago = Aplicacion.getInstancia().getSistemaPago().procesarPago(pedido.getCostePedido(), numTarjeta, cvv, fechaCaducidad, pedido);
 
 		if (pago == null) {
 			NotificacionPedido noti = new NotificacionPedido("¡Error en el pago del pedidio!", new DateTimeSimulado(),pedido);
@@ -244,7 +244,7 @@ public class ClienteRegistrado extends Usuario {
 		
 		SolicitudPedido pedido = new SolicitudPedido(this, carrito.getProductos());
 		this.pedidos.add(pedido);
-    GestorSolicitudes.getInstancia().añadirPedido(pedido);
+		Aplicacion.getInstancia().getGestorSolicitud().añadirPedido(pedido);
 		carrito.vaciarCarrito();
 		NotificacionPedido noti = new NotificacionPedido("¡Pedido realizado con éxito!", new DateTimeSimulado(),pedido);
 		anadirNotificacion(noti);
@@ -261,7 +261,7 @@ public class ClienteRegistrado extends Usuario {
 			throw new IllegalArgumentException("La solicitud de validación ya tiene un pago asociado.");
 		}
 
-		Pago pago = SistemaPago.getInstancia().procesarPago(
+		Pago pago = Aplicacion.getInstancia().getSistemaPago().procesarPago(
 				validacion.getPrecioValidacion(), numTarjeta, cvv,
 				fechaCaducidad, validacion);
 

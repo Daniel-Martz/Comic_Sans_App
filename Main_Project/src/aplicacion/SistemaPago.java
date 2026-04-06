@@ -5,7 +5,7 @@ import tiempo.*;
 
 public class SistemaPago {
 
-	private static SistemaPago instancia;
+	static SistemaPago instancia;
 
 	private SistemaPago() {
 	}

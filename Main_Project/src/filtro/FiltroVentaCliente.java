@@ -1,5 +1,8 @@
 package filtro;
+
 import java.util.*;
+
+import categoria.Categoria;
 
 public class FiltroVentaCliente extends FiltroVenta {
 	private double puntuacionMin;
@@ -10,8 +13,8 @@ public class FiltroVentaCliente extends FiltroVenta {
 	private boolean ordenarPorPuntuacion;
 	private Set<TipoDescuento> descuentoFiltrado = new HashSet<TipoDescuento>();
 
-	public FiltroVentaCliente(boolean ordenAscendente, double puntuacionMin, double puntuacionMax, double precioMin, double precioMax,
-		boolean ordenarPorPrecio, boolean ordenarPorPuntuacion) {
+	public FiltroVentaCliente(boolean ordenAscendente, double puntuacionMin, double puntuacionMax, double precioMin,
+			double precioMax, boolean ordenarPorPrecio, boolean ordenarPorPuntuacion) {
 		super(ordenAscendente);
 		this.puntuacionMin = puntuacionMin;
 		this.puntuacionMax = puntuacionMax;
@@ -60,18 +63,10 @@ public class FiltroVentaCliente extends FiltroVenta {
 	public void setOrdenarPorPrecio(boolean ordenarPorPrecio) {
 		this.ordenarPorPrecio = ordenarPorPrecio;
 	}
-	
-	public void añadirTipodescuento(TipoDescuento tipo) {
-		this.descuentoFiltrado.add(tipo);
-	}
 
-	public void eliminarTipodescuento(TipoDescuento tipo) {
-		this.descuentoFiltrado.remove(tipo);
+	public Set<TipoDescuento> getDescuentoFiltrado() {
+		return descuentoFiltrado;
 	}
-
-    public Set<TipoDescuento> getDescuentoFiltrado() { 
-    	return descuentoFiltrado; 
-    	}
 
 	public boolean isOrdenarPorPuntuacion() {
 		return ordenarPorPuntuacion;
@@ -80,5 +75,50 @@ public class FiltroVentaCliente extends FiltroVenta {
 	public void setOrdenarPorPuntuacion(boolean ordenarPorPuntuacion) {
 		this.ordenarPorPuntuacion = ordenarPorPuntuacion;
 	}
-    
+
+	@Override
+	public void limpiarFiltro() {
+		super.limpiarFiltro();
+		puntuacionMin = 0.0;
+		puntuacionMax = 5.0;
+		precioMin = 0.0;
+		precioMax = Double.MAX_VALUE;
+		ordenarPorPrecio = false;
+		ordenarPorPuntuacion = false;
+		descuentoFiltrado.clear();
+	}
+
+	public void cambiarFiltro(boolean ordenAscendente, Set<Categoria> categorias, Set<TipoProducto> tipos,
+			double puntuacionMin, double puntuacionMax, double precioMin, double precioMax, boolean ordenarPorPrecio,
+			boolean ordenarPorPuntuacion, Set<TipoDescuento> descuentoFiltrado) {
+
+		super.cambiarFiltro(ordenAscendente, categorias, tipos);
+		
+		if (puntuacionMin < 0 || puntuacionMax > 5.0) {
+			throw new IllegalArgumentException("La puntuación debe estar entre 0 y 5");
+		}
+		if (puntuacionMin > puntuacionMax) {
+			throw new IllegalArgumentException("La puntuación mínima no puede ser mayor que la máxima");
+		}
+
+		if (precioMin < 0) {
+			throw new IllegalArgumentException("El precio mínimo no puede ser negativo");
+		}
+		if (precioMin > precioMax) {
+			throw new IllegalArgumentException("El precio mínimo no puede ser superior al máximo");
+		}
+
+		this.puntuacionMin = puntuacionMin;
+		this.puntuacionMax = puntuacionMax;
+		this.precioMin = precioMin;
+		this.precioMax = precioMax;
+		this.ordenarPorPrecio = ordenarPorPrecio;
+		this.ordenarPorPuntuacion = ordenarPorPuntuacion;
+
+		this.descuentoFiltrado.clear();
+		if (descuentoFiltrado != null) {
+			this.descuentoFiltrado.addAll(descuentoFiltrado);
+		}
+	}
+		
 }

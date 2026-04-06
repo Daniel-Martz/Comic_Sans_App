@@ -3,28 +3,12 @@ import categoria.Categoria;
 import java.util.*;
 
 public class FiltroVenta extends Filtro {
-	private Set<Categoria> categoriasFiltradas = new HashSet<Categoria>();
-	private Set<TipoProducto> tipoFiltrado = new HashSet<TipoProducto>();
+	protected Set<Categoria> categoriasFiltradas = new HashSet<Categoria>();
+	protected Set<TipoProducto> tipoFiltrado = new HashSet<TipoProducto>();
 	
 
 	public FiltroVenta(boolean ordenAscendente) {
 		super(ordenAscendente);
-	}
-	
-	public void añadirCategoria(Categoria categ) {
-		categoriasFiltradas.add(categ);
-	}
-
-	public void eliminarCategoria(Categoria categ) {
-		categoriasFiltradas.remove(categ);
-	}
-	
-	public void añadirTipoProducto(TipoProducto tipo) {
-		tipoFiltrado.add(tipo);
-	}
-
-	public void eliminarTipoProducto(TipoProducto tipo) {
-		tipoFiltrado.remove(tipo);
 	}
 	
 	public Set<Categoria> getCategoriasFiltradas() {
@@ -35,4 +19,24 @@ public class FiltroVenta extends Filtro {
 		return tipoFiltrado;
 	}
 	
+	@Override
+	public void limpiarFiltro() {
+	    categoriasFiltradas.clear();
+	    tipoFiltrado.clear();
+	    super.limpiarFiltro();
+	}
+	
+	public void cambiarFiltro(boolean ordenAscendente, Set<Categoria> categorias, Set<TipoProducto> tipos) {
+	    this.categoriasFiltradas.clear();
+	    if (categorias != null) {
+	        this.categoriasFiltradas.addAll(categorias);
+	    }
+
+	    this.tipoFiltrado.clear();
+	    if (tipos != null) {
+	        this.tipoFiltrado.addAll(tipos);
+	    }
+
+	    this.ordenAscendente = ordenAscendente;
+	}
 }

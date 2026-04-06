@@ -4,10 +4,8 @@ import java.util.*;
 import descuento.*;
 import categoria.*;
 import producto.*;
-import solicitud.*;
 import tiempo.DateTimeSimulado;
 import usuario.ClienteRegistrado;
-import usuario.Usuario;
 import filtro.*;
 
 import java.io.BufferedReader;
@@ -24,17 +22,15 @@ public class Catalogo {
 	private Set<LineaProductoVenta> productosNuevos = new HashSet<>();
 	private Set<ProductoSegundaMano> productosSegundaMano = new HashSet<>();
 
-	//Parametros para busqueda
-	private FiltroVenta filtroProductosGestion;
-	private FiltroIntercambio filtroProductosSegundaMano;
-	private FiltroVentaCliente filtroProductosVenta;
-	
-	//Parametros para recomendacion por novedad
+	// Parametros para busqueda
+	private FiltroVenta filtroProductosGestion = new FiltroVenta(false);
+	private FiltroIntercambio filtroProductosSegundaMano = new FiltroIntercambio(false, 0, Double.MAX_VALUE);
+	private FiltroVentaCliente filtroProductosVenta = new FiltroVentaCliente(false, 0, 0, 0, 0, false, false);
+
+	// Parametros para recomendacion por novedad
 	private DateTimeSimulado primerLanzamiento = null;
 	private DateTimeSimulado ultimoLanzamiento = null;
-	
-	
-	
+
 	private Catalogo() {
 
 	}
@@ -66,20 +62,20 @@ public class Catalogo {
 		}
 
 		productosNuevos.add(p);
-		
-		//Para el ranking de novedad
-		if(primerLanzamiento == null) {
+
+		// Para el ranking de novedad
+		if (primerLanzamiento == null) {
 			primerLanzamiento = p.getFechaSubida();
 		}
 		ultimoLanzamiento = p.getFechaSubida();
 		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingNovedad(p);
-		
-		//Para añadir el producto al ranking de todos los usuarios
-		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+
+		// Para añadir el producto al ranking de todos los usuarios
+		for (ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
 			u.getInteres().actualizarInteresNuevoVenta(p);
 		}
-		
-		//Para el ranking de valoracion
+
+		// Para el ranking de valoracion
 		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingValoracion(p);
 	}
 
@@ -97,60 +93,61 @@ public class Catalogo {
 	}
 
 	public void eliminarProducto(Producto p) {
-		if(productosNuevos.isEmpty() || p == null) {
+		if (productosNuevos.isEmpty() || p == null) {
 			return;
 		}
 		productosNuevos.remove(p);
-		
-		//Para eliminar de los rankings el producto
-		if(p instanceof LineaProductoVenta) {
-			for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+
+		// Para eliminar de los rankings el producto
+		if (p instanceof LineaProductoVenta) {
+			for (ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
 				u.getInteres().eliminarProductoInteres((LineaProductoVenta) p);
 			}
 			Aplicacion.getInstancia().getConfiguracionRecomendacion().eliminarProductoNovedad((LineaProductoVenta) p);
-			Aplicacion.getInstancia().getConfiguracionRecomendacion().eliminarProductoValoracion((LineaProductoVenta) p);
-			
-			//Para actualizar la el primer lanzamiento y ultimo lanzamiento
-		    if (p.getFechaSubida().dateTimeEnSegundos() == ultimoLanzamiento.dateTimeEnSegundos()) {
-		        ultimoLanzamiento = null;
-		        long maxSegundos = -1;
-		        for (LineaProductoVenta prod : productosNuevos) {
-		            long segundos = prod.getFechaSubida().dateTimeEnSegundos();
-		            if (segundos > maxSegundos) {
-		                maxSegundos = segundos;
-		                ultimoLanzamiento = prod.getFechaSubida();
-		            }
-		        }
-		    }
-		    if (p.getFechaSubida().dateTimeEnSegundos() == primerLanzamiento.dateTimeEnSegundos()) {
-		        primerLanzamiento = null;
-		        long minSegundos = Long.MAX_VALUE;
-		        for (LineaProductoVenta prod : productosNuevos) {
-		            long segundos = prod.getFechaSubida().dateTimeEnSegundos();
-		            if (segundos < minSegundos) {
-		                minSegundos = segundos;
-		                primerLanzamiento = prod.getFechaSubida();
-		            }
-		        }
-		    }
+			Aplicacion.getInstancia().getConfiguracionRecomendacion()
+					.eliminarProductoValoracion((LineaProductoVenta) p);
+
+			// Para actualizar la el primer lanzamiento y ultimo lanzamiento
+			if (p.getFechaSubida().dateTimeEnSegundos() == ultimoLanzamiento.dateTimeEnSegundos()) {
+				ultimoLanzamiento = null;
+				long maxSegundos = -1;
+				for (LineaProductoVenta prod : productosNuevos) {
+					long segundos = prod.getFechaSubida().dateTimeEnSegundos();
+					if (segundos > maxSegundos) {
+						maxSegundos = segundos;
+						ultimoLanzamiento = prod.getFechaSubida();
+					}
+				}
+			}
+			if (p.getFechaSubida().dateTimeEnSegundos() == primerLanzamiento.dateTimeEnSegundos()) {
+				primerLanzamiento = null;
+				long minSegundos = Long.MAX_VALUE;
+				for (LineaProductoVenta prod : productosNuevos) {
+					long segundos = prod.getFechaSubida().dateTimeEnSegundos();
+					if (segundos < minSegundos) {
+						minSegundos = segundos;
+						primerLanzamiento = prod.getFechaSubida();
+					}
+				}
+			}
 		}
 	}
 
-	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, File nuevaFoto, Integer nuevoStock,
-	Double nuevoPrecio) {
-		if(nuevoNombre != null) {
+	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, File nuevaFoto,
+			Integer nuevoStock, Double nuevoPrecio) {
+		if (nuevoNombre != null) {
 			p.setNombre(nuevoNombre);
 		}
-		if(nuevaDescripcion != null) {
+		if (nuevaDescripcion != null) {
 			p.setDescripcion(nuevaDescripcion);
 		}
-		if(nuevoStock != null) {
+		if (nuevoStock != null) {
 			p.setStock(nuevoStock);
 		}
-		if(nuevoPrecio != null) {
+		if (nuevoPrecio != null) {
 			p.setPrecio(nuevoPrecio);
 		}
-		if(nuevaFoto != null) {
+		if (nuevaFoto != null) {
 			p.setFoto(nuevaFoto);
 		}
 	}
@@ -319,9 +316,9 @@ public class Catalogo {
 			return;
 		}
 		categoriasTienda.add(c);
-		
-		//Añadir la categoria al ranking de todos los clientes
-		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+
+		// Añadir la categoria al ranking de todos los clientes
+		for (ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
 			u.getInteres().actualizarInteresCategoriaNueva(c);
 		}
 	}
@@ -331,8 +328,8 @@ public class Catalogo {
 			return;
 		}
 		categoriasTienda.remove(c);
-		//Añadir la categoria al ranking de todos los clientes
-		for(ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+		// Añadir la categoria al ranking de todos los clientes
+		for (ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
 			u.getInteres().eliminarCategoriaInteres(c);
 		}
 	}
@@ -452,16 +449,25 @@ public class Catalogo {
 	}
 
 	// Métodos filtros
-	public void cambiarFiltroVenta(FiltroVentaCliente filtro) {
-		this.filtroProductosVenta = filtro;
+	public void cambiarFiltroGestion(boolean ordenAscendente, Set<Categoria> categorias, Set<TipoProducto> tipos) {
+		this.filtroProductosGestion.cambiarFiltro(ordenAscendente, categorias, tipos);
 	}
 
-	public void cambiarFiltroGestion(FiltroVenta filtro) {
-		this.filtroProductosGestion = filtro;
+	public void cambiarFiltroVenta(boolean ordenAscendente, Set<Categoria> categorias, Set<TipoProducto> tipos,
+			double puntuacionMin, double puntuacionMax, double precioMin, double precioMax, boolean ordenarPorPrecio,
+			boolean ordenarPorPuntuacion, Set<TipoDescuento> descuentoFiltrado) {
+		this.filtroProductosVenta.cambiarFiltro(ordenAscendente, categorias, tipos, puntuacionMin, puntuacionMax,
+				precioMin, precioMax, ordenarPorPrecio, ordenarPorPuntuacion, descuentoFiltrado);
 	}
 
-	public void cambiarFiltroIntercambio(FiltroIntercambio filtro) {
-		this.filtroProductosSegundaMano = filtro;
+	public void cambiarFiltroIntercambio(boolean ordenAscendente, double valorMin, double valorMax, Set<EstadoConservacion> estados) {
+		this.filtroProductosSegundaMano.cambiarFiltro(ordenAscendente, valorMin, valorMax, estados);
+	}
+
+	public void limpiarFiltros() {
+		filtroProductosGestion.limpiarFiltro();
+		filtroProductosSegundaMano.limpiarFiltro();
+		filtroProductosVenta.limpiarFiltro();
 	}
 
 	// Métodos de búsqueda
@@ -629,35 +635,33 @@ public class Catalogo {
 		return total;
 	}
 
-  /**
-   * @return the categoriasTienda
-   */
-  public Set<Categoria> getCategoriasTienda() {
-	return categoriasTienda;
-  }
+	/**
+	 * @return the categoriasTienda
+	 */
+	public Set<Categoria> getCategoriasTienda() {
+		return categoriasTienda;
+	}
 
-  /**
-   * @return the productosNuevos
-   */
-  public Set<LineaProductoVenta> getProductosNuevos() {
-	return productosNuevos;
-  }
+	/**
+	 * @return the productosNuevos
+	 */
+	public Set<LineaProductoVenta> getProductosNuevos() {
+		return productosNuevos;
+	}
 
-  /**
-   * @return the primerLanzamiento
-   */
-  public DateTimeSimulado getPrimerLanzamiento() {
-	return primerLanzamiento;
-  }
+	/**
+	 * @return the primerLanzamiento
+	 */
+	public DateTimeSimulado getPrimerLanzamiento() {
+		return primerLanzamiento;
+	}
 
-  /**
-   * @return the ultimoLanzamiento
-   */
-  public DateTimeSimulado getUltimoLanzamiento() {
-	return ultimoLanzamiento;
-  }
-  
-  
+	/**
+	 * @return the ultimoLanzamiento
+	 */
+	public DateTimeSimulado getUltimoLanzamiento() {
+		return ultimoLanzamiento;
+	}
 
 	public LineaProductoVenta buscarProductoNuevo(int promptId) {
 		for (LineaProductoVenta p : productosNuevos) {
@@ -728,5 +732,5 @@ public class Catalogo {
 		}
 		return resultado;
 	}
-	
+
 }
