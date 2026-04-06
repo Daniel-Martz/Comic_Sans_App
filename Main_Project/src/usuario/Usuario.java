@@ -1,17 +1,17 @@
 package usuario;
 
 /**
- * Implementa la clase Usuario
- * @author Matteo Artuñedo
+ * Implementa la clase Usuario.
+ * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 13-03-2026
+ * @date 06-04-2026
  */
 public abstract class Usuario {
 	
 	/** El nombre de usuario. */
 	protected String nombreUsuario;
 	
-	/** El dni del usuario. */
+	/** El DNI del usuario. */
 	private String dni;
 	
 	/** La contraseña del usuario. */
@@ -20,9 +20,9 @@ public abstract class Usuario {
 	/**
 	 * Instancia un nuevo usuario.
 	 *
-	 * @param username el nombre de usuario del nuevo usuario
-	 * @param DNI the dni
-	 * @param password the password
+	 * @param nombreUsuario el nombre de usuario del nuevo usuario
+	 * @param dni el DNI
+	 * @param contraseña la contraseña
 	 */
 	public Usuario(String nombreUsuario, String dni, String contraseña) {
 		this.nombreUsuario = nombreUsuario;
@@ -40,22 +40,29 @@ public abstract class Usuario {
 	}
 
 	/**
-	 * obtiene el DNI de un usuario
+	 * Obtiene el DNI de un usuario.
 	 *
-	 * @return DNI del usuario 
+	 * @return el DNI del usuario 
 	 */
 	public String getDNI() {
 		return dni;
 	}
 	
+	/**
+	 * Verifica si la contraseña introducida coincide con la del usuario.
+	 *
+	 * @param contraseñaIntroducida la contraseña introducida
+	 * @return true, si la contraseña es correcta; false en caso contrario
+	 */
 	public boolean verificarContraseña(String contraseñaIntroducida) {
 		return this.contraseña.equals(contraseñaIntroducida);
 	}
 
 	/**
-	 * Sets the password.
+	 * Establece una nueva contraseña si la antigua es correcta.
 	 *
-	 * @param password the new password
+	 * @param oldPassword la contraseña antigua
+	 * @param newPassword la nueva contraseña
 	 */
 	public void setContraseña(String oldPassword, String newPassword) {
 		if(verificarContraseña(oldPassword)) {
