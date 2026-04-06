@@ -93,5 +93,18 @@ public class LineaProductoVenta extends Producto {
 	public int getUnidadesVendidas() {
 		return unidadesVendidas;
 	}
+	
+	@Override
+	public String toString() {
+	    return "ID: " + getID() + " | " + getNombre() + "\n" +
+	           "Descripción: " + getDescripcion() + "\n" +
+	           "Precio: " + String.format("%.2f €", precio) + 
+	           (descuento != null ? " (Con descuento activo)" : "") + "\n" +
+	           "Stock disponible: " + stock + "\n" +
+	           "Valoración media: " + String.format("%.1f/5.0", obtenerPuntuacionMedia()) + 
+	           " (" + reseña.size() + " reseñas)\n" +
+	           "Ventas: " + unidadesVendidas + " unidades\n" +
+	           "Fecha de subida: " + getFechaSubida().toStringFecha();
+	}
 
 }
