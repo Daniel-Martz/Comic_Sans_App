@@ -5,8 +5,9 @@ import java.util.Set;
 import java.util.HashSet;
 import categoria.Categoria;
 import producto.LineaProductoVenta;
+import solicitud.Caducable;
 
-public abstract class Descuento {
+public abstract class Descuento implements Caducable{
 	private DateTimeSimulado fechaInicio;
 	private DateTimeSimulado fechaFin;
 	private Set<Categoria> categoriasRebajadas = new HashSet<Categoria>();
@@ -54,6 +55,13 @@ public abstract class Descuento {
 		return categoriasRebajadas;
 	}
 	
-
+  public boolean haCaducado(){
+    //Si la fecha de caducidad es anterior a la actual, el descuento ha caducado
+    if(this.fechaFin.compareTo(new DateTimeSimulado()) < 0){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
 }

@@ -6,18 +6,44 @@ import producto.LineaProductoVenta;
 import usuario.ClienteRegistrado;
 import usuario.Usuario;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ConfiguracionRecomendacion.
+ */
 public class ConfiguracionRecomendacion {
 
+	/** El instancia. */
 	private static ConfiguracionRecomendacion instancia;
+	
+	/** El importancia interes. */
 	private int importanciaInteres;
+	
+	/** El importancia resena. */
 	private int importanciaResena;
+	
+	/** El importancia novedad. */
 	private int importanciaNovedad;
+	
+	/** El unidades recomendadas. */
 	private int unidadesRecomendadas;
 
+	/** El ranking novedad. */
 	private Map<LineaProductoVenta, Long> rankingNovedad = new HashMap<>();
+	
+	/** El ranking valoracion. */
 	private Map<LineaProductoVenta, Double> rankingValoracion = new HashMap<>();
+	
+	/** El max valoracion. */
 	private Double maxValoracion = 0.0;
 
+	/**
+	 * Instancia un nuevo configuracion recomendacion.
+	 *
+	 * @param importanciaInteres el importancia interes
+	 * @param importanciaResena el importancia resena
+	 * @param importanciaNovedad el importancia novedad
+	 * @param unidadesRecomendadas el unidades recomendadas
+	 */
 	private ConfiguracionRecomendacion(int importanciaInteres, int importanciaResena, int importanciaNovedad,
 			int unidadesRecomendadas) {
 		this.importanciaInteres = importanciaInteres;
@@ -26,6 +52,11 @@ public class ConfiguracionRecomendacion {
 		this.unidadesRecomendadas = unidadesRecomendadas;
 	}
 
+	/**
+	 * Devuelve el instancia.
+	 *
+	 * @return el instancia
+	 */
 	public static ConfiguracionRecomendacion getInstancia() {
 		if (instancia == null) {
 			instancia = new ConfiguracionRecomendacion(1, 2, 3, 5);
@@ -33,6 +64,13 @@ public class ConfiguracionRecomendacion {
 		return instancia;
 	}
 
+	/**
+	 * Configurar importancia.
+	 *
+	 * @param importanciaInteres el importancia interes
+	 * @param importanciaResena el importancia resena
+	 * @param importanciaNovedad el importancia novedad
+	 */
 	public void configurarImportancia(int importanciaInteres, int importanciaResena, int importanciaNovedad) {
 		if (importanciaInteres < 0 || importanciaResena < 0 || importanciaNovedad < 0) {
 			throw new IllegalArgumentException("Las importancias no pueden ser negativas");
@@ -42,6 +80,11 @@ public class ConfiguracionRecomendacion {
 		this.importanciaNovedad = importanciaNovedad;
 	}
 
+	/**
+	 * Configurar unidades.
+	 *
+	 * @param unidades el unidades
+	 */
 	public void configurarUnidades(int unidades) {
 		if (unidades <= 0) {
 			throw new IllegalArgumentException("El número de unidades recomendadas no pueden ser menores o iguales");
@@ -49,14 +92,29 @@ public class ConfiguracionRecomendacion {
 		unidadesRecomendadas = unidades;
 	}
 
+	/**
+	 * Actualizar ranking novedad.
+	 *
+	 * @param p el p
+	 */
 	public void actualizarRankingNovedad(LineaProductoVenta p) {
 		rankingNovedad.put(p, p.getFechaSubida().dateTimeEnSegundos());
 	}
 	
+	/**
+	 * Eliminar producto novedad.
+	 *
+	 * @param p el p
+	 */
 	public void eliminarProductoNovedad(LineaProductoVenta p) {
 		rankingNovedad.remove(p);
 	}
 
+	/**
+	 * Obtener ranking novedad unificado.
+	 *
+	 * @return el map
+	 */
 	private Map<LineaProductoVenta, Double> obtenerRankingNovedadUnificado() {
 		Map<LineaProductoVenta, Double> ranking = new HashMap<>();
 		
@@ -81,6 +139,11 @@ public class ConfiguracionRecomendacion {
 		return ranking;
 	}
 	
+	/**
+	 * Actualizar ranking valoracion.
+	 *
+	 * @param p el p
+	 */
 	public void actualizarRankingValoracion(LineaProductoVenta p) {
 		double nuevaValoracion = p.obtenerPuntuacionMedia();
 		rankingValoracion.put(p, nuevaValoracion);
@@ -91,10 +154,20 @@ public class ConfiguracionRecomendacion {
 	}
 
 	
+	/**
+	 * Eliminar producto valoracion.
+	 *
+	 * @param p el p
+	 */
 	public void eliminarProductoValoracion(LineaProductoVenta p) {
 		rankingValoracion.remove(p);
 	}
 	
+	/**
+	 * Obtener ranking valoracion unificado.
+	 *
+	 * @return el map
+	 */
 	private Map<LineaProductoVenta, Double> obtenerRankingValoracionUnificado(){
 		Map<LineaProductoVenta, Double> ranking = new HashMap<>();
 		
@@ -108,6 +181,11 @@ public class ConfiguracionRecomendacion {
 		return ranking;
 	}
 
+	/**
+	 * Devuelve el recomendacion.
+	 *
+	 * @return el recomendacion
+	 */
 	public Set<LineaProductoVenta> getRecomendacion() {
 		Set<LineaProductoVenta> productos = Aplicacion.getInstancia().getCatalogo().getProductosNuevos();
 		Usuario usuario = Aplicacion.getInstancia().getUsuarioActual();
@@ -140,6 +218,12 @@ public class ConfiguracionRecomendacion {
 	    return recomendacion;
 	}
 
+	/**
+	 * Obtener mejor producto.
+	 *
+	 * @param ranking el ranking
+	 * @return el linea producto venta
+	 */
 	private LineaProductoVenta obtenerMejorProducto(Map<LineaProductoVenta, Double> ranking) {
 	    LineaProductoVenta mejor = null;
 	    double maxValor = -1.0;

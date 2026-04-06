@@ -3,14 +3,15 @@ package solicitud.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
+import usuario.ClienteRegistrado;
 import producto.ProductoSegundaMano;
 import producto.EstadoConservacion;
 import solicitud.SolicitudValidacion;
 import java.io.File;
 
 class SolicitudValidacionTest {
-  SolicitudValidacion solValidacion = new SolicitudValidacion(new ProductoSegundaMano("Pelota", "Una pelota muy chula", new File("pelota.jpg")));
+	ClienteRegistrado cliente = new ClienteRegistrado("Rigoberto", "01122233A", "123456");
+  SolicitudValidacion solValidacion = (new ProductoSegundaMano("Pelota", "Una pelota muy chula", new File("pelota.jpg"), cliente)).getSolicitudValidacion();
 
 	@Test
 	void testValidarProductoError() {

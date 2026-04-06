@@ -10,9 +10,11 @@ import java.util.AbstractMap.SimpleEntry;
 import descuento.*;
 import producto.*;
 import usuario.*;
+import solicitud.EstadoPedido;
 import solicitud.Pago;
 import solicitud.SolicitudPedido;
 import tiempo.DateTimeSimulado;
+import tiempo.TiempoSimulado;
 
 class SolicitudPedidoTest {
   private SolicitudPedido solicitudPedido = null;
@@ -125,7 +127,7 @@ class SolicitudPedidoTest {
     prods.put(prod2, 2);
     prods.put(pack1, 1);
     solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
-    //Confirmamos que se han pagado 2 productos y se han recibido 3
+    //Confirmamos que se han pagado los productos y se han recibido 2 unidades de prod3 como regalo
     assertTrue(solicitudPedido.getCostePedido() == 50 && solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod3, 2)) != null);
 	}
 
@@ -283,4 +285,65 @@ class SolicitudPedidoTest {
     assertTrue(solicitudPedido.pagado());
 	}
 
+
+  @Test
+  void testHaCaducado1(){
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    TiempoSimulado.getInstance().avanzarDias(10);
+    assertTrue(solicitudPedido.haCaducado());
+
+  }
+  
+  /**
+   * Si el pedido ya está pagado no se considera que haya caducado
+   */
+  @Test
+  void testHaCaducado2(){
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    solicitudPedido.añadirPagoPedido(new Pago(new DateTimeSimulado(), 10, solicitudPedido));
+    solicitudPedido.actualizarEstado(EstadoPedido.PAGADO);
+    TiempoSimulado.getInstance().avanzarDias(10);
+    assertFalse(solicitudPedido.haCaducado());
+
+  }
+  
+  /**
+   * Si no ha pasado el tiempo necesario, el pedido no ha caducado
+   */
+  @Test
+  void testHaCaducado3(){
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    assertFalse(solicitudPedido.haCaducado());
+
+  }
 }

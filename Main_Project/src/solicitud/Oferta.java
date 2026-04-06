@@ -5,7 +5,7 @@ import usuario.*;
 import producto.*;
 import tiempo.DateTimeSimulado;
 
-public class Oferta {
+public class Oferta implements Caducable{
 	private DateTimeSimulado fechaRealizacion;
 	private ClienteRegistrado destinatario;
 	private ClienteRegistrado ofertante;
@@ -18,7 +18,6 @@ public class Oferta {
 		this.fechaRealizacion = fechaRealizacion;
 		this.destinatario = destinatario;
 		this.ofertante = ofertante;
-		this.intercambio = intercambio;
 		this.productosOfertados = productosOfertados;
 		this.productosSolicitados = productosSolicitados;
 	}
@@ -46,5 +45,14 @@ public class Oferta {
 	public DateTimeSimulado fechaRealizacion() {
 		return this.fechaRealizacion;
 	}
-	
+
+  public boolean haCaducado(){
+    //Si la fecha de realización de la oferta + 7 días es anterior a la fecha actual, la oferta ha caducado. 
+    //Se tiene que cumplir también que no haya ya un intercambio confirmado para el producto
+    if(fechaRealizacion.diasDespuesDeFecha(7).compareTo(new DateTimeSimulado()) < 0 && this.intercambio == null){
+      return true;
+    }else{
+      return false;
+    }
+  }
 }
