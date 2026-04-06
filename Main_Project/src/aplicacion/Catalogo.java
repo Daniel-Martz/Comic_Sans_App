@@ -13,28 +13,56 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Catalogo.
+ */
 public class Catalogo {
 
+	/** El instancia. */
 	private static Catalogo instancia;
 
+	/** El descuentos. */
 	private Set<Descuento> descuentos = new HashSet<>();
+	
+	/** El categorias tienda. */
 	private Set<Categoria> categoriasTienda = new HashSet<>();
+	
+	/** El productos nuevos. */
 	private Set<LineaProductoVenta> productosNuevos = new HashSet<>();
+	
+	/** El productos segunda mano. */
 	private Set<ProductoSegundaMano> productosSegundaMano = new HashSet<>();
 
+	/** El filtro productos gestion. */
 	// Parametros para busqueda
 	private FiltroVenta filtroProductosGestion = new FiltroVenta(false);
+	
+	/** El filtro productos segunda mano. */
 	private FiltroIntercambio filtroProductosSegundaMano = new FiltroIntercambio(false, 0, Double.MAX_VALUE);
+	
+	/** El filtro productos venta. */
 	private FiltroVentaCliente filtroProductosVenta = new FiltroVentaCliente(false, 0, 0, 0, 0, false, false);
 
+	/** El primer lanzamiento. */
 	// Parametros para recomendacion por novedad
 	private DateTimeSimulado primerLanzamiento = null;
+	
+	/** El ultimo lanzamiento. */
 	private DateTimeSimulado ultimoLanzamiento = null;
 
+	/**
+	 * Instancia un nuevo catalogo.
+	 */
 	private Catalogo() {
 
 	}
 
+	/**
+	 * Devuelve el instancia.
+	 *
+	 * @return el instancia
+	 */
 	public static Catalogo getInstancia() {
 		if (instancia == null) {
 			instancia = new Catalogo();
@@ -42,6 +70,11 @@ public class Catalogo {
 		return instancia;
 	}
 
+	/**
+	 * Añadir descuento.
+	 *
+	 * @param d el d
+	 */
 	// Métodos para los descuentos
 	public void añadirDescuento(Descuento d) {
 		if (d == null) {
@@ -51,10 +84,20 @@ public class Catalogo {
 		descuentos.add(d);
 	}
 
+	/**
+	 * Eliminar descuento.
+	 *
+	 * @param d el d
+	 */
 	public void eliminarDescuento(Descuento d) {
 		descuentos.remove(d);
 	}
 
+	/**
+	 * Añadir producto.
+	 *
+	 * @param p el p
+	 */
 	// Métodos para los productos
 	public void añadirProducto(LineaProductoVenta p) {
 		if (p == null) {
@@ -79,6 +122,12 @@ public class Catalogo {
 		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingValoracion(p);
 	}
 
+	/**
+	 * Añadir pack.
+	 *
+	 * @param pack el pack
+	 * @param prods el prods
+	 */
 	public void añadirPack(Pack pack, Map<LineaProductoVenta, Integer> prods) {
 		if (pack == null) {
 			throw new IllegalArgumentException("El pack introducido no es valido");
@@ -92,6 +141,11 @@ public class Catalogo {
 		productosNuevos.add(pack);
 	}
 
+	/**
+	 * Eliminar producto.
+	 *
+	 * @param p el p
+	 */
 	public void eliminarProducto(Producto p) {
 		if (productosNuevos.isEmpty() || p == null) {
 			return;
@@ -133,6 +187,16 @@ public class Catalogo {
 		}
 	}
 
+	/**
+	 * Modificar producto.
+	 *
+	 * @param p el p
+	 * @param nuevoNombre el nuevo nombre
+	 * @param nuevaDescripcion el nueva descripcion
+	 * @param nuevaFoto el nueva foto
+	 * @param nuevoStock el nuevo stock
+	 * @param nuevoPrecio el nuevo precio
+	 */
 	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, File nuevaFoto,
 			Integer nuevoStock, Double nuevoPrecio) {
 		if (nuevoNombre != null) {
@@ -152,6 +216,12 @@ public class Catalogo {
 		}
 	}
 
+	/**
+	 * Añadir productos desde fichero.
+	 *
+	 * @param f el f
+	 * @throws IOException Señala que la I/O exception ha ocurrido
+	 */
 	public List<LineaProductoVenta> añadirProductosDesdeFichero(File f) throws IOException {
 		List<LineaProductoVenta> productos = new LinkedList<>();
 		if (f == null || !f.exists()) {
@@ -313,6 +383,11 @@ public class Catalogo {
 		return productos;
 	}
 
+	/**
+	 * Añadir categoria.
+	 *
+	 * @param c el c
+	 */
 	// Métodos para las categorías
 	public void añadirCategoria(Categoria c) {
 		if (c == null) {
@@ -326,6 +401,11 @@ public class Catalogo {
 		}
 	}
 
+	/**
+	 * Eliminar categoria.
+	 *
+	 * @param c el c
+	 */
 	public void eliminarCategoria(Categoria c) {
 		if (c == null) {
 			return;
@@ -337,6 +417,12 @@ public class Catalogo {
 		}
 	}
 
+	/**
+	 * Modificar categoria.
+	 *
+	 * @param c el c
+	 * @param nombreNuevo el nombre nuevo
+	 */
 	public void modificarCategoria(Categoria c, String nombreNuevo) {
 		if (c == null || nombreNuevo == null || nombreNuevo.trim().isEmpty()) {
 			return;
@@ -346,6 +432,12 @@ public class Catalogo {
 		}
 	}
 
+	/**
+	 * Buscar categoria por nombre.
+	 *
+	 * @param nombreCategoria el nombre categoria
+	 * @return el categoria
+	 */
 	// Busca una categoria por nombre exacto
 	public Categoria buscarCategoriaPorNombre(String nombreCategoria) {
 		for (Categoria c : categoriasTienda) {
@@ -356,6 +448,12 @@ public class Catalogo {
 		return null;
 	}
 
+	/**
+	 * Aplicar descuento.
+	 *
+	 * @param p el p
+	 * @param d el d
+	 */
 	// Métodos para los descuentos
 	public void aplicarDescuento(LineaProductoVenta p, Descuento d) {
 		if (p == null || d == null) {
@@ -365,6 +463,10 @@ public class Catalogo {
 		if (!productosNuevos.contains(p) || !descuentos.contains(d)) {
 			throw new IllegalStateException("El producto y el descuento debe perternecer al catalogo");
 		}
+
+    if(p.getDescuento().haCaducado() == true){
+      eliminarDescuento(d, p);
+    }
 
 		// Un producto no puede tener más de un descuento activo
 		if (p.getDescuento() != null) {
@@ -382,6 +484,12 @@ public class Catalogo {
 		d.añadirProductoRebajado(p);
 	}
 
+	/**
+	 * Eliminar descuento.
+	 *
+	 * @param d el d
+	 * @param p el p
+	 */
 	public void eliminarDescuento(Descuento d, LineaProductoVenta p) {
 		if (p == null || d == null) {
 			throw new IllegalArgumentException("El producto y el descuento no pueden ser nulos.");
@@ -404,6 +512,12 @@ public class Catalogo {
 		d.eliminarProductoRebajado(p);
 	}
 
+	/**
+	 * Aplicar descuento.
+	 *
+	 * @param d el d
+	 * @param c el c
+	 */
 	public void aplicarDescuento(Descuento d, Categoria c) {
 		if (d == null || c == null) {
 			throw new IllegalArgumentException("El descuento y la categoría no pueden ser nulos.");
@@ -413,6 +527,11 @@ public class Catalogo {
 			throw new IllegalStateException("El descuento y la categoria debe perternecer al catalogo");
 		}
 
+    if(c.getDescuento().haCaducado() == true){
+      eliminarDescuento(d, c);
+    }
+    
+    //Vemos si el producto ya tiene un descuento vigente
 		if (c.getDescuento() != null) {
 			throw new IllegalStateException("La categoría '" + c.getNombre() + "' ya tiene un descuento activo.");
 		}
@@ -429,6 +548,12 @@ public class Catalogo {
 		d.añadirCategoria(c);
 	}
 
+	/**
+	 * Eliminar descuento.
+	 *
+	 * @param d el d
+	 * @param c el c
+	 */
 	public void eliminarDescuento(Descuento d, Categoria c) {
 		if (d == null || c == null) {
 			throw new IllegalArgumentException("El descuento y la categoría no pueden ser nulos.");
@@ -451,11 +576,32 @@ public class Catalogo {
 		d.eliminarCategoria(c);
 	}
 
+	/**
+	 * Cambiar filtro gestion.
+	 *
+	 * @param ordenAscendente el orden ascendente
+	 * @param categorias el categorias
+	 * @param tipos el tipos
+	 */
 	// Métodos filtros
 	public void cambiarFiltroGestion(boolean ordenAscendente, Set<Categoria> categorias, Set<TipoProducto> tipos) {
 		this.filtroProductosGestion.cambiarFiltro(ordenAscendente, categorias, tipos);
 	}
 
+	/**
+	 * Cambiar filtro venta.
+	 *
+	 * @param ordenAscendente el orden ascendente
+	 * @param categorias el categorias
+	 * @param tipos el tipos
+	 * @param puntuacionMin el puntuacion min
+	 * @param puntuacionMax el puntuacion max
+	 * @param precioMin el precio min
+	 * @param precioMax el precio max
+	 * @param ordenarPorPrecio el ordenar por precio
+	 * @param ordenarPorPuntuacion el ordenar por puntuacion
+	 * @param descuentoFiltrado el descuento filtrado
+	 */
 	public void cambiarFiltroVenta(boolean ordenAscendente, Set<Categoria> categorias, Set<TipoProducto> tipos,
 			double puntuacionMin, double puntuacionMax, double precioMin, double precioMax, boolean ordenarPorPrecio,
 			boolean ordenarPorPuntuacion, Set<TipoDescuento> descuentoFiltrado) {
@@ -463,16 +609,33 @@ public class Catalogo {
 				precioMin, precioMax, ordenarPorPrecio, ordenarPorPuntuacion, descuentoFiltrado);
 	}
 
+	/**
+	 * Cambiar filtro intercambio.
+	 *
+	 * @param ordenAscendente el orden ascendente
+	 * @param valorMin el valor min
+	 * @param valorMax el valor max
+	 * @param estados el estados
+	 */
 	public void cambiarFiltroIntercambio(boolean ordenAscendente, double valorMin, double valorMax, Set<EstadoConservacion> estados) {
 		this.filtroProductosSegundaMano.cambiarFiltro(ordenAscendente, valorMin, valorMax, estados);
 	}
 
+	/**
+	 * Limpiar filtros.
+	 */
 	public void limpiarFiltros() {
 		filtroProductosGestion.limpiarFiltro();
 		filtroProductosSegundaMano.limpiarFiltro();
 		filtroProductosVenta.limpiarFiltro();
 	}
 
+	/**
+	 * Obtener productos nuevos filtrados.
+	 *
+	 * @param prompt el prompt
+	 * @return el list
+	 */
 	// Métodos de búsqueda
 	public List<LineaProductoVenta> obtenerProductosNuevosFiltrados(String prompt) {
 		List<LineaProductoVenta> resultado = new ArrayList<>();
@@ -575,6 +738,12 @@ public class Catalogo {
 		return resultado;
 	}
 
+	/**
+	 * Obtener productos intercambio filtrados.
+	 *
+	 * @param prompt el prompt
+	 * @return el list
+	 */
 	public List<ProductoSegundaMano> obtenerProductosIntercambioFiltrados(String prompt) {
 		List<ProductoSegundaMano> resultado = new ArrayList<>();
 
@@ -630,6 +799,11 @@ public class Catalogo {
 		return resultado;
 	}
 
+	/**
+	 * Devuelve el nombres categorias.
+	 *
+	 * @return el nombres categorias
+	 */
 	public String getNombresCategorias() {
 		String total = "";
 		for (Categoria cat : this.categoriasTienda) {
@@ -639,6 +813,8 @@ public class Catalogo {
 	}
 
 	/**
+	 * Devuelve el categorias tienda.
+	 *
 	 * @return the categoriasTienda
 	 */
 	public Set<Categoria> getCategoriasTienda() {
@@ -646,6 +822,8 @@ public class Catalogo {
 	}
 
 	/**
+	 * Devuelve el productos nuevos.
+	 *
 	 * @return the productosNuevos
 	 */
 	public Set<LineaProductoVenta> getProductosNuevos() {
@@ -653,6 +831,8 @@ public class Catalogo {
 	}
 
 	/**
+	 * Devuelve el primer lanzamiento.
+	 *
 	 * @return the primerLanzamiento
 	 */
 	public DateTimeSimulado getPrimerLanzamiento() {
@@ -660,12 +840,20 @@ public class Catalogo {
 	}
 
 	/**
+	 * Devuelve el ultimo lanzamiento.
+	 *
 	 * @return the ultimoLanzamiento
 	 */
 	public DateTimeSimulado getUltimoLanzamiento() {
 		return ultimoLanzamiento;
 	}
 
+	/**
+	 * Buscar producto nuevo.
+	 *
+	 * @param promptId el prompt id
+	 * @return el linea producto venta
+	 */
 	public LineaProductoVenta buscarProductoNuevo(int promptId) {
 		for (LineaProductoVenta p : productosNuevos) {
 			if (p.getID() == promptId) {
@@ -675,6 +863,12 @@ public class Catalogo {
 		return null;
 	}
 
+	/**
+	 * Buscar producto intercambio.
+	 *
+	 * @param promptId el prompt id
+	 * @return el producto segunda mano
+	 */
 	public ProductoSegundaMano buscarProductoIntercambio(int promptId) {
 		for (ProductoSegundaMano p : productosSegundaMano) {
 			if (p.getID() == promptId) {
@@ -684,6 +878,12 @@ public class Catalogo {
 		return null;
 	}
 
+	/**
+	 * Obtener productos nuevos gestion.
+	 *
+	 * @param prompt el prompt
+	 * @return el list
+	 */
 	public List<LineaProductoVenta> obtenerProductosNuevosGestion(String prompt) {
 		List<LineaProductoVenta> resultado = new ArrayList<>();
 

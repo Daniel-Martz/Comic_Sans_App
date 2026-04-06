@@ -1,12 +1,9 @@
 package tiempo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * The Class DateTimeSimulado.
  */
-public class DateTimeSimulado {
+public class DateTimeSimulado implements Comparable<DateTimeSimulado>{
 
 	/** El año. */
 	private final int año;
@@ -34,10 +31,10 @@ public class DateTimeSimulado {
 		TiempoSimulado Instancia = TiempoSimulado.getInstance();
 		año = Instancia.getAño();
 		mes = Instancia.getMes();
-		dia = Instancia.getAño();
-		hora = Instancia.getAño();
-		minuto = Instancia.getAño();
-		segundo = Instancia.getAño();
+		dia = Instancia.getDia();
+		hora = Instancia.getHora();
+		minuto = Instancia.getMinuto();
+		segundo = Instancia.getSegundo();
 	}
 
 	/**
@@ -54,17 +51,17 @@ public class DateTimeSimulado {
 	public DateTimeSimulado(int año, int mes, int dia, int hora, int minuto, int segundo) {
 	    TiempoSimulado instancia = TiempoSimulado.getInstance();
 
-	    if (año < instancia.getAño()) {
-	        throw new IllegalArgumentException("El año no puede ser menor al actual (" + instancia.getAño() + ")");
-	    }
-
-	    if (año == instancia.getAño() && mes < instancia.getMes()) {
-	        throw new IllegalArgumentException("El mes no puede ser menor al actual en el mismo año");
-	    }
-
-	    if (año == instancia.getAño() && mes == instancia.getMes() && dia < instancia.getDia()) {
-	        throw new IllegalArgumentException("El día no puede ser anterior al actual");
-	    }
+//	    if (año < instancia.getAño()) {
+//	        throw new IllegalArgumentException("El año no puede ser menor al actual (" + instancia.getAño() + ")");
+//	    }
+//
+//	    if (año == instancia.getAño() && mes < instancia.getMes()) {
+//	        throw new IllegalArgumentException("El mes no puede ser menor al actual en el mismo año");
+//	    }
+//
+//	    if (año == instancia.getAño() && mes == instancia.getMes() && dia < instancia.getDia()) {
+//	        throw new IllegalArgumentException("El día no puede ser anterior al actual");
+//	    }
 	    
 	    if (año == instancia.getAño() && mes == instancia.getMes() && dia == instancia.getDia()) {
 	        if (hora < instancia.getHora()) {
@@ -95,6 +92,23 @@ public class DateTimeSimulado {
 	 */
 	public static DateTimeSimulado DateTimeDiasDespues(int dias) {
 		DateTimeSimulado DateTime = new DateTimeSimulado();
+		
+		int diaPorMes = TiempoSimulado.getInstance().getDiasPorMes();
+		int mesesPorAño = TiempoSimulado.getInstance().getMesesPorAño();
+		
+		int año = DateTime.getAño() + ((DateTime.getMes() + (DateTime.getDia() + dias)/diaPorMes)/mesesPorAño);
+		int mes = (DateTime.getMes()-1 + (DateTime.getDia()-1 + dias)/diaPorMes)%mesesPorAño + 1;
+		int dia = (DateTime.getDia()-1 + dias)%diaPorMes + 1;
+		
+				
+		return new DateTimeSimulado(año, mes, dia, DateTime.getHora(), DateTime.getMinuto(), DateTime.getSegundo());
+	}
+
+  /**
+   * Devuelve una fecha un número indicvado de días posterior a la fecha desde la que se invoca el método
+   */
+  public DateTimeSimulado diasDespuesDeFecha(int dias) {
+		DateTimeSimulado DateTime = this;
 		
 		int diaPorMes = TiempoSimulado.getInstance().getDiasPorMes();
 		int mesesPorAño = TiempoSimulado.getInstance().getMesesPorAño();
@@ -183,5 +197,41 @@ public class DateTimeSimulado {
 	public String toStringFecha() {
 	    return dia + "/" + mes + "/" + año;
 	}
-	
+ 
+  /**
+   * Devuelve 0 si la fecha que invoca el metodo es igual a la introducida
+   * Devuelve -1 si la fecha que invoca el metodo es anterior a la introducida
+   * Devuelve 1 si la fecha que invoca el metodo es posterior a la introducida
+   */
+  public int compareTo(DateTimeSimulado tiempoComparado){
+    int ret;
+    ret = Integer.compare(this.getAño(), tiempoComparado.getAño());
+    if(ret != 0){
+      return ret;
+    } else{
+      ret = Integer.compare(this.getMes(), tiempoComparado.getMes());
+      if(ret != 0){
+        return ret;
+      } else{
+        ret = Integer.compare(this.getDia(), tiempoComparado.getDia());
+        if(ret != 0){
+          return ret;
+        } else{
+          ret = Integer.compare(this.getHora(), tiempoComparado.getHora());
+          if(ret != 0){
+            return ret;
+          } else{
+            ret = Integer.compare(this.getMinuto(), tiempoComparado.getMinuto());
+            if(ret != 0){
+              return ret;
+            } else{
+              ret = Integer.compare(this.getSegundo(), tiempoComparado.getSegundo());
+              return ret;
+            }
+          }
+        }
+      }
+    }
+  }
 }
+

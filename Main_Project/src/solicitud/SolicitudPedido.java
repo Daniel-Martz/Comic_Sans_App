@@ -5,18 +5,21 @@ import java.util.AbstractMap.SimpleEntry;
 
 import org.junit.jupiter.api.DisplayNameGenerator.Simple;
 
+import aplicacion.Aplicacion;
 import categoria.Categoria;
 import descuento.*;
 import producto.LineaProductoVenta;
 import usuario.ClienteRegistrado;
+import tiempo.DateTimeSimulado;
 
-public class SolicitudPedido extends Solicitud {
+public class SolicitudPedido extends Solicitud implements Caducable{
 
 	private Map<LineaProductoVenta, Integer> productosDiferentes = new HashMap<>();
 	private Map<SimpleEntry<LineaProductoVenta, Integer>, Double> productosRecaudacion = new HashMap<>();
 	private ClienteRegistrado cliente;
 	private Pago pagoPedido;
 	private EstadoPedido estado;
+  private DateTimeSimulado fechaRealizacion;
 
 	public SolicitudPedido(ClienteRegistrado cliente, Map<LineaProductoVenta, Integer> productos) {
 		super();
@@ -24,6 +27,7 @@ public class SolicitudPedido extends Solicitud {
 		this.productosDiferentes.putAll(productos);
 		calcularRecaudaciones(productos);
 		this.estado = EstadoPedido.PENDIENTE_DE_PAGO;
+		this.fechaRealizacion = new DateTimeSimulado();
 	}
 
   private void calcularRecaudaciones(Map<LineaProductoVenta, Integer> productos){
@@ -35,17 +39,29 @@ public class SolicitudPedido extends Solicitud {
       Descuento descuentoProducto = null;
       for(Categoria c : l.getCategorias()){
         if(c.getDescuento() != null){
-          categoriaDescontada = c;
+          //Nos aseguramos de que los descuentos no hayan caducado a la hora de valorarlos
+          if(c.getDescuento().haCaducado() == true){
+            Aplicacion.getInstancia().getCatalogo().eliminarDescuento(c.getDescuento(), c);
+          }else{
+            categoriaDescontada = c;
+          }
         }
       } 
       //Indentificamos si el descuento es del producto o de la categoría. 
-      //Si no hay descuento, insertamos el producto directamente en el mapa de la recaudacion de los productos
+      //Si la categoría tiene algún descuento, lo tomamos directamente como el descuento del producto
       if(categoriaDescontada != null){
         descuentoProducto = categoriaDescontada.getDescuento(); 
-      }else if(l.getDescuento() != null){
-        descuentoProducto = l.getDescuento();
+      //Si la cateogría no tiene descuento, pasamos a analizar el descuento del producto
+      //Nos aseguramos de que los descuentos no hayan caducado a la hora de valorarlos
+      }else if(l.getDescuento() != null && l.getDescuento().haCaducado() == true){
+          //Si el descuento ha caducado, lo borramos e insertamos el producto en productowsRecaudacion con su precio normal
+          Aplicacion.getInstancia().getCatalogo().eliminarDescuento(l.getDescuento(), l);
+          productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l));
+          continue;
+      }else if (l.getDescuento() != null && l.getDescuento().haCaducado() == false){
+          descuentoProducto = l.getDescuento();
+      //Si el producto no tiene ningún descuento, calculamos su recaudacion como su precio por las unidades
       }else{
-        //Si el producto no tiene ningún descuento, calculamos su recaudacion como su precio por las unidades
         productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l));
         continue;
       }
@@ -64,8 +80,8 @@ public class SolicitudPedido extends Solicitud {
     } 
     //Vamos a tratar aquellos descuentos que no se han aplicado todavía por ser grupales
     for(Descuento d : descuentosPendientes.keySet()){
-      if(d instanceof UmbralGasto){
-    	  UmbralGasto r = (UmbralGasto)d;
+      if(d instanceof RebajaUmbral){
+    	  RebajaUmbral r = (RebajaUmbral)d;
         //Obtenemos qué umbral tienen que sobrepasar los productos para que se aplique el descuento
         double umbral = r.getUmbral();
         double total = 0;
@@ -76,7 +92,7 @@ public class SolicitudPedido extends Solicitud {
         //Si hemos superado el umbral, aplicamos la rebaja a los productos
         if(total >= umbral){
           for(LineaProductoVenta l : descuentosPendientes.get(d)){
-            productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l) * ((Precio)d).getPorcentajeRebaja() / 100);
+            productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l) * ((RebajaUmbral)d).getPorcentajeRebaja() / 100);
           }
         }else 
         //Si no hemos superado el umbral, guardamos los productos con su precio normal
@@ -122,8 +138,8 @@ public class SolicitudPedido extends Solicitud {
 
 	public double getCostePedido() {
 		double precioFinal= 0;
-		for (LineaProductoVenta p: productosDiferentes.keySet()){
-			precioFinal += p.getPrecio()*productosDiferentes.get(p);
+		for(Double precioPorProducto : productosRecaudacion.values()) {
+			precioFinal += precioPorProducto;
 		}
 		return precioFinal;
 	}
@@ -147,6 +163,9 @@ public class SolicitudPedido extends Solicitud {
 		if (estado == null) {
 			throw new IllegalArgumentException("El estado no puede ser null");
 		}
+    if(estado == EstadoPedido.PENDIENTE_DE_PAGO){
+      throw new IllegalStateException("El pedido todavía no se ha pagado y no se puede procesar");
+    }
 		this.estado = estado;
 	}
 
@@ -173,5 +192,17 @@ public class SolicitudPedido extends Solicitud {
 	public ClienteRegistrado getCliente() {
 		return cliente;
 	}
+
+
+  public boolean haCaducado(){
+    //Si la fecha de realización de la oferta + 7 días es anterior a la fecha actual, la oferta ha caducado. 
+    //Se tiene que cumplir también que no haya ya un intercambio confirmado para el producto
+	fechaRealizacion.diasDespuesDeFecha(7);
+    if(fechaRealizacion.diasDespuesDeFecha(7).compareTo(new DateTimeSimulado()) < 0 && this.estado == EstadoPedido.PENDIENTE_DE_PAGO){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
 }

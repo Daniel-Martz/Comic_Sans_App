@@ -4,17 +4,36 @@ import java.util.*;
 import producto.*;
 import solicitud.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GestorSolicitudes.
+ */
 public class GestorSolicitudes {
 	
+	/** El instancia. */
 	private static GestorSolicitudes instancia;
+	
+	/** El intercambios. */
 	private List<SolicitudIntercambio> intercambios = new ArrayList<>();
+	
+	/** El pedidos. */
 	private List<SolicitudPedido> pedidos = new ArrayList<>();
+	
+	/** El validaciones. */
 	private List<SolicitudValidacion> validaciones = new ArrayList<>();
 	
+	/**
+	 * Instancia un nuevo gestor solicitudes.
+	 */
 	private GestorSolicitudes() {
 		
 	}
 	
+	/**
+	 * Devuelve el instancia.
+	 *
+	 * @return el instancia
+	 */
 	public static GestorSolicitudes getInstancia() {
 		if(instancia == null)
 		{
@@ -23,6 +42,11 @@ public class GestorSolicitudes {
 		return instancia;
 	}
 
+	/**
+	 * Añadir pedido.
+	 *
+	 * @param p el p
+	 */
 	public void añadirPedido(SolicitudPedido p) {
 		if(p == null)
 		{
@@ -31,10 +55,20 @@ public class GestorSolicitudes {
 		pedidos.add(p);
 	}
 	
+	/**
+	 * Eliminar pedido.
+	 *
+	 * @param p el p
+	 */
 	public void eliminarPedido(SolicitudPedido p) {
 		pedidos.remove(p);
 	}
 	
+	/**
+	 * Añadir solicitud intercambio.
+	 *
+	 * @param s el s
+	 */
 	public void añadirSolicitudIntercambio(SolicitudIntercambio s)
 	{
 		if(s == null)
@@ -44,11 +78,21 @@ public class GestorSolicitudes {
 		intercambios.add(s);
 	}
 	
+	/**
+	 * Eliminar solicitud intercambio.
+	 *
+	 * @param s el s
+	 */
 	public void eliminarSolicitudIntercambio(SolicitudIntercambio s)
 	{
 	 intercambios.remove(s);
 	}
 	
+	/**
+	 * Añadir solicitud validacion.
+	 *
+	 * @param s el s
+	 */
 	public void añadirSolicitudValidacion(SolicitudValidacion s)
 	{
 		if(s == null)
@@ -58,15 +102,29 @@ public class GestorSolicitudes {
 		validaciones.add(s);
 	}
 	
+	/**
+	 * Eliminar solicitud validacion.
+	 *
+	 * @param s el s
+	 */
 	public void eliminarSolicitudValidacion(SolicitudValidacion s)
 	{
 		validaciones.remove(s);
 	}
-
+/**
+	 * Devuelve el intercambios.
+	 *
+	 * @return el intercambios
+	 */
 	public List<SolicitudIntercambio> getIntercambios() {
 		return intercambios;
 	}
 
+	/**
+	 * Devuelve el intercambios pendientes.
+	 *
+	 * @return el intercambios pendientes
+	 */
 	public List<SolicitudIntercambio> getIntercambiosPendientes() {
 		List<SolicitudIntercambio> intercambiosPendientes = new ArrayList<>();
 		for(SolicitudIntercambio s: intercambios)
@@ -79,13 +137,25 @@ public class GestorSolicitudes {
 		return intercambiosPendientes;
 	}
 	
+	/**
+	 * Devuelve el pedidos.
+	 *
+	 * @return el pedidos
+	 */
 	public List<SolicitudPedido> getPedidos() {
 		return pedidos;
 	}
 
+	/**
+	 * Devuelve el validaciones.
+	 *
+	 * @return el validaciones
+	 */
 	public List<SolicitudValidacion> getValidaciones() {
 		return validaciones;
 	}
 	
+
+
 }
 

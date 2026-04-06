@@ -3,13 +3,26 @@ package aplicacion;
 import solicitud.*;
 import tiempo.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SistemaPago.
+ */
 public class SistemaPago {
 
+	/** El instancia. */
 	static SistemaPago instancia;
 
+	/**
+	 * Instancia un nuevo sistema pago.
+	 */
 	private SistemaPago() {
 	}
 
+	/**
+	 * Devuelve el instancia.
+	 *
+	 * @return el instancia
+	 */
 	public static SistemaPago getInstancia() {
 		if (instancia == null) {
 			instancia = new SistemaPago();
@@ -17,6 +30,16 @@ public class SistemaPago {
 		return instancia;
 	}
 
+	/**
+	 * Procesar pago.
+	 *
+	 * @param importe el importe
+	 * @param numTarjeta el num tarjeta
+	 * @param cvv el cvv
+	 * @param fechaCaducidad el fecha caducidad
+	 * @param objetoPagado el objeto pagado
+	 * @return el pago
+	 */
 	public Pago procesarPago(double importe, String numTarjeta, String cvv, DateTimeSimulado fechaCaducidad, Solicitud objetoPagado) {
 		
 		if (importe <= 0) {
