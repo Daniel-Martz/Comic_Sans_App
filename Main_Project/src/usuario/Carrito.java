@@ -3,20 +3,20 @@ import java.util.*;
 
 import producto.*;
 
-public class Carrito implements Contenedor<LineaProductoVenta> {
+public class Carrito {
 	private Map<LineaProductoVenta, Integer> productos = new HashMap<>(); 
 	private Map<LineaProductoVenta, Double> recaudacionProductos = new HashMap<>(); 
 	
-	@Override
+	
 	public void añadirProducto(LineaProductoVenta o, Integer cantidad) {
 		if(cantidad > o.getStock()) {
 			throw new IllegalStateException("No hay suficiente stock de ese producto");
 		}
 		//Usando esta función si existe la clave ya suma la cantidad, si no existe la crea
-	    this.productos.merge(p, cantidad, Integer::sum);
+	    this.productos.merge(o, cantidad, Integer::sum);
 	}
 	
-	@Override
+	
 	public void eliminarProducto(LineaProductoVenta p, Integer cantidad) {
     if(p == null || cantidad < 0){
       throw new IllegalArgumentException("Los argumentos introducidos no son validos");
