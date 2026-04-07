@@ -10,6 +10,9 @@ import java.io.*;
  * The Class GestorSolicitudes.
  */
 public class GestorSolicitudes {
+
+
+  private static final long serialVersionUID = 1L;
 	
 	/** El instancia. */
 	private static GestorSolicitudes instancia;
@@ -156,7 +159,14 @@ public class GestorSolicitudes {
 		return validaciones;
 	}
 	
+  private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
 
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        instancia = this;
+    }  
 
 }
 

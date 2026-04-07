@@ -27,6 +27,7 @@ import java.util.*;
  */
 public class Aplicacion {
 
+  private static final long serialVersionUID = 1L;
 	/**
 	 * Instancia única de la aplicación (singleton).
 	 */
@@ -826,11 +827,11 @@ public class Aplicacion {
 	}
 	
 	
-
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject();
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        instancia = this;
-    }
+  private void writeObject(ObjectOutputStream oos) throws IOException {
+      oos.defaultWriteObject();
+  }
+  private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+      ois.defaultReadObject();
+      instancia = this;
+  }
 }

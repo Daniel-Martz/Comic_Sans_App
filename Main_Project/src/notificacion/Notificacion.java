@@ -22,7 +22,6 @@ public class Notificacion implements Serializable {
 		this.horaEnvio = horaEnvio;
 	}
 
-	// Persist static contadorID
     private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
         oos.writeInt(contadorID);

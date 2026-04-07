@@ -2,6 +2,7 @@ package aplicacion;
 
 import solicitud.*;
 import tiempo.*;
+import java.io.*;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -77,4 +78,14 @@ public class SistemaPago {
 		Pago p = new Pago(new DateTimeSimulado(), importe, objetoPagado);
 		return p;
 	}
+
+  private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        instancia = this;
+    }
+  
 }

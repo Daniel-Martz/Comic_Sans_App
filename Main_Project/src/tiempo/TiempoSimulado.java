@@ -142,16 +142,15 @@ public class TiempoSimulado implements Serializable {
 	    }
 	    return meses;
 	}
-+
-+    // Persist singleton and MS_POR_DIA
-+    private void writeObject(ObjectOutputStream oos) throws IOException {
-+        oos.defaultWriteObject();
-+        oos.writeLong(MS_POR_DIA);
-+    }
-+
-+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-+        ois.defaultReadObject();
-+        MS_POR_DIA = ois.readLong();
-+        instance = this;
-+    }
- }
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+        oos.writeLong(MS_POR_DIA);
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        MS_POR_DIA = ois.readLong();
+        instance = this;
+    }
+  }
