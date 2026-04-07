@@ -248,4 +248,12 @@ public class ConfiguracionRecomendacion implements Serializable {
         ois.defaultReadObject();
         instancia = this;
     }
+
+	@Override
+	public String toString() {
+		return "ConfiguracionRecomendacion [importanciaInteres=" + importanciaInteres + ", importanciaResena="
+				+ importanciaResena + ", importanciaNovedad=" + importanciaNovedad + ", unidadesRecomendadas="
+				+ unidadesRecomendadas + ", rankingNovedad=" + rankingNovedad + ", rankingValoracion="
+				+ rankingValoracion + ", maxValoracion=" + maxValoracion + "]";
+	}
 }

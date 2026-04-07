@@ -946,4 +946,15 @@ public class Catalogo implements Serializable {
         ois.defaultReadObject();
         instancia = this;
     }
+
+	@Override
+	public String toString() {
+		return "Catalogo [descuentos=" + descuentos + ", categoriasTienda=" + categoriasTienda + ", productosNuevos="
+				+ productosNuevos + ", productosSegundaMano=" + productosSegundaMano + ", filtroProductosGestion="
+				+ filtroProductosGestion + ", filtroProductosSegundaMano=" + filtroProductosSegundaMano
+				+ ", filtroProductosVenta=" + filtroProductosVenta + ", primerLanzamiento=" + primerLanzamiento
+				+ ", ultimoLanzamiento=" + ultimoLanzamiento + "]";
+	}
+    
+    
  }

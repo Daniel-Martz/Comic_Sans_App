@@ -1,9 +1,9 @@
 package tiempo;
-
+import java.io.*;
 /**
  * The Class DateTimeSimulado.
  */
-public class DateTimeSimulado implements Comparable<DateTimeSimulado>{
+public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializable{
 
 	/** El año. */
 	private final int año;

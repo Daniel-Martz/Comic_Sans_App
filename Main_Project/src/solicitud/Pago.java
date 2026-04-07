@@ -3,6 +3,7 @@ package solicitud;
 import java.util.*;
 import tiempo.DateTimeSimulado;
 
+import java.io.Serializable;
 /**
  * Clase que representa un pago realizado para una solicitud
  * 
@@ -10,7 +11,7 @@ import tiempo.DateTimeSimulado;
  * @version 1.0
  * @date 06-04-2026
  */
-public class Pago {
+public class Pago implements Serializable{
 
     /**
      * Fecha en la que se realizó el pago.

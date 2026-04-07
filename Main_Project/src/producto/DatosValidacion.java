@@ -1,5 +1,6 @@
 package producto;
 
+import java.io.Serializable;
 /**
  * Almacena los resultados técnicos y económicos tras la revisión de un 
  * producto de segunda mano por parte de un empleado especializado.
@@ -7,7 +8,7 @@ package producto;
  * @version 1.0
  * @date 06-04-2026
  */
-public class DatosValidacion {
+public class DatosValidacion implements Serializable{
 	
 	/** Precio de mercado sugerido tras la inspección técnica. */
 	private final double precioEstimadoProducto;

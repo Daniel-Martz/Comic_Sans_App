@@ -442,10 +442,43 @@ public class Main {
 		    System.out.println("-> " + p.getNombre());
 		}
 		app.cerrarSesion();
+  
+    System.out.println("Ahora probaremos que la aplicación puede guardar su estado en un fichero");
+    String archivo = "test_tienda.dat";
+    
+    
+    System.out.println("\n\n\nEl estado previo de la aplicación es: ");
+    System.out.println(app);
+    
+    try {
+        app.guardarEstadoAplicacion(archivo);
+    } catch (IOException e) {
+        System.err.println("Error guardando: " + e.getMessage());
+        return;
+    }
+    
+    Aplicacion appCargada = null;
+    try {
+        Aplicacion.cargarEstadoAplicacion(archivo);
+        appCargada = Aplicacion.getInstancia();
+    } catch (Exception e) {
+        System.err.println("Error cargando: " + e.getMessage());
+        return;
+    }
+    
+    System.out.println("\n\n\nEl estado tras la carga de la aplicación es: ");
+    System.out.println(appCargada);
+    
+    // 5. LIMPIAR
+    new java.io.File(archivo).delete();
+
 
 		System.out.println("\n====================================================");
 		System.out.println("           FIN DE LA DEMOSTRACIÓN");
 		System.out.println("====================================================");
+
+
+
 	}
 	
 }

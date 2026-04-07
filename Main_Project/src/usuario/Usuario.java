@@ -1,5 +1,5 @@
 package usuario;
-
+import java.io.*;
 /**
  * Implementa la clase Usuario.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import producto.*;
 import tiempo.DateTimeSimulado;
+import tiempo.TiempoSimulado;
 import usuario.*;
 import solicitud.*;
 import notificacion.*;
@@ -339,17 +340,15 @@ class ClienteRegistradoTest {
 	}
 
 	@Test
-	void testPagarPedidoEstadoIncorrecto() {
+	void testPagarPedidoCaducado() {
 		LineaProductoVenta p1 = new LineaProductoVenta("Marvel", "Comic", new File("Foto.png"), 1000, 6.0);
 		cliente.añadirProductoACarrito(p1, 1);
 		SolicitudPedido pedido = cliente.realizarPedido();
-		
-		pedido.actualizarEstado(EstadoPedido.LISTO_PARA_RECOGER);
-		
+		TiempoSimulado.getInstance().avanzarDias(100);
 		Exception e = assertThrows(IllegalStateException.class, () -> {
 			cliente.pagarPedido(pedido, "0123456789012345", "123", new DateTimeSimulado());
 		});
-		assertEquals("El pedido no está en estado pendiente de pago.", e.getMessage());
+		assertEquals("El pedido ya no existe, ha caducado", e.getMessage());
 	}
 
 	@Test

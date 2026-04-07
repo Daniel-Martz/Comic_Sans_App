@@ -9,8 +9,16 @@ import java.io.*;
 /**
  * The Class GestorSolicitudes.
  */
-public class GestorSolicitudes {
+public class GestorSolicitudes implements Serializable{
 
+/**
+ * Imprime los datos de la clase
+ */
+  @Override
+	public String toString() {
+		return "GestorSolicitudes [intercambios=" + intercambios + ", pedidos=" + pedidos + ", validaciones="
+				+ validaciones + "]";
+	}
 
   private static final long serialVersionUID = 1L;
 	

@@ -1,11 +1,11 @@
 package solicitud;
-
+import java.io.Serializable;
 /**
  * Representa un código asociado a un intercambio para su validación o seguimiento.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
  */
-public class CodigoIntercambio {
+public class CodigoIntercambio implements Serializable{
 	
 	/** El texto que representa el código de intercambio. */
 	private String codigo;

@@ -1,5 +1,6 @@
 package usuario;
 
+import java.io.Serializable;
 import java.util.*;
 
 import producto.*;
@@ -12,7 +13,7 @@ import producto.*;
  * @version 1.0
  * @date 06-04-2026
  */
-public class Carrito {
+public class Carrito implements Serializable{
 
 	private Map<LineaProductoVenta, Integer> productos = new HashMap<>();
 

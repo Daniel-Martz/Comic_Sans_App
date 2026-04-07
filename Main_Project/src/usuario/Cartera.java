@@ -1,4 +1,6 @@
 package usuario;
+
+import java.io.Serializable;
 import java.util.*;
 
 import producto.ProductoSegundaMano;
@@ -12,7 +14,7 @@ import producto.ProductoSegundaMano;
  * @version 1.0
  * @date 06-04-2026
  */
-public class Cartera {
+public class Cartera implements Serializable{
 	
 	private Set<ProductoSegundaMano> productos = new HashSet<>(); 
 	

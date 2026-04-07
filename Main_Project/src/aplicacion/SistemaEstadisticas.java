@@ -17,7 +17,8 @@ import usuario.*;
 import tiempo.DateTimeSimulado;
 import tiempo.TiempoSimulado;
 
-public class SistemaEstadisticas {
+import java.io.Serializable;
+public class SistemaEstadisticas implements Serializable{
 
 	private static SistemaEstadisticas instancia;
 	private List<Pago> pagos = new ArrayList<>();
@@ -322,4 +323,9 @@ public class SistemaEstadisticas {
         ois.defaultReadObject();
         instancia = this;
     }
+
+	@Override
+	public String toString() {
+		return "SistemaEstadisticas [pagos=" + pagos + "]";
+	}
 }

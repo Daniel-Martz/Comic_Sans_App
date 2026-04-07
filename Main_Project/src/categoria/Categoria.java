@@ -2,6 +2,7 @@ package categoria;
 import java.util.*;
 import descuento.Descuento;
 import producto.LineaProductoVenta;
+import java.io.*;
 
 /**
   * Esta clase implementa las categorías de la aplicación.

@@ -1,5 +1,6 @@
 package solicitud;
 
+import java.io.Serializable;
 import java.util.*;
 import usuario.*;
 import producto.*;
@@ -13,7 +14,7 @@ import tiempo.DateTimeSimulado;
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
  */
-public class Oferta implements Caducable{
+public class Oferta implements Caducable, Serializable{
 	
 	/** Fecha en la que se realizó la oferta. */
 	private DateTimeSimulado fechaRealizacion;

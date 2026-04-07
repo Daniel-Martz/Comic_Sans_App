@@ -4,11 +4,12 @@ import solicitud.*;
 import tiempo.*;
 import java.io.*;
 
+import java.io.Serializable;
 // TODO: Auto-generated Javadoc
 /**
  * The Class SistemaPago.
  */
-public class SistemaPago {
+public class SistemaPago implements Serializable{
 
 	/** El instancia. */
 	static SistemaPago instancia;

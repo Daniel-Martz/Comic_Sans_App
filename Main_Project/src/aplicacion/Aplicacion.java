@@ -25,8 +25,9 @@ import java.util.*;
  * habituales (crear cuentas, iniciar/cerrar sesión, crear pedidos,
  * enviar notificaciones, etc.).
  */
-public class Aplicacion {
+public class Aplicacion implements Serializable {
 
+  /** La constante serialVersionUID. */
   private static final long serialVersionUID = 1L;
 	/**
 	 * Instancia única de la aplicación (singleton).
@@ -553,7 +554,7 @@ public class Aplicacion {
 	}
 
 	/**
-	 * Buscar un producto de segunda mano por su identificador
+	 * Buscar un producto de segunda mano por su identificador.
 	 *
 	 * @param promptId el identificador del producto
 	 * @return el producto de segunda mano a la venta con dicho identificador
@@ -827,11 +828,64 @@ public class Aplicacion {
 	}
 	
 	
+  /**
+   * Escribe el objeto aplicacion en un fichero siguiendo la forma de guardado de Serializable
+   *
+   * @param oos el ObjectOutputStream donde se guardará la aplicación
+   * @throws IOException Señala que la I/O exception ha ocurrido
+   */
   private void writeObject(ObjectOutputStream oos) throws IOException {
       oos.defaultWriteObject();
   }
+  
+  /**
+   * Lee el objeto aplicacion de un fichero siguiendo la forma de guardado de Serializable
+   *
+   * @param ois el ObjectInputStream donde se leerá la aplicación
+   * @throws IOException Señala que la I/O exception ha ocurrido
+   * @throws ClassNotFoundException señala que ha habido un error encontrando la clase
+   */
   private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
       ois.defaultReadObject();
       instancia = this;
+  }
+
+  /**
+   * Guarda el estado de la aplicacion. Este método es a través del cual clases externas podrán guardar la aplicación.
+   *
+   * @param file el archivo donde se guardará la aplicación
+   * @throws IOException Señala que la I/O exception ha ocurrido
+   */
+  public void guardarEstadoAplicacion(String file) throws IOException {
+    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+        out.writeObject(this);
+    }
+}
+
+  /**
+   * Carga el estado de la aplicacion. Este método es a través del cual clases externas podrán cargar la aplicación.
+   *
+   * @param file el archivo del que se leerá la aplicación.
+   */
+  public static void cargarEstadoAplicacion(String file) {
+    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+        instancia = (Aplicacion) in.readObject();
+    } catch (FileNotFoundException e) {
+        instancia = Aplicacion.getInstancia();
+    } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+        instancia = Aplicacion.getInstancia();
+    }
+  }
+  
+  /**
+   * Escribe los datos de la aplicación
+   */
+  @Override
+  public String toString() {
+	return "Aplicacion \nNombre de la aplicación = " + nombre + " \nCriterio de recomendacion de la aplicación = " + criterioRecomendacion + "\nSistema de pago = "
+			+  sistemaEstadisticas + "\nGestor de solicitudes de la aplicación = " + gestorSolicitud
+			+ "\nCatalogo=" + catalogo + "\nUsuarioActual=" + usuarioActual + "\nUsuariosRegistrados="
+			+ usuariosRegistrados + "]";
   }
 }

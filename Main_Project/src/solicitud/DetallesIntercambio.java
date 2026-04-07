@@ -2,13 +2,14 @@ package solicitud;
 import java.util.*;
 import tiempo.DateTimeSimulado;
 
+import java.io.Serializable;
 /**
  * Representa los detalles especificos de un intercambio, 
  * incluyendo la fecha y el lugar donde se llevara a cabo.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
  */
-public class DetallesIntercambio {
+public class DetallesIntercambio implements Serializable{
 	
 	/** Fecha en la que se realizara o se acordo el intercambio. */
 	private DateTimeSimulado fechaIntercambio;

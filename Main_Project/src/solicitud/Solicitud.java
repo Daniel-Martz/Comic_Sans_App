@@ -1,5 +1,5 @@
 package solicitud;
-
+import java.io.Serializable;
 /**
  * Clase base abstracta para representar una solicitud genérica.
  * 
@@ -7,7 +7,7 @@ package solicitud;
  * @version 1.0
  * @date 06-04-2026
  */
-public abstract class Solicitud {
+public abstract class Solicitud implements Serializable{
 
     /**
      * Constructor por defecto de la clase Solicitud.

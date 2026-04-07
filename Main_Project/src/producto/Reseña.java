@@ -1,5 +1,5 @@
 package producto;
-
+import java.io.Serializable;
 import tiempo.DateTimeSimulado;
 
 /**
@@ -12,7 +12,7 @@ import tiempo.DateTimeSimulado;
  * @version 1.0
  * @date 06-04-2026
  */
-public class Reseña {
+public class Reseña implements Serializable{
 	
 	private String descripcion;
 	private double puntuacion;
