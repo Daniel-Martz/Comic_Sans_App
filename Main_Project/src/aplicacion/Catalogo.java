@@ -12,16 +12,13 @@ import usuario.NotificacionDeseada;
 import filtro.*;
 import notificacion.NotificacionProducto;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Catalogo.
  */
-public class Catalogo {
+public class Catalogo implements Serializable {
 
 	/** El instancia. */
 	private static Catalogo instancia;
@@ -989,5 +986,25 @@ public class Catalogo {
 		}
 		return resultado;
 	}
+
+	// Persist singleton instance on deserialization
+	private void writeObject(ObjectOutputStream oos) throws IOException {
+		oos.defaultWriteObject();
+	}
+
+	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+		ois.defaultReadObject();
+		instancia = this;
+	}
+
+	@Override
+	public String toString() {
+		return "\n\n\n************CATALOGO DE LA TIENDA************ " +
+		        "\nDescuentos de la tienda:\n" + descuentos + "\nCategorias de la tienda:\n" + categoriasTienda + "\nProductos nuevos de la tienda:\n"
+						+ productosNuevos + "\nProductos de segunda mano:\n" + productosSegundaMano + "\nFiltros de productos para los ususarios que los gestionan:\n"
+						+ filtroProductosGestion + "\nFiltros de productos de segunda mano:\n" + filtroProductosSegundaMano
+						+ "\nFiltro de productos nuevos para los clientes:\n" + filtroProductosVenta + "\nPrimer lanzamiento de la tienda:\n" + primerLanzamiento
+						+ "\nUltimo lanzamiento de la tienda:\n" + ultimoLanzamiento + "]";
+			}
 
 }
