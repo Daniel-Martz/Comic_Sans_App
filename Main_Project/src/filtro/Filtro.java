@@ -1,6 +1,8 @@
 package filtro;
 
-public abstract class Filtro {
+import java.io.Serializable;
+
+public abstract class Filtro implements Serializable{
 	protected boolean ordenAscendente;
 
 	public Filtro(boolean ordenAscendente) {

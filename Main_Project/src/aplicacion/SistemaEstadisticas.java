@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
 
@@ -312,4 +313,13 @@ public class SistemaEstadisticas {
 		}
 	}
 
+    // Persist singleton instance across serialization
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        instancia = this;
+    }
 }

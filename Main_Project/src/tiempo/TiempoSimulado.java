@@ -2,13 +2,16 @@ package tiempo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 /**
  * Clase refactorizada siguiendo el patrón Singleton.
  * Permite gestionar un tiempo simulado con velocidad variable.
  */
-public class TiempoSimulado {
+public class TiempoSimulado implements Serializable {
     
+
+    private static final long serialVersionUID = 1L;
 
     private static TiempoSimulado instance;
     private static long MS_POR_DIA = 24L * 60 * 60 * 1000;
@@ -139,4 +142,16 @@ public class TiempoSimulado {
 	    }
 	    return meses;
 	}
-}
++
++    // Persist singleton and MS_POR_DIA
++    private void writeObject(ObjectOutputStream oos) throws IOException {
++        oos.defaultWriteObject();
++        oos.writeLong(MS_POR_DIA);
++    }
++
++    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
++        ois.defaultReadObject();
++        MS_POR_DIA = ois.readLong();
++        instance = this;
++    }
+ }

@@ -17,7 +17,7 @@ import producto.LineaProductoVenta;
  * @version 1.0
  * @date 06-04-2026
  */
-public class Interes {
+public class Interes implements Serializable {
 
 	/** Peso asignado a una búsqueda de producto. */
 	public static final int PESO_BUSQUEDA = 5;

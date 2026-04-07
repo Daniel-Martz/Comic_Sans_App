@@ -2,12 +2,13 @@ package descuento;
 
 import tiempo.*;
 import java.util.Set;
+import java.io.Serializable;
 import java.util.HashSet;
 import categoria.Categoria;
 import producto.LineaProductoVenta;
 import solicitud.Caducable;
 
-public abstract class Descuento implements Caducable{
+public abstract class Descuento implements Caducable, Serializable{
 	private DateTimeSimulado fechaInicio;
 	private DateTimeSimulado fechaFin;
 	private Set<Categoria> categoriasRebajadas = new HashSet<Categoria>();

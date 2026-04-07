@@ -1,6 +1,7 @@
 package aplicacion;
 
 import java.util.*;
+import java.io.*;
 
 import producto.LineaProductoVenta;
 import usuario.ClienteRegistrado;
@@ -10,7 +11,9 @@ import usuario.Usuario;
 /**
  * The Class ConfiguracionRecomendacion.
  */
-public class ConfiguracionRecomendacion {
+public class ConfiguracionRecomendacion implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
 	/** El instancia. */
 	private static ConfiguracionRecomendacion instancia;
@@ -236,4 +239,13 @@ public class ConfiguracionRecomendacion {
 	    return mejor;
 	}
 	
+	// Persist singleton
+	private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        instancia = this;
+    }
 }

@@ -6,7 +6,7 @@ package usuario;
  * @version 1.0
  * @date 06-04-2026
  */
-public abstract class Usuario {
+public abstract class Usuario implements Serializable{
 	
 	/** El nombre de usuario. */
 	protected String nombreUsuario;

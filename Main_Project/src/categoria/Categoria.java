@@ -10,7 +10,7 @@ import producto.LineaProductoVenta;
   * @version 1.0
   * @date 13-03-2026
   */
-public class Categoria {
+public class Categoria implements Serializable{
     
     /** El nombre de la categoría. */
     private String nombre;

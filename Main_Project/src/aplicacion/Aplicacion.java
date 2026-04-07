@@ -8,6 +8,7 @@ import tiempo.DateTimeSimulado;
 import notificacion.*;
 import categoria.*;
 
+import java.io.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -826,4 +827,10 @@ public class Aplicacion {
 	
 	
 
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        instancia = this;
+    }
 }

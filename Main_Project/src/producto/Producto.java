@@ -1,13 +1,15 @@
 package producto;
 
 import java.util.*;
+import java.io.*;
 
 import tiempo.DateTimeSimulado;
 
 import java.io.File;
 
 
-public abstract class Producto implements Comparable<Producto>{
+public abstract class Producto implements Comparable<Producto>, Serializable{
+    private static final long serialVersionUID = 1L;
 	private static int contadorID = 1;
 	private final int ID;
 	private String nombre;
@@ -24,6 +26,15 @@ public abstract class Producto implements Comparable<Producto>{
 		fechaSubida = new DateTimeSimulado();
 	}
 
+	private void writeObject(ObjectOutputStream oos) throws IOException {
+		oos.defaultWriteObject();
+		oos.writeInt(contadorID);
+	}
+
+	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+		ois.defaultReadObject();
+		contadorID = ois.readInt();
+	}
 	public String getNombre() {
 		return nombre;
 	}

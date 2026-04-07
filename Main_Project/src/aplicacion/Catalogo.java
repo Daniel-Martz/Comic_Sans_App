@@ -12,12 +12,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.*;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Catalogo.
  */
-public class Catalogo {
+public class Catalogo implements Serializable {
 
 	/** El instancia. */
 	private static Catalogo instancia;
@@ -935,5 +936,14 @@ public class Catalogo {
 		}
 		return resultado;
 	}
+	
+    // Persist singleton instance on deserialization
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+    }
 
-}
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+        instancia = this;
+    }
+ }
