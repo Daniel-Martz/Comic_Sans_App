@@ -129,6 +129,11 @@ public class Empleado extends UsuarioGestion {
 		p.getCliente().anadirNotificacion(noti);
 	}
 
+	/**
+	 * Devuelve las notificaciones del empleado
+	 *
+	 * @return las notificaciones
+	 */
 	public List<NotificacionEmpleado> getNotificaciones() {
 		return notificaciones;
 	}

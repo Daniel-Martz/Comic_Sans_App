@@ -1,20 +1,40 @@
 package usuario.test;
 import usuario.*;
+import aplicacion.*;
 import producto.*;
 import java.util.*;
 import solicitud.*;
 import notificacion.*;
 import java.io.File;
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import aplicacion.GestorSolicitudes;
 import notificacion.NotificacionIntercambio;
 
+
 class EmpleadoTest {
   Empleado e = new Empleado("federico", "01122233A", "12345");
 
+  @BeforeAll
+  public static void resetearSingletons() throws Exception {
+      resetField(ConfiguracionRecomendacion.class, "instancia");
+      resetField(Aplicacion.class,                "instancia");
+      resetField(Catalogo.class,                  "instancia");
+      resetField(GestorSolicitudes.class,         "instancia");
+      resetField(SistemaEstadisticas.class,        "instancia");
+      resetField(SistemaPago.class,                "instancia");
+  }
+
+  private static void resetField(Class<?> clazz, String fieldName) throws Exception {
+      Field f = clazz.getDeclaredField(fieldName);
+      f.setAccessible(true);
+      f.set(null, null);
+  }
 	@Test
 	void testAprobarIntercambio() {
     e.añadirPermiso(Permiso.INTERCAMBIOS);
@@ -69,21 +89,19 @@ class EmpleadoTest {
 
 	@Test
 	void testActualizarEstadoPedido() {
-    e.añadirPermiso(Permiso.PEDIDOS);
-    ClienteRegistrado cliente = new ClienteRegistrado("Juan", "01122233A", "123456");
-    LineaProductoVenta p1 = new LineaProductoVenta("Marvel", "Comic de Marvel", new File("Foto1.png"), 1000, 6);
-	  LineaProductoVenta p2 = new LineaProductoVenta("DC", "Comid de DC", new File("Foto2.png"), 1000, 6);
-	  Pack pack1 = new Pack("DC", "Comics varios", new File("Foto2.png"), 10, 11);
-    pack1.añadirProductoAPack(p1, 2);
-    pack1.añadirProductoAPack(p2, 1);
-    cliente.añadirProductoACarrito(p1, 3);
-    cliente.añadirProductoACarrito(p2, 2);
-    cliente.añadirProductoACarrito(pack1, 1);
-    SolicitudPedido pedido = cliente.realizarPedido(); 
-	  for(SolicitudPedido s : cliente.getPedidos()){
-      e.actualizarEstadoPedido(s, EstadoPedido.PENDIENTE_DE_PAGO);
-      assertTrue(s.getEstado() == EstadoPedido.PENDIENTE_DE_PAGO);
-    }
+		e.añadirPermiso(Permiso.PEDIDOS);
+		ClienteRegistrado cliente = new ClienteRegistrado("Juan", "01122233A", "123456");
+		LineaProductoVenta p1 = new LineaProductoVenta("Marvel", "Comic de Marvel", new File("Foto1.png"), 1000, 6);
+		LineaProductoVenta p2 = new LineaProductoVenta("DC", "Comic de DC", new File("Foto2.png"), 1000, 6);
+		Pack pack1 = new Pack("DC", "Comics varios", new File("Foto2.png"), 10, 11);
+		pack1.añadirProductoAPack(p1, 2);
+		pack1.añadirProductoAPack(p2, 1);
+		cliente.añadirProductoACarrito(p1, 3);
+		cliente.añadirProductoACarrito(p2, 2);
+		cliente.añadirProductoACarrito(pack1, 1);
+		SolicitudPedido pedido = cliente.realizarPedido(); 
+		e.actualizarEstadoPedido(pedido, EstadoPedido.PAGADO);
+		assertEquals(EstadoPedido.PAGADO, pedido.getEstado(), "El estado del pedido no se actualizó correctamente");
 	}
 
 }

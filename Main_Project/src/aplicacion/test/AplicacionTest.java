@@ -948,7 +948,7 @@ class AplicacionTest {
     }
 
     // =========================================================================
-    // BLOQUE 18 – CRÉDITOS DE RECOMENDACIÓN (sanity check)
+    // BLOQUE 18 – CRÉDITOS DE RECOMENDACIÓN 
     // =========================================================================
 
     @Test @Order(180)
