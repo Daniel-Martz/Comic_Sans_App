@@ -4,10 +4,11 @@ import java.io.*;
  * Implementa la clase Usuario.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public abstract class Usuario implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	/** El nombre de usuario. */
 	protected String nombreUsuario;
 	

@@ -9,6 +9,7 @@ import tiempo.*;
  */
 public class RebajaUmbral extends UmbralGasto implements DePorcentaje{
 	
+	private static final long serialVersionUID = 1L;
 	/** El porcentaje de rebaja a aplicar (ej. 15 para un 15%). */
 	private int procentajeRebaja;
 

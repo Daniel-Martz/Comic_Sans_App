@@ -9,13 +9,12 @@ import categoria.Categoria;
  * Permite filtrar por rangos de puntuación, precio y tipos de descuento.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class FiltroVentaCliente extends FiltroVenta {
 	
 	/** Identificador único para la serialización de la clase. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** Puntuación mínima del producto (0.0 - 5.0). */
 	private double puntuacionMin;
 	

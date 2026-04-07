@@ -9,6 +9,8 @@ import tiempo.DateTimeSimulado;
  */
 public abstract class NotificacionCliente extends Notificacion {
 	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Crea una notificación para un cliente.
 	 *

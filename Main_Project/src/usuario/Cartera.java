@@ -12,10 +12,11 @@ import producto.ProductoSegundaMano;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Cartera implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	/**Set de productos de la cartera*/
 	private Set<ProductoSegundaMano> productos = new HashSet<>(); 
 	
 	/**

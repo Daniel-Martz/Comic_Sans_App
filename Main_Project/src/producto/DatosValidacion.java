@@ -6,10 +6,11 @@ import java.io.Serializable;
  * producto de segunda mano por parte de un empleado especializado.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class DatosValidacion implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	/** Precio de mercado sugerido tras la inspección técnica. */
 	private final double precioEstimadoProducto;
 	

@@ -12,10 +12,11 @@ import aplicacion.Aplicacion;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
+
  */
 public class ProductoSegundaMano extends Producto {
 
+	private static final long serialVersionUID = 1L;
 	private boolean validado;
 	private Oferta ofertaRecibida;
 	private Oferta ofertaEnviada;

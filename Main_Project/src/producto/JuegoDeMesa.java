@@ -12,10 +12,10 @@ import java.io.File;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class JuegoDeMesa extends LineaProductoVenta {
 
+	private static final long serialVersionUID = 1L;
 	private final int numeroJugadores;
 	private final int edadMinima;
 	private final int edadMaxima;

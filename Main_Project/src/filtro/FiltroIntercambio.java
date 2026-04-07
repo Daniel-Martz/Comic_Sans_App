@@ -8,7 +8,6 @@ import java.util.*;
  * Permite filtrar por rangos de valor del producto y estados de conservación.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class FiltroIntercambio extends Filtro {
 	/** Identificador único para la serialización de la clase. */

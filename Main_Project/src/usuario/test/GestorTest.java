@@ -188,10 +188,11 @@ class GestorTest {
         c.añadirProductoACarrito(p, 1);
         SolicitudPedido pedido = c.realizarPedido();
         pedido.añadirPagoPedido(new Pago(new DateTimeSimulado(), 10.0, pedido));
+        pedido.actualizarPagoPedido(EstadoPedido.PAGADO); 
         assertDoesNotThrow(() ->
-                e.actualizarEstadoPedido(pedido, EstadoPedido.LISTO_PARA_RECOGER));
+                e.actualizarEstadoPedido(pedido, EstadoPedido.LISTO_PARA_RECOGER), 
+                "El empleado debería poder actualizar el pedido sin lanzar excepciones");
     }
-
     @Test
     void testEliminarPermisoImpideAccion() {
         Aplicacion app = Aplicacion.getInstancia();

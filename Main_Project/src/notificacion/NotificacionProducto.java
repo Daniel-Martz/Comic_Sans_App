@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class NotificacionProducto extends NotificacionCliente {
 	
+	private static final long serialVersionUID = 1L;
 	/** Conjunto de productos asociados a la notificación. */
 	private Set<LineaProductoVenta> productos = new HashSet<>();
 

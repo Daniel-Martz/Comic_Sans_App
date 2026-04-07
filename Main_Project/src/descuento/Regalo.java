@@ -10,6 +10,7 @@ import producto.*;
  */
 public class Regalo extends UmbralGasto {
 	
+	private static final long serialVersionUID = 1L;
 	/** Mapa que asocia cada producto de regalo con su cantidad de unidades. */
 	private Map<LineaProductoVenta, Integer> productosRegalo;
 

@@ -9,10 +9,10 @@ import java.util.*;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Pack extends LineaProductoVenta {
 	
+	private static final long serialVersionUID = 1L;
 	private Map<LineaProductoVenta, Integer> pack = new HashMap<>();
 
 	/**

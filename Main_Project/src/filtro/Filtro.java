@@ -8,10 +8,10 @@ import java.io.Serializable;
  * mediante la interfaz Serializable.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public abstract class Filtro implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	/** Define si el orden de los resultados es ascendente (true) o descendente (false). */
 	protected boolean ordenAscendente;
 

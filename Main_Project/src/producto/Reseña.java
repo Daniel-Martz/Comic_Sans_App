@@ -10,10 +10,10 @@ import tiempo.DateTimeSimulado;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Reseña implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private String descripcion;
 	private double puntuacion;
 	private DateTimeSimulado fecha;

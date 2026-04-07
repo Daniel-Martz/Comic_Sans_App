@@ -14,11 +14,12 @@ import tiempo.DateTimeSimulado;
  * Clase que representa una solicitud de pedido realizada por un cliente registrado.
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class SolicitudPedido extends Solicitud implements Caducable {
 
-    /**
+    private static final long serialVersionUID = 1L;
+
+	/**
      * Mapa que almacena los productos distintos del pedido y la cantidad de cada uno.
      */
 	private Map<LineaProductoVenta, Integer> productosDiferentes = new HashMap<>();

@@ -16,6 +16,8 @@ import solicitud.Caducable;
  */
 public abstract class Descuento implements Caducable, Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	/** Fecha en la que el descuento entra en vigor. */
 	private DateTimeSimulado fechaInicio;
 	

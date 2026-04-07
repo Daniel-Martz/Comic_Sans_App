@@ -15,9 +15,10 @@ import descuento.Descuento;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public abstract class UsuarioGestion extends Usuario {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Instancia un nuevo usuario gestion.

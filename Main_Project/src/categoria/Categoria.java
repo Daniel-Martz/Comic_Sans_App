@@ -9,11 +9,12 @@ import java.io.*;
   *
   * @author Matteo Artuñedo González
   * @version 1.0
-  * @date 13-03-2026
   */
 public class Categoria implements Serializable{
     
-    /** El nombre de la categoría. */
+    private static final long serialVersionUID = 1L;
+
+	/** El nombre de la categoría. */
     private String nombre;
     
     /** El descuento de la categoria. */

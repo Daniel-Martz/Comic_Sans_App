@@ -1,31 +1,37 @@
 package tiempo;
 import java.io.*;
+
 /**
- * The Class DateTimeSimulado.
+ * Representa un instante de tiempo (fecha y hora) dentro de la simulación.
+ * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
+ * @version 1.0
  */
 public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializable{
 
-	/** El año. */
+	private static final long serialVersionUID = 1L;
+
+	/** El año de la fecha simulada. */
 	private final int año;
 	
-	/** El mes. */
+	/** El mes de la fecha simulada. */
 	private final int mes;
 	
-	/** El dia. */
+	/** El día de la fecha simulada. */
 	private final int dia;
 	
-	/** El hora. */
+	/** La hora (formato 24h). */
 	private final int hora;
 	
-	/** El minuto. */
+	/** El minuto de la hora. */
 	private final int minuto;
 	
-	/** El segundo. */
+	/** El segundo del minuto. */
 	private final int segundo;
 	
 
 	/**
-	 * Instancia un nuevo date time simulado, con la fecha actual de la apliación.
+	 * Instancia un nuevo objeto DateTimeSimulado capturando la fecha y hora 
+	 * actuales de la aplicación a través del Singleton TiempoSimulado.
 	 */
 	public DateTimeSimulado() {
 		TiempoSimulado Instancia = TiempoSimulado.getInstance();
@@ -38,15 +44,17 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	}
 
 	/**
-	 * instancia un nuevo date time simulado, pero campo por campo, asegurandose de que los campos 
-	 * sean válidos (no sean menores que el tiempo actual)
+	 * Instancia un nuevo DateTimeSimulado especificando cada campo temporal.
+	 * Se asegura de que, si la fecha es la de hoy, la hora introducida no 
+	 * sea anterior al tiempo actual de la simulación.
 	 *
 	 * @param año el año
 	 * @param mes el mes
-	 * @param dia el dia
+	 * @param dia el día
 	 * @param hora la hora
 	 * @param minuto el minuto
 	 * @param segundo el segundo
+	 * @throws IllegalArgumentException si la hora, minuto o segundo especificados ya han pasado en el día de hoy.
 	 */
 	public DateTimeSimulado(int año, int mes, int dia, int hora, int minuto, int segundo) {
 	    TiempoSimulado instancia = TiempoSimulado.getInstance();
@@ -85,10 +93,11 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	}
 	
 	/**
-	 * Date time dias despues.
+	 * Método estático que genera una nueva fecha sumando un número de días 
+	 * a la fecha actual del sistema.
 	 *
-	 * @param dias the dias
-	 * @return the date time simulado
+	 * @param dias número de días a avanzar.
+	 * @return un nuevo objeto DateTimeSimulado con la fecha futura.
 	 */
 	public static DateTimeSimulado DateTimeDiasDespues(int dias) {
 		DateTimeSimulado DateTime = new DateTimeSimulado();
@@ -104,10 +113,13 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 		return new DateTimeSimulado(año, mes, dia, DateTime.getHora(), DateTime.getMinuto(), DateTime.getSegundo());
 	}
 
-  /**
-   * Devuelve una fecha un número indicvado de días posterior a la fecha desde la que se invoca el método
-   */
-  public DateTimeSimulado diasDespuesDeFecha(int dias) {
+	/**
+	 * Devuelve una nueva fecha correspondiente a sumar un número indicado de días 
+	 * a la fecha desde la que se invoca el método.
+	 * * @param dias número de días a sumar a esta fecha.
+	 * @return un nuevo objeto DateTimeSimulado con la fecha calculada.
+	 */
+	public DateTimeSimulado diasDespuesDeFecha(int dias) {
 		DateTimeSimulado DateTime = this;
 		
 		int diaPorMes = TiempoSimulado.getInstance().getDiasPorMes();
@@ -122,7 +134,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	}
 	
 	/**
-	 * Gets the año.
+	 * Obtiene el año.
 	 *
 	 * @return el año
 	 */
@@ -131,7 +143,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	}
 
 	/**
-	 * Gets the mes.
+	 * Obtiene el mes.
 	 *
 	 * @return el mes
 	 */
@@ -140,7 +152,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	}
 
 	/**
-	 * Gets the dia.
+	 * Obtiene el día.
 	 *
 	 * @return el dia
 	 */
@@ -149,7 +161,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	}
 
 	/**
-	 * Gets the hora.
+	 * Obtiene la hora.
 	 *
 	 * @return la hora
 	 */
@@ -158,7 +170,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	}
 
 	/**
-	 * Gets the minuto.
+	 * Obtiene el minuto.
 	 *
 	 * @return el minuto
 	 */
@@ -167,7 +179,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	}
 
 	/**
-	 * Gets the segundo.
+	 * Obtiene el segundo.
 	 *
 	 * @return el segundo
 	 */
@@ -175,18 +187,26 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 		return segundo;
 	}
 
+	/**
+	 * Convierte la fecha actual a su equivalente absoluto en segundos.
+	 * * @return el total de segundos transcurridos en la simulación para esta fecha.
+	 */
 	public long dateTimeEnSegundos() {
 		return TiempoSimulado.getInstance().dateTimeASegundos(this);
 	}
 	
+	/**
+	 * Método reservado para avanzar la fecha internamente (actualmente sin implementación).
+	 * * @param dias el número de días a avanzar.
+	 */
 	public void avanzarDias(int dias) {
 		
 	}
 	
 	/**
-	 * To string.
+	 * Devuelve una representación textual detallada del objeto.
 	 *
-	 * @return the string
+	 * @return cadena con el formato "Año: X-Mes: X-Dia: X-Hora: X-Minuto: X-Segundo: X"
 	 */
 	@Override
 	public String toString() {
@@ -194,44 +214,48 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 				+ "-Segundo: " + segundo;
 	}
 	
+	/**
+	 * Devuelve una representación textual corta de la fecha.
+	 * * @return cadena con el formato "dia/mes/año".
+	 */
 	public String toStringFecha() {
 	    return dia + "/" + mes + "/" + año;
 	}
  
-  /**
-   * Devuelve 0 si la fecha que invoca el metodo es igual a la introducida
-   * Devuelve -1 si la fecha que invoca el metodo es anterior a la introducida
-   * Devuelve 1 si la fecha que invoca el metodo es posterior a la introducida
-   */
-  public int compareTo(DateTimeSimulado tiempoComparado){
-    int ret;
-    ret = Integer.compare(this.getAño(), tiempoComparado.getAño());
-    if(ret != 0){
-      return ret;
-    } else{
-      ret = Integer.compare(this.getMes(), tiempoComparado.getMes());
-      if(ret != 0){
-        return ret;
-      } else{
-        ret = Integer.compare(this.getDia(), tiempoComparado.getDia());
-        if(ret != 0){
-          return ret;
-        } else{
-          ret = Integer.compare(this.getHora(), tiempoComparado.getHora());
-          if(ret != 0){
-            return ret;
-          } else{
-            ret = Integer.compare(this.getMinuto(), tiempoComparado.getMinuto());
-            if(ret != 0){
-              return ret;
-            } else{
-              ret = Integer.compare(this.getSegundo(), tiempoComparado.getSegundo());
-              return ret;
-            }
-          }
-        }
-      }
-    }
-  }
+	/**
+	 * Compara cronológicamente este objeto con otro DateTimeSimulado.
+	 * * @param tiempoComparado la fecha con la que se quiere comparar.
+	 * @return 0 si son exactamente iguales, -1 si esta fecha es anterior a la introducida, 
+	 * 1 si esta fecha es posterior a la introducida.
+	 */
+	public int compareTo(DateTimeSimulado tiempoComparado){
+		int ret;
+		ret = Integer.compare(this.getAño(), tiempoComparado.getAño());
+		if(ret != 0){
+			return ret;
+		} else{
+			ret = Integer.compare(this.getMes(), tiempoComparado.getMes());
+			if(ret != 0){
+				return ret;
+			} else{
+				ret = Integer.compare(this.getDia(), tiempoComparado.getDia());
+				if(ret != 0){
+					return ret;
+				} else{
+					ret = Integer.compare(this.getHora(), tiempoComparado.getHora());
+					if(ret != 0){
+						return ret;
+					} else{
+						ret = Integer.compare(this.getMinuto(), tiempoComparado.getMinuto());
+						if(ret != 0){
+							return ret;
+						} else{
+							ret = Integer.compare(this.getSegundo(), tiempoComparado.getSegundo());
+							return ret;
+						}
+					}
+				}
+			}
+		}
+	}
 }
-

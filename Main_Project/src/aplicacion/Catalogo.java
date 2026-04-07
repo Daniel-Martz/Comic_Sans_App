@@ -1,8 +1,6 @@
 package aplicacion;
 
 import java.util.*;
-import java.util.Map.Entry;
-
 import descuento.*;
 import categoria.*;
 import producto.*;
@@ -19,6 +17,8 @@ import java.io.*;
  * The Class Catalogo.
  */
 public class Catalogo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/** El instancia. */
 	private static Catalogo instancia;

@@ -1,6 +1,6 @@
 package notificacion;
 import solicitud.*;
-import java.util.*;
+
 import tiempo.DateTimeSimulado;
 
 /**
@@ -9,6 +9,8 @@ import tiempo.DateTimeSimulado;
  * @version 1.0
  */
 public class NotificacionIntercambio extends NotificacionCliente {
+
+	private static final long serialVersionUID = 1L;
 
 	/** Código único utilizado para verificar el intercambio. */
 	private String codigoIntercambio;	

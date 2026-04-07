@@ -10,9 +10,10 @@ import usuario.ClienteRegistrado;
  * al proceso de validación.
  * @author Dani, Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class SolicitudValidacion extends Solicitud {
+
+  private static final long serialVersionUID = 1L;
 
   /** Pago asociado a la validacion. */
   private Pago pagoValidacion;

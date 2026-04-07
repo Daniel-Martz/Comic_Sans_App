@@ -16,6 +16,8 @@ import tiempo.DateTimeSimulado;
  */
 public class Oferta implements Caducable, Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	/** Fecha en la que se realizó la oferta. */
 	private DateTimeSimulado fechaRealizacion;
 	

@@ -2,12 +2,11 @@ package aplicacion;
 
 import producto.*; 
 
+
 import usuario.*;
 import solicitud.*;
 import tiempo.DateTimeSimulado;
 import notificacion.*;
-import categoria.*;
-
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;

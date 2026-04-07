@@ -5,7 +5,6 @@ package producto;
  * Se utiliza para clasificar los juegos y facilitar las búsquedas.
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public enum TipoJuegoMesa {
 	/** Juegos de cartas */

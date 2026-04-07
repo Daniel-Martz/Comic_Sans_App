@@ -15,17 +15,36 @@ import aplicacion.*;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class ClienteRegistrado extends Usuario {
+	/** Identificador único para la serialización de la clase. */
+	private static final long serialVersionUID = 1L;
+	
+	/** Preferencias de configuración sobre qué notificaciones desea recibir el cliente. */
 	private Set<NotificacionDeseada> configuracionNotificacionClientees = new HashSet<NotificacionDeseada>();
+	
+	/** Cartera del cliente (gestiona su saldo y sus productos para intercambiar/vender). */
 	private Cartera cartera = new Cartera();
+	
+	/** Carrito de la compra con los productos actualmente seleccionados. */
 	private Carrito carrito = new Carrito();
+	
+	/** Historial de notificaciones y avisos recibidos por el cliente. */
 	private List<NotificacionCliente> notificaciones = new ArrayList<>();
+	
+	/** Historial de los pedidos de compra realizados por el cliente. */
 	private List<SolicitudPedido> pedidos = new ArrayList<>();
+	
+	/** Lista de reseñas y valoraciones escritas por el cliente. */
 	private List<Reseña> reseñas = new ArrayList<>();
+	
+	/** Historial de las ofertas (de compra o intercambio) que este cliente ha enviado. */
 	private List<Oferta> ofertasRealizadas = new ArrayList<>();
+	
+	/** Historial de las ofertas que este cliente ha recibido de otros usuarios. */
 	private List<Oferta> ofertasRecibidas = new ArrayList<>();
+	
+	/** Temáticas, categorías o productos concretos por los que el cliente ha mostrado interés. */
 	private Interes interes = new Interes();
 
 	/**
@@ -537,7 +556,7 @@ public class ClienteRegistrado extends Usuario {
 	
 	/**
 	 * Elimina el pedido
-	 *@param SolicitudPedido el pedido
+	 *@param pedido el pedido
 	 */
   public void eliminarPedido(SolicitudPedido pedido){
     if(Aplicacion.getInstancia().getUsuarioActual() != this){
