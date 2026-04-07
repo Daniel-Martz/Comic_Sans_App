@@ -7,11 +7,14 @@ import producto.*;
 import solicitud.*;
 import notificacion.*;
 import tiempo.DateTimeSimulado;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import solicitud.SolicitudIntercambio;
@@ -20,6 +23,22 @@ import usuario.ClienteRegistrado;
 
 class SolicitudIntercambioTest {
   
+	@BeforeAll
+   public static void resetearSingletons() throws Exception {
+        resetField(ConfiguracionRecomendacion.class, "instancia");
+        resetField(Aplicacion.class,                "instancia");
+        resetField(Catalogo.class,                  "instancia");
+        resetField(GestorSolicitudes.class,         "instancia");
+        resetField(SistemaEstadisticas.class,        "instancia");
+        resetField(SistemaPago.class,                "instancia");
+    }
+
+    private static void resetField(Class<?> clazz, String fieldName) throws Exception {
+        Field f = clazz.getDeclaredField(fieldName);
+        f.setAccessible(true);
+        f.set(null, null);
+    }
+	
 	@Test
   void testAprobarIntercambio() {
 		ClienteRegistrado matteo, rodrigo;

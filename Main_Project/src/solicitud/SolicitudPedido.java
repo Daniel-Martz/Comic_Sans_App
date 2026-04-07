@@ -307,5 +307,23 @@ public class SolicitudPedido extends Solicitud implements Caducable {
       return false;
     }
   }
-
+  
+  @Override
+  public String toString() {
+      StringBuilder sb = new StringBuilder();
+      sb.append("----------------------------------------------------\n");
+      sb.append(String.format("CLIENTE: %-15s | ESTADO: %s\n", 
+                this.cliente.getNombreUsuario(), this.estado));
+      sb.append("Fecha realización: ").append(this.fechaRealizacion.toStringFecha()).append("\n");
+      sb.append("Resumen de productos:\n");
+      
+      for (Map.Entry<LineaProductoVenta, Integer> entry : productosDiferentes.entrySet()) {
+          sb.append(String.format("  > %-30s [x%d]\n", 
+                    entry.getKey().getNombre(), entry.getValue()));
+      }
+      
+      sb.append(String.format("COSTE TOTAL DEL PEDIDO: %.2f €\n", getCostePedido()));
+      sb.append("----------------------------------------------------");
+      return sb.toString();
+  }
 }

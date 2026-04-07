@@ -535,6 +535,10 @@ public class ClienteRegistrado extends Usuario {
 		return prods;
 	}
 	
+	/**
+	 * Elimina el pedido
+	 *@param SolicitudPedido el pedido
+	 */
   public void eliminarPedido(SolicitudPedido pedido){
     if(Aplicacion.getInstancia().getUsuarioActual() != this){
       throw new IllegalStateException("Otro usuario no puede eliminar el pedido de este usuario");
@@ -542,12 +546,15 @@ public class ClienteRegistrado extends Usuario {
     this.pedidos.remove(pedido);
   }	
 
+  /**
+	 * Actualiza el pedido
+	 */
   private void actualizarPedidos(){
     //Actualizamos las ofertas recibidas, eliminando las caducadas
     List<SolicitudPedido> temp = new ArrayList<>();
     for(SolicitudPedido sP : pedidos){
       if(sP.haCaducado() == false){
-        temp.add(sP);
+        temp.add(sP); 
       }else{
         Aplicacion.getInstancia().getGestorSolicitud().eliminarPedido(sP);
       }
