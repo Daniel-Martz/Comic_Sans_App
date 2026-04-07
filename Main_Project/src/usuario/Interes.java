@@ -258,4 +258,19 @@ public class Interes implements Serializable {
 		return normalizado;
 	}
 
+	/**
+	 * @return the rankingInteresCategoriaVenta
+	 */
+	public Map<Categoria, Integer> getRankingInteresCategoriaVenta() {
+		return rankingInteresCategoriaVenta;
+	}
+
+	/**
+	 * @return the rankMaxCat
+	 */
+	public int getRankMaxCat() {
+		return rankMaxCat;
+	}
+
+	
 }

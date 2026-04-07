@@ -1,54 +1,57 @@
 package aplicacion;
 
 import java.util.*;
+import java.util.Map.Entry;
+
 import descuento.*;
 import categoria.*;
 import producto.*;
 import tiempo.DateTimeSimulado;
 import usuario.ClienteRegistrado;
+import usuario.NotificacionDeseada;
 import filtro.*;
+import notificacion.NotificacionProducto;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.*;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class Catalogo.
  */
-public class Catalogo implements Serializable {
+public class Catalogo {
 
 	/** El instancia. */
 	private static Catalogo instancia;
 
 	/** El descuentos. */
 	private Set<Descuento> descuentos = new HashSet<>();
-	
+
 	/** El categorias tienda. */
 	private Set<Categoria> categoriasTienda = new HashSet<>();
-	
+
 	/** El productos nuevos. */
 	private Set<LineaProductoVenta> productosNuevos = new HashSet<>();
-	
+
 	/** El productos segunda mano. */
 	private Set<ProductoSegundaMano> productosSegundaMano = new HashSet<>();
 
 	/** El filtro productos gestion. */
 	// Parametros para busqueda
 	private FiltroVenta filtroProductosGestion = new FiltroVenta(false);
-	
+
 	/** El filtro productos segunda mano. */
 	private FiltroIntercambio filtroProductosSegundaMano = new FiltroIntercambio(false, 0, Double.MAX_VALUE);
-	
+
 	/** El filtro productos venta. */
 	private FiltroVentaCliente filtroProductosVenta = new FiltroVentaCliente(false, 0, 0, 0, 0, false, false);
 
 	/** El primer lanzamiento. */
 	// Parametros para recomendacion por novedad
 	private DateTimeSimulado primerLanzamiento = null;
-	
+
 	/** El ultimo lanzamiento. */
 	private DateTimeSimulado ultimoLanzamiento = null;
 
@@ -112,21 +115,51 @@ public class Catalogo implements Serializable {
 			primerLanzamiento = p.getFechaSubida();
 		}
 		ultimoLanzamiento = p.getFechaSubida();
-		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingNovedad(p);
+		ConfiguracionRecomendacion config = Aplicacion.getInstancia().getConfiguracionRecomendacion();
+		config.actualizarRankingNovedad(p);
+		config.actualizarRankingValoracion(p);
 
-		// Para añadir el producto al ranking de todos los usuarios
+		// Notificar a usuarios interesados y con permisos
+		NotificacionProducto noti = new NotificacionProducto("¡Un nuevo producto que encaja con tus gustos!",
+				new DateTimeSimulado());
+		noti.addProducto(p);
 		for (ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
 			u.getInteres().actualizarInteresNuevoVenta(p);
-		}
 
-		// Para el ranking de valoracion
-		Aplicacion.getInstancia().getConfiguracionRecomendacion().actualizarRankingValoracion(p);
+			// Comprobar si el usuario quiere recibir recomendaciones
+			if (!u.getConfiguracionNotificacionClientees().contains(NotificacionDeseada.RECOMENDACIONES)) {
+				continue;
+			}
+
+			double rankProd = 0;
+			double rankUmbral = u.getInteres().getRankMaxCat();
+
+			// Si el usuario no tiene intereses (umbral 0), evitamos notificar a ciegas
+			if (rankUmbral <= 0)
+				continue;
+
+			// Iteramos sobre las categorías del PRODUCTO (es más eficiente que iterar sobre
+			// el mapa del usuario)
+			for (Categoria cat : p.getCategorias()) {
+				Integer interesCat = u.getInteres().getRankingInteresCategoriaVenta().get(cat);
+
+				if (interesCat != null) {
+					rankProd += interesCat;
+
+					if (rankProd >= rankUmbral) {
+						Aplicacion.getInstancia().enviarNotificacion(u, noti);
+
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	/**
 	 * Añadir pack.
 	 *
-	 * @param pack el pack
+	 * @param pack  el pack
 	 * @param prods el prods
 	 */
 	public void añadirPack(Pack pack, Map<LineaProductoVenta, Integer> prods) {
@@ -191,12 +224,12 @@ public class Catalogo implements Serializable {
 	/**
 	 * Modificar producto.
 	 *
-	 * @param p el p
-	 * @param nuevoNombre el nuevo nombre
+	 * @param p                el p
+	 * @param nuevoNombre      el nuevo nombre
 	 * @param nuevaDescripcion el nueva descripcion
-	 * @param nuevaFoto el nueva foto
-	 * @param nuevoStock el nuevo stock
-	 * @param nuevoPrecio el nuevo precio
+	 * @param nuevaFoto        el nueva foto
+	 * @param nuevoStock       el nuevo stock
+	 * @param nuevoPrecio      el nuevo precio
 	 */
 	public void modificarProducto(LineaProductoVenta p, String nuevoNombre, String nuevaDescripcion, File nuevaFoto,
 			Integer nuevoStock, Double nuevoPrecio) {
@@ -421,7 +454,7 @@ public class Catalogo implements Serializable {
 	/**
 	 * Modificar categoria.
 	 *
-	 * @param c el c
+	 * @param c           el c
 	 * @param nombreNuevo el nombre nuevo
 	 */
 	public void modificarCategoria(Categoria c, String nombreNuevo) {
@@ -467,12 +500,11 @@ public class Catalogo implements Serializable {
 
 		// Un producto no puede tener más de un descuento activo
 		if (p.getDescuento() != null) {
-		    if(p.getDescuento().haCaducado() == true){
-		        eliminarDescuento(d, p);
-		      }
-		    else {
-		    	throw new IllegalStateException("El producto '" + p.getNombre() + "' ya tiene un descuento activo.");
-		    }
+			if (p.getDescuento().haCaducado() == true) {
+				eliminarDescuento(d, p);
+			} else {
+				throw new IllegalStateException("El producto '" + p.getNombre() + "' ya tiene un descuento activo.");
+			}
 		}
 
 		// Si alguna categoría del producto ya tiene descuento, hay conflicto
@@ -484,6 +516,14 @@ public class Catalogo implements Serializable {
 		}
 		p.setDescuento(d);
 		d.añadirProductoRebajado(p);
+		NotificacionProducto noti = new NotificacionProducto(
+				"Aprovecha el descuento en el producto " + p.getNombre() + "!!", new DateTimeSimulado());
+		noti.addProducto(p);
+		for (ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+			if (u.getConfiguracionNotificacionClientees().contains(NotificacionDeseada.DESCUENTOS)) {
+				Aplicacion.getInstancia().enviarNotificacion(u, noti);
+			}
+		}
 	}
 
 	/**
@@ -528,15 +568,14 @@ public class Catalogo implements Serializable {
 		if (!categoriasTienda.contains(c) || !descuentos.contains(d)) {
 			throw new IllegalStateException("El descuento y la categoria debe perternecer al catalogo");
 		}
-    
-    //Vemos si el producto ya tiene un descuento vigente
+
+		// Vemos si el producto ya tiene un descuento vigente
 		if (c.getDescuento() != null) {
-		    if(c.getDescuento().haCaducado() == true){
-		        eliminarDescuento(d, c);
-		      }
-		    else {
-		    	throw new IllegalStateException("La categoría '" + c.getNombre() + "' ya tiene un descuento activo.");
-		    }
+			if (c.getDescuento().haCaducado() == true) {
+				eliminarDescuento(d, c);
+			} else {
+				throw new IllegalStateException("La categoría '" + c.getNombre() + "' ya tiene un descuento activo.");
+			}
 		}
 
 		// Comprobamos que ningún producto de la categoría tenga ya un descuento
@@ -549,6 +588,17 @@ public class Catalogo implements Serializable {
 		}
 		c.añadirDescuento(d);
 		d.añadirCategoria(c);
+		NotificacionProducto noti = new NotificacionProducto(
+				"Aprovecha el descuento en todos los productos de la categoria " + c.getNombre() + "!!",
+				new DateTimeSimulado());
+		for (LineaProductoVenta p : c.obtenerProductosCategoria()) {
+			noti.addProducto(p);
+		}
+		for (ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
+			if (u.getConfiguracionNotificacionClientees().contains(NotificacionDeseada.DESCUENTOS)) {
+				Aplicacion.getInstancia().enviarNotificacion(u, noti);
+			}
+		}
 	}
 
 	/**
@@ -583,8 +633,8 @@ public class Catalogo implements Serializable {
 	 * Cambiar filtro gestion.
 	 *
 	 * @param ordenAscendente el orden ascendente
-	 * @param categorias el categorias
-	 * @param tipos el tipos
+	 * @param categorias      el categorias
+	 * @param tipos           el tipos
 	 */
 	// Métodos filtros
 	public void cambiarFiltroGestion(boolean ordenAscendente, Set<Categoria> categorias, Set<TipoProducto> tipos) {
@@ -594,16 +644,16 @@ public class Catalogo implements Serializable {
 	/**
 	 * Cambiar filtro venta.
 	 *
-	 * @param ordenAscendente el orden ascendente
-	 * @param categorias el categorias
-	 * @param tipos el tipos
-	 * @param puntuacionMin el puntuacion min
-	 * @param puntuacionMax el puntuacion max
-	 * @param precioMin el precio min
-	 * @param precioMax el precio max
-	 * @param ordenarPorPrecio el ordenar por precio
+	 * @param ordenAscendente      el orden ascendente
+	 * @param categorias           el categorias
+	 * @param tipos                el tipos
+	 * @param puntuacionMin        el puntuacion min
+	 * @param puntuacionMax        el puntuacion max
+	 * @param precioMin            el precio min
+	 * @param precioMax            el precio max
+	 * @param ordenarPorPrecio     el ordenar por precio
 	 * @param ordenarPorPuntuacion el ordenar por puntuacion
-	 * @param descuentoFiltrado el descuento filtrado
+	 * @param descuentoFiltrado    el descuento filtrado
 	 */
 	public void cambiarFiltroVenta(boolean ordenAscendente, Set<Categoria> categorias, Set<TipoProducto> tipos,
 			double puntuacionMin, double puntuacionMax, double precioMin, double precioMax, boolean ordenarPorPrecio,
@@ -616,11 +666,12 @@ public class Catalogo implements Serializable {
 	 * Cambiar filtro intercambio.
 	 *
 	 * @param ordenAscendente el orden ascendente
-	 * @param valorMin el valor min
-	 * @param valorMax el valor max
-	 * @param estados el estados
+	 * @param valorMin        el valor min
+	 * @param valorMax        el valor max
+	 * @param estados         el estados
 	 */
-	public void cambiarFiltroIntercambio(boolean ordenAscendente, double valorMin, double valorMax, Set<EstadoConservacion> estados) {
+	public void cambiarFiltroIntercambio(boolean ordenAscendente, double valorMin, double valorMax,
+			Set<EstadoConservacion> estados) {
 		this.filtroProductosSegundaMano.cambiarFiltro(ordenAscendente, valorMin, valorMax, estados);
 	}
 
@@ -938,26 +989,5 @@ public class Catalogo implements Serializable {
 		}
 		return resultado;
 	}
-	
-    // Persist singleton instance on deserialization
-    private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject();
-    }
 
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        instancia = this;
-    }
-
-	@Override
-	public String toString() {
-		return "\n\n\n************CATALOGO DE LA TIENDA************ " +
-        "\nDescuentos de la tienda:\n" + descuentos + "\nCategorias de la tienda:\n" + categoriasTienda + "\nProductos nuevos de la tienda:\n"
-				+ productosNuevos + "\nProductos de segunda mano:\n" + productosSegundaMano + "\nFiltros de productos para los ususarios que los gestionan:\n"
-				+ filtroProductosGestion + "\nFiltros de productos de segunda mano:\n" + filtroProductosSegundaMano
-				+ "\nFiltro de productos nuevos para los clientes:\n" + filtroProductosVenta + "\nPrimer lanzamiento de la tienda:\n" + primerLanzamiento
-				+ "\nUltimo lanzamiento de la tienda:\n" + ultimoLanzamiento + "]";
-	}
-    
-    
- }
+}
