@@ -43,7 +43,7 @@ public class Catalogo implements Serializable {
 	private FiltroIntercambio filtroProductosSegundaMano = new FiltroIntercambio(false, 0, Double.MAX_VALUE);
 
 	/** El filtro productos venta. */
-	private FiltroVentaCliente filtroProductosVenta = new FiltroVentaCliente(false, 0, 0, 0, 0, false, false);
+	private FiltroVentaCliente filtroProductosVenta = new FiltroVentaCliente(false, 0, 5, 0, Double.MAX_VALUE, false, false);
 
 	/** El primer lanzamiento. */
 	// Parametros para recomendacion por novedad
