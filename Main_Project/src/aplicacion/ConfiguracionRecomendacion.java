@@ -209,7 +209,7 @@ public class ConfiguracionRecomendacion {
 	        return new HashSet<>(rankingFinal.keySet());
 	    }
 	    
-	    Set<LineaProductoVenta> recomendacion = new HashSet<>();
+	    Set<LineaProductoVenta> recomendacion = new LinkedHashSet<>();
 	    for(int i = 0; i<unidadesRecomendadas; i++) {
 	    	LineaProductoVenta best = obtenerMejorProducto(rankingFinal);
 	    	rankingFinal.remove(best);
