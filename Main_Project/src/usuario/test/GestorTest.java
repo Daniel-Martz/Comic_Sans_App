@@ -187,7 +187,7 @@ class GestorTest {
         LineaProductoVenta p = new LineaProductoVenta("Prod", "d", new File("f.png"), 100, 10.0);
         c.añadirProductoACarrito(p, 1);
         SolicitudPedido pedido = c.realizarPedido();
-        pedido.añadirPagoPedido(new Pago(new DateTimeSimulado(), 10.0, pedido));
+        c.pagarPedido(pedido, "0123456789012345", "123", new DateTimeSimulado());
         assertDoesNotThrow(() ->
                 e.actualizarEstadoPedido(pedido, EstadoPedido.LISTO_PARA_RECOGER));
     }

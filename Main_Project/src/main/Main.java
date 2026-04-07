@@ -119,6 +119,7 @@ public class Main {
 		app.iniciarSesion("Federico", "123456");
 		List<SolicitudIntercambio> listaIntercambios = GestorSolicitudes.getInstancia().getIntercambios();
 		SolicitudIntercambio sol = listaIntercambios.get(0);
+		System.out.println(federico.getNotificaciones());
 		federico.aprobarIntercambio(sol, codigoMatteo, codigoRodrigo);
 		app.cerrarSesion();
 
@@ -263,7 +264,7 @@ public class Main {
 		System.out.println(rodrigo.getCarrito());
 
 		// Rodrigo crea el pedido a partir del carrito
-		SolicitudPedido pedidoRodrigo = rodrigo.realizarPedido();
+		SolicitudPedido pedidoRodrigo = Aplicacion.getInstancia().crearPedidoAPartirDeCarrito();
 		System.out.println("\nPedido creado:");
 		System.out.println(pedidoRodrigo);
 		System.out.println("Estado del pedido: " + pedidoRodrigo.getEstado());
@@ -271,6 +272,9 @@ public class Main {
 		// Rodrigo paga el pedido
 		rodrigo.pagarPedido(pedidoRodrigo, "1234567890123456", "123", new DateTimeSimulado());
 		System.out.println("\nEstado del pedido tras el pago: " + pedidoRodrigo.getEstado());
+		
+		
+		System.out.println("\nVemos que a Federico le aparece una notificación correspondiente al pedido " + federico.getNotificaciones());
 
 		app.cerrarSesion();
 

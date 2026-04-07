@@ -258,4 +258,11 @@ public class Interes implements Serializable {
 		return normalizado;
 	}
 
+  @Override
+  public String toString() {
+    return "Interes [rankingInteresBusquedaVenta=" + rankingInteresBusquedaVenta + ", rankingInteresCategoriaVenta="
+        + rankingInteresCategoriaVenta + ", rankMaxProd=" + rankMaxProd + ", rankMaxCat=" + rankMaxCat
+        + ", rankMinProd()=" + rankMinProd() + ", rankMinCat()=" + rankMinCat() + "]";
+  }
+
 }

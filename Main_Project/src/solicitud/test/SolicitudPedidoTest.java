@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import aplicacion.Aplicacion;
+import categoria.Categoria;
 
 import java.io.File;
 import java.util.*;
@@ -34,6 +35,9 @@ class SolicitudPedidoTest {
     assertTrue(solicitudPedido.getCostePedido() == 80);
 	}
 
+  /**
+   * Se calcula el coste de un pedido en el caso de que haya un porcentaje de descuento en uno o varios productos
+   */
   @Test
 	void testGetCostePedidoDescuentoRebaja() {
     LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
@@ -49,6 +53,78 @@ class SolicitudPedidoTest {
     solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
 
     assertTrue(solicitudPedido.getCostePedido() == 15);
+	}
+  
+  /**
+   * Se calcula el coste de un pedido en el caso de que haya un porcentaje de descuento en una categoria
+   */
+  @Test
+	void testGetCostePedidoDescuentoRebajaEnCategoria() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    Categoria catDescontada = new Categoria("Diversion");
+    catDescontada.añadirProductoACategoria(prod1);
+    prod1.añadirCategoria(catDescontada);
+    
+    Precio d = new Precio(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 50);
+    d.añadirCategoria(catDescontada);
+    catDescontada.añadirDescuento(d);
+    prods.put(prod1, 1);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+
+    assertTrue(solicitudPedido.getCostePedido() == 15);
+	}
+  
+  /**
+   * Se calcula el coste de un pedido en el caso de que haya un porcentaje de descuento en una categoria pero este haya caducado
+   */
+  @Test
+	void testGetCostePedidoDescuentoRebajaEnCategoriaCaducado() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    Categoria catDescontada = new Categoria("Diversion");
+    catDescontada.añadirProductoACategoria(prod1);
+    prod1.añadirCategoria(catDescontada);
+    
+    Precio d = new Precio(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 50);
+    d.añadirCategoria(catDescontada);
+    catDescontada.añadirDescuento(d);
+    Aplicacion.getInstancia().getCatalogo().añadirCategoria(catDescontada);
+    Aplicacion.getInstancia().getCatalogo().añadirDescuento(d);
+    TiempoSimulado.getInstance().avanzarDias(60);
+    prods.put(prod1, 1);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+
+    assertTrue(solicitudPedido.getCostePedido() == 20);
+	}
+  
+  /**
+   * Se calcula el coste de un pedido en el caso de que haya un porcentaje de descuento en un producto pero el descuento haya caducado
+   */
+  @Test
+	void testGetCostePedidoDescuentoRebajaCaducado() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    
+    Precio d = new Precio(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 50);
+    d.añadirProductoRebajado(prod1);
+    prod1.setDescuento(d);
+    prods.put(prod1, 1);
+    prods.put(pack1, 1);
+    Aplicacion.getInstancia().getCatalogo().añadirDescuento(d);
+    Aplicacion.getInstancia().getCatalogo().añadirProducto(prod1);
+    TiempoSimulado.getInstance().avanzarDias(60);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    assertTrue(solicitudPedido.getCostePedido() == 20);
+	
 	}
 
   /**
@@ -135,42 +211,6 @@ class SolicitudPedidoTest {
    * En este test probaremos que, al comprar productos que tienen un descuento de regalo asociado y NO superar el umbral, NO se añaden los productos regalados
    */
   @Test
-	void testGetCostePedidoDescuentoRebajaRegaloAplicado() {
-    //Creamos los productos
-    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
-    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
-      , 5, 10);
-
-    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
-      , 5, 10);
-    
-    //Regalaremos dos unidades de prod3
-    LineaProductoVenta prod3 = new LineaProductoVenta("Figura", "Figura Pokemon", new File("figura.jpg")
-      , 5, 2);
-    
-    //Creamos el descuento con el producto de regalo y lo asociamos a los productos deseados
-    Map<LineaProductoVenta, Integer> prodsRegalo = new HashMap<>();
-    prodsRegalo.put(prod3, 2);
-    Regalo d = new Regalo(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 100, prodsRegalo);
-    d.añadirProductoRebajado(prod1);
-    d.añadirProductoRebajado(prod2);
-    prod1.setDescuento(d);
-    prod2.setDescuento(d);
-    
-    //Creamos la solicitudPedido
-    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
-    prods.put(prod1, 2);
-    prods.put(prod2, 2);
-    prods.put(pack1, 1);
-    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
-    //Confirmamos que se han pagado 2 productos y se han recibido 3
-    assertTrue(solicitudPedido.getCostePedido() == 50 && solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod3, 2)) == null);
-	}
-
-  /**
-   * En este test probaremos que, al comprar productos que tienen un descuento de regalo asociado y NO superar el umbral, NO se añaden los productos regalados
-   */
-  @Test
 	void testGetCostePedidoDescuentoRegaloNoAplicado() {
     //Creamos los productos
     Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
@@ -206,7 +246,7 @@ class SolicitudPedidoTest {
 
 
   /**
-   * En este test probaremos que, al comprar productos que tienen un descuento de regalo asociado y NO superar el umbral, NO se añaden los productos regalados
+   * En este test probaremos que, al comprar productos que tienen un descuento de rebaja por encima de un umbral y NO superar el umbral, NO se aplica el descuento
    */
   @Test
 	void testGetCostePedidoDescuentoRebajaPorUmbralNoAplicado() {
@@ -236,7 +276,7 @@ class SolicitudPedidoTest {
 	}
 
   /**
-   * En este test probaremos que, al comprar productos que tienen un descuento de regalo asociado y NO superar el umbral, NO se añaden los productos regalados
+   * En este test probaremos que, al comprar productos que tienen un descuento de rebaja por encima de un umbral y superar el umbral, se aplica el descuento
    */
   @Test
 	void testGetCostePedidoDescuentoRebajaPorUmbralAplicado() {
@@ -285,7 +325,9 @@ class SolicitudPedidoTest {
     assertTrue(solicitudPedido.pagado());
 	}
 
-
+  /**
+   * Se prueba que un pedido caduca pasado un tiempo
+   */
   @Test
   void testHaCaducado1(){
     LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")

@@ -166,5 +166,14 @@ public class FiltroVentaCliente extends FiltroVenta {
 			this.descuentoFiltrado.addAll(descuentoFiltrado);
 		}
 	}
+
+  @Override
+  public String toString() {
+    return "FiltroVentaCliente [categoriasFiltradas=" + categoriasFiltradas + ", ordenAscendente=" + ordenAscendente
+        + ", puntuacionMin=" + puntuacionMin + ", puntuacionMax=" + puntuacionMax + ", precioMin=" + precioMin
+        + ", precioMax=" + precioMax + ", ordenarPorPrecio=" + ordenarPorPrecio + ", ordenarPorPuntuacion="
+        + ordenarPorPuntuacion + ", descuentoFiltrado=" + descuentoFiltrado + ", getTipoFiltrado()=" + getTipoFiltrado()
+        + "]";
+  }
 		
 }

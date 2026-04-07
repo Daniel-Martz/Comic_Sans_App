@@ -251,7 +251,9 @@ public class ConfiguracionRecomendacion implements Serializable {
 
 	@Override
 	public String toString() {
-		return "\n\n\n************CONFIGURACIÓN DE RECOMENDACIONES************ " +
+		return "\n\n\n====================================================" +
+            "\n************CONFIGURACIÓN DE RECOMENDACIONES************ " +
+            "\n====================================================" +
             "\nImportancia del interés del usuario:\n" + importanciaInteres + 
             "\nImportancia de las reseñas:\n" + importanciaResena + 
             "\nImportancia de la novedad del producto:\n" + importanciaNovedad + 
@@ -259,5 +261,6 @@ public class ConfiguracionRecomendacion implements Serializable {
             "\nRanking basado en novedad:\n" + rankingNovedad + 
             "\nRanking basado en valoración:\n" + rankingValoracion + 
             "\nValoración máxima permitida:\n" + maxValoracion + "]";
+
 	}
 }

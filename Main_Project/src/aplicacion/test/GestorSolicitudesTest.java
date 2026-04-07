@@ -46,7 +46,10 @@ class GestorSolicitudesTest {
 		return new SolicitudIntercambio("codigo1", "codigo2", "Tienda", oferta);
 	}
 
-	@Test
+	/**
+   * Se comprueba que al añadir un pedido nuevo a la aplicación, esto se hace correctamente
+   */
+  @Test
 	void testAñadirPedidoValido() {
 		GestorSolicitudes gs = GestorSolicitudes.getInstancia();
 		SolicitudPedido pedido = crearPedido();

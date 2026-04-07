@@ -561,4 +561,12 @@ public class ClienteRegistrado extends Usuario {
     }
     this.pedidos = temp;
   }
+
+  @Override
+  public String toString() {
+    return "ClienteRegistrado [nombreUsuario=" + nombreUsuario + ", configuracionNotificacionClientees="
+        + configuracionNotificacionClientees + ", cartera=" + cartera + ", carrito=" + carrito + ", notificaciones="
+        + notificaciones + ", pedidos=" + pedidos + ", reseñas=" + reseñas + ", ofertasRealizadas=" + ofertasRealizadas
+        + ", ofertasRecibidas=" + ofertasRecibidas + ", interes=" + interes + "]";
+  }
 }

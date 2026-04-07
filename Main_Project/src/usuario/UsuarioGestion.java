@@ -199,4 +199,9 @@ public abstract class UsuarioGestion extends Usuario {
 		Aplicacion.getInstancia().getCatalogo().eliminarDescuento(d, categoria);
 		System.out.println("Descuento eliminado de la categoría.");
 	}
+
+  @Override
+  public String toString() {
+    return "UsuarioGestion []";
+  }
 }

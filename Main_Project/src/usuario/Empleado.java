@@ -137,5 +137,11 @@ public class Empleado extends UsuarioGestion {
 	public List<NotificacionEmpleado> getNotificaciones() {
 		return notificaciones;
 	}
-	
+
+  @Override
+  public String toString() {
+    return "Empleado [nombreUsuario=" + nombreUsuario + ", notificaciones=" + notificaciones + ", permisos=" + permisos
+        + "]";
+  }
+  	
 }

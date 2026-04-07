@@ -38,7 +38,7 @@ public class ProductoSegundaMano extends Producto {
 		this.clienteProducto = cliente;
 		this.solicitudValidacion = new SolicitudValidacion(this, cliente);
 
-		Aplicacion.getInstancia().getGestorSolicitud().añadirSolicitudValidacion(solicitudValidacion);
+		Aplicacion.getInstancia().añadirSolicitudValidacion(solicitudValidacion);
 	}
 
 	/**

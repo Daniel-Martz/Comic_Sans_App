@@ -62,4 +62,10 @@ public class FiltroVenta extends Filtro {
 
 	    this.ordenAscendente = ordenAscendente;
 	}
+
+  @Override
+  public String toString() {
+    return "FiltroVenta [categoriasFiltradas=" + categoriasFiltradas + ", ordenAscendente=" + ordenAscendente
+        + ", tipoFiltrado=" + tipoFiltrado + "]";
+  }
 }

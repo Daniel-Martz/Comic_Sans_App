@@ -141,4 +141,11 @@ public class Gestor extends UsuarioGestion {
 		Aplicacion.getInstancia().getSistemaEstadisticas().obtenerGastoClientes(periodoInicio, periodoFin, ficheroSalida);
 		System.out.println("Se ha generado el informe de gasto por clientes en: " + ficheroSalida.getName());
 	}
+
+  @Override
+  public String toString() {
+    return "Gestor []";
+  }
+
+
 }

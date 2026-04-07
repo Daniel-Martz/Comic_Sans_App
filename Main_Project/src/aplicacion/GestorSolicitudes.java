@@ -1,6 +1,8 @@
 package aplicacion;
 
 import java.util.*;
+
+import notificacion.NotificacionEmpleado;
 import producto.*;
 import solicitud.*;
 import java.io.*;
@@ -16,9 +18,12 @@ public class GestorSolicitudes implements Serializable{
  */
   @Override
 	public String toString() {
-		return "\n\n\n************GESTOR DE SOLICITUDES DE la APLICACION************" +
+		return "\n\n\n====================================================" +
+    "\n************GESTOR DE SOLICITUDES DE la APLICACION************" +
+    "\n====================================================" +
     "[\n\nIntercambios" + intercambios + "\n\nPedidos:" + pedidos + "\n\nValidaciones:"
 				+ validaciones + "]";
+
 	}
 
   private static final long serialVersionUID = 1L;

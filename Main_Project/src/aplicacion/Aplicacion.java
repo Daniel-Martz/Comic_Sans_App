@@ -432,7 +432,7 @@ public class Aplicacion implements Serializable {
 	 * @throws IllegalArgumentException si no hay ningún usuario logueado
 	 * @throws IllegalStateException    si el usuario actual no es un cliente registrado
 	 */
-	public void crearPedidoAPartirDeCarrito() {
+	public SolicitudPedido crearPedidoAPartirDeCarrito() {
 		// Comprobamos que el usuario actual sea un cliente registrado
 		if (this.usuarioActual == null) {
 			throw new IllegalArgumentException("No hay ningún usuario logueado.");
@@ -446,12 +446,13 @@ public class Aplicacion implements Serializable {
 		SolicitudPedido pedido = cliente.realizarPedido();
     GestorSolicitudes.getInstancia().añadirPedido(pedido);
     //Notificamos a los empleados de la tienda de que hay un nuevo pedido
-		NotificacionEmpleado notifEmpleado = new NotificacionEmpleado("Hay una nueva solicitud de intercambio en la tienda", new DateTimeSimulado());
+		NotificacionEmpleado notifEmpleado = new NotificacionEmpleado("Hay un nuevo pedido en la tienda", new DateTimeSimulado());
     notifEmpleado.addSolicitud(pedido);
     List<Empleado> lista = this.getEmpleados();
 		for (Empleado e : lista) {
 			e.añadirNotificacion(notifEmpleado);
 		}
+    return pedido;
 	}
 
 	/**
@@ -883,9 +884,20 @@ public class Aplicacion implements Serializable {
    */
   @Override
   public String toString() {
-	return "\nAplicacion: nombre de la aplicación = " + nombre + " \nCriterio de recomendacion de la aplicación = " + criterioRecomendacion + "\nSistema de pago = "
-			+  sistemaEstadisticas + "\nGestor de solicitudes de la aplicación = " + gestorSolicitud
-			+ "\nCatalogo=" + catalogo + "\nUsuarioActual=" + usuarioActual + "\nUsuariosRegistrados="
+	return "\n\nAplicacion: nombre de la aplicación = " + nombre + " \n\nCriterio de recomendacion de la aplicación = " + criterioRecomendacion + "\n\nSistema de pago = "
+			+  sistemaEstadisticas + "\n\nGestor de solicitudes de la aplicación = " + gestorSolicitud
+			+ "\n\nCatalogo=" + catalogo + "\n\nUsuarioActual=" + usuarioActual + "\n\nUsuariosRegistrados="
 			+ usuariosRegistrados + "]";
+  }
+
+  public void añadirSolicitudValidacion(SolicitudValidacion v){
+    this.gestorSolicitud.añadirSolicitudValidacion(v);
+    //Notificamos a los empleados de la tienda de que hay un nuevo validacion por realizar
+		NotificacionEmpleado notifEmpleado = new NotificacionEmpleado("Hay una nueva validación pendiente en la tienda", new DateTimeSimulado());
+    notifEmpleado.addSolicitud(v);
+    List<Empleado> lista = this.getEmpleados();
+		for (Empleado e : lista) {
+			e.añadirNotificacion(notifEmpleado);
+		}
   }
 }

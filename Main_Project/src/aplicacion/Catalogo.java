@@ -951,12 +951,15 @@ public class Catalogo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "\n\n\n************CATALOGO DE LA TIENDA************ " +
+		return "\n\n\n====================================================" +
+        "\n************CATALOGO DE LA TIENDA************ " +
+        "\n====================================================" +
         "\nDescuentos de la tienda:\n" + descuentos + "\nCategorias de la tienda:\n" + categoriasTienda + "\nProductos nuevos de la tienda:\n"
 				+ productosNuevos + "\nProductos de segunda mano:\n" + productosSegundaMano + "\nFiltros de productos para los ususarios que los gestionan:\n"
 				+ filtroProductosGestion + "\nFiltros de productos de segunda mano:\n" + filtroProductosSegundaMano
 				+ "\nFiltro de productos nuevos para los clientes:\n" + filtroProductosVenta + "\nPrimer lanzamiento de la tienda:\n" + primerLanzamiento
 				+ "\nUltimo lanzamiento de la tienda:\n" + ultimoLanzamiento + "]";
+
 	}
     
     

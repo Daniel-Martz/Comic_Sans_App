@@ -326,6 +326,11 @@ public class SistemaEstadisticas implements Serializable{
 
 	@Override
 	public String toString() {
-		return "\n\n\n************SISTEMA DE ESTADISTICAS DE LA APLICACION************ \nPagos:\n" + pagos + "]";
+		return "\n====================================================" +
+    "\n************SISTEMA DE ESTADISTICAS DE LA APLICACION************" +
+    "\n====================================================" + 
+    "\nPagos:\n" + pagos + "]";
+
+
 	}
 }

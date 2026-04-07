@@ -91,5 +91,11 @@ public class FiltroIntercambio extends Filtro {
 			this.estadosFiltrados.addAll(estados);
 		}
 	}
+
+  @Override
+  public String toString() {
+    return "FiltroIntercambio [ordenAscendente=" + ordenAscendente + ", valorMin=" + valorMin + ", valorMax=" + valorMax
+        + ", estadosFiltrados=" + estadosFiltrados + "]";
+  }
 	
 }
