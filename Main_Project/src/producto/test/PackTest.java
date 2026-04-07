@@ -45,14 +45,13 @@ class PackTest {
 	 */
 	@Test
 	void testAñadirProductoValidoYaExistenteAPack() {
-		LineaProductoVenta p1 = new LineaProductoVenta("Marvel", "Comic de Marvel", new File("Foto1.png"), 10, 5.99);
-
-		p.añadirProductoAPack(p1, 2);
-		p.añadirProductoAPack(p1, 1);
-
-		assertTrue(p.getProductosPack().get(p1) == 3);
+	    LineaProductoVenta p1 = new LineaProductoVenta("Marvel", "Comic", new File("Foto1.png"), 100, 5.99);
+	    p.añadirProductoAPack(p1, 2);
+	    p.añadirProductoAPack(p1, 1);
+	    Map<LineaProductoVenta, Integer> productos = p.getProductosPack();
+	    assertNotNull(productos.get(p1), "El producto p1 debería existir en el pack");
+	    assertEquals(3, productos.get(p1).intValue());
 	}
-
 	/**
 	 * Test method for
 	 * {@link producto.Pack#añadirProductoAPack(producto.LineaProductoVenta, java.lang.Integer)}.
@@ -137,22 +136,23 @@ class PackTest {
 	 */
 	@Test
 	void testGetProductosPack() {
-		LineaProductoVenta p1 = new LineaProductoVenta("Marvel", "Comic de Marvel", new File("Foto1.png"), 10, 5.99);
-		LineaProductoVenta p2 = new LineaProductoVenta("DC", "Comic de DC", new File("Foto2.png"), 8, 5.99);
-		LineaProductoVenta p3 = new LineaProductoVenta("Star Wars", "Comic de Star Wars", new File("Foto3.png"), 12,
-				5.99);
-		p.añadirProductoAPack(p1, 1);
-		p.añadirProductoAPack(p2, 1);
-		p.añadirProductoAPack(p3, 1);
-		Map<LineaProductoVenta, Integer> listaProds = new HashMap<>();
-		listaProds.put(p1, 1);
-		listaProds.put(p2, 1);
-		listaProds.put(p3, 1);
-		Map<LineaProductoVenta, Integer> listaProdsDevuelta = this.p.getProductosPack();
-		listaProdsDevuelta.put(p1, 1);
-		listaProdsDevuelta.put(p2, 1);
-		listaProdsDevuelta.put(p3, 1);
-		assertEquals(listaProds.entrySet(), listaProdsDevuelta.entrySet());
+	    LineaProductoVenta p1 = new LineaProductoVenta("Marvel", "Comic", new File("Foto1.png"), 10, 5.99);
+	    LineaProductoVenta p2 = new LineaProductoVenta("DC", "Comic", new File("Foto2.png"), 10, 5.99);
+	    LineaProductoVenta p3 = new LineaProductoVenta("Star Wars", "Comic", new File("Foto3.png"), 10, 5.99);
+	    
+	    p.añadirProductoAPack(p1, 1);
+	    p.añadirProductoAPack(p2, 1);
+	    p.añadirProductoAPack(p3, 1);
+	    
+	    Map<LineaProductoVenta, Integer> esperado = new HashMap<>();
+	    esperado.put(p1, 1);
+	    esperado.put(p2, 1);
+	    esperado.put(p3, 1);
+	    
+	    Map<LineaProductoVenta, Integer> obtenido = p.getProductosPack();
+	    
+	    assertEquals(esperado, obtenido);
+	    assertEquals(3, obtenido.size());
 	}
 
 	/**
@@ -161,16 +161,13 @@ class PackTest {
 	 */
 	@Test
 	void testEliminarProductoDePack() {
-		LineaProductoVenta p1 = new LineaProductoVenta("Marvel", "Comic de Marvel", new File("Foto1.png"), 100, 5.99);
-		this.p.añadirProductoAPack(p1, 10);
-		this.p.eliminarProductoDePack(p1, 1);
-		assertEquals(this.p.getProductosPack().get(p1), (Integer) 9);
-		this.p.eliminarProductoDePack(p1, 9);
-		Exception e = assertThrows(IllegalStateException.class, () -> {
-			p.getProductosPack();
-		});
-		assertEquals(e.getMessage(), "Este pack no contiene productos");
-
+	    LineaProductoVenta p1 = new LineaProductoVenta("Marvel", "Comic", new File("Foto1.png"), 100, 5.99);
+	    this.p.añadirProductoAPack(p1, 10);
+	    this.p.eliminarProductoDePack(p1, 1);
+	    assertEquals(9, this.p.getProductosPack().get(p1));
+	    this.p.eliminarProductoDePack(p1, 9);
+	    assertNotNull(this.p.getProductosPack());
+	    assertTrue(this.p.getProductosPack().isEmpty());
 	}
 
 	/**

@@ -85,7 +85,8 @@ public class Main {
 		// Rodrigo inicia sesion para aceptar la oferta
 		app.iniciarSesion("Rodrigo", "2222");
 		List<Oferta> ofertasRecibidasRodrigo = rodrigo.getOfertasRecibidas();
-		rodrigo.aceptarOferta(ofertasRecibidasRodrigo.get(0));
+		Oferta ofertaAceptar = ofertasRecibidasRodrigo.get(0);
+		rodrigo.aceptarOferta(ofertaAceptar);
 		app.cerrarSesion();
 
 		// Matteo inicia sesion para acceder a sus notificaciones
@@ -314,7 +315,7 @@ public class Main {
 		// PRUEBA DE RECOGIDA DEL PEDIDO
 
 		System.out.println("\n====================================================");
-		System.out.println("          PRUEBA DE RECOGIDA DEL PEDIDO");
+		System.out.println("          PRUEBA PEDIDO A RECOGER");
 		System.out.println("====================================================");
 
 		// Rodrigo inicia sesión para recoger el pedido
@@ -363,10 +364,85 @@ public class Main {
 		}
 
 		app.cerrarSesion();
+		
+		// *********************************************************************************************************
+		// DEMOSTRACIÓN DETALLADA DEL SISTEMA DE RECOMENDACIÓN
+		// *********************************************************************************************************
+		System.out.println("\n====================================================");
+		System.out.println("      DEMOSTRACIÓN SISTEMA DE RECOMENDACIÓN");
+		System.out.println("====================================================");
+
+		// 1. ESCENARIO A: PRIORIDAD NOVEDAD (Configuración por defecto del Gestor)
+		// El gestor configura que lo más importante sea la Novedad (factor 3)
+		app.iniciarSesion("gestor", "@soyElGestor1234!");
+		gestor.configurarImportancia(0, 0, 1); // Solo importa la novedad
+		gestor.configurarUnidadesRecomendadas(1);
+		app.cerrarSesion();
+
+		app.iniciarSesion("Rodrigo", "2222");
+		System.out.println("\n[Escenario A] Prioridad: NOVEDAD");
+		System.out.println("Producto recomendado (debe ser el último añadido al catálogo):");
+		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
+		    System.out.println("-> " + p.getNombre() + " (Fecha: " + p.getFechaSubida().toStringFecha() + ")");
+		}
+		app.cerrarSesion();
+
+		// 2. ESCENARIO B: PRIORIDAD RESEÑAS (Valoración)
+		// Vamos a añadir una reseña excelente a un producto antiguo para que destaque sobre los nuevos
+		app.iniciarSesion("Matteo", "1111");
+		List<LineaProductoVenta> todos = new ArrayList<>(cat.getProductosNuevos());
+		LineaProductoVenta productoAntiguo = todos.get(0); // El primer comic de Spiderman
+		matteo.escribirReseña(productoAntiguo, "Increíble. Es el mejor cómic que he leído", 5, new DateTimeSimulado());
+		app.cerrarSesion();
+
+		app.iniciarSesion("gestor", "@soyElGestor1234!");
+		gestor.configurarImportancia(0, 1, 0); // Solo importan las reseñas
+		app.cerrarSesion();
+
+		app.iniciarSesion("Rodrigo", "2222");
+		System.out.println("\n[Escenario B] Prioridad: RESEÑAS (Valoración)");
+		System.out.println("Producto recomendado (debe ser el que tiene la mejor puntuación media):");
+		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
+		    System.out.println("-> " + p.getNombre() + " (Puntuación: " + p.obtenerPuntuacionMedia() + ")");
+		}
+		app.cerrarSesion();
+
+		// 3. ESCENARIO C: PRIORIDAD INTERÉS (Comportamiento del usuario)
+		// Rodrigo busca mucho un tipo de producto, lo que debe cambiar su recomendación personal
+		app.iniciarSesion("gestor", "@soyElGestor1234!");
+		gestor.configurarImportancia(1, 0, 0); // Solo importa el interés generado por el usuario
+		app.cerrarSesion();
+
+		app.iniciarSesion("Rodrigo", "2222");
+		System.out.println("\n[Escenario C] Prioridad: INTERÉS");
+		System.out.println("Rodrigo va a buscar 'Figuras' repetidamente...");
+		app.buscarProductosNuevos("Figura"); 
+		app.buscarProductosNuevos("Figura");
+
+		System.out.println("Producto recomendado para Rodrigo (debe ser una Figura por su interés de búsqueda):");
+		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
+		    System.out.println("-> " + p.getNombre());
+		}
+
+		// 4. ESCENARIO D: INTERÉS POR CATEGORÍA (Añadir al carrito)
+		// Al añadir al carrito, el interés por la categoría aumenta drásticamente (PESO_CARRITO = 10)
+		System.out.println("\nRodrigo añade un 'Pack' al carrito...");
+		List<LineaProductoVenta> prodsPack = cat.obtenerProductosNuevosGestion("Pack");
+		if(!prodsPack.isEmpty()){
+		    rodrigo.añadirProductoACarrito(prodsPack.get(0), 1);
+		}
+
+		System.out.println("Nueva recomendación tras añadir al carrito (el interés ha evolucionado):");
+		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
+		    System.out.println("-> " + p.getNombre());
+		}
+		app.cerrarSesion();
 
 		System.out.println("\n====================================================");
 		System.out.println("           FIN DE LA DEMOSTRACIÓN");
 		System.out.println("====================================================");
 	}
+	
+	
 
 }
