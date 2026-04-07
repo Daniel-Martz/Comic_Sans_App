@@ -3,6 +3,7 @@ import usuario.*;
 import producto.*;
 import java.util.*;
 import solicitud.*;
+import tiempo.DateTimeSimulado;
 import notificacion.*;
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
@@ -80,9 +81,10 @@ class EmpleadoTest {
     cliente.añadirProductoACarrito(p2, 2);
     cliente.añadirProductoACarrito(pack1, 1);
     SolicitudPedido pedido = cliente.realizarPedido(); 
-	  for(SolicitudPedido s : cliente.getPedidos()){
-      e.actualizarEstadoPedido(s, EstadoPedido.PENDIENTE_DE_PAGO);
-      assertTrue(s.getEstado() == EstadoPedido.PENDIENTE_DE_PAGO);
+    for(SolicitudPedido s : cliente.getPedidos()){
+    	cliente.pagarPedido(s, "0123456789012345", "123", new DateTimeSimulado());
+    	e.actualizarEstadoPedido(s, EstadoPedido.LISTO_PARA_RECOGER);
+		assertTrue(s.getEstado() == EstadoPedido.LISTO_PARA_RECOGER);
     }
 	}
 

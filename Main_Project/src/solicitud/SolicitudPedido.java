@@ -212,6 +212,7 @@ public class SolicitudPedido extends Solicitud implements Caducable {
      */
 	public void añadirPagoPedido(Pago pagoPedido) {
 		this.pagoPedido = pagoPedido;
+
 	}
 
     /**
@@ -238,7 +239,7 @@ public class SolicitudPedido extends Solicitud implements Caducable {
 		if (estado == null) {
 			throw new IllegalArgumentException("El estado no puede ser null");
 		}
-    if(estado == EstadoPedido.PENDIENTE_DE_PAGO){
+    if(this.estado == EstadoPedido.PENDIENTE_DE_PAGO){
       throw new IllegalStateException("El pedido todavía no se ha pagado y no se puede procesar");
     }
 		this.estado = estado;

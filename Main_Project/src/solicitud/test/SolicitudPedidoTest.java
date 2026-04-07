@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import aplicacion.Aplicacion;
+
 import java.io.File;
 import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
@@ -18,9 +21,6 @@ import tiempo.TiempoSimulado;
 
 class SolicitudPedidoTest {
   private SolicitudPedido solicitudPedido = null;
-  @BeforeAll
-  static void prepararTest(){
-      }
 
 	@Test
 	void testGetCostePedido() {
@@ -309,19 +309,18 @@ class SolicitudPedidoTest {
    */
   @Test
   void testHaCaducado2(){
+    ClienteRegistrado cliente = new ClienteRegistrado("Rigoberto", "01122233A", "123456" );
     LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
       , 5, 10);
 
     LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
       , 5, 10);
     
-    //Creamos la solicitudPedido
-    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
-    prods.put(prod1, 2);
-    prods.put(prod2, 2);
-    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
-    solicitudPedido.añadirPagoPedido(new Pago(new DateTimeSimulado(), 10, solicitudPedido));
-    solicitudPedido.actualizarEstado(EstadoPedido.PAGADO);
+    cliente.añadirProductoACarrito(prod1, 2);
+    cliente.añadirProductoACarrito(prod2, 2);
+    solicitudPedido = cliente.realizarPedido();
+    cliente.pagarPedido(solicitudPedido, "0123456789012345", "123", new DateTimeSimulado());
+
     TiempoSimulado.getInstance().avanzarDias(10);
     assertFalse(solicitudPedido.haCaducado());
 
@@ -344,6 +343,39 @@ class SolicitudPedidoTest {
     prods.put(prod2, 2);
     solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
     assertFalse(solicitudPedido.haCaducado());
+
+  }
+  
+  /**
+   * Se prueba que el estado tiene que ser válido
+   */
+  @Test
+  void testActualizarEstado1() {
+	LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 5);
+    prods.put(pack1, 3);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+
+    Exception e = assertThrows(IllegalArgumentException.class, ()->{solicitudPedido.actualizarEstado(null);});
+    assertTrue(e.getMessage() == "El estado no puede ser null");
+
+  }
+
+  /**
+   * Se prueba que el cliente debe haber realizado el pago del pedido para que se pueda cambiar su estado
+   */
+  @Test
+  void testActualizarEstado2() {
+	LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 5);
+    prods.put(pack1, 3);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    Exception e = assertThrows(IllegalStateException.class, ()->{solicitudPedido.actualizarEstado(EstadoPedido.LISTO_PARA_RECOGER);});
+    assertTrue(e.getMessage() == "El pedido todavía no se ha pagado y no se puede procesar");
 
   }
 }

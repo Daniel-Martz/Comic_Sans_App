@@ -9,6 +9,7 @@ import descuento.Descuento;
 import categoria.Categoria;
 import producto.LineaProductoVenta;
 import tiempo.DateTimeSimulado;
+import tiempo.TiempoSimulado;
 
 import java.io.File;
 
@@ -109,5 +110,17 @@ class DescuentoTest {
 	void testEliminarProductoRebajadoNoExistente() {
 		LineaProductoVenta prod = new LineaProductoVenta("Marvel", "Comic", new File("f.png"), 10, 9.99);
 		assertDoesNotThrow(() -> descuento.eliminarProductoRebajado(prod));
+	}
+	
+	@Test 
+	public void testHaCaducado1() {
+		TiempoSimulado.getInstance().avanzarDias(35);
+		assertTrue(descuento.haCaducado());
+	}
+	
+	@Test 
+	public void testHaCaducado2() {
+		TiempoSimulado.getInstance().avanzarDias(5);
+		assertFalse(descuento.haCaducado());
 	}
 }
