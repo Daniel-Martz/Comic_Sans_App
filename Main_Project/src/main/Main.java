@@ -148,15 +148,20 @@ public class Main {
 			System.out.println(excepcionFichero);
 		}
 
-		System.out.println("Categorías de la tienda");
-		System.out.println(cat.getCategoriasTienda());
+		System.out.println("Categorías de la tienda:");
+		for(Categoria c : cat.getCategoriasTienda()) {
+		    System.out.println(" - " + c);
+		}
 
 		// Modificamos una categoria
 		Categoria catThriller = cat.buscarCategoriaPorNombre("Thriller");
 		cat.modificarCategoria(catThriller, "Suspense");
 
 		System.out.println("Categorías (con modificación) de la tienda");
-		System.out.println(cat.getCategoriasTienda());
+		System.out.println("\nCategorías (con modificación) de la tienda:");
+		for(Categoria c : cat.getCategoriasTienda()) {
+		    System.out.println(" - " + c);
+		}
 
 		// Modificamos los datos de un producto
 		List<LineaProductoVenta> prod = cat.obtenerProductosNuevosGestion("Comic de Spiderman Adventures");
@@ -443,6 +448,4 @@ public class Main {
 		System.out.println("====================================================");
 	}
 	
-	
-
 }

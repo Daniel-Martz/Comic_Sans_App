@@ -106,6 +106,9 @@ public class Categoria {
 		this.nombre = nombre;
 	}
     
-    
+	@Override
+	public String toString() {
+	    return this.nombre; // Para que en las listas solo salga el nombre
+	}
     
 }

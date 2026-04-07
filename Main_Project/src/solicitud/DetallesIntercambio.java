@@ -26,4 +26,5 @@ public class DetallesIntercambio {
 		this.fechaIntercambio = fechaIntercambio;
 		this.lugarIntercambio = lugarIntercambio;
 	}
+
 }
