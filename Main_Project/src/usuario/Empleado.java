@@ -127,5 +127,10 @@ public class Empleado extends UsuarioGestion {
 		
 		NotificacionPedido noti = new NotificacionPedido("El estado del pedido se ha actualizado a " + nuevoEstado, new DateTimeSimulado(), p);
 		p.getCliente().anadirNotificacion(noti);
-	} 
+	}
+
+	public List<NotificacionEmpleado> getNotificaciones() {
+		return notificaciones;
+	}
+	
 }
