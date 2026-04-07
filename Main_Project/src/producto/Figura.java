@@ -9,10 +9,10 @@ import java.io.File;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Figura extends LineaProductoVenta {
 
+	private static final long serialVersionUID = 1L;
 	private final String marca;
 	private final String material;
 	private final double dimensionX;

@@ -9,6 +9,7 @@ import tiempo.DateTimeSimulado;
  */
 public class NotificacionPedido extends NotificacionCliente {
 	
+	private static final long serialVersionUID = 1L;
 	/** El pedido asociado a esta notificación. */
 	private Solicitud pedido; 
 	

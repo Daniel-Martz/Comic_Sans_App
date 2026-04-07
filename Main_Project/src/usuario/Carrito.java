@@ -11,10 +11,11 @@ import producto.*;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Carrito implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	/** Mapa que asocia cada producto con su cantidad */
 	private Map<LineaProductoVenta, Integer> productos = new HashMap<>();
 
 	/**

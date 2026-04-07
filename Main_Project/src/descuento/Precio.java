@@ -9,6 +9,7 @@ import tiempo.*;
  */
 public class Precio extends Descuento implements DePorcentaje{
 	
+	private static final long serialVersionUID = 1L;
 	/** El porcentaje de rebaja a aplicar. */
 	private int porcentaje;
 

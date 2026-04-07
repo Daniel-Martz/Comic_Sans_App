@@ -1,7 +1,5 @@
 package notificacion;
 
-import java.util.*;
-import producto.*;
 import solicitud.SolicitudValidacion;
 import tiempo.DateTimeSimulado;
 
@@ -14,6 +12,7 @@ import tiempo.DateTimeSimulado;
  */
 public class NotificacionValidacion extends NotificacionCliente {
 	
+	private static final long serialVersionUID = 1L;
 	/** La solicitud de validación asociada a esta notificación. */
 	private SolicitudValidacion solicitudProductoSegundaMano;
 

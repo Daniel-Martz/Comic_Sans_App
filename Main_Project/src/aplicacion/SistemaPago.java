@@ -4,26 +4,31 @@ import solicitud.*;
 import tiempo.*;
 import java.io.*;
 
-import java.io.Serializable;
-// TODO: Auto-generated Javadoc
 /**
- * The Class SistemaPago.
+ * Sistema encargado de simular el procesamiento de pagos en la aplicación.
+ * Implementa el patrón Singleton para garantizar una única instancia y 
+ * soporta serialización para persistir su estado.
+ * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
+ * @version 1.0
  */
 public class SistemaPago implements Serializable{
 
-	/** El instancia. */
+	/** Identificador único para la serialización de la clase. */
+	private static final long serialVersionUID = 1L;
+	
+	/** Instancia única de la clase (Singleton). */
 	static SistemaPago instancia;
 
 	/**
-	 * Instancia un nuevo sistema pago.
+	 * Constructor privado para evitar la instanciación externa.
 	 */
 	private SistemaPago() {
 	}
 
 	/**
-	 * Devuelve el instancia.
+	 * Obtiene la instancia única de SistemaPago.
 	 *
-	 * @return el instancia
+	 * @return La instancia global del sistema de pago.
 	 */
 	public static SistemaPago getInstancia() {
 		if (instancia == null) {
@@ -33,14 +38,15 @@ public class SistemaPago implements Serializable{
 	}
 
 	/**
-	 * Procesar pago.
+	 * Procesa un pago simulado validando previamente el importe y el formato de la tarjeta.
 	 *
-	 * @param importe el importe
-	 * @param numTarjeta el num tarjeta
-	 * @param cvv el cvv
-	 * @param fechaCaducidad el fecha caducidad
-	 * @param objetoPagado el objeto pagado
-	 * @return el pago
+	 * @param importe Cantidad a cobrar.
+	 * @param numTarjeta Número de la tarjeta de crédito (debe tener 16 caracteres).
+	 * @param cvv Código de seguridad de la tarjeta (debe tener 3 caracteres).
+	 * @param fechaCaducidad Fecha de caducidad de la tarjeta.
+	 * @param objetoPagado Solicitud a la que se asocia el pago.
+	 * @return Un nuevo objeto Pago que representa la transacción completada.
+	 * @throws IllegalArgumentException Si el importe, tarjeta, CVV o fecha son inválidos.
 	 */
 	public Pago procesarPago(double importe, String numTarjeta, String cvv, DateTimeSimulado fechaCaducidad, Solicitud objetoPagado) {
 		
@@ -62,12 +68,8 @@ public class SistemaPago implements Serializable{
 			throw new IllegalArgumentException("La fecha de caducidad no puede ser nula.");
 		}
 
-		DateTimeSimulado hoy = new DateTimeSimulado();
-		int mesActual = hoy.getMes();
-		int anioActual = hoy.getAño(); 
-		
+
 		int mesCaducidad = fechaCaducidad.getMes();
-		int anioCaducidad = fechaCaducidad.getAño();
 
 		// Comprobamos meses menores a 1 y mayores a 12
 		if (mesCaducidad < 1 || mesCaducidad > 12) {
@@ -80,13 +82,23 @@ public class SistemaPago implements Serializable{
 		return p;
 	}
 
-  private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject();
-    }
+	/**
+	 * Personaliza el proceso de serialización.
+	 * @param oos Flujo de salida de objetos.
+	 * @throws IOException Si ocurre un error de entrada/salida.
+	 */
+	private void writeObject(ObjectOutputStream oos) throws IOException {
+	    oos.defaultWriteObject();
+	}
 
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        instancia = this;
-    }
-  
+	/**
+	 * Personaliza el proceso de deserialización para restaurar el Singleton correctamente.
+	 * @param ois Flujo de entrada de objetos.
+	 * @throws IOException Si ocurre un error de lectura.
+	 * @throws ClassNotFoundException Si no se encuentra la clase.
+	 */
+	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+	    ois.defaultReadObject();
+	    instancia = this;
+	}
 }

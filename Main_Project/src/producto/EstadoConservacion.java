@@ -6,7 +6,6 @@ package producto;
  * y determinan, en gran medida, la valoración del producto.
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public enum EstadoConservacion {
 	/** El producto está como nuevo, sin marcas de uso. */

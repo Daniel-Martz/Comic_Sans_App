@@ -13,10 +13,11 @@ import tiempo.DateTimeSimulado;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Gestor extends UsuarioGestion {
 	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Instancia un nuevo gestor.
 	 *

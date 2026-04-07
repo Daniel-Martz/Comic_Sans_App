@@ -9,6 +9,8 @@ import tiempo.*;
  */
 public class Cantidad extends Descuento {
 	
+	private static final long serialVersionUID = 1L;
+
 	/** Número de unidades que el cliente paga para aplicar la promoción. */
 	private int numeroComprados;
 	

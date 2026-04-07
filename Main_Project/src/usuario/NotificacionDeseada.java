@@ -6,7 +6,6 @@ package usuario;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public enum NotificacionDeseada {
 	

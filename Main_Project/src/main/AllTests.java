@@ -11,6 +11,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
     "producto.test", 
     "usuario.test",
     "filtro.test",
+    "notificacion.test",
     "descuento.test",
     "solicitud.test"
     

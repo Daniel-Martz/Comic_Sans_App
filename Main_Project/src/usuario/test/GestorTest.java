@@ -187,11 +187,12 @@ class GestorTest {
         LineaProductoVenta p = new LineaProductoVenta("Prod", "d", new File("f.png"), 100, 10.0);
         c.añadirProductoACarrito(p, 1);
         SolicitudPedido pedido = c.realizarPedido();
-        c.pagarPedido(pedido, "0123456789012345", "123", new DateTimeSimulado());
+        c.pagarPedido(pedido, "1234567891234567","234" , new DateTimeSimulado().diasDespuesDeFecha(10));
+ 
         assertDoesNotThrow(() ->
-                e.actualizarEstadoPedido(pedido, EstadoPedido.LISTO_PARA_RECOGER));
+                e.actualizarEstadoPedido(pedido, EstadoPedido.LISTO_PARA_RECOGER), 
+                "El empleado debería poder actualizar el pedido sin lanzar excepciones");
     }
-
     @Test
     void testEliminarPermisoImpideAccion() {
         Aplicacion app = Aplicacion.getInstancia();

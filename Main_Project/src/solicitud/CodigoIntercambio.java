@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class CodigoIntercambio implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	/** El texto que representa el código de intercambio. */
 	private String codigo;
 	

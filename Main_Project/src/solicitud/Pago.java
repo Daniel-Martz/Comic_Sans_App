@@ -9,11 +9,12 @@ import java.io.Serializable;
  * 
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Pago implements Serializable{
 
-    /**
+    private static final long serialVersionUID = 1L;
+
+	/**
      * Fecha en la que se realizó el pago.
      */
 	private final DateTimeSimulado fechaPago;

@@ -11,6 +11,7 @@ import java.util.*;
  */
 public class NotificacionEmpleado extends Notificacion {
 	
+	private static final long serialVersionUID = 1L;
 	/** Conjunto de solicitudes asociadas a esta notificación. */
 	private Set<Solicitud> solicitudes = new HashSet<>();
 	

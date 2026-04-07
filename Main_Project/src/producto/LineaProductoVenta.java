@@ -13,10 +13,10 @@ import descuento.*;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class LineaProductoVenta extends Producto {
 
+	private static final long serialVersionUID = 1L;
 	protected List<Reseña> reseña = new ArrayList<>();
 	protected Set<Categoria> categorias = new HashSet<>();
 

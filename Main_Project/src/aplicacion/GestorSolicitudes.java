@@ -7,15 +7,18 @@ import producto.*;
 import solicitud.*;
 import java.io.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class GestorSolicitudes.
+ * Gestor centralizado que administra todas las solicitudes de la aplicación.
+ * Gestiona de forma unificada los pedidos, intercambios y validaciones mediante el patrón Singleton.
+ * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
+ * @version 1.0
  */
 public class GestorSolicitudes implements Serializable{
 
-/**
- * Imprime los datos de la clase
- */
+	/**
+	 * Devuelve una representación textual de todas las solicitudes gestionadas.
+	 * @return Cadena de texto con las listas de intercambios, pedidos y validaciones.
+	 */
   @Override
 	public String toString() {
 		return "\n\n\n====================================================" +
@@ -26,31 +29,32 @@ public class GestorSolicitudes implements Serializable{
 
 	}
 
+	/** Identificador único para la serialización de la clase. */
   private static final long serialVersionUID = 1L;
 	
-	/** El instancia. */
+	/** Instancia única de la clase (Singleton). */
 	private static GestorSolicitudes instancia;
 	
-	/** El intercambios. */
+	/** Lista que almacena todas las solicitudes de intercambio del sistema. */
 	private List<SolicitudIntercambio> intercambios = new ArrayList<>();
 	
-	/** El pedidos. */
+	/** Lista que almacena todos los pedidos de compra del sistema. */
 	private List<SolicitudPedido> pedidos = new ArrayList<>();
 	
-	/** El validaciones. */
+	/** Lista que almacena todas las solicitudes de validación de productos. */
 	private List<SolicitudValidacion> validaciones = new ArrayList<>();
 	
 	/**
-	 * Instancia un nuevo gestor solicitudes.
+	 * Constructor privado para evitar la instanciación externa.
 	 */
 	private GestorSolicitudes() {
 		
 	}
 	
 	/**
-	 * Devuelve el instancia.
+	 * Obtiene la instancia única del GestorSolicitudes.
 	 *
-	 * @return el instancia
+	 * @return La instancia global del gestor.
 	 */
 	public static GestorSolicitudes getInstancia() {
 		if(instancia == null)
@@ -61,9 +65,10 @@ public class GestorSolicitudes implements Serializable{
 	}
 
 	/**
-	 * Añadir pedido.
+	 * Registra un nuevo pedido en el sistema.
 	 *
-	 * @param p el p
+	 * @param p el pedido a añadir.
+	 * @throws IllegalArgumentException si el pedido es nulo.
 	 */
 	public void añadirPedido(SolicitudPedido p) {
 		if(p == null)
@@ -74,18 +79,19 @@ public class GestorSolicitudes implements Serializable{
 	}
 	
 	/**
-	 * Eliminar pedido.
+	 * Elimina un pedido del registro del sistema.
 	 *
-	 * @param p el p
+	 * @param p el pedido a eliminar.
 	 */
 	public void eliminarPedido(SolicitudPedido p) {
 		pedidos.remove(p);
 	}
 	
 	/**
-	 * Añadir solicitud intercambio.
+	 * Registra una nueva solicitud de intercambio en el sistema.
 	 *
-	 * @param s el s
+	 * @param s la solicitud de intercambio a añadir.
+	 * @throws IllegalArgumentException si la solicitud es nula.
 	 */
 	public void añadirSolicitudIntercambio(SolicitudIntercambio s)
 	{
@@ -97,9 +103,9 @@ public class GestorSolicitudes implements Serializable{
 	}
 	
 	/**
-	 * Eliminar solicitud intercambio.
+	 * Elimina una solicitud de intercambio del registro del sistema.
 	 *
-	 * @param s el s
+	 * @param s la solicitud de intercambio a eliminar.
 	 */
 	public void eliminarSolicitudIntercambio(SolicitudIntercambio s)
 	{
@@ -107,9 +113,10 @@ public class GestorSolicitudes implements Serializable{
 	}
 	
 	/**
-	 * Añadir solicitud validacion.
+	 * Registra una nueva solicitud de validación en el sistema.
 	 *
-	 * @param s el s
+	 * @param s la solicitud de validación a añadir.
+	 * @throws IllegalArgumentException si la solicitud es nula.
 	 */
 	public void añadirSolicitudValidacion(SolicitudValidacion s)
 	{
@@ -121,27 +128,28 @@ public class GestorSolicitudes implements Serializable{
 	}
 	
 	/**
-	 * Eliminar solicitud validacion.
+	 * Elimina una solicitud de validación del registro del sistema.
 	 *
-	 * @param s el s
+	 * @param s la solicitud de validación a eliminar.
 	 */
 	public void eliminarSolicitudValidacion(SolicitudValidacion s)
 	{
 		validaciones.remove(s);
 	}
-/**
-	 * Devuelve el intercambios.
+
+	/**
+	 * Obtiene la lista completa de intercambios registrados.
 	 *
-	 * @return el intercambios
+	 * @return Lista de solicitudes de intercambio.
 	 */
 	public List<SolicitudIntercambio> getIntercambios() {
 		return intercambios;
 	}
 
 	/**
-	 * Devuelve el intercambios pendientes.
+	 * Obtiene una lista filtrada únicamente con los intercambios que aún no han sido aprobados.
 	 *
-	 * @return el intercambios pendientes
+	 * @return Lista de solicitudes de intercambio pendientes de resolución.
 	 */
 	public List<SolicitudIntercambio> getIntercambiosPendientes() {
 		List<SolicitudIntercambio> intercambiosPendientes = new ArrayList<>();
@@ -156,31 +164,41 @@ public class GestorSolicitudes implements Serializable{
 	}
 	
 	/**
-	 * Devuelve el pedidos.
+	 * Obtiene la lista completa de pedidos registrados.
 	 *
-	 * @return el pedidos
+	 * @return Lista de solicitudes de pedido.
 	 */
 	public List<SolicitudPedido> getPedidos() {
 		return pedidos;
 	}
 
 	/**
-	 * Devuelve el validaciones.
+	 * Obtiene la lista completa de validaciones registradas.
 	 *
-	 * @return el validaciones
+	 * @return Lista de solicitudes de validación.
 	 */
 	public List<SolicitudValidacion> getValidaciones() {
 		return validaciones;
 	}
 	
+	/**
+	 * Personaliza el proceso de serialización para guardar el estado del gestor.
+	 * @param oos stream de salida de objetos.
+	 * @throws IOException si existe un error de escritura.
+	 */
   private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
     }
 
+	/**
+	 * Personaliza el proceso de deserialización para restaurar el Singleton correctamente.
+	 * @param ois stream de entrada de objetos.
+	 * @throws IOException si existe un error de lectura.
+	 * @throws ClassNotFoundException si no se encuentra la clase durante la carga.
+	 */
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
         instancia = this;
     }  
 
 }
-

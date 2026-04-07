@@ -14,11 +14,14 @@ import tiempo.DateTimeSimulado;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Empleado extends UsuarioGestion {
 
+	private static final long serialVersionUID = 1L;
+	/** Historial de notificaciones y avisos dirigidos al empleado. */
 	private List<NotificacionEmpleado> notificaciones = new ArrayList<>();
+	
+	/** Conjunto de permisos asignados que definen a qué secciones o acciones del sistema tiene acceso. */
 	private Set<Permiso> permisos = new HashSet<Permiso>();
 
 	/**

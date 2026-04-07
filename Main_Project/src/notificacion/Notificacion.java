@@ -1,6 +1,5 @@
 package notificacion;
 
-import java.util.*;
 import tiempo.DateTimeSimulado;
 import java.io.*;
 

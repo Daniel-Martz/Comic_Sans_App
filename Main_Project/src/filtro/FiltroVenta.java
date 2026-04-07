@@ -7,10 +7,11 @@ import java.util.*;
  * Clase base para gestionar los criterios de filtrado de productos en venta.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class FiltroVenta extends Filtro {
-	
+	/** Identificador único para la serialización de la clase. */
+	private static final long serialVersionUID = 1L;
+
 	/** Categorías seleccionadas para el filtrado. */
 	protected Set<Categoria> categoriasFiltradas = new HashSet<Categoria>();
 	

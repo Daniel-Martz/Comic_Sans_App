@@ -6,11 +6,12 @@ import tiempo.*;
  * Clase que representa una solicitud de intercambio.
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class SolicitudIntercambio extends Solicitud {
 
-    /**
+    private static final long serialVersionUID = 1L;
+
+	/**
      * Detalles del intercambio, incluyendo fecha y lugar.
      */
 	private DetallesIntercambio informacionIntercambio;

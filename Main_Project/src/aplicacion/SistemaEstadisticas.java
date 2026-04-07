@@ -18,14 +18,35 @@ import tiempo.DateTimeSimulado;
 import tiempo.TiempoSimulado;
 
 import java.io.Serializable;
+
+/**
+ * Sistema centralizado para la gestión y exportación de estadísticas de la aplicación.
+ * Implementa el patrón Singleton y permite la generación de informes en ficheros de texto
+ * sobre recaudación mensual, recaudación por ámbito, ventas por productos y gastos de clientes.
+ * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
+ * @version 1.0
+ */
 public class SistemaEstadisticas implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+
+	/** Instancia única de la clase (Singleton). */
 	private static SistemaEstadisticas instancia;
+	
+	/** Lista que almacena el histórico de todos los pagos registrados en el sistema. */
 	private List<Pago> pagos = new ArrayList<>();
 
+	/**
+	 * Constructor privado para evitar la instanciación externa y garantizar el patrón Singleton.
+	 */
 	private SistemaEstadisticas() {
 	}
 
+	/**
+	 * Obtiene la instancia única del SistemaEstadisticas.
+	 *
+	 * @return la instancia global de las estadísticas.
+	 */
 	public static SistemaEstadisticas getInstancia() {
 		if (instancia == null) {
 			instancia = new SistemaEstadisticas();
@@ -33,12 +54,28 @@ public class SistemaEstadisticas implements Serializable{
 		return instancia;
 	}
 
+	/**
+	 * Añade un nuevo pago al histórico del sistema para futuras estadísticas.
+	 *
+	 * @param p el pago a registrar.
+	 * @throws IllegalArgumentException si el pago introducido es nulo.
+	 */
 	public void añadirPago(Pago p) {
 		if (p == null)
 			throw new IllegalArgumentException("El pago añadido no puede ser null");
 		pagos.add(p);
 	}
 
+	/**
+	 * Genera un informe en un fichero de texto con la recaudación agrupada por meses 
+	 * dentro de un periodo de tiempo determinado.
+	 *
+	 * @param periodoInicio fecha inicial del periodo a evaluar.
+	 * @param periodoFin fecha final del periodo a evaluar.
+	 * @param fichero archivo donde se escribirá el informe generado.
+	 * @throws IOException si ocurre un error de escritura en el fichero.
+	 * @throws IllegalArgumentException si algún parámetro es nulo o si la fecha de inicio es posterior a la de fin.
+	 */
 	public void obtenerRecaudacionMensual(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, File fichero)
 			throws IOException {
 
@@ -90,6 +127,16 @@ public class SistemaEstadisticas implements Serializable{
 		}
 	}
 
+	/**
+	 * Genera un informe detallando la recaudación clasificada por ámbitos o tipos 
+	 * de operación (por ejemplo: Venta de productos vs Validaciones).
+	 *
+	 * @param periodoInicio fecha inicial del periodo a evaluar.
+	 * @param periodoFin fecha final del periodo a evaluar.
+	 * @param fichero archivo donde se guardará el informe.
+	 * @throws IOException si ocurre un error de escritura.
+	 * @throws IllegalArgumentException si los parámetros son nulos o la fecha inicial es mayor a la final.
+	 */
 	public void obtenerRecaudacionAmbito(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, File fichero)
 			throws IOException {
 
@@ -144,6 +191,17 @@ public class SistemaEstadisticas implements Serializable{
 		}
 	}
 
+	/**
+	 * Genera un informe detallado con las ventas realizadas por cada producto de la tienda.
+	 * Permite organizar el documento por IDs de producto o por nivel de recaudación.
+	 *
+	 * @param periodoInicio fecha de inicio de la estadística.
+	 * @param periodoFin fecha de fin de la estadística.
+	 * @param porIds true si se desea ordenar el informe por ID, false para ordenar por mayor recaudación.
+	 * @param fichero archivo de destino para el informe.
+	 * @throws IOException si existe un error al crear o escribir el archivo.
+	 * @throws IllegalArgumentException si los datos proporcionados no son válidos.
+	 */
 	public void obtenerVentasProductos(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, boolean porIds, File fichero)
 			throws IOException {
 
@@ -244,6 +302,16 @@ public class SistemaEstadisticas implements Serializable{
 		}
 	}
 
+	/**
+	 * Genera un informe donde se detalla la cantidad económica aportada por cada cliente.
+	 * Tiene en cuenta los gastos de compra en pedidos y los gastos por tasación o validación.
+	 *
+	 * @param periodoInicio fecha inicial para el registro del gasto.
+	 * @param periodoFin fecha final para el registro del gasto.
+	 * @param fichero ubicación y nombre del archivo de texto a generar.
+	 * @throws IOException si existe algún problema de escritura con el disco.
+	 * @throws IllegalArgumentException si existe algún problema de lógica en los parámetros.
+	 */
 	public void obtenerGastoClientes(DateTimeSimulado periodoInicio, DateTimeSimulado periodoFin, File fichero)
 			throws IOException {
 
@@ -315,15 +383,32 @@ public class SistemaEstadisticas implements Serializable{
 	}
 
     // Persist singleton instance across serialization
+    /**
+     * Define el comportamiento de escritura de la instancia durante la serialización.
+     * @param oos stream de salida donde se guardará el estado de las estadísticas.
+     * @throws IOException si existe algún error de lectura/escritura de los objetos.
+     */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
     }
 
+    /**
+     * Define el comportamiento de recuperación del objeto para mantener la coherencia
+     * del patrón de diseño Singleton.
+     * @param ois stream de entrada desde donde se leerán los objetos de estadísticas.
+     * @throws IOException si existe un problema con el sistema de archivos.
+     * @throws ClassNotFoundException si la clase no existe en el contexto.
+     */
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
         instancia = this;
     }
 
+	/**
+	 * Devuelve una representación en texto del estado del sistema de estadísticas.
+	 *
+	 * @return cadena de texto con la información y registros de pagos del sistema.
+	 */
 	@Override
 	public String toString() {
 		return "\n====================================================" +

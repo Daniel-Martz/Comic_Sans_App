@@ -15,9 +15,10 @@ import producto.LineaProductoVenta;
  *
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Interes implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	/** Peso asignado a una búsqueda de producto. */
 	public static final int PESO_BUSQUEDA = 5;
@@ -34,9 +35,16 @@ public class Interes implements Serializable {
 	/** Factor de división para evitar desbordamiento (Overflow). */
 	public static final int REAUJESTE_OVERFLOW = 2;
 
+	/** Mapa que registra el nivel de interés. */
 	private Map<LineaProductoVenta, Integer> rankingInteresBusquedaVenta = new HashMap<>();
+	
+	/** Mapa que registra el nivel de interés acumulado por cada categoría de productos. */
 	private Map<Categoria, Integer> rankingInteresCategoriaVenta = new HashMap<>();
+	
+	/** Puntuación máxima actual o límite de elementos para el ranking de productos. */
 	private int rankMaxProd;
+	
+	/** Puntuación máxima actual o límite de elementos para el ranking de categorías. */
 	private int rankMaxCat;
 
 	/**
@@ -265,4 +273,20 @@ public class Interes implements Serializable {
         + ", rankMinProd()=" + rankMinProd() + ", rankMinCat()=" + rankMinCat() + "]";
   }
 
+	/**
+	 * Obtiene el registro del nivel de interés acumulado por cada categoría.
+	 * @return Mapa que asocia cada categoría con su respectivo nivel de interés.
+	 */
+	public Map<Categoria, Integer> getRankingInteresCategoriaVenta() {
+		return rankingInteresCategoriaVenta;
+	}
+
+	/**
+	 * Obtiene el valor o límite máximo actual del ranking de categorías.
+	 * @return La puntuación máxima del ranking de categorías.
+	 */
+	public int getRankMaxCat() {
+		return rankMaxCat;
+	}
+	
 }

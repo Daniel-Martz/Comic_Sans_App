@@ -5,11 +5,12 @@ import java.io.Serializable;
  * 
  * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public abstract class Solicitud implements Serializable{
 
-    /**
+    private static final long serialVersionUID = 1L;
+
+	/**
      * Constructor por defecto de la clase Solicitud.
      */
 	public Solicitud() {

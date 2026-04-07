@@ -4,7 +4,6 @@ package filtro;
  * Define los tipos de descuentos disponibles para el filtrado.
  * * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public enum TipoDescuento {
 	/** Descuento por volumen de compra (ej. 3x2). */

@@ -6,10 +6,11 @@ import java.io.File;
  * Representa un cómi para la venta en la tienda.
  * *@author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
- * @date 06-04-2026
  */
 public class Comic extends LineaProductoVenta {
 	
+	private static final long serialVersionUID = 1L;
+
 	/** Cantidad total de páginas del ejemplar. */
 	private final int numeroPaginas;
 	

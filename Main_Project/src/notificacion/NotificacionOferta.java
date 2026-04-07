@@ -1,7 +1,6 @@
 package notificacion;
 
 import solicitud.*;
-import java.util.*;
 import tiempo.DateTimeSimulado;
 
 /**
@@ -11,6 +10,7 @@ import tiempo.DateTimeSimulado;
  */
 public class NotificacionOferta extends NotificacionCliente {
 
+	private static final long serialVersionUID = 1L;
 	/** La oferta vinculada a esta notificación. */
 	private Oferta oferta;
 	

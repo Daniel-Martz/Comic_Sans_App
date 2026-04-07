@@ -11,6 +11,8 @@ import java.io.Serializable;
  */
 public class DetallesIntercambio implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	/** Fecha en la que se realizara o se acordo el intercambio. */
 	private DateTimeSimulado fechaIntercambio;
 	

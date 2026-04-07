@@ -9,6 +9,7 @@ import tiempo.*;
  */
 public abstract class UmbralGasto extends Descuento {
 	
+	private static final long serialVersionUID = 1L;
 	/** Cantidad mínima de dinero que se debe gastar para que el descuento sea aplicable. */
 	private double umbral;
 	
