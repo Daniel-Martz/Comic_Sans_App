@@ -259,7 +259,7 @@ public class ClienteRegistrado extends Usuario {
     this.ofertasRecibidas = temp;
 
     //Actualizamos las ofertas realizadas, eliminando las caducadas
-    temp.clear();
+    temp = new ArrayList<>();
     for(Oferta o : ofertasRealizadas){
       if(o.haCaducado() == false){
         temp.add(o);
