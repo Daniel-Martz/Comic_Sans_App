@@ -326,6 +326,6 @@ public class SistemaEstadisticas implements Serializable{
 
 	@Override
 	public String toString() {
-		return "SistemaEstadisticas [pagos=" + pagos + "]";
+		return "\n\n\n************SISTEMA DE ESTADISTICAS DE LA APLICACION************ \nPagos:\n" + pagos + "]";
 	}
 }

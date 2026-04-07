@@ -16,7 +16,8 @@ public class GestorSolicitudes implements Serializable{
  */
   @Override
 	public String toString() {
-		return "GestorSolicitudes [intercambios=" + intercambios + ", pedidos=" + pedidos + ", validaciones="
+		return "\n\n\n************GESTOR DE SOLICITUDES DE la APLICACION************" +
+    "[\n\nIntercambios" + intercambios + "\n\nPedidos:" + pedidos + "\n\nValidaciones:"
 				+ validaciones + "]";
 	}
 

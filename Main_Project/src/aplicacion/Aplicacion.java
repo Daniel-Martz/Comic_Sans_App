@@ -883,7 +883,7 @@ public class Aplicacion implements Serializable {
    */
   @Override
   public String toString() {
-	return "Aplicacion \nNombre de la aplicación = " + nombre + " \nCriterio de recomendacion de la aplicación = " + criterioRecomendacion + "\nSistema de pago = "
+	return "\nAplicacion: nombre de la aplicación = " + nombre + " \nCriterio de recomendacion de la aplicación = " + criterioRecomendacion + "\nSistema de pago = "
 			+  sistemaEstadisticas + "\nGestor de solicitudes de la aplicación = " + gestorSolicitud
 			+ "\nCatalogo=" + catalogo + "\nUsuarioActual=" + usuarioActual + "\nUsuariosRegistrados="
 			+ usuariosRegistrados + "]";
