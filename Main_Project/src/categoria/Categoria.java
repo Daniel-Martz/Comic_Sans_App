@@ -78,7 +78,11 @@ public class Categoria {
      * @param prod el producto que queremos que pertenezca a la categoría
      */
     public void añadirProductoACategoria(LineaProductoVenta prod) {
-    	this.productosCategoria.add(prod);
+        if (this.productosCategoria.contains(prod)) {
+            return; 
+        }
+        this.productosCategoria.add(prod);
+        prod.añadirCategoria(this);
     }
 
     /**

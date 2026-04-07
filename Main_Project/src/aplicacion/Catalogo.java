@@ -464,13 +464,14 @@ public class Catalogo {
 			throw new IllegalStateException("El producto y el descuento debe perternecer al catalogo");
 		}
 
-    if(p.getDescuento().haCaducado() == true){
-      eliminarDescuento(d, p);
-    }
-
 		// Un producto no puede tener más de un descuento activo
 		if (p.getDescuento() != null) {
-			throw new IllegalStateException("El producto '" + p.getNombre() + "' ya tiene un descuento activo.");
+		    if(p.getDescuento().haCaducado() == true){
+		        eliminarDescuento(d, p);
+		      }
+		    else {
+		    	throw new IllegalStateException("El producto '" + p.getNombre() + "' ya tiene un descuento activo.");
+		    }
 		}
 
 		// Si alguna categoría del producto ya tiene descuento, hay conflicto
@@ -526,14 +527,15 @@ public class Catalogo {
 		if (!categoriasTienda.contains(c) || !descuentos.contains(d)) {
 			throw new IllegalStateException("El descuento y la categoria debe perternecer al catalogo");
 		}
-
-    if(c.getDescuento().haCaducado() == true){
-      eliminarDescuento(d, c);
-    }
     
     //Vemos si el producto ya tiene un descuento vigente
 		if (c.getDescuento() != null) {
-			throw new IllegalStateException("La categoría '" + c.getNombre() + "' ya tiene un descuento activo.");
+		    if(c.getDescuento().haCaducado() == true){
+		        eliminarDescuento(d, c);
+		      }
+		    else {
+		    	throw new IllegalStateException("La categoría '" + c.getNombre() + "' ya tiene un descuento activo.");
+		    }
 		}
 
 		// Comprobamos que ningún producto de la categoría tenga ya un descuento

@@ -390,26 +390,40 @@ class ConfiguracionRecomendacionTest {
     void testBusquedaActualizaInteresYAfectaRecomendacion() {
         Aplicacion app = Aplicacion.getInstancia();
         Catalogo cat = app.getCatalogo();
+        TiempoSimulado tiempo = TiempoSimulado.getInstance();
 
+        // 1. Creamos y añadimos el primer producto
         LineaProductoVenta pBuscado  = new LineaProductoVenta("Figura Goku",  "d", new File("f.png"), 10, 20.0);
-        LineaProductoVenta pNoBuscado = new LineaProductoVenta("Comic Marvel", "d", new File("f.png"), 10, 10.0);
         cat.añadirProducto(pBuscado);
+
+        // 2. Avanzamos el tiempo para que el siguiente producto tenga una fecha de subida distinta
+        tiempo.avanzarDias(1);
+
+        // 3. Creamos y añadimos el segundo producto (ahora tendrá una fecha posterior)
+        LineaProductoVenta pNoBuscado = new LineaProductoVenta("Comic Marvel", "d", new File("f.png"), 10, 10.0);
         cat.añadirProducto(pNoBuscado);
 
-        // Solo el interés (búsquedas) importa
+        // Solo el interés (búsquedas) importa en esta configuración
         app.getConfiguracionRecomendacion().configurarImportancia(1, 0, 0);
         app.getConfiguracionRecomendacion().configurarUnidades(1);
 
         app.crearCuenta("ClienteH", "888888888H", "1234");
         app.iniciarSesion("ClienteH", "1234");
 
-        // Buscar varias veces el producto para acumular interés
+        // Buscar varias veces el producto para acumular interés (PESO_BUSQUEDA = 5)
         app.buscarProductosNuevos("Figura Goku");
         app.buscarProductosNuevos("Figura Goku");
 
         Set<LineaProductoVenta> rec = app.getConfiguracionRecomendacion().getRecomendacion();
+        
+        // Verificaciones
+        assertFalse(rec.isEmpty(), "La recomendación no debería estar vacía");
+        assertEquals(1, rec.size(), "Debería recomendar exactamente 1 unidad");
         assertTrue(rec.contains(pBuscado),
                 "El producto más buscado debe aparecer en la recomendación de interés");
+                
         app.cerrarSesion();
     }
+    
+    
 }

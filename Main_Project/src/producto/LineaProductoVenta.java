@@ -47,7 +47,11 @@ public class LineaProductoVenta extends Producto {
 	 * @param categoria categoría a añadir
 	 */
 	public void añadirCategoria(Categoria categoria) {
-		this.categorias.add(categoria);
+	    if (this.categorias.contains(categoria)) {
+	        return;
+	    }
+	    this.categorias.add(categoria);
+	    categoria.añadirProductoACategoria(this);
 	}
 
 	/**
