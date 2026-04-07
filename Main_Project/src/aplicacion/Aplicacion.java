@@ -253,14 +253,15 @@ public class Aplicacion implements Serializable {
 		}
 
 		for (Usuario u : usuariosRegistrados) {
-			if (u.getNombreUsuario().equals(nombreUsuario) && u.verificarContraseña(contraseña)) {
-				this.usuarioActual = u;
-				System.out.println("Sesión iniciada con éxito. Bienvenido, " + nombreUsuario);
-				return;
-			}
-		}
-
-		throw new IllegalArgumentException("Usuario o contraseña incorrectos.");
+	        if (u.getNombreUsuario().equals(nombreUsuario)) {
+	            if (u.verificarContraseña(contraseña)) {
+	                this.usuarioActual = u;
+	                return;
+	            }
+	            break; // Si el usuario coincide pero la pass no, dejamos de buscar
+	        }
+	    }
+	    throw new IllegalArgumentException("Usuario o contraseña incorrectos.");
 	}
 
 	/**
