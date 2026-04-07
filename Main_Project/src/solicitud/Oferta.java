@@ -120,4 +120,31 @@ public class Oferta implements Caducable{
       return false;
     }
   }
+  
+  @Override
+  public String toString() {
+      StringBuilder sb = new StringBuilder();
+      sb.append("===== OFERTA DE INTERCAMBIO =====\n");
+      sb.append(String.format("De: %s  --->  Para: %s\n", 
+                ofertante.getNombreUsuario(), destinatario.getNombreUsuario()));
+      sb.append("Fecha: ").append(this.fechaRealizacion.toStringFecha()).append("\n");
+      
+      sb.append("Productos que ofrece ").append(ofertante.getNombreUsuario()).append(":\n");
+      for (producto.ProductoSegundaMano p : productosOfertados) {
+          sb.append("  [+] ").append(p.getNombre()).append("\n");
+      }
+      
+      sb.append("Productos que solicita a ").append(destinatario.getNombreUsuario()).append(":\n");
+      for (producto.ProductoSegundaMano p : productosSolicitados) {
+          sb.append("  [-] ").append(p.getNombre()).append("\n");
+      }
+      
+      if (this.haCaducado()) {
+          sb.append("ESTADO: CADUCADA\n");
+      } else {
+          sb.append("ESTADO: VIGENTE\n");
+      }
+      sb.append("=================================");
+      return sb.toString();
+  }
 }
