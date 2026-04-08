@@ -71,17 +71,17 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 //	        throw new IllegalArgumentException("El día no puede ser anterior al actual");
 //	    }
 	    
-	    if (año == instancia.getAño() && mes == instancia.getMes() && dia == instancia.getDia()) {
-	        if (hora < instancia.getHora()) {
-	            throw new IllegalArgumentException("La hora ya ha pasado");
-	        }
-	        if (hora == instancia.getHora() && minuto < instancia.getMinuto()) {
-	            throw new IllegalArgumentException("El minuto ya ha pasado");
-	        }
-	        if (hora == instancia.getHora() && minuto == instancia.getMinuto() && segundo < instancia.getSegundo()) {
-	            throw new IllegalArgumentException("El segundo ya ha pasado");
-	        }
-	    }
+//	    if (año == instancia.getAño() && mes == instancia.getMes() && dia == instancia.getDia()) {
+//	        if (hora < instancia.getHora()) {
+//	            throw new IllegalArgumentException("La hora ya ha pasado");
+//	        }
+//	        if (hora == instancia.getHora() && minuto < instancia.getMinuto()) {
+//	            throw new IllegalArgumentException("El minuto ya ha pasado");
+//	        }
+//	        if (hora == instancia.getHora() && minuto == instancia.getMinuto() && segundo < instancia.getSegundo()) {
+//	            throw new IllegalArgumentException("El segundo ya ha pasado");
+//	        }
+//	    }
 
 	    // Si todas las comprobaciones pasan, asignamos los valores
 	    this.año = año;
