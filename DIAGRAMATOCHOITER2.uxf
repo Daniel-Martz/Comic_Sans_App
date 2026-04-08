@@ -1853,10 +1853,10 @@ bg=white</panel_attributes>
 -precio: double
 -unidadesVendidas: int
 --
-+añadirCategoria(cat: Categoria): boolean
-+eliminarCategoria(c: Categoria): boolean
-+añadirReseña(descripcion: String, puntuacion: double, fecha: Date): boolean
-+eliminarReseña(r: Reseña): boolean
++añadirCategoria(cat: Categoria): void
++eliminarCategoria(c: Categoria): void
++añadirReseña(descripcion: String, puntuacion: double, fecha: Date): void
++eliminarReseña(r: Reseña): void
 +obtenerPuntuacionMedia(): double
 +pasaFiltro(filtro: FiltroVenta, prompt: String): boolean
 
@@ -1893,7 +1893,7 @@ bg=white
     <coordinates>
       <x>5412</x>
       <y>2904</y>
-      <w>294</w>
+      <w>300</w>
       <h>102</h>
     </coordinates>
     <panel_attributes>ProductoSegundaMano
@@ -2887,14 +2887,14 @@ m1=estado</panel_attributes>
     <coordinates>
       <x>5256</x>
       <y>5220</y>
-      <w>78</w>
+      <w>84</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;
 r2=cliente
 r1= pedidos
 m1=*</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0;70.0;60.0;70.0;180.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0;80.0;60.0;80.0;180.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -2949,7 +2949,7 @@ bg=white</panel_attributes>
     <coordinates>
       <x>4482</x>
       <y>5226</y>
-      <w>426</w>
+      <w>438</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>SolicitudValidacion
@@ -2981,7 +2981,7 @@ r1=solicitudValidacion
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4902</x>
+      <x>4914</x>
       <y>5196</y>
       <w>84</w>
       <h>72</h>
@@ -3504,7 +3504,7 @@ bg=DARK_GRAY</panel_attributes>
     <coordinates>
       <x>5538</x>
       <y>864</y>
-      <w>1182</w>
+      <w>1218</w>
       <h>378</h>
     </coordinates>
     <panel_attributes>Catalogo
@@ -3903,16 +3903,16 @@ r2=estadoConservacion</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>5700</x>
+      <x>5706</x>
       <y>2934</y>
-      <w>114</w>
+      <w>108</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 r1=datosValidacion
 m1=0..1
 </panel_attributes>
-    <additional_attributes>170.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -3954,8 +3954,11 @@ m1=pedido</panel_attributes>
     <panel_attributes>/Usuario/
 --
 -dni: String
--password: String
--username: String
+-nombreUsuario: String
+-hashContraseña: String
+-sal: byte[]
+--
++verificarContraseña(contraseñaIntroducida: String): boolean
 
 
 layer=1
@@ -3966,7 +3969,7 @@ bg=white
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>5808</x>
+      <x>5862</x>
       <y>1698</y>
       <w>444</w>
       <h>84</h>
@@ -3984,30 +3987,30 @@ bg=white
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>5400</x>
+      <x>5268</x>
       <y>1638</y>
-      <w>336</w>
-      <h>246</h>
+      <w>558</w>
+      <h>210</h>
     </coordinates>
     <panel_attributes>/UsuarioGestion/
 --
 #Métodos para los productos
-+añadirProducto(p: LineaProductoVenta): boolean
-+añadirPack(pack: LineaProductoVenta, prods: ProductoVenta[2..*]): boolean
-+eliminarProducto(p: LineaProductoVenta): boolean
-+añadirProductosDesdeFichero(f: File): boolean
-+modificarProducto(p:LineaProducto): boolean
++añadirProducto(nombre: String, desc: String, foto: File, stock: Integer, precio: Double): LineaProductoVenta
++añadirPack(nombre: String, desc: String, foto: File, stock: Integer, precio: Double, prods: Map&lt;LineaProductoVenta, Integer&gt;): Pack
++eliminarProducto(producto: LineaProductoVenta): void
++añadirProductosDesdeFichero(f: File): List&lt;LineaProductoVenta&gt;
++modificarProducto(p: LineaProductoVenta, nombre: String, desc: String, stock: Integer, precio: Double, foto: File): void
 
 #Métodos para las categorías
-+añadirCategoria(c: Categoria): boolean
-+eliminarCategoria(c: Categoria): boolean
-+modificarCategoria(c: Categoria, nuevoNombre: String): boolean
++añadirCategoria(nombre: String): void
++eliminarCategoria(c: Categoria): void
++modificarCategoria(c: Categoria, nombreNuevo: String): void
 
 #Métodos para los descuentos
-+aplicarDescuento(p: LineaProductoVenta, d: Descuento): boolean
-+eliminarDescuentoAProducto(p: LineaProductoVenta, d: Descuento): boolean
-+eliminarDescuento(d: Descuento): boolean
-
++aplicarDescuento(d: Descuento, productos: Set&lt;LineaProductoVenta&gt;, categorias: Set&lt;Categoria&gt;): void
++eliminarDescuento(d: Descuento): void
++eliminarDescuentoProducto(d: Descuento, producto: LineaProductoVenta): void
++eliminarDescuentoCategoria(d: Descuento, categoria: Categoria): void
 
 layer=1
 bg=white
@@ -4018,27 +4021,37 @@ bg=white
     <id>UMLClass</id>
     <coordinates>
       <x>5604</x>
-      <y>1914</y>
-      <w>474</w>
-      <h>192</h>
+      <y>1908</y>
+      <w>492</w>
+      <h>258</h>
     </coordinates>
     <panel_attributes>Gestor
 --
 #Métodos para la gestión de empleados
-+crearEmpleado(username: String, dni: String): e:empleado
-+eliminarEmpleado(e: Empleado): boolean
-+añadirPermisoEmpleado(e: Empleado, permiso: Permiso): boolean
-+eliminarPermisoEmpleado(e: Empleado, permiso: Permiso): boolean
++crearEmpleado(username: String, dni: String): Empleado
++eliminarEmpleado(e: Empleado): void
++añadirPermisoEmpleado(e: Empleado, p: Permiso): void
++eliminarPermisoEmpleado(e: Empleado, p: Permiso): void
 
 #Métodos para el sistema de recomendaciones
-+configurarImportancia(interes: int, reseña: int,novedad: int): void
-+configurarNProductosRecomendados(nProductos: int): void
++configurarImportancia(interes: int, reseña: int, novedad: int): void
++configurarNProductosRecomendados(n: int): void
 
-#Metodos sobre estadisticas
-+estadisticasRecaudacion(periodoInicio: Date, periodoFin: Date, porMes: boolean): Map&lt;String, double&gt; 
-+estadisticasVentasProductos(periodoInicio: Date, periodoFin: Date): Map&lt;LineaProductoVenta, int&gt; {ordered}
-+estadisticasGastoClientes(periodoInicio: Date, periodoFin: Date): Map&lt;ClienteRegistrado, double&gt; {ordered}
+#Métodos sobre estadísticas
++estadisticasRecaudacion(inicio: Date, fin: Date, porMes: boolean): Map&lt;String, double&gt;
++estadisticasVentasProductos(inicio: Date, fin: Date): Map&lt;LineaProductoVenta, int&gt; {ordered}
++estadisticasGastoClientes(inicio: Date, fin: Date): Map&lt;ClienteRegistrado, double&gt; {ordered}
 
+#Métodos de permisos y notificaciones (Internos)
++añadirPermiso(p: Permiso): void
++eliminarPermiso(p: Permiso): void
++añadirNotificacion(n: NotificacionEmpleado): void
++eliminarNotificacion(n: NotificacionEmpleado): void
+
+#Métodos operativos (Gestión)
++aprobarIntercambio(s: SolicitudIntercambio, codOfertante: String, codDestinatario: String): void
++validarProducto(s: SolicitudValidacion, pValidacion: double, pProducto: double, estado: EstadoConservacion): void
++actualizarEstadoPedido(p: SolicitudPedido, nuevoEstado: EstadoPedido): void
 layer=1
 bg=white
 </panel_attributes>
@@ -4048,59 +4061,70 @@ bg=white
     <id>Relation</id>
     <coordinates>
       <x>5502</x>
-      <y>1878</y>
+      <y>1842</y>
       <w>114</w>
-      <h>102</h>
+      <h>138</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;150.0;170.0;150.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0;170.0;210.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>5730</x>
+      <x>5820</x>
       <y>1722</y>
-      <w>90</w>
+      <w>54</w>
       <h>18</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>4674</x>
-      <y>1824</y>
-      <w>564</w>
-      <h>276</h>
+      <x>4650</x>
+      <y>1764</y>
+      <w>612</w>
+      <h>372</h>
     </coordinates>
     <panel_attributes>ClienteRegistrado
 --
+#Métodos de estadísticas y gastos
 +getGastoTotal(): double
++getGastoTotalValidaciones(): double
 
-+añadirProductoACarrito(p:ProductoVenta): boolean
-+eliminarProductoDelCarrito(p:ProductoVenta):boolean
+#Métodos de carrito de compra
++añadirProductoACarrito(p: LineaProductoVenta, cantidad: Integer): void
++eliminarProductoDelCarrito(p: LineaProductoVenta, cantidad: Integer): void
 
-+añadirProductoACarteraDeIntercambio(p:ProductoIntercambio): boolean
-+eliminarProductoACarteraDeIntercambio(p:ProductoIntercambio): boolean
+#Métodos de pedidos y pagos
++realizarPedido(): SolicitudPedido
++pagarPedido(pedido: SolicitudPedido, numTarjeta: String, cvv: String, fechaCaducidad: DateTimeSimulado): void
++cancelarPedido(p: SolicitudPedido, u: Usuario): void
++eliminarPedido(pedido: SolicitudPedido): void
+-actualizarPedidos(): void
++pagarValidacion(s: SolicitudValidacion, numTarjeta: int, cvv: int, fechaCaducidad: DateTimeSimulado): Pago
 
-+añadirOfertaRecibida(of: Oferta): boolean
-+aceptarOferta(of: Oferta): boolean
-+rechazarOferta(of: Oferta): boolean
-+realizarOferta(productosOfertados: PorductoIntercambio[*], productosRecibidos: PorductoIntercambio[*], destinatario:Usuario): boolean
+#Métodos de cartera e intercambio
++añadirProductoACarteraDeIntercambio(nombre: String, descripcion: String, imagen: File): ProductoSegundaMano
++eliminarProductoACarteraDeIntercambio(p: ProductoIntercambio): void
 
-+escribirReseña(p: ProductoVenta, descripcion: String, puntuacion: double, fecha: Date)
-#escrbir reseña llama a añadirReseña del paquete de Producto
+#Métodos de ofertas
++realizarOferta(productosOfertados: ProductoSegundaMano[], productosRecibidos: ProductoSegundaMano[], destinatario: ClienteRegistrado): Oferta
++recibirOferta(of: Oferta): void
++aceptarOferta(of: Oferta): void
++rechazarOferta(of: Oferta): void
++eliminarOferta(of: Oferta): void
+-actualizarOfertas(): void
+
+#Métodos de reseñas
++escribirReseña(p: LineaProductoVenta, descripcion: String, puntuacion: double, fecha: DateTimeSimulado)
 +eliminarrReseña(r: Reseña): boolean
 
-+borrarNotificacion(notif: NotificacionUsuario);
-+añadirNotificacion(notif: NotificacionUsuario);
-
-+pagarPedido(p: SolicitudPedido, numTarjeta: int, cvv: int, mesCaducidad: int, añoCaducidad): boolean
-+pagarValidacion(s: SolicitudValidacion, numTarjeta: int, cvv: int, mesCaducidad: int, añoCaducidad): boolean
-
-+cancelarPedido(p:SolicitudPedido, u:Usuario): boolean
-+realizarPedido(): boolean
+#Métodos de notificaciones
++añadirNotificacion(notif: NotificacionCliente): void
++borrarNotificacion(notif: NotificacionCliente): void
++eliminarNotificacionPorId(id: Integer): void
 
 layer=1
 bg=white
@@ -4113,21 +4137,21 @@ bg=white
       <x>4920</x>
       <y>1662</y>
       <w>144</w>
-      <h>174</h>
+      <h>114</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>220.0;10.0;220.0;100.0;10.0;100.0;10.0;270.0</additional_attributes>
+    <additional_attributes>220.0;10.0;220.0;100.0;10.0;100.0;10.0;170.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>5112</x>
       <y>1662</y>
-      <w>300</w>
+      <w>168</w>
       <h>66</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0;480.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0;260.0;90.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -4151,26 +4175,26 @@ bg=white
     <id>Relation</id>
     <coordinates>
       <x>4710</x>
-      <y>2094</y>
+      <y>2130</y>
       <w>48</w>
-      <h>204</h>
+      <h>168</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=*
 r1=historial</panel_attributes>
-    <additional_attributes>10.0;320.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;260.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>5088</x>
-      <y>2094</y>
+      <y>2130</y>
       <w>48</w>
-      <h>162</h>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=cartera</panel_attributes>
-    <additional_attributes>10.0;250.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;190.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -4194,12 +4218,12 @@ bg=white
     <id>UMLClass</id>
     <coordinates>
       <x>4728</x>
-      <y>2148</y>
+      <y>2154</y>
       <w>138</w>
       <h>42</h>
     </coordinates>
     <panel_attributes>/from package Notifcacion/
-/NotificacionUsuario/
+/NotificacionCliente/
 --
 
 layer=1
@@ -4233,38 +4257,38 @@ bg=white
     <id>Relation</id>
     <coordinates>
       <x>4800</x>
-      <y>2094</y>
+      <y>2130</y>
       <w>78</w>
-      <h>66</h>
+      <h>36</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=*notificaciones</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>4920</x>
-      <y>2094</y>
+      <y>2130</y>
       <w>42</w>
-      <h>120</h>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=carrito</panel_attributes>
-    <additional_attributes>10.0;180.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>4524</x>
       <y>2022</y>
-      <w>162</w>
+      <w>138</w>
       <h>78</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;
 m1=*
 </panel_attributes>
-    <additional_attributes>10.0;110.0;10.0;20.0;250.0;20.0</additional_attributes>
+    <additional_attributes>10.0;110.0;10.0;20.0;210.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -4289,28 +4313,28 @@ bg=white
     <coordinates>
       <x>4464</x>
       <y>1992</y>
-      <w>222</w>
+      <w>198</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;
 r1=destinatario
 r2=ofertasRecibidas
 m2=*</panel_attributes>
-    <additional_attributes>350.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>310.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>4464</x>
       <y>2004</y>
-      <w>222</w>
+      <w>198</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;
 r1=ofertante
 r2=ofertasRealizadas
 m2=*</panel_attributes>
-    <additional_attributes>350.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>310.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -4333,17 +4357,17 @@ bg=white</panel_attributes>
       <x>5112</x>
       <y>2304</y>
       <w>60</w>
-      <h>114</h>
+      <h>96</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=*productos</panel_attributes>
-    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>5040</x>
-      <y>2406</y>
+      <y>2388</y>
       <w>156</w>
       <h>48</h>
     </coordinates>
@@ -4357,14 +4381,14 @@ layer=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>4926</x>
+      <x>4908</x>
       <y>2274</y>
-      <w>162</w>
+      <w>210</w>
       <h>132</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=*
-r1=Map&lt;LineaProductoVenta, Integer&gt;</panel_attributes>
+r1=productos: Map&lt;LineaProductoVenta, Integer&gt;</panel_attributes>
     <additional_attributes>10.0;200.0;10.0;10.0</additional_attributes>
   </element>
   <element>
@@ -4373,10 +4397,9 @@ r1=Map&lt;LineaProductoVenta, Integer&gt;</panel_attributes>
       <x>4872</x>
       <y>2394</y>
       <w>120</w>
-      <h>54</h>
+      <h>30</h>
     </coordinates>
     <panel_attributes>/from package Producto/
---
 LineaProductoVenta
 
 
@@ -4405,15 +4428,15 @@ bg=white
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>5232</x>
+      <x>5256</x>
       <y>1962</y>
-      <w>156</w>
+      <w>138</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 r2=configuracionNotificaciones
 m2=0..2</panel_attributes>
-    <additional_attributes>240.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -4421,19 +4444,31 @@ m2=0..2</panel_attributes>
       <x>5298</x>
       <y>2178</y>
       <w>378</w>
-      <h>102</h>
+      <h>210</h>
     </coordinates>
     <panel_attributes>Interes
 --
-- rankingInteresCompra: Map&lt;LineaProductoVenta int&gt;
-- rankingInteresIntercambio: Map&lt;ProductoSegundaMano, int&gt;
-- interesCompraMax: int
-- interesIntercambioMax: int
+_+PESO_BUSQUEDA: int_
+_+PESO_COMPRA: int_
+_+PESO_PEDIDO: int_
+_+PESO_CARRITO: int_
+_+REAJUSTE_OVERFLOW: int_
+- rankMaxProd: int
+- rankMaxCat: int
 --
-+ actualizarInteresCompra(productosBuscados: LineaProductoVenta[*])
-+ actualizarInteresBusquedaCompra(productosBuscados: LineaProductoVenta[*])
-+ actualizarInteresIntercambio(productosBuscados: ProductoSegundaMano[*])
-+ actualizarInteresBusquedaIntercambio(productosBuscados: ProductoSegundaMano[*])
++ actualizarInteresCompraCategorias(producto: LineaProductoVenta): void 
++ actualizarInteresBusquedaVenta(productosBuscados: LineaProductoVenta[*]): void
++ actualizarInteresPedidoCategorias(producto: LineaProductoVenta): void
++ actualizarInteresCarritoCategorias(producto: LineaProductoVenta): void
+
++ actualizarInteresNuevoVenta(producto: LineaProductoVenta): void
++ actualizarInteresCategoriaNueva(producto: LineaProductoVenta): void
++ eliminarProductoInteres(producto: LineaProductoVenta): void
++ eliminarCategoriaInteres(producto: LineaProductoVenta): void
+
+- rankMinProd(): Integer
+- rankMinCat(): Integer
++ obtenerRankingDeInteres(): Map&lt;LineaProductoVenta, Double&gt;
 layer=1
 bg=white</panel_attributes>
     <additional_attributes/>
@@ -4442,13 +4477,13 @@ bg=white</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>5118</x>
-      <y>2094</y>
+      <y>2130</y>
       <w>192</w>
-      <h>114</h>
+      <h>78</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 r1=interes</panel_attributes>
-    <additional_attributes>300.0;170.0;10.0;170.0;10.0;10.0;10.0;20.0</additional_attributes>
+    <additional_attributes>300.0;110.0;10.0;110.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLPackage</id>
@@ -4456,7 +4491,7 @@ r1=interes</panel_attributes>
       <x>4242</x>
       <y>1524</y>
       <w>2250</w>
-      <h>960</h>
+      <h>978</h>
     </coordinates>
     <panel_attributes>package usuario
 --
@@ -4486,14 +4521,14 @@ bg=white
     <coordinates>
       <x>4572</x>
       <y>2058</y>
-      <w>114</w>
+      <w>90</w>
       <h>180</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;
 m1=*
 r1=pedidos
 r2=cliente</panel_attributes>
-    <additional_attributes>10.0;270.0;90.0;270.0;90.0;20.0;170.0;20.0</additional_attributes>
+    <additional_attributes>10.0;270.0;90.0;270.0;90.0;20.0;130.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
@@ -4689,7 +4724,7 @@ r1=solicitudValidacion
     <coordinates>
       <x>4644</x>
       <y>5688</y>
-      <w>1164</w>
+      <w>1206</w>
       <h>120</h>
     </coordinates>
     <panel_attributes>FiltroVentaCliente
@@ -4923,15 +4958,15 @@ layer=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>5802</x>
+      <x>5844</x>
       <y>5766</y>
-      <w>192</w>
+      <w>150</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 r1=DescuentoFiltrado
 m1=0..4</panel_attributes>
-    <additional_attributes>300.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>230.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLNote</id>
@@ -5176,15 +5211,15 @@ m1=codigoDestinatario</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>6246</x>
+      <x>6288</x>
       <y>1722</y>
-      <w>108</w>
+      <w>66</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..3
 r1=permisos</panel_attributes>
-    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>90.0;20.0;30.0;20.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -5374,7 +5409,7 @@ bg=white</panel_attributes>
     <coordinates>
       <x>5070</x>
       <y>3102</y>
-      <w>270</w>
+      <w>294</w>
       <h>72</h>
     </coordinates>
     <panel_attributes>Pack
@@ -5457,5 +5492,46 @@ r1=clienteProducto
 m1=0..1
 </panel_attributes>
     <additional_attributes>10.0;10.0;10.0;210.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>4938</x>
+      <y>2382</y>
+      <w>384</w>
+      <h>102</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*
+r1=rankingInteresBusquedaVenta: Map&lt;LineaProductoVenta, Integer&gt;</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;150.0;620.0;150.0;620.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>5406</x>
+      <y>2382</y>
+      <w>264</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=*
+r1=rankingInteresCategoriaVenta: Map&lt;Categoria, Integer&gt;</panel_attributes>
+    <additional_attributes>420.0;70.0;10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>5658</x>
+      <y>2394</y>
+      <w>156</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>/from package Categoria/
+Categoria
+--
+bg=white
+layer=1</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
