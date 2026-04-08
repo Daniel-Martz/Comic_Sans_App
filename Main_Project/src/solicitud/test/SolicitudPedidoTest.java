@@ -400,7 +400,7 @@ class SolicitudPedidoTest {
     prods.put(pack1, 3);
     solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
 
-    Exception e = assertThrows(IllegalArgumentException.class, ()->{solicitudPedido.actualizarEstado(null);});
+    Exception e = assertThrows(IllegalArgumentException.class, ()->{solicitudPedido.actualizarEstadoPedidoEmpleado(null);});
     assertTrue(e.getMessage() == "El estado no puede ser null");
 
   }
@@ -416,7 +416,7 @@ class SolicitudPedidoTest {
     prods.put(prod1, 5);
     prods.put(pack1, 3);
     solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
-    Exception e = assertThrows(IllegalStateException.class, ()->{solicitudPedido.actualizarEstado(EstadoPedido.LISTO_PARA_RECOGER);});
+    Exception e = assertThrows(IllegalStateException.class, ()->{solicitudPedido.actualizarEstadoPedidoEmpleado(EstadoPedido.LISTO_PARA_RECOGER);});
     assertTrue(e.getMessage() == "El pedido todavía no se ha pagado y no se puede procesar");
 
   }

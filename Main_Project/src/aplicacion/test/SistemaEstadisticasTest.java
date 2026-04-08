@@ -497,7 +497,7 @@ class SistemaEstadisticasTest {
         Pago pago = app.getSistemaPago().procesarPago(50.0, "1234567890123456", "123",
                 DateTimeSimulado.DateTimeDiasDespues(30), pedido);
         pedido.añadirPagoPedido(pago);
-        pedido.actualizarPagoPedido(EstadoPedido.PAGADO);
+        pedido.actualizarEstadoPedido(EstadoPedido.PAGADO);
         se.añadirPago(pago);
 
         File f = new File(tempDir, "clientes2.txt");
@@ -552,7 +552,7 @@ class SistemaEstadisticasTest {
         Pago pago1 = app.getSistemaPago().procesarPago(100.0, "1234567890123456", "123",
                 DateTimeSimulado.DateTimeDiasDespues(30), pedido1);
         pedido1.añadirPagoPedido(pago1);
-        pedido1.actualizarPagoPedido(EstadoPedido.PAGADO);
+        pedido1.actualizarEstadoPedido(EstadoPedido.PAGADO);
         se.añadirPago(pago1);
 
         c2.añadirProductoACarrito(prod2, 1);
@@ -560,7 +560,7 @@ class SistemaEstadisticasTest {
         Pago pago2 = app.getSistemaPago().procesarPago(5.0, "1234567890123456", "123",
                 DateTimeSimulado.DateTimeDiasDespues(30), pedido2);
         pedido2.añadirPagoPedido(pago2);
-        pedido2.actualizarPagoPedido(EstadoPedido.PAGADO);
+        pedido2.actualizarEstadoPedido(EstadoPedido.PAGADO);
         se.añadirPago(pago2);
 
         File f = new File(tempDir, "clientes4.txt");
@@ -593,7 +593,7 @@ class SistemaEstadisticasTest {
         Pago pago = app.getSistemaPago().procesarPago(40.0, "1234567890123456", "123",
                 DateTimeSimulado.DateTimeDiasDespues(30), pedido);
         pedido.añadirPagoPedido(pago);
-        pedido.actualizarPagoPedido(EstadoPedido.PAGADO);
+        pedido.actualizarEstadoPedido(EstadoPedido.PAGADO);
         se.añadirPago(pago);
 
         File f = new File(tempDir, "clientes5.txt");

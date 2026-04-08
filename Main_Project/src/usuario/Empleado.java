@@ -125,7 +125,7 @@ public class Empleado extends UsuarioGestion {
 		if(p == null) {
 			throw new IllegalArgumentException("El pedido no puede ser null");
 		}
-		p.actualizarEstado(nuevoEstado);
+		p.actualizarEstadoPedidoEmpleado(nuevoEstado);
 		System.out.println("El estado del pedido se ha actualizado a: " + nuevoEstado);
 		
 		NotificacionPedido noti = new NotificacionPedido("El estado del pedido se ha actualizado a " + nuevoEstado, new DateTimeSimulado(), p);

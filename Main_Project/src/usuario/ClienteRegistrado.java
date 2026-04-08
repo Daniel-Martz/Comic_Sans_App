@@ -443,7 +443,7 @@ public class ClienteRegistrado extends Usuario {
 		/* Añadimos la notificacion */
 		NotificacionPedido noti = new NotificacionPedido("¡Pago procesado con éxito!", new DateTimeSimulado(), pedido);
 		anadirNotificacion(noti);
-		pedido.actualizarPagoPedido(EstadoPedido.PAGADO);
+		pedido.actualizarEstadoPedido(EstadoPedido.PAGADO);
 
 		/* Actualizamos el interés */
 		for (LineaProductoVenta p : pedido.getProductosDiferentes().keySet()) {

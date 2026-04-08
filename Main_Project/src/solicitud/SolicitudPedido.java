@@ -202,7 +202,7 @@ public class SolicitudPedido extends Solicitud implements Caducable {
      * 
      * @param estado Nuevo estado del pedido.
      */
-	public void actualizarPagoPedido(EstadoPedido estado) {
+	public void actualizarEstadoPedido(EstadoPedido estado) {
 		this.estado = estado;
 	}
 
@@ -236,7 +236,7 @@ public class SolicitudPedido extends Solicitud implements Caducable {
      * @throws IllegalArgumentException si el estado es null.
      * @throws IllegalStateException si el pedido está pendiente de pago.
      */
-	public void actualizarEstado(EstadoPedido estado) {
+	public void actualizarEstadoPedidoEmpleado(EstadoPedido estado) {
 		if (estado == null) {
 			throw new IllegalArgumentException("El estado no puede ser null");
 		}
