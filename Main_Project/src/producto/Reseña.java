@@ -15,9 +15,9 @@ public class Reseña implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String descripcion;
-	private double puntuacion;
-	private DateTimeSimulado fecha;
-	private LineaProductoVenta producto;
+	private final double puntuacion;
+	private final DateTimeSimulado fecha;
+	private final LineaProductoVenta producto;
 	
 	/**
 	 * Construye una nueva reseña.
@@ -67,34 +67,12 @@ public class Reseña implements Serializable{
 	}
 
 	/**
-	 * Modifica la puntuación.
-	 *
-	 * @param puntuacion nueva puntuación
-	 * @throws IllegalArgumentException si no está entre 0 y 5
-	 */
-	public void setPuntuacion(double puntuacion) {
-		if (puntuacion < 0 || puntuacion > 5) {
-			throw new IllegalArgumentException("La puntuación debe ser un real entre 0.00 y 5.00");
-		}
-		this.puntuacion = puntuacion;
-	}
-
-	/**
 	 * Devuelve la fecha de la reseña.
 	 *
 	 * @return fecha
 	 */
 	public DateTimeSimulado getFecha() {
 		return fecha;
-	}
-
-	/**
-	 * Modifica la fecha de la reseña.
-	 *
-	 * @param fecha nueva fecha
-	 */
-	public void setFecha(DateTimeSimulado fecha) {
-		this.fecha = fecha;
 	}
 
 	/**
@@ -106,12 +84,4 @@ public class Reseña implements Serializable{
 		return producto;
 	}
 
-	/**
-	 * Modifica el producto reseñado.
-	 *
-	 * @param producto nuevo producto
-	 */
-	public void setProducto(LineaProductoVenta producto) {
-		this.producto = producto;
-	}
 }
