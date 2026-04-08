@@ -58,7 +58,7 @@ public class SolicitudValidacion extends Solicitud {
 
   /**
    * Comprueba si el proceso de validación ha finalizado correctamente.
-   * * @return true si el producto ya cuenta con datos de validación, false en caso contrario.
+   * @return true si el producto ya cuenta con datos de validación, false en caso contrario.
    */
   public boolean validado(){
     if (this.productoAValidar.getDatosValidacion() != null){
@@ -78,7 +78,7 @@ public class SolicitudValidacion extends Solicitud {
 
   /**
    * Devuelve una representación textual de la solicitud.
-   * * @return cadena con la información del pago y el producto.
+   * @return cadena con la información del pago y el producto.
    */
   @Override
   public String toString() {
@@ -90,7 +90,7 @@ public class SolicitudValidacion extends Solicitud {
   }
   /**
    * Obtiene el producto vinculado a esta solicitud.
-   * * @return el objeto ProductoSegundaMano.
+   * @return el objeto ProductoSegundaMano.
    */
   public ProductoSegundaMano getProductoAValidar() {
     return productoAValidar;
@@ -98,7 +98,7 @@ public class SolicitudValidacion extends Solicitud {
 
   /**
    * Obtiene el registro de pago de la validación.
-   * * @return el objeto Pago o null si aún no se ha pagado.
+   * @return el objeto Pago o null si aún no se ha pagado.
    */
   public Pago getPagoValidacion() {
     return pagoValidacion;
@@ -106,7 +106,7 @@ public class SolicitudValidacion extends Solicitud {
 
   /**
    * Obtiene el cliente propietario de la solicitud.
-   * * @return el cliente registrado.
+   * @return el cliente registrado.
    */
   public ClienteRegistrado getCliente() {
 	return cliente;
@@ -114,7 +114,7 @@ public class SolicitudValidacion extends Solicitud {
   
   /**
    * Obtiene el precio estipulado por realizar la validación.
-   * * @return coste de la validación.
+   * @return coste de la validación.
    */
   public double getPrecioValidacion(){
     return this.precioValidacion;

@@ -15,6 +15,7 @@ import producto.ProductoSegundaMano;
  */
 public class Cartera implements Serializable{
 	
+	/** Identificador único para la serialización de la clase. */
 	private static final long serialVersionUID = 1L;
 	/**Set de productos de la cartera*/
 	private Set<ProductoSegundaMano> productos = new HashSet<>(); 

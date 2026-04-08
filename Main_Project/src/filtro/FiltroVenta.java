@@ -26,12 +26,16 @@ public class FiltroVenta extends Filtro {
 		super(ordenAscendente);
 	}
 	
-	/** @return El conjunto de categorías aplicadas al filtro. */
+	/**
+	 * Devuelve las categorias filtradas 
+	 * @return El conjunto de categorías aplicadas al filtro. */
 	public Set<Categoria> getCategoriasFiltradas() {
 	    return categoriasFiltradas;
 	}
 
-	/** @return El conjunto de tipos de producto aplicados al filtro. */
+	/** 
+	 * Devuelve el tipo filtrado
+	 * @return El conjunto de tipos de producto aplicados al filtro. */
 	public Set<TipoProducto> getTipoFiltrado() {
 		return tipoFiltrado;
 	}

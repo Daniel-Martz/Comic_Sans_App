@@ -16,12 +16,25 @@ import aplicacion.Aplicacion;
  */
 public class ProductoSegundaMano extends Producto {
 
+	/** Identificador único para la serialización de la clase. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Indica si el producto de segunda mano ha sido validado por un empleado. */
 	private boolean validado;
+	
+	/** Oferta de intercambio que ha recibido este producto. */
 	private Oferta ofertaRecibida;
+	
+	/** Oferta de intercambio en la que se ha incluido este producto. */
 	private Oferta ofertaEnviada;
+	
+	/** Solicitud de validación generada para este producto. */
 	private final SolicitudValidacion solicitudValidacion;
+	
+	/** Datos resultantes del proceso de validación (estado, precio estimado, etc.). */
 	private DatosValidacion datosValidacion;
+	
+	/** Cliente propietario de este producto de segunda mano. */
 	private ClienteRegistrado clienteProducto;
 
 	/**

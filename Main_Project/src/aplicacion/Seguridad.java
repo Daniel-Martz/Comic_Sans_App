@@ -9,15 +9,13 @@ import java.util.Base64;
 /**
  * Clase de utilidad encargada de gestionar la seguridad de las credenciales de
  * usuario. Proporciona métodos para la generación de sales aleatorias y el
- * cifrado de contraseñas mediante el algoritmo PBKDF2. * @author Matteo
- * Artuñedo, Rodrigo Diaz y Daniel Martinez
- * 
+ * cifrado de contraseñas mediante el algoritmo PBKDF2. 
+ * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
  * @version 1.0
  */
-public class Seguridad {
-
+public class Seguridad {	
 	/**
-	 * * Número de iteraciones para el algoritmo de hashing. Un valor alto aumenta
+	 * Número de iteraciones para el algoritmo de hashing. Un valor alto aumenta
 	 * el tiempo necesario para ataques de fuerza bruta.
 	 */
 	private static final int ITERACIONES = 65536;

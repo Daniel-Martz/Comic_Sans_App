@@ -60,67 +60,93 @@ public class FiltroVentaCliente extends FiltroVenta {
 		this.ordenarPorPuntuacion = ordenarPorPuntuacion;
 	}
 
-	/** @return Puntuación mínima permitida. */
+	/** * Obtiene la puntuación mínima permitida.
+	 * @return Puntuación mínima. 
+	 */
 	public double getPuntuacionMin() {
 		return puntuacionMin;
 	}
 
-	/** @param puntuacionMin Nueva puntuación mínima. */
+	/** * Establece la puntuación mínima permitida.
+	 * @param puntuacionMin Nueva puntuación mínima. 
+	 */
 	public void setPuntuacionMin(double puntuacionMin) {
 		this.puntuacionMin = puntuacionMin;
 	}
 
-	/** @return Puntuación máxima permitida. */
+	/** * Obtiene la puntuación máxima permitida.
+	 * @return Puntuación máxima. 
+	 */
 	public double getPuntuacionMax() {
 		return puntuacionMax;
 	}
 
-	/** @param puntuacionMax Nueva puntuación máxima. */
+	/** * Establece la puntuación máxima permitida.
+	 * @param puntuacionMax Nueva puntuación máxima. 
+	 */
 	public void setPuntuacionMax(double puntuacionMax) {
 		this.puntuacionMax = puntuacionMax;
 	}
 
-	/** @return Precio mínimo del rango. */
+	/** * Obtiene el precio mínimo del rango.
+	 * @return Precio mínimo. 
+	 */
 	public double getPrecioMin() {
 		return precioMin;
 	}
 
-	/** @param precioMin Nuevo precio mínimo. */
+	/** * Establece el precio mínimo del rango.
+	 * @param precioMin Nuevo precio mínimo. 
+	 */
 	public void setPrecioMin(double precioMin) {
 		this.precioMin = precioMin;
 	}
 
-	/** @return Precio máximo del rango. */
+	/** * Obtiene el precio máximo del rango.
+	 * @return Precio máximo. 
+	 */
 	public double getPrecioMax() {
 		return precioMax;
 	}
 
-	/** @param precioMax Nuevo precio máximo. */
+	/** * Establece el precio máximo del rango.
+	 * @param precioMax Nuevo precio máximo. 
+	 */
 	public void setPrecioMax(double precioMax) {
 		this.precioMax = precioMax;
 	}
 
-	/** @return true si el orden es por precio. */
+	/** * Comprueba si el orden de los resultados es por precio.
+	 * @return true si el orden es por precio. 
+	 */
 	public boolean isOrdenarPorPrecio() {
 		return ordenarPorPrecio;
 	}
 
-	/** @param ordenarPorPrecio Define si ordena por precio. */
+	/** * Define si los resultados deben ordenarse por precio.
+	 * @param ordenarPorPrecio Define si ordena por precio. 
+	 */
 	public void setOrdenarPorPrecio(boolean ordenarPorPrecio) {
 		this.ordenarPorPrecio = ordenarPorPrecio;
 	}
 
-	/** @return Set de descuentos para filtrar. */
+	/** * Obtiene el conjunto de descuentos seleccionados para filtrar.
+	 * @return Set de descuentos para filtrar. 
+	 */
 	public Set<TipoDescuento> getDescuentoFiltrado() {
 		return descuentoFiltrado;
 	}
 
-	/** @return true si el orden es por puntuación. */
+	/** * Comprueba si el orden de los resultados es por puntuación.
+	 * @return true si el orden es por puntuación. 
+	 */
 	public boolean isOrdenarPorPuntuacion() {
 		return ordenarPorPuntuacion;
 	}
 
-	/** @param ordenarPorPuntuacion Define si ordena por puntuación. */
+	/** * Define si los resultados deben ordenarse por puntuación.
+	 * @param ordenarPorPuntuacion Define si ordena por puntuación. 
+	 */
 	public void setOrdenarPorPuntuacion(boolean ordenarPorPuntuacion) {
 		this.ordenarPorPuntuacion = ordenarPorPuntuacion;
 	}
@@ -142,6 +168,17 @@ public class FiltroVentaCliente extends FiltroVenta {
 
 	/**
 	 * Modifica los criterios de filtrado validando que los rangos sean coherentes.
+	 * @param ordenAscendente      true para ordenar los resultados de forma ascendente, false para descendente.
+	 * @param categorias           conjunto de categorías permitidas en el filtro.
+	 * @param tipos                conjunto de tipos de producto permitidos en el filtro.
+	 * @param puntuacionMin        puntuación mínima requerida para los productos.
+	 * @param puntuacionMax        puntuación máxima permitida para los productos.
+	 * @param precioMin            precio mínimo requerido para los productos.
+	 * @param precioMax            precio máximo permitido para los productos.
+	 * @param ordenarPorPrecio     true para aplicar ordenación basada en el precio.
+	 * @param ordenarPorPuntuacion true para aplicar ordenación basada en la puntuación.
+	 * @param descuentoFiltrado    conjunto de tipos de descuento permitidos en el filtro.
+	 * @throws IllegalArgumentException si los rangos de puntuación o precio son inválidos o incoherentes.
 	 */
 	public void cambiarFiltro(boolean ordenAscendente, Set<Categoria> categorias, Set<TipoProducto> tipos,
 			double puntuacionMin, double puntuacionMax, double precioMin, double precioMax, boolean ordenarPorPrecio,
@@ -176,13 +213,17 @@ public class FiltroVentaCliente extends FiltroVenta {
 		}
 	}
 
-  @Override
-  public String toString() {
-    return "FiltroVentaCliente [categoriasFiltradas=" + categoriasFiltradas + ", ordenAscendente=" + ordenAscendente
-        + ", puntuacionMin=" + puntuacionMin + ", puntuacionMax=" + puntuacionMax + ", precioMin=" + precioMin
-        + ", precioMax=" + precioMax + ", ordenarPorPrecio=" + ordenarPorPrecio + ", ordenarPorPuntuacion="
-        + ordenarPorPuntuacion + ", descuentoFiltrado=" + descuentoFiltrado + ", getTipoFiltrado()=" + getTipoFiltrado()
-        + "]";
-  }
+	/**
+	 * Devuelve una representación en formato de cadena de texto del estado actual del filtro.
+	 * * @return Cadena de texto con los valores actuales de los atributos del filtro.
+	 */
+	@Override
+	public String toString() {
+		return "FiltroVentaCliente [categoriasFiltradas=" + categoriasFiltradas + ", ordenAscendente=" + ordenAscendente
+				+ ", puntuacionMin=" + puntuacionMin + ", puntuacionMax=" + puntuacionMax + ", precioMin=" + precioMin
+				+ ", precioMax=" + precioMax + ", ordenarPorPrecio=" + ordenarPorPrecio + ", ordenarPorPuntuacion="
+				+ ordenarPorPuntuacion + ", descuentoFiltrado=" + descuentoFiltrado + ", getTipoFiltrado()=" + getTipoFiltrado()
+				+ "]";
+	}
 		
 }

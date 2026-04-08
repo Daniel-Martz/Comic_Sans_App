@@ -12,13 +12,20 @@ import tiempo.DateTimeSimulado;
  * @version 1.0
  */
 public class Reseña implements Serializable{
-	
+	/** Identificador único para la serialización de la clase. */
 	private static final long serialVersionUID = 1L;
-	private String descripcion;
-	private final double puntuacion;
-	private final DateTimeSimulado fecha;
-	private final LineaProductoVenta producto;
 	
+	/** Texto o comentario detallado de la reseña. */
+	private String descripcion;
+	
+	/** Puntuación numérica asignada al producto. */
+	private final double puntuacion;
+	
+	/** Fecha simulada en la que se publicó o realizó la reseña. */
+	private final DateTimeSimulado fecha;
+	
+	/** Producto de venta al que hace referencia esta reseña. */
+	private final LineaProductoVenta producto;
 	/**
 	 * Construye una nueva reseña.
 	 *

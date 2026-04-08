@@ -44,7 +44,7 @@ public class DatosValidacion implements Serializable{
 
 	/**
 	 * Obtiene el estado de conservación.
-	 * * @return una constante del enumerado {@link EstadoConservacion}.
+	 * @return una constante del enumerado {@link EstadoConservacion}.
 	 */
 	public EstadoConservacion getEstadoConservacion() {
 		return estadoConservacion;
