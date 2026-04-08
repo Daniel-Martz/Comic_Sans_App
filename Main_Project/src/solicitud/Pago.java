@@ -25,22 +25,22 @@ public class Pago implements Serializable{
 	private final double importe;
 
     /**
-     * Objeto de la solicitud que se está pagando.
+     * Solicitud que se está pagando.
      */
-	private final Solicitud objetoPagado;
+	private final Solicitud solicitudPagada;
 
     /**
      * Constructor de la clase Pago.
      * 
      * @param fechaPago Fecha en que se realiza el pago.
      * @param importe Importe del pago.
-     * @param objetoPagado Solicitud asociada al pago.
+     * @param solicitudPagada Solicitud asociada al pago.
      */
-	public Pago(DateTimeSimulado fechaPago, double importe, Solicitud objetoPagado) {
+	public Pago(DateTimeSimulado fechaPago, double importe, Solicitud solicitudPagada) {
 		super();
 		this.fechaPago = fechaPago;
 		this.importe = importe;
-		this.objetoPagado = objetoPagado;
+		this.solicitudPagada = solicitudPagada;
 	}
 
     /**
@@ -67,6 +67,6 @@ public class Pago implements Serializable{
      * @return Objeto de la solicitud pagada.
      */
 	public Solicitud getObjetoPagado() {
-		return objetoPagado;
+		return solicitudPagada;
 	}
 }
