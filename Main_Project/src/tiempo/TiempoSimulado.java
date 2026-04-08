@@ -121,6 +121,7 @@ public class TiempoSimulado implements Serializable {
     }
 
     /**
+     * Metodo para conseguir el segundo actual
      * @return El segundo actual del minuto (0-59).
      */
     public int getSegundo() {
@@ -128,6 +129,7 @@ public class TiempoSimulado implements Serializable {
     }
 
     /**
+     * Metodo para conseguir el minuto actual
      * @return El minuto actual de la hora (0-59).
      */
     public int getMinuto() {
@@ -135,6 +137,7 @@ public class TiempoSimulado implements Serializable {
     }
 
     /**
+     * Metodo para conseguir la hora actual
      * @return La hora actual del día (0-23).
      */
     public int getHora() {
@@ -142,6 +145,7 @@ public class TiempoSimulado implements Serializable {
     }
 
     /**
+     * Metodo para conseguir el dia acutal
      * @return El día actual del mes.
      */
     public int getDia() {
@@ -150,6 +154,7 @@ public class TiempoSimulado implements Serializable {
     }
 
     /**
+     * Metodo para conseguir el mes actual
      * @return El mes actual del año.
      */
     public int getMes() {
@@ -159,7 +164,8 @@ public class TiempoSimulado implements Serializable {
     }
 
     /**
-     * @return El año actual de la simulación.
+     * Metodo para conseguir el año actual
+     * @return El año actual 
      */
     public int getAño() {
         long diasTotales = getSegundosTotales() / 86400;
@@ -168,6 +174,7 @@ public class TiempoSimulado implements Serializable {
     }
 
     /**
+     * Metodo para conseguir los años
      * @return número de meses por año
      */
     public int getMesesPorAño() {
@@ -175,6 +182,7 @@ public class TiempoSimulado implements Serializable {
     }
 
     /**
+     * Metodo para conseguir los meses
      * @return número de días por mes
      */
     public int getDiasPorMes() {

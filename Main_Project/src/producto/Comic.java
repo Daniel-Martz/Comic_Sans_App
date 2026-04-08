@@ -25,15 +25,16 @@ public class Comic extends LineaProductoVenta {
 	
 	/**
 	 * Construye un nuevo Comic con sus atributos detallados.
-	 * @param nombre          Nombre o título del cómic.
-	 * @param descripcion     Breve reseña o sinopsis.
-	 * @param foto            Archivo de imagen de la portada.
-	 * @param stock           Unidades disponibles en el almacén.
-	 * @param precio          Precio de venta al público.
-	 * @param numeroPaginas   Extensión del cómic.
-	 * @param autor           Creador/es de la obra.
-	 * @param editorial       Sello editorial.
-	 * @param añoPublicacion  Año de edición.
+	 * @param nombre           Nombre o título del cómic.
+	 * @param descripcion      Breve reseña o sinopsis.
+	 * @param foto             Archivo de imagen de la portada.
+	 * @param stock            Unidades disponibles en el almacén.
+	 * @param precio           Precio de venta al público.
+	 * @param unidadesVendidas Unidades vendidas
+	 * @param numeroPaginas    Extensión del cómic.
+	 * @param autor            Creador/es de la obra.
+	 * @param editorial        Sello editorial.
+	 * @param añoPublicacion   Año de edición.
 	 */
 	public Comic(String nombre, String descripcion, File foto, int stock, double precio, int unidadesVendidas,
 				 int numeroPaginas, String autor, String editorial, int añoPublicacion) {

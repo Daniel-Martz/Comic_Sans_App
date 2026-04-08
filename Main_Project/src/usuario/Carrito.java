@@ -13,7 +13,7 @@ import producto.*;
  * @version 1.0
  */
 public class Carrito implements Serializable{
-
+	
 	private static final long serialVersionUID = 1L;
 	/** Mapa que asocia cada producto con su cantidad */
 	private Map<LineaProductoVenta, Integer> productos = new HashMap<>();

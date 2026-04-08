@@ -12,9 +12,11 @@ import java.util.*;
  */
 public class Pack extends LineaProductoVenta {
 	
+	/** Identificador único para la serialización de la clase. */
 	private static final long serialVersionUID = 1L;
+	
+	/** Mapa que asocia cada producto incluido en el pack con su cantidad correspondiente. */
 	private Map<LineaProductoVenta, Integer> pack = new HashMap<>();
-
 	/**
 	 * Instancia un nuevo pack.
 	 *
