@@ -110,7 +110,7 @@ public class SolicitudPedido extends Solicitud implements Caducable {
       }
 
       if(descuentoProducto instanceof Precio){
-        productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() - l.getPrecio() * productosDiferentes.get(l) * ((Precio)descuentoProducto).getPorcentajeRebaja() / 100);
+        productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l) - l.getPrecio() * productosDiferentes.get(l) * ((Precio)descuentoProducto).getPorcentajeRebaja() / 100);
       }else if(descuentoProducto instanceof Cantidad){
     	int unidadesRegaladas = (productosDiferentes.get(l)  / ((Cantidad)descuentoProducto).getNumeroComprados()) * ((Cantidad)descuentoProducto).getNumeroRecibidos();
         productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, ((productosDiferentes.get(l)%2) + unidadesRegaladas)), 
@@ -135,7 +135,7 @@ public class SolicitudPedido extends Solicitud implements Caducable {
         //Si hemos superado el umbral, aplicamos la rebaja a los productos
         if(total >= umbral){
           for(LineaProductoVenta l : descuentosPendientes.get(d)){
-            productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() - l.getPrecio() * productosDiferentes.get(l) * ((RebajaUmbral)d).getPorcentajeRebaja() / 100);
+            productosRecaudacion.put(new SimpleEntry<LineaProductoVenta, Integer>(l, productosDiferentes.get(l)), l.getPrecio() * productosDiferentes.get(l)- l.getPrecio() * productosDiferentes.get(l) * ((RebajaUmbral)d).getPorcentajeRebaja() / 100);
           }
         }else 
         //Si no hemos superado el umbral, guardamos los productos con su precio normal
