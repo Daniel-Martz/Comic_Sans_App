@@ -423,6 +423,7 @@ public class Aplicacion implements Serializable {
 	 *
 	 * @throws IllegalArgumentException si no hay ningún usuario logueado
 	 * @throws IllegalStateException    si el usuario actual no es un cliente registrado
+	 * @return el pedido creado
 	 */
 	public SolicitudPedido crearPedidoAPartirDeCarrito() {
 		// Comprobamos que el usuario actual sea un cliente registrado
@@ -882,7 +883,11 @@ public class Aplicacion implements Serializable {
 			+ usuariosRegistrados + "]";
   }
 
-  public void añadirSolicitudValidacion(SolicitudValidacion v){
+  /**
+   * Añade una solictud de validacion
+ * @param v la solicitud
+ */
+public void añadirSolicitudValidacion(SolicitudValidacion v){
     this.gestorSolicitud.añadirSolicitudValidacion(v);
     //Notificamos a los empleados de la tienda de que hay un nuevo validacion por realizar
 		NotificacionEmpleado notifEmpleado = new NotificacionEmpleado("Hay una nueva validación pendiente en la tienda", new DateTimeSimulado());

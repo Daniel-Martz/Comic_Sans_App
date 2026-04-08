@@ -116,7 +116,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	/**
 	 * Devuelve una nueva fecha correspondiente a sumar un número indicado de días 
 	 * a la fecha desde la que se invoca el método.
-	 * * @param dias número de días a sumar a esta fecha.
+	 * @param dias número de días a sumar a esta fecha.
 	 * @return un nuevo objeto DateTimeSimulado con la fecha calculada.
 	 */
 	public DateTimeSimulado diasDespuesDeFecha(int dias) {
@@ -189,7 +189,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 
 	/**
 	 * Convierte la fecha actual a su equivalente absoluto en segundos.
-	 * * @return el total de segundos transcurridos en la simulación para esta fecha.
+	 * @return el total de segundos transcurridos en la simulación para esta fecha.
 	 */
 	public long dateTimeEnSegundos() {
 		return TiempoSimulado.getInstance().dateTimeASegundos(this);
@@ -197,7 +197,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	
 	/**
 	 * Método reservado para avanzar la fecha internamente (actualmente sin implementación).
-	 * * @param dias el número de días a avanzar.
+	 * @param dias el número de días a avanzar.
 	 */
 	public void avanzarDias(int dias) {
 		
@@ -216,7 +216,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	
 	/**
 	 * Devuelve una representación textual corta de la fecha.
-	 * * @return cadena con el formato "dia/mes/año".
+	 * @return cadena con el formato "dia/mes/año".
 	 */
 	public String toStringFecha() {
 	    return dia + "/" + mes + "/" + año;
@@ -224,7 +224,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
  
 	/**
 	 * Compara cronológicamente este objeto con otro DateTimeSimulado.
-	 * * @param tiempoComparado la fecha con la que se quiere comparar.
+	 * @param tiempoComparado la fecha con la que se quiere comparar.
 	 * @return 0 si son exactamente iguales, -1 si esta fecha es anterior a la introducida, 
 	 * 1 si esta fecha es posterior a la introducida.
 	 */

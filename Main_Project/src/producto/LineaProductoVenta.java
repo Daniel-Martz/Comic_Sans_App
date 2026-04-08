@@ -16,15 +16,26 @@ import descuento.*;
  */
 public class LineaProductoVenta extends Producto {
 
+	/** Identificador de versión para serialización. */
 	private static final long serialVersionUID = 1L;
+
+	/** Lista de reseñas asociadas al producto. */
 	protected List<Reseña> reseña = new ArrayList<>();
+
+	/** Categorías a las que pertenece el producto. */
 	protected Set<Categoria> categorias = new HashSet<>();
 
+	/** Unidades disponibles en stock. */
 	protected int stock;
-	protected double precio;
-	protected int unidadesVendidas;
-	protected Descuento descuento;
 
+	/** Precio del producto. */
+	protected double precio;
+
+	/** Número total de unidades vendidas. */
+	protected int unidadesVendidas;
+
+	/** Descuento aplicado al producto. */
+	protected Descuento descuento;
 	/**
 	 * Construye una línea de producto de venta.
 	 *

@@ -69,4 +69,10 @@ public class Pago implements Serializable{
 	public Solicitud getObjetoPagado() {
 		return solicitudPagada;
 	}
+	
+	@Override
+	public String toString() {
+	    return "Pago [fecha=" + fechaPago.toStringFecha() +
+	           " | importe=" + String.format("%.2f €", importe) + "]";
+	}
 }

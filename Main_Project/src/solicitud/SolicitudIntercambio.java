@@ -100,11 +100,14 @@ public class SolicitudIntercambio extends Solicitud {
 		return codigoOfertante;
 	}
 
-    @Override
-    public String toString() {
-      return "SolicitudIntercambio [informacionIntercambio=" + informacionIntercambio + ", codigoOfertante="
-          + codigoOfertante + ", codigoDestinatario=" + codigoDestinatario + ", oferta=" + oferta + ", aprobado="
-          + aprobado + ", esAprobado()=" + esAprobado() + ", getInformacionIntercambio()=" + getInformacionIntercambio()
-          + ", getCodigoOfertante()=" + getCodigoOfertante() + "]";
-    }
+	@Override
+	public String toString() {
+	    return "SolicitudIntercambio [\n" +
+	           "  aprobado=" + aprobado + "\n" +
+	           "  codigoOfertante=" + codigoOfertante + "\n" +
+	           "  codigoDestinatario=" + codigoDestinatario + "\n" +
+	           "  intercambio=" + informacionIntercambio + "\n" +
+	           "  oferta=" + oferta + "\n" +
+	           "]";
+	}
 }

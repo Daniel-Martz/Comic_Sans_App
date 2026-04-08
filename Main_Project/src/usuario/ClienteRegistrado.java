@@ -19,32 +19,44 @@ import aplicacion.*;
 public class ClienteRegistrado extends Usuario {
 	/** Identificador único para la serialización de la clase. */
 	private static final long serialVersionUID = 1L;
-	
-	/** Preferencias de configuración sobre qué notificaciones desea recibir el cliente. */
+
+	/**
+	 * Preferencias de configuración sobre qué notificaciones desea recibir el
+	 * cliente.
+	 */
 	private Set<NotificacionDeseada> configuracionNotificacionClientees = new HashSet<NotificacionDeseada>();
-	
-	/** Cartera del cliente (gestiona su saldo y sus productos para intercambiar/vender). */
+
+	/**
+	 * Cartera del cliente (gestiona su saldo y sus productos para
+	 * intercambiar/vender).
+	 */
 	private Cartera cartera = new Cartera();
-	
+
 	/** Carrito de la compra con los productos actualmente seleccionados. */
 	private Carrito carrito = new Carrito();
-	
+
 	/** Historial de notificaciones y avisos recibidos por el cliente. */
 	private List<NotificacionCliente> notificaciones = new ArrayList<>();
-	
+
 	/** Historial de los pedidos de compra realizados por el cliente. */
 	private List<SolicitudPedido> pedidos = new ArrayList<>();
-	
+
 	/** Lista de reseñas y valoraciones escritas por el cliente. */
 	private List<Reseña> reseñas = new ArrayList<>();
-	
-	/** Historial de las ofertas (de compra o intercambio) que este cliente ha enviado. */
+
+	/**
+	 * Historial de las ofertas (de compra o intercambio) que este cliente ha
+	 * enviado.
+	 */
 	private List<Oferta> ofertasRealizadas = new ArrayList<>();
-	
+
 	/** Historial de las ofertas que este cliente ha recibido de otros usuarios. */
 	private List<Oferta> ofertasRecibidas = new ArrayList<>();
-	
-	/** Temáticas, categorías o productos concretos por los que el cliente ha mostrado interés. */
+
+	/**
+	 * Temáticas, categorías o productos concretos por los que el cliente ha
+	 * mostrado interés.
+	 */
 	private Interes interes = new Interes();
 
 	/**
@@ -177,10 +189,10 @@ public class ClienteRegistrado extends Usuario {
 	 * @param o la oferta a aceptar
 	 */
 	public void aceptarOferta(Oferta o) {
-    actualizarOfertas();
-    if(!this.ofertasRecibidas.contains(o)){
-      throw new IllegalStateException("La oferta ya no existe");
-    }
+		actualizarOfertas();
+		if (!this.ofertasRecibidas.contains(o)) {
+			throw new IllegalStateException("La oferta ya no existe");
+		}
 
 		Aplicacion app = Aplicacion.getInstancia();
 		app.crearSolicitudIntercambio(o);
@@ -229,7 +241,7 @@ public class ClienteRegistrado extends Usuario {
 	 * @return los pedidos
 	 */
 	public List<SolicitudPedido> getPedidos() {
-    actualizarPedidos();
+		actualizarPedidos();
 		return pedidos;
 	}
 
@@ -248,7 +260,7 @@ public class ClienteRegistrado extends Usuario {
 	 * @return las ofertas realizadas
 	 */
 	public List<Oferta> getOfertasRealizadas() {
-    actualizarOfertas();
+		actualizarOfertas();
 		return ofertasRealizadas;
 	}
 
@@ -261,36 +273,36 @@ public class ClienteRegistrado extends Usuario {
 		return interes;
 	}
 
-  /**
-   * Actualiza las ofertas del cliente, eliminando aquellas que hayan caducado
-   */
-  private void actualizarOfertas(){
-    //Actualizamos las ofertas recibidas, eliminando las caducadas
-    List<Oferta> temp = new ArrayList<>();
-    for(Oferta o : ofertasRecibidas){
-      if(o.haCaducado() == false){
-        temp.add(o);
-      }else{
-    	//Se rechaza la oferta automáticamente si caduca
-        o.getOfertante().rechazarOferta(o);
-        o.getDestinatario().rechazarOferta(o);
-      }
-    }
-    this.ofertasRecibidas = temp;
+	/**
+	 * Actualiza las ofertas del cliente, eliminando aquellas que hayan caducado
+	 */
+	private void actualizarOfertas() {
+		// Actualizamos las ofertas recibidas, eliminando las caducadas
+		List<Oferta> temp = new ArrayList<>();
+		for (Oferta o : ofertasRecibidas) {
+			if (o.haCaducado() == false) {
+				temp.add(o);
+			} else {
+				// Se rechaza la oferta automáticamente si caduca
+				o.getOfertante().rechazarOferta(o);
+				o.getDestinatario().rechazarOferta(o);
+			}
+		}
+		this.ofertasRecibidas = temp;
 
-    //Actualizamos las ofertas realizadas, eliminando las caducadas
-    List<Oferta> temp2 = new ArrayList<>();
-    for(Oferta o : ofertasRealizadas){
-      if(o.haCaducado() == false){
-        temp2.add(o);
-      }else{
-        o.getOfertante().eliminarOferta(o);
-        o.getDestinatario().eliminarOferta(o);
-      }
-    }
-    this.ofertasRealizadas = temp2;
+		// Actualizamos las ofertas realizadas, eliminando las caducadas
+		List<Oferta> temp2 = new ArrayList<>();
+		for (Oferta o : ofertasRealizadas) {
+			if (o.haCaducado() == false) {
+				temp2.add(o);
+			} else {
+				o.getOfertante().eliminarOferta(o);
+				o.getDestinatario().eliminarOferta(o);
+			}
+		}
+		this.ofertasRealizadas = temp2;
 
-  }
+	}
 
 	/**
 	 * Obtiene las ofertas recibidas por el cliente.
@@ -298,7 +310,7 @@ public class ClienteRegistrado extends Usuario {
 	 * @return las ofertas recibidas
 	 */
 	public List<Oferta> getOfertasRecibidas() {
-    actualizarOfertas();
+		actualizarOfertas();
 		return ofertasRecibidas;
 	}
 
@@ -308,10 +320,10 @@ public class ClienteRegistrado extends Usuario {
 	 * @param o la oferta a rechazar
 	 */
 	public void rechazarOferta(Oferta o) {
-    actualizarOfertas();
-    if(!this.ofertasRecibidas.contains(o)){
-      throw new IllegalStateException("La oferta ya no existe");
-    }
+		actualizarOfertas();
+		if (!this.ofertasRecibidas.contains(o)) {
+			throw new IllegalStateException("La oferta ya no existe");
+		}
 		this.ofertasRecibidas.remove(o);
 		o.getOfertante().eliminarOferta(o);
 		System.out.println("Oferta rechazada.");
@@ -323,9 +335,9 @@ public class ClienteRegistrado extends Usuario {
 	 * @param o la oferta a eliminar
 	 */
 	public void eliminarOferta(Oferta o) {
-    if(!this.ofertasRealizadas.contains(o)){
-      throw new IllegalStateException("La oferta ya no existe en el sistema");
-    }
+		if (!this.ofertasRealizadas.contains(o)) {
+			throw new IllegalStateException("La oferta ya no existe en el sistema");
+		}
 		this.ofertasRealizadas.remove(o);
 	}
 
@@ -413,11 +425,11 @@ public class ClienteRegistrado extends Usuario {
 		if (pedido == null || fechaCaducidad == null) {
 			throw new IllegalArgumentException("El pedido y la fecha de caducidad no pueden ser nulos.");
 		}
-  
-    actualizarPedidos();
-    if(!this.pedidos.contains(pedido)){
-      throw new IllegalStateException("El pedido ya no existe, ha caducado");
-    }
+
+		actualizarPedidos();
+		if (!this.pedidos.contains(pedido)) {
+			throw new IllegalStateException("El pedido ya no existe, ha caducado");
+		}
 
 		if (pedido.pagado()) {
 			throw new IllegalStateException("El pedido ya tiene un pago asociado.");
@@ -482,9 +494,9 @@ public class ClienteRegistrado extends Usuario {
 		}
 
 		if (this.getCarrito().getProductos().isEmpty()) {
-	        throw new IllegalStateException("El carrito está vacío.");
-	    }
-		
+			throw new IllegalStateException("El carrito está vacío.");
+		}
+
 		SolicitudPedido pedido = new SolicitudPedido(this, carrito.getProductos());
 		this.pedidos.add(pedido);
 		Aplicacion.getInstancia().getGestorSolicitud().añadirPedido(pedido);
@@ -553,39 +565,41 @@ public class ClienteRegistrado extends Usuario {
 		}
 		return prods;
 	}
-	
+
 	/**
 	 * Elimina el pedido
-	 *@param pedido el pedido
+	 * 
+	 * @param pedido el pedido
 	 */
-  public void eliminarPedido(SolicitudPedido pedido){
-    if(Aplicacion.getInstancia().getUsuarioActual() != this){
-      throw new IllegalStateException("Otro usuario no puede eliminar el pedido de este usuario");
-    } 
-    this.pedidos.remove(pedido);
-  }	
+	public void eliminarPedido(SolicitudPedido pedido) {
+		if (Aplicacion.getInstancia().getUsuarioActual() != this) {
+			throw new IllegalStateException("Otro usuario no puede eliminar el pedido de este usuario");
+		}
+		this.pedidos.remove(pedido);
+	}
 
-  /**
+	/**
 	 * Actualiza el pedido
 	 */
-  private void actualizarPedidos(){
-    //Actualizamos las ofertas recibidas, eliminando las caducadas
-    List<SolicitudPedido> temp = new ArrayList<>();
-    for(SolicitudPedido sP : pedidos){
-      if(sP.haCaducado() == false){
-        temp.add(sP); 
-      }else{
-        Aplicacion.getInstancia().getGestorSolicitud().eliminarPedido(sP);
-      }
-    }
-    this.pedidos = temp;
-  }
+	private void actualizarPedidos() {
+		// Actualizamos las ofertas recibidas, eliminando las caducadas
+		List<SolicitudPedido> temp = new ArrayList<>();
+		for (SolicitudPedido sP : pedidos) {
+			if (sP.haCaducado() == false) {
+				temp.add(sP);
+			} else {
+				Aplicacion.getInstancia().getGestorSolicitud().eliminarPedido(sP);
+			}
+		}
+		this.pedidos = temp;
+	}
 
-  @Override
-  public String toString() {
-    return "ClienteRegistrado [nombreUsuario=" + nombreUsuario + ", configuracionNotificacionClientees="
-        + configuracionNotificacionClientees + ", cartera=" + cartera + ", carrito=" + carrito + ", notificaciones="
-        + notificaciones + ", pedidos=" + pedidos + ", reseñas=" + reseñas + ", ofertasRealizadas=" + ofertasRealizadas
-        + ", ofertasRecibidas=" + ofertasRecibidas + ", interes=" + interes + "]";
-  }
+	@Override
+	public String toString() {
+		return "ClienteRegistrado [nombreUsuario=" + nombreUsuario + ", configuracionNotificacionClientees="
+				+ configuracionNotificacionClientees + ", cartera=" + cartera + ", carrito=" + carrito
+				+ ", notificaciones=" + notificaciones + ", pedidos=" + pedidos + ", reseñas=" + reseñas
+				+ ", ofertasRealizadas=" + ofertasRealizadas + ", ofertasRecibidas=" + ofertasRecibidas + ", interes="
+				+ interes + "]";
+	}
 }

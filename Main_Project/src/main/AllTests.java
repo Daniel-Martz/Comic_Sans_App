@@ -16,6 +16,9 @@ import org.junit.platform.suite.api.SuiteDisplayName;
     "solicitud.test"
     
 })
+/*
+ * Ejecuta todos los tests
+ */
 public class AllTests {
 
 }

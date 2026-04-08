@@ -37,7 +37,17 @@ public class FiltroVentaCliente extends FiltroVenta {
 	private Set<TipoDescuento> descuentoFiltrado = new HashSet<TipoDescuento>();
 
 	/**
-	 * Instancia el filtro con sus parámetros de orden y rango.
+	 * Instancia el filtro de venta para clientes con parámetros de ordenación y rangos 
+	 * de búsqueda específicos.
+	 *
+	 * @param ordenAscendente      {@code true} para que el orden de los resultados sea ascendente, 
+	 * {@code false} para descendente.
+	 * @param puntuacionMin        Límite inferior de la puntuación media (incluido).
+	 * @param puntuacionMax        Límite superior de la puntuación media (incluido).
+	 * @param precioMin            Límite inferior del precio del producto (incluido).
+	 * @param precioMax            Límite superior del precio del producto (incluido).
+	 * @param ordenarPorPrecio     {@code true} si se desea aplicar un criterio de ordenación basado en el precio.
+	 * @param ordenarPorPuntuacion {@code true} si se desea aplicar un criterio de ordenación basado en la valoración.
 	 */
 	public FiltroVentaCliente(boolean ordenAscendente, double puntuacionMin, double puntuacionMax, double precioMin,
 			double precioMax, boolean ordenarPorPrecio, boolean ordenarPorPuntuacion) {

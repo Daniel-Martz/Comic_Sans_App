@@ -82,9 +82,12 @@ public class SolicitudValidacion extends Solicitud {
    */
   @Override
   public String toString() {
-    return "SolicitudValidacion [pagoValidacion=" + pagoValidacion + ", productoAValidar=" + productoAValidar + "]";
+      return "SolicitudValidacion [\n" +
+             "  producto=" + productoAValidar.getNombre() + "\n" +
+             "  validado=" + (productoAValidar.getDatosValidacion() != null) + "\n" +
+             "  pago=" + (pagoValidacion != null ? pagoValidacion.toString() : "sin pago") + "\n" +
+             "]";
   }
-
   /**
    * Obtiene el producto vinculado a esta solicitud.
    * * @return el objeto ProductoSegundaMano.

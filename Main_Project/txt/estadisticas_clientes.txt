@@ -2,7 +2,7 @@
 
 DNI          NOMBRE DE USUARIO                    RECAUDACION
 ----------------------------------------------------------------------
-123456789C   Rodrigo                                  88,48 €
-123456789B   Matteo                                    2,40 €
+123456789C   Rodrigo                                  55.97 €
+123456789B   Matteo                                    2.40 €
 ----------------------------------------------------------------------
-TOTAL RECAUDADO EN EL PERIODO:                        90,88 €
+TOTAL RECAUDADO EN EL PERIODO:                        58.37 €

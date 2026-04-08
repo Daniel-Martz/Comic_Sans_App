@@ -38,17 +38,23 @@ public class FiltroIntercambio extends Filtro {
 		this.valorMax = valorMax;
 	}
 
-	/** @return El valor mínimo actual del filtro. */
+	/** 
+	 * getter del valor minimo
+	 * @return El valor mínimo actual del filtro. */
 	public double getValorMin() {
 		return valorMin;
 	}
 
-	/** @return El valor máximo actual del filtro. */
+	/** 
+	 * getter del valor maximo
+	 * @return El valor máximo actual del filtro. */
 	public double getValorMax() {
 		return valorMax;
 	}
 
-	/** @return El conjunto de estados de conservación seleccionados. */
+	/** 
+	 * getter de los estados filtrados
+	 * @return El conjunto de estados de conservación seleccionados. */
 	public Set<EstadoConservacion> getEstadosFiltrados() {
 		return estadosFiltrados;
 	}
