@@ -106,7 +106,8 @@ public class Categoria implements Serializable{
     }
 
     /**
-     * Establecer el nombre de la categoria. 
+     * Establecer el nombre de la categoria.
+     * @param nombre nuevo 
      */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;

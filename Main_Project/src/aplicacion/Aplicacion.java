@@ -423,6 +423,7 @@ public class Aplicacion implements Serializable {
 	 *
 	 * @throws IllegalArgumentException si no hay ningún usuario logueado
 	 * @throws IllegalStateException    si el usuario actual no es un cliente registrado
+	 * @return el pedido creado
 	 */
 	public SolicitudPedido crearPedidoAPartirDeCarrito() {
 		// Comprobamos que el usuario actual sea un cliente registrado
@@ -884,7 +885,7 @@ public class Aplicacion implements Serializable {
 
   /**
    * Añade una solictud de validacion
- * @param v
+ * @param v la solicitud
  */
 public void añadirSolicitudValidacion(SolicitudValidacion v){
     this.gestorSolicitud.añadirSolicitudValidacion(v);

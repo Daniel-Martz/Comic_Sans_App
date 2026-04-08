@@ -36,7 +36,7 @@ public class DatosValidacion implements Serializable{
 
 	/**
 	 * Obtiene el precio estimado resultante de la validación.
-	 * * @return el precio del producto como un valor real.
+	 * @return el precio del producto como un valor real.
 	 */
 	public double getPrecioEstimadoProducto() {
 		return precioEstimadoProducto;

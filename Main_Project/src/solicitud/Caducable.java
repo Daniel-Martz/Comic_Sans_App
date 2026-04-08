@@ -10,7 +10,7 @@ public interface Caducable{
   
   /**
    * Comprueba si el objeto ha superado su periodo de validez o ha caducado.
-   * * @return true si el objeto ha caducado, false en caso contrario
+   * @return true si el objeto ha caducado, false en caso contrario
    */
   public boolean haCaducado();
 }

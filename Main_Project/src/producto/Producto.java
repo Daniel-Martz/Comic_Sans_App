@@ -72,42 +72,58 @@ public abstract class Producto implements Comparable<Producto>, Serializable{
 		contadorID = ois.readInt();
 	}
 	
-	/** @return El nombre del producto. */
+	/** 
+	 * getter de nombre
+	 * @return El nombre del producto. */
 	public String getNombre() {
 		return nombre;
 	}
 
-	/** @param nombre El nuevo nombre del producto. */
+	/** 
+	 * setter del nuevo nombre
+	 * @param nombre El nuevo nombre del producto. */
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-	/** @return La descripción del producto. */
+	/** 
+	 * getter de descripcion
+	 * @return La descripción del producto. */
 	public String getDescripcion() {
 		return descripcion;
 	}
 
-	/** @param descripcion La nueva descripción del producto. */
+	/** 
+	 * setter de descripcion
+	 * @param descripcion La nueva descripción del producto. */
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
 
-	/** @return El archivo de imagen del producto. */
+	/** 
+	 * getter de foto
+	 * @return El archivo de imagen del producto. */
 	public File getFoto() {
 		return foto;
 	}
 
-	/** @param foto El nuevo archivo de imagen del producto. */
+	/** 
+	 * setter de foto
+	 * @param foto El nuevo archivo de imagen del producto. */
 	public void setFoto(File foto) {
 		this.foto = foto;
 	}
 
-	/** @return El identificador único del producto. */
+	/** 
+	 * getter del id
+	 * @return El identificador único del producto. */
 	public int getID() {
 		return ID;
 	}
 	
-	/** @return La fecha en la que se subió el producto. */
+	/** 
+	 * getter de la fecha de subida
+	 * @return La fecha en la que se subió el producto. */
 	public DateTimeSimulado getFechaSubida() {
 		return fechaSubida;
 	}

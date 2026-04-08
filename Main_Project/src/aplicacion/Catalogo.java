@@ -252,6 +252,7 @@ public class Catalogo implements Serializable {
 	 *
 	 * @param f el f
 	 * @throws IOException Señala que la I/O exception ha ocurrido
+	 * @return la lista de productos añadidos
 	 */
 	public List<LineaProductoVenta> añadirProductosDesdeFichero(File f) throws IOException {
 		List<LineaProductoVenta> productos = new LinkedList<>();
