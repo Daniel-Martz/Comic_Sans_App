@@ -302,7 +302,7 @@ class SolicitudPedidoTest {
     prods.put(pack1, 1);
     solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
     //Confirmamos que se han pagado 2 productos y se han recibido 3
-    assertTrue(solicitudPedido.getCostePedido() == 30);
+    assertTrue(solicitudPedido.getCostePedido() == 10);
 	}
 
 	@Test

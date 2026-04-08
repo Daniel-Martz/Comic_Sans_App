@@ -53,6 +53,25 @@ public class Main {
 		rodrigo = app.crearCuenta("Rodrigo", "123456789C", "2222");
 
 		// *********************************************************************************************************
+		// CONFIGURACIÓN DE NOTIFICACIONES DESEADAS POR EL CLIENTE
+		System.out.println("\n====================================================");
+		System.out.println("      CONFIGURACIÓN DE NOTIFICACIONES DEL CLIENTE");
+		System.out.println("====================================================");
+		System.out.println("[->] Matteo activa notificaciones de DESCUENTOS y RECOMENDACIONES...");
+		app.iniciarSesion("Matteo", "1111");
+		matteo.getConfiguracionNotificacionClientees().add(NotificacionDeseada.DESCUENTOS);
+		matteo.getConfiguracionNotificacionClientees().add(NotificacionDeseada.RECOMENDACIONES);
+		System.out.println("     Notificaciones activas de Matteo: " + matteo.getConfiguracionNotificacionClientees());
+		app.cerrarSesion();
+
+		System.out.println("[->] Rodrigo activa únicamente notificaciones de RECOMENDACIONES...");
+		app.iniciarSesion("Rodrigo", "2222");
+		rodrigo.getConfiguracionNotificacionClientees().add(NotificacionDeseada.RECOMENDACIONES);
+		System.out
+				.println("     Notificaciones activas de Rodrigo: " + rodrigo.getConfiguracionNotificacionClientees());
+		app.cerrarSesion();
+
+		// *********************************************************************************************************
 		// PRUEBA DE SOLICITUD VALIDACION Y SOLICITUD INTERCAMBIO
 		System.out.println("\n====================================================");
 		System.out.println("    PRUEBA DE VALIDACIÓN E INTERCAMBIOS DE SEGUNDA MANO");
@@ -130,7 +149,7 @@ public class Main {
 
 		String codigoMatteo = notifIntercambioMatteo.getCodigoIntercambio();
 		String codigoRodrigo = notifIntercambioRodrigo.getCodigoIntercambio();
-		
+
 		System.out.println("\n[->] Federico aprueba el intercambio final usando los códigos de seguridad...");
 		// Federico inicia sesion para aprobar el intercambio
 		app.iniciarSesion("Federico", "123456");
@@ -171,8 +190,8 @@ public class Main {
 		}
 
 		System.out.println("\nCategorías iniciales de la tienda:");
-		for(Categoria c : cat.getCategoriasTienda()) {
-		    System.out.println(" - " + c.getNombre());
+		for (Categoria c : cat.getCategoriasTienda()) {
+			System.out.println(" - " + c.getNombre());
 		}
 
 		// Modificamos una categoria
@@ -180,15 +199,14 @@ public class Main {
 		cat.modificarCategoria(catThriller, "Suspense");
 
 		System.out.println("\nCategorías (con modificación de Thriller a Suspense):");
-		for(Categoria c : cat.getCategoriasTienda()) {
-		    System.out.println(" - " + c.getNombre());
+		for (Categoria c : cat.getCategoriasTienda()) {
+			System.out.println(" - " + c.getNombre());
 		}
 
 		System.out.println("\n[->] Gestor busca y modifica el stock de un producto...");
 		// Modificamos los datos de un producto
 		List<LineaProductoVenta> prod = cat.obtenerProductosNuevosGestion("Comic de Spiderman Adventures");
-		System.out.println(
-				"Lista de productos obtenidos al buscar 'Comic de Spiderman Adventures':");
+		System.out.println("Lista de productos obtenidos al buscar 'Comic de Spiderman Adventures':");
 
 		for (LineaProductoVenta p : prod) {
 			System.out.println(p);
@@ -216,7 +234,7 @@ public class Main {
 		} catch (IllegalArgumentException errorStock) {
 			System.out.println("Error capturado correctamente: " + errorStock.getMessage());
 		}
-		
+
 		System.out.println("\nAñadiendo cantidades correctas al pack...");
 		for (LineaProductoVenta p : prod) {
 			comicsSpidermanPack.añadirProductoAPack(p, 1);
@@ -298,8 +316,9 @@ public class Main {
 		System.out.println("\nProcesando pago del pedido...");
 		rodrigo.pagarPedido(pedidoRodrigo, "1234567890123456", "123", new DateTimeSimulado());
 		System.out.println("Estado del pedido tras el pago: " + pedidoRodrigo.getEstado());
-		
-		System.out.println("\nVemos que a Federico le aparece una notificación correspondiente al pedido:\n" + federico.getNotificaciones());
+
+		System.out.println("\nVemos que a Federico le aparece una notificación correspondiente al pedido:\n"
+				+ federico.getNotificaciones());
 
 		app.cerrarSesion();
 
@@ -330,21 +349,20 @@ public class Main {
 				System.out.println("Error capturado: " + e.getMessage());
 			}
 			app.cerrarSesion();
-			
+
 			System.out.println("\nGestor inicia sesión y otorga el permiso de Pedidos a Federico...");
-			//El gestor le da el permiso
+			// El gestor le da el permiso
 			app.iniciarSesion("gestor", "@soyElGestor1234!");
 			gestor.añadirPermiso(federico, Permiso.PEDIDOS);
 			app.cerrarSesion();
-			
+
 			System.out.println("Federico vuelve a iniciar sesión y ahora SÍ puede actualizar el pedido...");
 			// Federico inicia sesión para validar el pedido
 			app.iniciarSesion("Federico", "123456");
 			federico.actualizarEstadoPedido(pedidoAValidar, EstadoPedido.LISTO_PARA_RECOGER);
-			
+
 			System.out.println("Estado tras validación: " + pedidoAValidar.getEstado());
-		} 
-		else {
+		} else {
 			System.out.println("No hay pedidos pendientes de validar.");
 		}
 
@@ -368,6 +386,55 @@ public class Main {
 
 		app.cerrarSesion();
 
+		// *********************************************************************************************************
+		// DEMOSTRACIÓN: NUEVO PRODUCTO CON DESCUENTO Y NOTIFICACIÓN
+
+		System.out.println("\n====================================================");
+		System.out.println("   DEMOSTRACIÓN: NUEVO PRODUCTO CON DESCUENTO");
+		System.out.println("====================================================");
+
+		// Federico (Empleado) sube un producto nuevo
+		app.iniciarSesion("Federico", "123456");
+		System.out.println("[->] Federico sube un nuevo producto: 'Figura de Iron Man'...");
+		// original:
+		// 100€
+		LineaProductoVenta ironMan = federico.añadirProducto("Figura de Iron Man Limited Edition",
+				"Figura de alta calidad, escala 1/6 con luces LED.", new File("/images/ironman.jpg"), 10, 100.0);
+
+		System.out.println("[->] Federico crea un descuento del 20% y lo aplica a la Figura de Iron Man...");
+		Descuento desc20 = new Precio(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 20);
+		cat.añadirDescuento(desc20);
+		cat.aplicarDescuento(ironMan, desc20);
+		app.cerrarSesion();
+
+		// Rodrigo entra y revisa sus notificaciones
+		app.iniciarSesion("Rodrigo", "2222");
+		System.out.println("\n[->] Rodrigo entra en la aplicación y revisa sus notificaciones...");
+
+		// Rodrigo tenía activas las notificaciones de Recomendaciones y Descuentos
+		System.out.println(rodrigo.getNotificaciones());
+
+		// 4. Rodrigo añade el producto al carrito y paga
+		System.out.println("\n[->] Rodrigo añade la figura al carrito y procede al pago...");
+		rodrigo.añadirProductoACarrito(ironMan, 1);
+
+		SolicitudPedido pedidoDescuento = app.crearPedidoAPartirDeCarrito();
+
+		double precioAntesDePagar = pedidoDescuento.getCostePedido();
+		System.out.println("Importe total del pedido (con descuento aplicado): " + precioAntesDePagar + "€");
+
+		rodrigo.pagarPedido(pedidoDescuento, "1234567890123456", "123", new DateTimeSimulado());
+
+		// 5. Verificación final del ahorro
+		System.out.println("Verificación: El precio pagado es " + precioAntesDePagar 
+				+ "€ frente al precio original de 100.0€");
+
+		if (pedidoDescuento.getCostePedido() < 100.0) {
+			System.out
+					.println(">>> ÉXITO: El cliente ha ahorrado " + (100 - pedidoDescuento.getCostePedido()) + "€");
+		}
+
+		app.cerrarSesion();
 		// *********************************************************************************************************
 		// PRUEBA DE ESTADÍSTICAS TRAS EL PEDIDO
 
@@ -403,7 +470,7 @@ public class Main {
 		}
 
 		app.cerrarSesion();
-		
+
 		// *********************************************************************************************************
 		// DEMOSTRACIÓN DETALLADA DEL SISTEMA DE RECOMENDACIÓN
 		// *********************************************************************************************************
@@ -422,12 +489,13 @@ public class Main {
 		System.out.println("\n[Escenario A] Prioridad: NOVEDAD");
 		System.out.println("Producto recomendado (debe ser el último añadido al catálogo):");
 		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
-		    System.out.println("-> " + p.getNombre() + " (Fecha: " + p.getFechaSubida().toStringFecha() + ")");
+			System.out.println("-> " + p.getNombre() + " (Fecha: " + p.getFechaSubida().toStringFecha() + ")");
 		}
 		app.cerrarSesion();
 
 		// 2. ESCENARIO B: PRIORIDAD RESEÑAS (Valoración)
-		// Vamos a añadir una reseña excelente a un producto antiguo para que destaque sobre los nuevos
+		// Vamos a añadir una reseña excelente a un producto antiguo para que destaque
+		// sobre los nuevos
 		app.iniciarSesion("Matteo", "1111");
 		List<LineaProductoVenta> todos = new ArrayList<>(cat.getProductosNuevos());
 		LineaProductoVenta productoAntiguo = todos.get(0); // El primer comic de Spiderman
@@ -442,12 +510,13 @@ public class Main {
 		System.out.println("\n[Escenario B] Prioridad: RESEÑAS (Valoración)");
 		System.out.println("Producto recomendado (debe ser el que tiene la mejor puntuación media):");
 		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
-		    System.out.println("-> " + p.getNombre() + " (Puntuación: " + p.obtenerPuntuacionMedia() + ")");
+			System.out.println("-> " + p.getNombre() + " (Puntuación: " + p.obtenerPuntuacionMedia() + ")");
 		}
 		app.cerrarSesion();
 
 		// 3. ESCENARIO C: PRIORIDAD INTERÉS (Comportamiento del usuario)
-		// Rodrigo busca mucho un tipo de producto, lo que debe cambiar su recomendación personal
+		// Rodrigo busca mucho un tipo de producto, lo que debe cambiar su recomendación
+		// personal
 		app.iniciarSesion("gestor", "@soyElGestor1234!");
 		gestor.configurarImportancia(1, 0, 0); // Solo importa el interés generado por el usuario
 		app.cerrarSesion();
@@ -455,25 +524,26 @@ public class Main {
 		app.iniciarSesion("Rodrigo", "2222");
 		System.out.println("\n[Escenario C] Prioridad: INTERÉS");
 		System.out.println("Rodrigo va a buscar 'Figuras' repetidamente...");
-		app.buscarProductosNuevos("Figura"); 
+		app.buscarProductosNuevos("Figura");
 		app.buscarProductosNuevos("Figura");
 
 		System.out.println("Producto recomendado para Rodrigo (debe ser una Figura por su interés de búsqueda):");
 		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
-		    System.out.println("-> " + p.getNombre());
+			System.out.println("-> " + p.getNombre());
 		}
 
 		// 4. ESCENARIO D: INTERÉS POR CATEGORÍA (Añadir al carrito)
-		// Al añadir al carrito, el interés por la categoría aumenta drásticamente (PESO_CARRITO = 10)
+		// Al añadir al carrito, el interés por la categoría aumenta drásticamente
+		// (PESO_CARRITO = 10)
 		System.out.println("\nRodrigo añade un 'Pack' al carrito...");
 		List<LineaProductoVenta> prodsPack = cat.obtenerProductosNuevosGestion("Pack");
-		if(!prodsPack.isEmpty()){
-		    rodrigo.añadirProductoACarrito(prodsPack.get(0), 1);
+		if (!prodsPack.isEmpty()) {
+			rodrigo.añadirProductoACarrito(prodsPack.get(0), 1);
 		}
 
 		System.out.println("Nueva recomendación tras añadir al carrito (el interés ha evolucionado):");
 		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
-		    System.out.println("-> " + p.getNombre());
+			System.out.println("-> " + p.getNombre());
 		}
 		app.cerrarSesion();
 
@@ -481,35 +551,53 @@ public class Main {
 		System.out.println("      PRUEBA DE PERSISTENCIA (GUARDAR Y CARGAR DATOS)");
 		System.out.println("====================================================");
 		String archivo = "test_tienda.dat";
-		
+
 		System.out.println("Guardando el estado actual de la aplicación en '" + archivo + "'...");
 		try {
-		    app.guardarEstadoAplicacion(archivo);
-		    System.out.println("Estado guardado con éxito.");
+			app.guardarEstadoAplicacion(archivo);
+			System.out.println("Estado guardado con éxito.");
 		} catch (IOException e) {
-		    System.err.println("Error guardando: " + e.getMessage());
-		    return;
+			System.err.println("Error guardando: " + e.getMessage());
+			return;
 		}
-		
+
 		Aplicacion appCargada = null;
 		System.out.println("\nCargando el estado de la aplicación desde el fichero...");
 		try {
-		    Aplicacion.cargarEstadoAplicacion(archivo);
-		    appCargada = Aplicacion.getInstancia();
-		    System.out.println("Aplicación cargada con éxito.");
+			Aplicacion.cargarEstadoAplicacion(archivo);
+			appCargada = Aplicacion.getInstancia();
+			System.out.println("Aplicación cargada con éxito.");
 		} catch (Exception e) {
-		    System.err.println("Error cargando: " + e.getMessage());
-		    return;
+			System.err.println("Error cargando: " + e.getMessage());
+			return;
 		}
-		
+
 		System.out.println("\nImprimiendo un fragmento del catálogo cargado para verificar persistencia:");
 		System.out.println("Categorías restauradas: " + appCargada.getCatalogo().getCategoriasTienda());
-		
+
 		// 5. LIMPIAR
 		new java.io.File(archivo).delete();
 
 		System.out.println("\n====================================================");
+		System.out.println("           GUARDADO DE APLICACIÓN");
+		System.out.println("====================================================");
+
+		System.out.println("Estado de la aplicacion antes de su guardado :");
+		System.out.println("====================================================");
+		System.out.println(app);
+		System.out.println(
+				"============================================================================================================================================================");
+		System.out.println(
+				"============================================================================================================================================================");
+		System.out.println(
+				"============================================================================================================================================================");
+		System.out.println("\nEstado de la aplicacion al cargarla del guardado:");
+		System.out.println("====================================================");
+		System.out.println(appCargada);
+
+		System.out.println("\n====================================================");
 		System.out.println("           FIN DE LA DEMOSTRACIÓN");
 		System.out.println("====================================================");
+
 	}
 }
