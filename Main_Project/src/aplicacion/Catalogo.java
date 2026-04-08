@@ -987,14 +987,26 @@ public class Catalogo implements Serializable {
 		return resultado;
 	}
 
-	// Persist singleton instance on deserialization
+	/**
+	 * Serializa el objeto singleton.
+	 *
+	 * @param oos flujo de salida de objetos
+	 * @throws IOException si ocurre un error de escritura
+	 */
 	private void writeObject(ObjectOutputStream oos) throws IOException {
-		oos.defaultWriteObject();
+	    oos.defaultWriteObject();
 	}
 
+	/**
+	 * Deserializa el objeto y restablece la instancia singleton.
+	 *
+	 * @param ois flujo de entrada de objetos
+	 * @throws IOException si ocurre un error de lectura
+	 * @throws ClassNotFoundException si no se encuentra una clase durante la deserialización
+	 */
 	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-		ois.defaultReadObject();
-		instancia = this;
+	    ois.defaultReadObject();
+	    instancia = this;
 	}
 
 	@Override

@@ -39,11 +39,24 @@ public class Notificacion implements Serializable {
 		this.horaEnvio = horaEnvio;
 	}
 
+	/**
+	 * Serializa el objeto y guarda el contador de identificadores.
+	 *
+	 * @param oos flujo de salida de objetos
+	 * @throws IOException si ocurre un error de escritura
+	 */
     private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
         oos.writeInt(contadorID);
     }
 
+    /**
+     * Deserializa el objeto y recupera el contador de identificadores.
+     *
+     * @param ois flujo de entrada de objetos
+     * @throws IOException si ocurre un error de lectura
+     * @throws ClassNotFoundException si no se encuentra una clase durante la deserialización
+     */
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
         contadorID = ois.readInt();

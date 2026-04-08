@@ -12,11 +12,22 @@ import java.io.File;
  */
 public class Figura extends LineaProductoVenta {
 
+	/** Identificador de versión para serialización. */
 	private static final long serialVersionUID = 1L;
+
+	/** Marca del producto. */
 	private final String marca;
+
+	/** Material del producto. */
 	private final String material;
+
+	/** Dimensión en el eje X. */
 	private final double dimensionX;
+
+	/** Dimensión en el eje Y. */
 	private final double dimensionY;
+
+	/** Dimensión en el eje Z. */
 	private final double dimensionZ;
 
 	/**

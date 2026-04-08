@@ -15,10 +15,19 @@ import java.io.File;
  */
 public class JuegoDeMesa extends LineaProductoVenta {
 
+	/** Identificador de versión para serialización. */
 	private static final long serialVersionUID = 1L;
+
+	/** Número de jugadores permitidos. */
 	private final int numeroJugadores;
+
+	/** Edad mínima recomendada. */
 	private final int edadMinima;
+
+	/** Edad máxima recomendada. */
 	private final int edadMaxima;
+
+	/** Tipo de juego de mesa. */
 	private final TipoJuegoMesa tipo;
 
 	/**

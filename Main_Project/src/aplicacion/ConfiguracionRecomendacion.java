@@ -239,16 +239,27 @@ public class ConfiguracionRecomendacion implements Serializable {
 	    return mejor;
 	}
 	
-	// Persist singleton
+	/**
+	 * Serializa el objeto singleton.
+	 *
+	 * @param oos flujo de salida de objetos
+	 * @throws IOException si ocurre un error de escritura
+	 */
 	private void writeObject(ObjectOutputStream oos) throws IOException {
-        oos.defaultWriteObject();
-    }
+	    oos.defaultWriteObject();
+	}
 
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        ois.defaultReadObject();
-        instancia = this;
-    }
-
+	/**
+	 * Deserializa el objeto y restaura la instancia singleton.
+	 *
+	 * @param ois flujo de entrada de objetos
+	 * @throws IOException si ocurre un error de lectura
+	 * @throws ClassNotFoundException si no se encuentra una clase durante la deserialización
+	 */
+	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+	    ois.defaultReadObject();
+	    instancia = this;
+	}
 	@Override
 	public String toString() {
 		return "\n\n\n====================================================" +
