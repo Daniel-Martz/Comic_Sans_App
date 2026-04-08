@@ -84,4 +84,10 @@ public class Reseña implements Serializable{
 		return producto;
 	}
 
+	@Override
+	public String toString() {
+	    return "Reseña [puntuacion=" + puntuacion + "/5" +
+	           " | fecha=" + fecha.toStringFecha() +
+	           " | comentario=\"" + descripcion + "\"]";
+	}
 }

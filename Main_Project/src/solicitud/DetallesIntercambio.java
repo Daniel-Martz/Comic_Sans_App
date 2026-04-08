@@ -29,5 +29,11 @@ public class DetallesIntercambio implements Serializable{
 		this.fechaIntercambio = fechaIntercambio;
 		this.lugarIntercambio = lugarIntercambio;
 	}
+	
+	@Override
+	public String toString() {
+	    return "Lugar: " + lugarIntercambio +
+	           " | Fecha: " + (fechaIntercambio != null ? fechaIntercambio.toStringFecha() : "sin fecha");
+	}
 
 }

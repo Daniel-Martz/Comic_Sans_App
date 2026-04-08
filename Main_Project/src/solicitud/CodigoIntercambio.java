@@ -38,4 +38,8 @@ public class CodigoIntercambio implements Serializable{
 	public String getCodigo() {
 		return codigo;
 	}
+	@Override
+	public String toString() {
+	    return "Codigo[" + codigo + "]";
+	}
 }
