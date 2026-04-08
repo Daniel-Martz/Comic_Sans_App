@@ -20,9 +20,6 @@ import java.util.*;
  * pedidos, notificaciones y acceso a subsistemas compartidos como el
  * catálogo, el sistema de pago y el gestor de solicitudes.
  *
- * <p>Esta clase actúa como fachada para las operaciones de dominio más
- * habituales (crear cuentas, iniciar/cerrar sesión, crear pedidos,
- * enviar notificaciones, etc.).
  */
 public class Aplicacion implements Serializable {
 
@@ -64,11 +61,6 @@ public class Aplicacion implements Serializable {
 	 * Construye la instancia de {@code Aplicacion} inicializando los
 	 * subsistemas que dependen de la aplicación.
 	 *
-	 * <p>El constructor es {@code private} ya que la clase sigue el patrón
-	 * singleton. Los parámetros permiten inyectar instancias de los
-	 * subsistemas (configuración de recomendación, sistema de pago,
-	 * estadísticas, gestor de solicitudes y catálogo) y crear la cuenta
-	 * inicial del gestor.
 	 *
 	 * @param nombre nombre de la aplicación
 	 * @param criterioRecomendacion instancia de configuración de recomendaciones
@@ -224,7 +216,7 @@ public class Aplicacion implements Serializable {
 				return;
 			}
 		}
-
+  
 		Usuario nuevoUsuario = new Gestor(nombreUser, DNI, contraseña);
 		usuariosRegistrados.add(nuevoUsuario);
 
@@ -331,7 +323,7 @@ public class Aplicacion implements Serializable {
 	 * @return la instancia de {@link Empleado} creada
 	 * @throws IllegalArgumentException si no hay un usuario logueado o si los
 	 *                                  parámetros no son válidos
-	 * @throws IllegalStateException    si el usuario actual no es el gestor o
+	 * @throws IllegalStateException    si el usuario actual no es el gestor o  
 	 *                                  si ya existe un usuario con el mismo nombre
 	 */
 	// Métodos exclusivos del gestor
