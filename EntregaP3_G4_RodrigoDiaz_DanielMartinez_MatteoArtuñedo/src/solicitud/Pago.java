@@ -1,0 +1,78 @@
+package solicitud;
+
+import java.util.*;
+import tiempo.DateTimeSimulado;
+
+import java.io.Serializable;
+/**
+ * Clase que representa un pago realizado para una solicitud
+ * 
+ * @author Matteo Artuñedo, Rodrigo Diaz y Daniel Martinez
+ * @version 1.0
+ */
+public class Pago implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
+	/**
+     * Fecha en la que se realizó el pago.
+     */
+	private final DateTimeSimulado fechaPago;
+
+    /**
+     * Importe del pago.
+     */
+	private final double importe;
+
+    /**
+     * Solicitud que se está pagando.
+     */
+	private final Solicitud solicitudPagada;
+
+    /**
+     * Constructor de la clase Pago.
+     * 
+     * @param fechaPago Fecha en que se realiza el pago.
+     * @param importe Importe del pago.
+     * @param solicitudPagada Solicitud asociada al pago.
+     */
+	public Pago(DateTimeSimulado fechaPago, double importe, Solicitud solicitudPagada) {
+		super();
+		this.fechaPago = fechaPago;
+		this.importe = importe;
+		this.solicitudPagada = solicitudPagada;
+	}
+
+    /**
+     * Devuelve la fecha del pago.
+     * 
+     * @return Fecha de pago.
+     */
+	public DateTimeSimulado getFechaPago() {
+		return fechaPago;
+	}
+
+    /**
+     * Devuelve el importe del pago.
+     * 
+     * @return Importe pagado.
+     */
+	public double getImporte() {
+		return importe;
+	}
+
+    /**
+     * Devuelve la solicitud asociada al pago.
+     * 
+     * @return Objeto de la solicitud pagada.
+     */
+	public Solicitud getObjetoPagado() {
+		return solicitudPagada;
+	}
+	
+	@Override
+	public String toString() {
+	    return "Pago [fecha=" + fechaPago.toStringFecha() +
+	           " | importe=" + String.format("%.2f €", importe) + "]";
+	}
+}

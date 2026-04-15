@@ -1,0 +1,7 @@
+------- INFORME DE RECAUDACION POR AMBITO ( 1/1/1 - 30/12/1 ) -------
+AMBITO                    RECAUDACION
+----------------------------------------
+Venta de productos        185.48 €
+Validaciones              5.40 €
+----------------------------------------
+TOTAL                     190.88 €
