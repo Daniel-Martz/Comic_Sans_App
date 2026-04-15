@@ -1,0 +1,423 @@
+package modelo.solicitud.test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import modelo.aplicacion.Aplicacion;
+import modelo.categoria.Categoria;
+
+import java.io.File;
+import java.util.*;
+import java.util.AbstractMap.SimpleEntry;
+import modelo.descuento.*;
+import modelo.producto.*;
+import modelo.usuario.*;
+import modelo.solicitud.EstadoPedido;
+import modelo.solicitud.Pago;
+import modelo.solicitud.SolicitudPedido;
+import modelo.tiempo.DateTimeSimulado;
+import modelo.tiempo.TiempoSimulado;
+
+class SolicitudPedidoTest {
+  private SolicitudPedido solicitudPedido = null;
+
+	@Test
+	void testGetCostePedido() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 5);
+    prods.put(pack1, 3);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+
+    assertTrue(solicitudPedido.getCostePedido() == 80);
+	}
+
+  /**
+   * Se calcula el coste de un pedido en el caso de que haya un porcentaje de descuento en uno o varios productos
+   */
+  @Test
+	void testGetCostePedidoDescuentoRebaja() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    
+    Precio d = new Precio(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 50);
+    d.añadirProductoRebajado(prod1);
+    prod1.setDescuento(d);
+    prods.put(prod1, 1);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+
+    assertTrue(solicitudPedido.getCostePedido() == 15);
+	}
+  
+  /**
+   * Se calcula el coste de un pedido en el caso de que haya un porcentaje de descuento en una categoria
+   */
+  @Test
+	void testGetCostePedidoDescuentoRebajaEnCategoria() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    Categoria catDescontada = new Categoria("Diversion");
+    catDescontada.añadirProductoACategoria(prod1);
+    prod1.añadirCategoria(catDescontada);
+    
+    Precio d = new Precio(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 50);
+    d.añadirCategoria(catDescontada);
+    catDescontada.añadirDescuento(d);
+    prods.put(prod1, 1);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+
+    assertTrue(solicitudPedido.getCostePedido() == 15);
+	}
+  
+  /**
+   * Se calcula el coste de un pedido en el caso de que haya un porcentaje de descuento en una categoria pero este haya caducado
+   */
+  @Test
+	void testGetCostePedidoDescuentoRebajaEnCategoriaCaducado() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    Categoria catDescontada = new Categoria("Diversion");
+    catDescontada.añadirProductoACategoria(prod1);
+    prod1.añadirCategoria(catDescontada);
+    
+    Precio d = new Precio(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 50);
+    d.añadirCategoria(catDescontada);
+    catDescontada.añadirDescuento(d);
+    Aplicacion.getInstancia().getCatalogo().añadirCategoria(catDescontada);
+    Aplicacion.getInstancia().getCatalogo().añadirDescuento(d);
+    TiempoSimulado.getInstance().avanzarDias(60);
+    prods.put(prod1, 1);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+
+    assertTrue(solicitudPedido.getCostePedido() == 20);
+	}
+  
+  /**
+   * Se calcula el coste de un pedido en el caso de que haya un porcentaje de descuento en un producto pero el descuento haya caducado
+   */
+  @Test
+	void testGetCostePedidoDescuentoRebajaCaducado() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    
+    Precio d = new Precio(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 50);
+    d.añadirProductoRebajado(prod1);
+    prod1.setDescuento(d);
+    prods.put(prod1, 1);
+    prods.put(pack1, 1);
+    Aplicacion.getInstancia().getCatalogo().añadirDescuento(d);
+    Aplicacion.getInstancia().getCatalogo().añadirProducto(prod1);
+    TiempoSimulado.getInstance().avanzarDias(60);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    assertTrue(solicitudPedido.getCostePedido() == 20);
+	
+	}
+
+  /**
+   * En este test probaremos que, al comprar 1 unidad de un producto y haber un 2x3, nos seguimos llevando 1
+   */
+  @Test
+	void testGetCostePedidoDescuentoCantidadSinCambios() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    
+    Cantidad d = new Cantidad(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 2, 3);
+    d.añadirProductoRebajado(prod1);
+    prod1.setDescuento(d);
+    prods.put(prod1, 1);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    double val1 = solicitudPedido.getCostePedido();
+    boolean cond2 = (val1 == 20.0);
+    boolean cond1 = solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod1, 3)) == null;
+    assertTrue(cond1 && cond2);
+	}
+
+  /**
+   * En este test probaremos que, al comprar 2 unidades de un producto y haber un 2x3, realmente nos llevamos 3
+   */
+  @Test
+	void testGetCostePedidoDescuentoCantidad() {
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    
+    Cantidad d = new Cantidad(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 2, 3);
+    d.añadirProductoRebajado(prod1);
+    prod1.setDescuento(d);
+    prods.put(prod1, 2);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    //Confirmamos que se han pagado 2 productos y se han recibido 3
+    boolean cond1 = solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod1, 3)) != null;
+    boolean cond2 = solicitudPedido.getCostePedido() == 30;
+    assertTrue(cond1 && cond2);
+	}
+
+  /**
+   * En este test probaremos que, al comprar productos que tienen un descuento de regalo asociado y superar el umbral, se añaden los productos regalados
+   */
+  @Test
+	void testGetCostePedidoDescuentoRegalo() {
+    //Creamos los productos
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Regalaremos dos unidades de prod3
+    LineaProductoVenta prod3 = new LineaProductoVenta("Figura", "Figura Pokemon", new File("figura.jpg")
+      , 5, 2);
+    
+    //Creamos el descuento con el producto de regalo y lo asociamos a los productos deseados
+    Map<LineaProductoVenta, Integer> prodsRegalo = new HashMap<>();
+    prodsRegalo.put(prod3, 2);
+    Regalo d = new Regalo(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 25, prodsRegalo);
+    d.añadirProductoRebajado(prod1);
+    d.añadirProductoRebajado(prod2);
+    prod1.setDescuento(d);
+    prod2.setDescuento(d);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    //Confirmamos que se han pagado los productos y se han recibido 2 unidades de prod3 como regalo
+    assertTrue(solicitudPedido.getCostePedido() == 50 && solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod3, 2)) != null);
+	}
+
+  /**
+   * En este test probaremos que, al comprar productos que tienen un descuento de regalo asociado y NO superar el umbral, NO se añaden los productos regalados
+   */
+  @Test
+	void testGetCostePedidoDescuentoRegaloNoAplicado() {
+    //Creamos los productos
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Regalaremos dos unidades de prod3
+    LineaProductoVenta prod3 = new LineaProductoVenta("Figura", "Figura Pokemon", new File("figura.jpg")
+      , 5, 2);
+    
+    //Creamos el descuento con el producto de regalo y lo asociamos a los productos deseados
+    Map<LineaProductoVenta, Integer> prodsRegalo = new HashMap<>();
+    prodsRegalo.put(prod3, 2);
+    Regalo d = new Regalo(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 100, prodsRegalo);
+    d.añadirProductoRebajado(prod1);
+    d.añadirProductoRebajado(prod2);
+    prod1.setDescuento(d);
+    prod2.setDescuento(d);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    //Confirmamos que se han pagado 2 productos y se han recibido 3
+    boolean cond1 = solicitudPedido.getCostePedido() == 50;
+    assertTrue(cond1 && solicitudPedido.getRecaudacionProductos().get(new SimpleEntry<LineaProductoVenta, Integer>(prod3, 2)) == null);
+	}
+
+
+  /**
+   * En este test probaremos que, al comprar productos que tienen un descuento de rebaja por encima de un umbral y NO superar el umbral, NO se aplica el descuento
+   */
+  @Test
+	void testGetCostePedidoDescuentoRebajaPorUmbralNoAplicado() {
+    //Creamos los productos
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Creamos el descuento con el producto de regalo y lo asociamos a los productos deseados
+    RebajaUmbral d = new RebajaUmbral(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 100, 50);
+    d.añadirProductoRebajado(prod1);
+    d.añadirProductoRebajado(prod2);
+    prod1.setDescuento(d);
+    prod2.setDescuento(d);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    //Confirmamos que se han pagado 2 productos y se han recibido 3
+    assertTrue(solicitudPedido.getCostePedido() == 50);
+	}
+
+  /**
+   * En este test probaremos que, al comprar productos que tienen un descuento de rebaja por encima de un umbral y superar el umbral, se aplica el descuento
+   */
+  @Test
+	void testGetCostePedidoDescuentoRebajaPorUmbralAplicado() {
+    //Creamos los productos
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Creamos el descuento con el producto de regalo y lo asociamos a los productos deseados
+    RebajaUmbral d = new RebajaUmbral(new DateTimeSimulado(), DateTimeSimulado.DateTimeDiasDespues(7), 20, 50);
+    d.añadirProductoRebajado(prod1);
+    d.añadirProductoRebajado(prod2);
+    prod1.setDescuento(d);
+    prod2.setDescuento(d);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    //Confirmamos que se han pagado 2 productos y se han recibido 3
+    assertTrue(solicitudPedido.getCostePedido() == 30);
+	}
+
+	@Test
+	void testPagado() {
+    //Creamos los productos
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    prods.put(pack1, 1);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    solicitudPedido.añadirPagoPedido(new Pago(new DateTimeSimulado(), 10, solicitudPedido));
+    assertTrue(solicitudPedido.pagado());
+	}
+
+  /**
+   * Se prueba que un pedido caduca pasado un tiempo
+   */
+  @Test
+  void testHaCaducado1(){
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    TiempoSimulado.getInstance().avanzarDias(10);
+    assertTrue(solicitudPedido.haCaducado());
+
+  }
+  
+  /**
+   * Si el pedido ya está pagado no se considera que haya caducado
+   */
+  @Test
+  void testHaCaducado2(){
+    ClienteRegistrado cliente = new ClienteRegistrado("Rigoberto", "01122233A", "123456" );
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    cliente.añadirProductoACarrito(prod1, 2);
+    cliente.añadirProductoACarrito(prod2, 2);
+    solicitudPedido = cliente.realizarPedido();
+    cliente.pagarPedido(solicitudPedido, "0123456789012345", "123", new DateTimeSimulado());
+
+    TiempoSimulado.getInstance().avanzarDias(10);
+    assertFalse(solicitudPedido.haCaducado());
+
+  }
+  
+  /**
+   * Si no ha pasado el tiempo necesario, el pedido no ha caducado
+   */
+  @Test
+  void testHaCaducado3(){
+    LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg")
+      , 5, 10);
+
+    LineaProductoVenta prod2 = new LineaProductoVenta("Botas", "Botas de montaña", new File("botas.jpg")
+      , 5, 10);
+    
+    //Creamos la solicitudPedido
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 2);
+    prods.put(prod2, 2);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    assertFalse(solicitudPedido.haCaducado());
+
+  }
+  
+  /**
+   * Se prueba que el estado tiene que ser válido
+   */
+  @Test
+  void testActualizarEstado1() {
+	LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 5);
+    prods.put(pack1, 3);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+
+    Exception e = assertThrows(IllegalArgumentException.class, ()->{solicitudPedido.actualizarEstadoPedidoEmpleado(null);});
+    assertTrue(e.getMessage() == "El estado no puede ser null");
+
+  }
+
+  /**
+   * Se prueba que el cliente debe haber realizado el pago del pedido para que se pueda cambiar su estado
+   */
+  @Test
+  void testActualizarEstado2() {
+	LineaProductoVenta prod1 = new LineaProductoVenta("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Pack pack1 = new Pack("Cometa", "Una cometa muy chula", new File("cometa.jpg"), 5, 10);
+    Map<LineaProductoVenta, Integer> prods = new HashMap<>();
+    prods.put(prod1, 5);
+    prods.put(pack1, 3);
+    solicitudPedido = new SolicitudPedido(new ClienteRegistrado("Rigoberto", "01122233A", "123456" ), prods);
+    Exception e = assertThrows(IllegalStateException.class, ()->{solicitudPedido.actualizarEstadoPedidoEmpleado(EstadoPedido.LISTO_PARA_RECOGER);});
+    assertTrue(e.getMessage() == "El pedido todavía no se ha pagado y no se puede procesar");
+
+  }
+}
