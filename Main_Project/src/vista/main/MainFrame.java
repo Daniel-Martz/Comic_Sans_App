@@ -11,7 +11,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super("Java Swing MVC");
         cardLayout = new CardLayout();
-         JPanel crearUsuarioPanel = new CrearUsuarioPanel();
+         JPanel crearUsuarioPanel = new InterchangeCardPanel();
         // sets our layout as a card layout
         setLayout(cardLayout);
 
