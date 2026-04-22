@@ -6,93 +6,127 @@ import java.awt.event.ActionListener;
 
 public class CrearUsuarioPanel extends JPanel {
 
-    private JTextField firstnameField;
-    private JTextField lastNameField;
-
-    private JButton addButton;
-    private JButton viewButton;
+    private JLabel titleLabel;
+    private JPanel panelInferior;
+    private JPanel panelIntermedio;
 
     public CrearUsuarioPanel() {
-
-        JLabel firstnameLabel = new JLabel("First Name: ");
-        JLabel lastnameLabel = new JLabel("Last Name: ");
-
-        firstnameField = new JTextField(25);
-        lastNameField = new JTextField(25);
-
-        addButton = new JButton("Add User");
-        addButton.setPreferredSize(new Dimension(278, 40));
-        viewButton = new JButton("View All Users");
-        viewButton.setPreferredSize(new Dimension(278, 40));
-
-        // space between fields
-        Insets fieldsInset = new Insets(0, 0, 10, 0);
-        // space between buttons
-        Insets buttonInset = new Insets(20,0,0,0);
-
-        // uses Grid Bag Layout
-        setLayout(new GridBagLayout());
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.insets = fieldsInset;
-        gridBagConstraints.fill = GridBagConstraints.NONE;
-
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = GridBagConstraints.WEST;
-
-        add(firstnameLabel, gridBagConstraints);
-
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-
-        add(firstnameField, gridBagConstraints);
-
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = GridBagConstraints.WEST;
-
-        add(lastnameLabel, gridBagConstraints);
-
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-
-        add(lastNameField, gridBagConstraints);
-
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.insets = buttonInset;
-
-        add(addButton, gridBagConstraints);
-
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.insets = buttonInset;
-
-        add(viewButton, gridBagConstraints);
+        initComponents();
+        initLayout();
     }
 
-    // getters
-    public String getFirstname() {
-        return firstnameField.getText();
+    private void initComponents() {
+        titleLabel = new JLabel("Crear usuario");
+        panelInferior = new PanelInferior();
+        panelIntermedio = new PanelIntermedio();
     }
 
-    public String getLastname() {
-        return lastNameField.getText();
+    private void initLayout() {
+
+        setLayout(new BorderLayout());
+
+        add(titleLabel, BorderLayout.NORTH);
+        add(panelIntermedio, BorderLayout.CENTER);
+        add(panelInferior, BorderLayout.SOUTH);
     }
 
-    public void submitUsers(ActionListener actionListener) {
-        addButton.addActionListener(actionListener);
-    }
 
-    public void viewUsers(ActionListener actionListener) {
-        viewButton.addActionListener(actionListener);
-    }
+//    public String getUsername() {
+//        return usernameField.getText().trim();
+//    }
+//
+//	public String getDni() {
+//        return dniField.getText().trim();
+//    }
+//
+//    public String getPassword() {
+//        return passwordField.getText().trim();
+//    }
+//
+//    public String getConfirmedPassword() {
+//        return confirmPasswordField.getText().trim();
+//    }
+//
+//    public void addAddUserListener(ActionListener listener) {
+//        createButton.addActionListener(listener);
+//    }
 
-    // reset fields
-    public void reset(boolean bln) {
-        if(bln) {
-            firstnameField.setText("");
-            lastNameField.setText("");
-        }
+
+    public void reset() {
     }
+    
+    private class PanelIntermedio extends JPanel{
+    	JPanel fieldsPanel;
+    	JPanel requirementsPanel;
+    	
+    	public PanelIntermedio() {
+    		this.initComponents();
+    		this.initLayout();
+    	}
+    	
+    	void initComponents(){
+    		fieldsPanel = new FieldsPanel();
+    		requirementsPanel = new RequirementsPanel();
+    	}
+		void initLayout(){
+			this.setLayout(new BorderLayout());
+			add(fieldsPanel, BorderLayout.EAST);
+			add(requirementsPanel, BorderLayout.WEST);
+    	}
+    }
+    
+    private class FieldsPanel extends JPanel{
+		private JTextField usernameField;
+		private JTextField dniField;
+		private JTextField passwordField;
+		private JTextField confirmPasswordField;
+		
+		public FieldsPanel() {
+			initComponents();
+			initLayout();
+		}
+
+		void initComponents() {
+			usernameField = new JTextField(25);
+			dniField = new JTextField(25);
+			passwordField = new JTextField(25);
+			confirmPasswordField = new JTextField(25);
+		}
+		
+		void initLayout() {
+			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+			add(usernameField);
+			add(dniField);
+			add(passwordField);
+			add(confirmPasswordField);
+		}
+		void reset() {
+			usernameField.setText("");
+			dniField.setText("");
+			passwordField.setText("");
+			confirmPasswordField.setText("");
+		}
+    	
+    }
+	private class RequirementsPanel extends JPanel{
+    	
+    }
+	
+	private class PanelInferior extends JPanel{
+		private JButton botonCrear;
+		
+		public PanelInferior() {
+			initComponents();
+			initLayout();
+		}
+		
+		void initComponents() {
+			botonCrear = new JButton();
+			botonCrear.setText("Crear");
+		}
+		
+		void initLayout() {
+			this.add(botonCrear);
+		}
+	}
 }
