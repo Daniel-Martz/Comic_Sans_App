@@ -139,7 +139,7 @@ public class Aplicacion implements Serializable {
 			throw new IllegalArgumentException("Nombre de usuario inválido");
 		}
 
-		if (contraseña == null || contraseña.length() < 4) {
+		if (contraseña == null || !contraseñaLower(contraseña) || !contraseñaUpper(contraseña) || !contraseñaSymbol(contraseña) || !contraseñaNumber(contraseña) || !contraseñaLength(contraseña)) {
 			throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
 		}
 
@@ -158,6 +158,53 @@ public class Aplicacion implements Serializable {
 
 		System.out.println("Nueva cuenta de cliente creada con éxito para: " + nombreUser);
 		return nuevoUsuario;
+	}
+	
+	/**
+	 * Verifica tamaño de contraseña
+	 * @param contraseña
+	 * @return true o false
+	 */
+	public boolean contraseñaLength(String contraseña) {
+		return contraseña.length() >= 10;
+	}
+	
+	/**
+	 * Verifica que hay minusculas
+	 * @param contraseña
+	 * @return true o false
+	 */
+	public boolean contraseñaLower(String contraseña) {
+		return contraseña.matches(".*[a-z].*");
+	}
+	
+	/**
+	 * Verifica que hay mayúsculas
+	 * @param contraseña
+	 * @return true o false
+	 */
+	public boolean contraseñaUpper(String contraseña) {
+		return contraseña.matches(".*[A-Z].*");
+	}
+	
+	/**
+	 * Verifica que hay al menos un símbolo (carácter especial)
+	 * @param contraseña
+	 * @return true o false
+	 */
+	public boolean contraseñaNumber(String contraseña) {
+	    // Busca cualquier cosa que NO sea una letra ni un número
+	    return contraseña.matches(".*[0-9].*");
+	}
+	
+	/**
+	 * Verifica que hay al menos un símbolo (carácter especial)
+	 * @param contraseña
+	 * @return true o false
+	 */
+	public boolean contraseñaSymbol(String contraseña) {
+	    // Busca cualquier cosa que NO sea una letra ni un número
+	    return contraseña.matches(".*[^a-zA-Z0-9].*");
 	}
 
 	/**
