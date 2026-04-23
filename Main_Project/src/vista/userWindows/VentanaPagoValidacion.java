@@ -8,6 +8,7 @@ import modelo.producto.ProductoSegundaMano;
 import modelo.producto.EstadoConservacion;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -56,21 +57,32 @@ public class VentanaPagoValidacion extends JDialog {
         panelPrincipal.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         // ── Panel Norte: Título CHECKOUT y Total (no interactivo)
-        JPanel panelNorte = new JPanel(new GridLayout(2, 1, 5, 5));
+        JPanel panelNorte = new JPanel(new GridLayout(2, 1, 10, 10)); // Aumentado el gap para que respire
         
+        // Estilo igual al de la otra ventana (Fondo Azul, Letras Blancas)
         JLabel labelCheckout = new JLabel("CHECKOUT", SwingConstants.CENTER);
-        labelCheckout.setFont(new Font("SansSerif", Font.BOLD, 18));
+        labelCheckout.setFont(new Font("SansSerif", Font.BOLD, 15));
+        labelCheckout.setOpaque(true);
+        labelCheckout.setBackground(new Color(100, 130, 200));
+        labelCheckout.setForeground(Color.WHITE);
+        labelCheckout.setBorder(BorderFactory.createEmptyBorder(6, 0, 6, 0));
         panelNorte.add(labelCheckout);
 
+        // Estilo igual al de la otra ventana (Fondo Gris clarito)
         labelTotal = new JLabel(
                 String.format("TOTAL TO PAY FOR VALIDATION: %.2f €", precioValidacion),
                 SwingConstants.CENTER);
+        labelTotal.setFont(new Font("SansSerif", Font.BOLD, 13));
+        labelTotal.setOpaque(true);
+        labelTotal.setBackground(new Color(220, 220, 220));
+        labelTotal.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
         panelNorte.add(labelTotal);
         
         panelPrincipal.add(panelNorte, BorderLayout.NORTH);
 
         // ── Panel Central: Formulario de tarjeta 
         JPanel panelCampos = new JPanel(new GridLayout(5, 1, 5, 5));
+        panelCampos.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
 
         panelCampos.add(new JLabel("Card Number", SwingConstants.CENTER));
         campoNumeroTarjeta = new JTextField(16);
@@ -91,8 +103,11 @@ public class VentanaPagoValidacion extends JDialog {
 
         panelCampos.add(panelFechaYCVV);
 
-        // Botón CONFIRM
+        // Botón CONFIRM (Verde, igual que en la ventana de pedido)
         botonConfirmar = new JButton("CONFIRM");
+        botonConfirmar.setBackground(new Color(50, 200, 80));
+        botonConfirmar.setForeground(Color.WHITE);
+        botonConfirmar.setFont(new Font("SansSerif", Font.BOLD, 13));
         panelCampos.add(botonConfirmar);
 
         panelPrincipal.add(panelCampos, BorderLayout.CENTER);
@@ -102,9 +117,6 @@ public class VentanaPagoValidacion extends JDialog {
 
     // ── Métodos para el MVC (Conexión y Getters)
 
-    /**
-     * Asigna el controlador a los botones de la vista.
-     */
     public void setControlador(ActionListener c) {
         botonConfirmar.addActionListener(c);
         botonConfirmar.setActionCommand("CONFIRMAR_PAGO");
@@ -127,9 +139,13 @@ public class VentanaPagoValidacion extends JDialog {
     public void mostrarVentanaExito() {
         JDialog ventanaExito = new JDialog(getOwner(), "Successful Payment", ModalityType.APPLICATION_MODAL);
         JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
-        panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        // Mismos colores y márgenes que en tu ventana de pedido
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBackground(new Color(200, 240, 200));
 
-        panel.add(new JLabel("SUCCESSFUL PAYMENT!!", SwingConstants.CENTER));
+        JLabel titulo = new JLabel("SUCCESSFUL PAYMENT!!", SwingConstants.CENTER);
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 14));
+        panel.add(titulo);
         panel.add(new JLabel("Your product will be validated and priced soon", SwingConstants.CENTER));
 
         ventanaExito.add(panel);
@@ -141,10 +157,14 @@ public class VentanaPagoValidacion extends JDialog {
     public void mostrarVentanaError(String motivo) {
         JDialog ventanaError = new JDialog(getOwner(), "Error", ModalityType.APPLICATION_MODAL);
         JPanel panel = new JPanel(new GridLayout(3, 1, 5, 5));
-        panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        // Fondo rojo pastel igual que en la otra
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBackground(new Color(255, 200, 200));
 
-        panel.add(new JLabel("THERE WAS AN ERROR DURING THE PAYMENT", SwingConstants.CENTER));
-        panel.add(new JLabel(motivo, SwingConstants.CENTER)); // Muestra el motivo real
+        JLabel titulo = new JLabel("THERE WAS AN ERROR DURING THE PAYMENT", SwingConstants.CENTER);
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 13));
+        panel.add(titulo);
+        panel.add(new JLabel(motivo, SwingConstants.CENTER)); 
         panel.add(new JLabel("You will get payed back.", SwingConstants.CENTER));
 
         ventanaError.add(panel);
@@ -173,7 +193,7 @@ public class VentanaPagoValidacion extends JDialog {
         // Instanciamos el Controlador y le pasamos la vista y el modelo (solicitud)
         ControladorPagoValidacion controlador = new ControladorPagoValidacion(vista, solicitud);
         
-        // Configuramos la vista con el controlador [cite: 126, 127]
+        // Configuramos la vista con el controlador
         vista.setControlador(controlador);
         
         vista.setVisible(true);
