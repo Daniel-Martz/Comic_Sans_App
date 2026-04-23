@@ -1,7 +1,6 @@
 package vista.main;
 
 import controladores.MainController;
-import vista.userPanels.InterchangeCardPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,13 +26,11 @@ public class MainFrame extends JFrame {
     private JPanel contenedorPaneles;
 
     // -------------------------------------------------------
-    // Paneles (vistas)
+    // Paneles (vistas principales)
     // -------------------------------------------------------
-    private InterchangeCardPanel interchangeCardPanel;
-    // Aquí irías añadiendo el resto de paneles:
+    // Aquí es donde instanciarás tus verdaderos paneles a pantalla completa:
     // private LoginPanel loginPanel;
     // private MenuPrincipalPanel menuPrincipalPanel;
-    // private ListaOfertasPanel listaOfertasPanel;
 
     // -------------------------------------------------------
     // Controlador principal
@@ -111,6 +108,7 @@ public class MainFrame extends JFrame {
         // -------------------------------------------------------------
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Esto centra la ventana en la pantalla
 
         ImageIcon icon = new ImageIcon("src/assets/appicon.png");
         setIconImage(icon.getImage());
@@ -144,15 +142,8 @@ public class MainFrame extends JFrame {
         cardLayout.show(contenedorPaneles, nombrePanel);
     }
 
-    /**
-     * Devuelve el panel de detalle de intercambio.
-     * El MainController lo usa para pasárselo al ControladorIntercambio.
-     */
-    public InterchangeCardPanel getInterchangeCardPanel() {
-        return interchangeCardPanel;
-    }
-
-    // Aquí irías añadiendo getters para el resto de paneles:
+    // Aquí irías añadiendo getters para tus paneles principales si el MainController necesita
+    // pasarles datos al iniciar la aplicación:
     // public LoginPanel getLoginPanel() { return loginPanel; }
     // public MenuPrincipalPanel getMenuPrincipalPanel() { return menuPrincipalPanel; }
 }
