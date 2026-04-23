@@ -41,6 +41,13 @@ public class MainController {
     public static final String PANEL_MENU_PRINCIPAL     = "MENU_PRINCIPAL";
     public static final String PANEL_MIS_INTERCAMBIOS   = "MIS_INTERCAMBIOS";
     public static final String PANEL_DETALLE_INTERCAMBIO = "DETALLE_INTERCAMBIO";
+    // Paneles añadidos para navegación desde el menú principal
+    public static final String PANEL_DESCUENTOS         = "DESCUENTOS";
+    public static final String PANEL_PRODUCTOS_FILTRADOS= "PRODUCTOS_FILTRADOS";
+    public static final String PANEL_CARRITO            = "CARRITO";
+    public static final String PANEL_CONFIGURACION      = "CONFIGURACION";
+    public static final String PANEL_PERFIL             = "PERFIL";
+    public static final String PANEL_NOTIFICACIONES     = "NOTIFICACIONES";
     // Añade aquí más paneles según los necesites
 
     // -------------------------------------------------------
