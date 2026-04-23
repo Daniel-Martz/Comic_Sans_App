@@ -11,7 +11,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super("Java Swing MVC");
         cardLayout = new CardLayout();
-         JPanel crearUsuarioPanel = new InterchangeCardPanel();
+         JPanel crearUsuarioPanel = new mainMenuEmpleadoPanel();
         // sets our layout as a card layout
         setLayout(cardLayout);
 
@@ -22,7 +22,7 @@ public class MainFrame extends JFrame {
         // icon for our application
         ImageIcon imageIcon = new ImageIcon("src/assets/appicon.png");
         setIconImage(imageIcon.getImage());
-        // frame width & height
+        // frame width & heightW
         int FRAME_WIDTH = 1200;
         int FRAME_HEIGHT = 700;
         // size of our application frame
