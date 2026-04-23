@@ -20,14 +20,16 @@ public class InterchangeCardPanel extends JPanel {
     private String usernameFrom;
     private List<ProductoSegundaMano> received;
     private List<ProductoSegundaMano> given;
+    private double balance;
     //Este boolean es para saber si también tendrá botón para aceptar
     private boolean alsoAccept;
 
-    public InterchangeCardPanel(String usernameFrom, List<ProductoSegundaMano> received, List<ProductoSegundaMano> given, boolean alsoAccept) {
+    public InterchangeCardPanel(String usernameFrom, List<ProductoSegundaMano> received, List<ProductoSegundaMano> given, boolean alsoAccept, double balance) {
         this.usernameFrom = usernameFrom;
         this.received = received;
         this.given = given;
         this.alsoAccept = alsoAccept;
+        this.balance = balance;
         initComponents();
         initLayout();
     }
@@ -59,7 +61,7 @@ public class InterchangeCardPanel extends JPanel {
     }
 
     private void initComponents() {
-        headerPanel = new HeaderPanel(usernameFrom, calcularBalance());
+        headerPanel = new HeaderPanel(usernameFrom, balance);
         panelGiven = new PanelDesplegable("PRODUCTS GIVEN ▼", given);
         panelReceived = new PanelDesplegable("PRODUCTS RECEIVED ▼", received);
         actionButtonPanel = new ActionButtonPanel(alsoAccept);
@@ -86,7 +88,20 @@ public class InterchangeCardPanel extends JPanel {
         add(Box.createVerticalStrut(10));
         add(actionButtonPanel);
     }
+    
+    // MÉTODOS PÚBLICOS PARA EL CONTROLADOR 
+    public void setAcceptAction(ActionListener listener) {
+        // Le pasamos el listener al botón (si existe)
+        if (alsoAccept && actionButtonPanel.btnAccept != null) {
+            actionButtonPanel.btnAccept.addActionListener(listener);
+        }
+    }
 
+    public void setRejectAction(ActionListener listener) {
+        actionButtonPanel.btnReject.addActionListener(listener);
+    }
+
+    // clases de sub-paneles
     private class HeaderPanel extends JPanel {
         private static final long serialVersionUID = 1L;
 		private JLabel lblFrom;
