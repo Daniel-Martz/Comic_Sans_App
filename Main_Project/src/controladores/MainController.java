@@ -4,7 +4,7 @@ import modelo.aplicacion.Aplicacion;
 import modelo.solicitud.Oferta;
 import modelo.usuario.ClienteRegistrado;
 import vista.main.MainFrame;
-import vista.userPanels.InterchangeCardPanel;
+import vista.userWindows.ProposalsWindow;
 
 import java.util.List;
 
@@ -12,24 +12,25 @@ import java.util.List;
  * Controlador Principal (MainController).
  *
  * Es el "director de orquesta" de la aplicación:
- *  - Gestiona la navegación entre paneles (CardLayout).
- *  - Crea los controladores específicos cuando se necesitan.
- *  - Es el único que conoce el MainFrame.
+ * - Gestiona la navegación entre paneles del MainFrame (CardLayout).
+ * - Coordina la apertura de ventanas modales (JDialog).
+ * - Crea los controladores de nivel superior cuando se necesitan.
  *
  * ┌─────────────────────────────────────────────────────┐
  * │                   MainFrame                         │
- * │  (contiene CardLayout con todos los paneles)        │
+ * │  (contiene CardLayout con paneles: Login, Menú...)  │
  * └──────────────────────┬──────────────────────────────┘
- *                        │ usa
+ * │ usa
  * ┌──────────────────────▼──────────────────────────────┐
  * │                 MainController                      │
  * │  - navegarA(panel)                                  │
- * │  - mostrarOferta(oferta)  → crea ControladorIntercambio│
- * └──────────────────────┬──────────────────────────────┘
- *                        │ crea
- * ┌──────────────────────▼──────────────────────────────┐
- * │          ControladorIntercambio                     │
- * │  - Conecta InterchangeCardPanel ↔ Oferta (modelo)   │
+ * │  - mostrarVentanaPropuestas() ──┐                   │
+ * └─────────────────────────────────│───────────────────┘
+ * │ crea
+ * ▼
+ * ┌─────────────────────────────────────────────────────┐
+ * │             ControladorProposals                    │
+ * │  (Gestiona la lógica de la lista de intercambios)   │
  * └─────────────────────────────────────────────────────┘
  */
 public class MainController {
@@ -39,18 +40,14 @@ public class MainController {
     // -------------------------------------------------------
     public static final String PANEL_LOGIN              = "LOGIN";
     public static final String PANEL_MENU_PRINCIPAL     = "MENU_PRINCIPAL";
-    public static final String PANEL_MIS_INTERCAMBIOS   = "MIS_INTERCAMBIOS";
-    public static final String PANEL_DETALLE_INTERCAMBIO = "DETALLE_INTERCAMBIO";
-    // Añade aquí más paneles según los necesites
+    // Si la lista de intercambios ahora es un JDialog, PANEL_MIS_INTERCAMBIOS 
+    // podría ser redundante si no hay un panel físico en el MainFrame para ello.
 
     // -------------------------------------------------------
     // Referencias
     // -------------------------------------------------------
     private final MainFrame mainFrame;
     private final Aplicacion modelo;
-
-    // Controlador activo de intercambio (se recrea cada vez)
-    private ControladorIntercambio controladorIntercambioActual;
 
     // -------------------------------------------------------
     // Constructor
@@ -61,55 +58,45 @@ public class MainController {
     }
 
     // -------------------------------------------------------
-    // Navegación
+    // Navegación de Paneles (CardLayout)
     // -------------------------------------------------------
 
     /**
      * Cambia el panel visible en el CardLayout del MainFrame.
-     * @param nombrePanel una de las constantes PANEL_* definidas arriba
      */
     public void navegarA(String nombrePanel) {
         mainFrame.mostrarPanel(nombrePanel);
     }
 
     // -------------------------------------------------------
-    // Métodos de negocio que crean controladores específicos
+    // Gestión de Ventanas y Flujos de Negocio
     // -------------------------------------------------------
 
     /**
-     * Muestra el detalle de una oferta concreta.
-     * Crea un nuevo ControladorIntercambio que conecta
-     * el panel de la vista con la oferta del modelo.
-     *
-     * @param oferta la oferta que se quiere visualizar
+     * Muestra la ventana modal con todas las propuestas de intercambio (enviadas y recibidas).
+     * Este es ahora el punto central para gestionar los intercambios.
      */
-    public void mostrarDetalleOferta(Oferta oferta) {
-        // 1. Obtenemos el panel de la vista desde el MainFrame
-        InterchangeCardPanel panel = mainFrame.getInterchangeCardPanel();
-
-        // 2. Creamos el controlador específico.
-        //    Él solo se encarga de cargar datos y registrar listeners.
-        controladorIntercambioActual = new ControladorIntercambio(panel, oferta, this);
-
-        // 3. Navegamos a ese panel
-        navegarA(PANEL_DETALLE_INTERCAMBIO);
+    public void mostrarVentanaPropuestas() {
+        // 1. Creamos la vista (JDialog)
+        ProposalsWindow ventanaPropuestas = new ProposalsWindow(mainFrame);
+        
+        // 2. Creamos su controlador, inyectándole la vista y este MainController
+        // El controlador se encarga de cargar las ofertas automáticamente al crearse.
+        new ControladorProposals(ventanaPropuestas, this);
+        
+        // 3. Mostramos la ventana
+        ventanaPropuestas.mostrar();
     }
 
     /**
-     * Muestra la lista de ofertas recibidas por el cliente actual.
-     * Aquí crearías otro controlador específico (ControladorListaOfertas, etc.)
+     * Muestra la lista de ofertas del cliente. 
+     * Puedes mantener este método para ser llamado desde los botones del menú,
+     * delegando directamente en la apertura de la ventana.
      */
     public void mostrarMisIntercambios() {
         if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
             return;
         }
-        ClienteRegistrado cliente = (ClienteRegistrado) modelo.getUsuarioActual();
-        List<Oferta> ofertas = cliente.getOfertasRecibidas();
-
-        // Aquí pasarías las ofertas a un panel de lista
-        // Por ejemplo: mainFrame.getListaOfertasPanel().cargar(ofertas);
-        // y crearías un ControladorListaOfertas
-
-        navegarA(PANEL_MIS_INTERCAMBIOS);
+        mostrarVentanaPropuestas();
     }
 }

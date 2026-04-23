@@ -137,40 +137,24 @@ public class VentanaPagoValidacion extends JDialog {
     // ── Ventanas de resultado (Llamadas por el controlador) ──────────────────
 
     public void mostrarVentanaExito() {
-        JDialog ventanaExito = new JDialog(getOwner(), "Successful Payment", ModalityType.APPLICATION_MODAL);
-        JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
-        // Mismos colores y márgenes que en tu ventana de pedido
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(new Color(200, 240, 200));
-
-        JLabel titulo = new JLabel("SUCCESSFUL PAYMENT!!", SwingConstants.CENTER);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 14));
-        panel.add(titulo);
-        panel.add(new JLabel("Your product will be validated and priced soon", SwingConstants.CENTER));
-
-        ventanaExito.add(panel);
-        ventanaExito.pack();
-        ventanaExito.setLocationRelativeTo(getOwner());
-        ventanaExito.setVisible(true);
+        VentanaExito exito = new VentanaExito(
+            getOwner(), 
+            "Successful Payment", 
+            "SUCCESSFUL PAYMENT!!", 
+            "Your product will be validated and priced soon"
+        );
+        exito.mostrar();
     }
 
     public void mostrarVentanaError(String motivo) {
-        JDialog ventanaError = new JDialog(getOwner(), "Error", ModalityType.APPLICATION_MODAL);
-        JPanel panel = new JPanel(new GridLayout(3, 1, 5, 5));
-        // Fondo rojo pastel igual que en la otra
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(new Color(255, 200, 200));
-
-        JLabel titulo = new JLabel("THERE WAS AN ERROR DURING THE PAYMENT", SwingConstants.CENTER);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 13));
-        panel.add(titulo);
-        panel.add(new JLabel(motivo, SwingConstants.CENTER)); 
-        panel.add(new JLabel("You will get payed back.", SwingConstants.CENTER));
-
-        ventanaError.add(panel);
-        ventanaError.pack();
-        ventanaError.setLocationRelativeTo(getOwner());
-        ventanaError.setVisible(true);
+        // Al usar \n en la descripción, la clase lo convertirá en dos líneas automáticamente
+        VentanaError error = new VentanaError(
+            getOwner(), 
+            "Error", 
+            "THERE WAS AN ERROR DURING THE PAYMENT", 
+            motivo + "\nYou will get payed back."
+        );
+        error.mostrar();
     }
     
     public void mostrarAvisoIncompleto(String mensaje, String titulo) {

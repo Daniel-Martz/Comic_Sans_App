@@ -80,7 +80,9 @@ public class InterchangeCardPanel extends JPanel {
                 new LineBorder(Color.DARK_GRAY, 2),
                 new EmptyBorder(10, 10, 10, 10)));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, getPreferredSize().height));
+        // No fijar una altura máxima rígida: permitir que la card se encoja/expanda
+        // cuando se oculta/mostrar el contenido desplegable.
+        setAlignmentX(Component.LEFT_ALIGNMENT);
 
         add(headerPanel);
         add(Box.createVerticalStrut(8));
@@ -125,16 +127,6 @@ public class InterchangeCardPanel extends JPanel {
         repaint();
     }
 
-    /** Muestra un diálogo de error. */
-    public void mostrarError(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    /** Muestra un diálogo informativo. */
-    public void mostrarMensaje(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje, "Info", JOptionPane.INFORMATION_MESSAGE);
-    }
-
     // -------------------------------------------------------
     // Subpanel: cabecera (FROM/TO + balance)
     // -------------------------------------------------------
@@ -152,7 +144,7 @@ public class InterchangeCardPanel extends JPanel {
                 lblPrice = new JLabel(String.format("PRICE: %.2f €", balance));
                 lblPrice.setForeground(Color.RED);
             } else {
-                lblPrice = new JLabel("PRICE: 0.00 €");
+                lblPrice = new JLabel(String.format("PRICE: %.2f €", balance));
                 lblPrice.setForeground(Color.BLACK);
             }
 
@@ -181,26 +173,80 @@ public class InterchangeCardPanel extends JPanel {
             setOpaque(false);
 
             if (modo == Modo.INCOME) {
-                btnAccept = new JButton("ACEPT");
+                // ACCEPT button (simple rectangular style)
+                btnAccept = new JButton("ACCEPT");
                 btnAccept.setBackground(new Color(50, 205, 50));
                 btnAccept.setForeground(Color.WHITE);
-                btnAccept.setFont(new Font("SansSerif", Font.BOLD, 12));
+                btnAccept.setFont(new Font("SansSerif", Font.BOLD, 11));
+                btnAccept.setOpaque(true);
+                btnAccept.setContentAreaFilled(true);
+                btnAccept.setFocusPainted(false);
+                btnAccept.setPreferredSize(new Dimension(90, 28));
+                btnAccept.setMargin(new Insets(4, 10, 4, 10));
+                btnAccept.setBorder(new LineBorder(new Color(120, 120, 120), 1));
 
+                // REJECT button (simple rectangular style)
                 btnReject = new JButton("REJECT");
-                btnReject.setBackground(Color.RED);
+                btnReject.setBackground(new Color(178, 34, 34));
                 btnReject.setForeground(Color.WHITE);
-                btnReject.setFont(new Font("SansSerif", Font.BOLD, 12));
+                btnReject.setFont(new Font("SansSerif", Font.BOLD, 11));
+                btnReject.setOpaque(true);
+                btnReject.setContentAreaFilled(true);
+                btnReject.setFocusPainted(false);
+                btnReject.setPreferredSize(new Dimension(90, 28));
+                btnReject.setMargin(new Insets(4, 10, 4, 10));
+                btnReject.setBorder(new LineBorder(new Color(120, 120, 120), 1));
 
                 add(btnAccept);
                 add(btnReject);
 
+                // Hover effect: change border color and slightly darken background (no shadows)
+                Border normalBorder = new LineBorder(new Color(120, 120, 120), 1);
+                Border hoverBorder = new LineBorder(new Color(80, 80, 80), 1);
+
+                applyHoverEffectToButton(btnAccept, btnAccept.getBackground(), normalBorder, hoverBorder);
+                applyHoverEffectToButton(btnReject, btnReject.getBackground(), normalBorder, hoverBorder);
+
+                // Si por alguna razón no existe btnReject, marcar ACCEPT en rojo
+                if (btnReject == null && btnAccept != null) {
+                    btnAccept.setBackground(new Color(178, 34, 34));
+                }
+
             } else {
                 btnCancel = new JButton("CANCEL");
-                btnCancel.setBackground(Color.RED);
+                btnCancel.setBackground(new Color(178, 34, 34));
                 btnCancel.setForeground(Color.WHITE);
-                btnCancel.setFont(new Font("SansSerif", Font.BOLD, 12));
+                btnCancel.setFont(new Font("SansSerif", Font.BOLD, 11));
+                btnCancel.setOpaque(true);
+                btnCancel.setContentAreaFilled(true);
+                btnCancel.setFocusPainted(false);
+                btnCancel.setPreferredSize(new Dimension(90, 28));
+                btnCancel.setMargin(new Insets(4, 10, 4, 10));
+                btnCancel.setBorder(new LineBorder(new Color(120, 120, 120), 1));
                 add(btnCancel);
+                Border normalBorderC = new LineBorder(new Color(120, 120, 120), 1);
+                Border hoverBorderC = new LineBorder(new Color(80, 80, 80), 1);
+                applyHoverEffectToButton(btnCancel, btnCancel.getBackground(), normalBorderC, hoverBorderC);
             }
+        }
+
+        private void applyHoverEffectToButton(final AbstractButton btn, final Color baseColor, final Border normal, final Border hover) {
+            if (btn == null) return;
+            btn.setBorder(normal);
+            btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            btn.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    btn.setBorder(hover);
+                    btn.setBackground(adjustColor(baseColor, 0.92f));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    btn.setBorder(normal);
+                    btn.setBackground(baseColor);
+                }
+            });
         }
 
         public void addAcceptListener(ActionListener l) {
@@ -232,6 +278,12 @@ public class InterchangeCardPanel extends JPanel {
             toggleButton   = new JButton(titulo);
             contenidoPanel = new TablaProductosPanel(data);
 
+            // Iniciar el panel desplegable cerrado por defecto para un aspecto
+            // más compacto y predecible.
+            contenidoPanel.setVisible(false);
+            // Actualizar el texto del botón para mostrar el símbolo de cerrado
+            toggleButton.setText(this.titulo.replace("▼", "▶"));
+
             toggleButton.setBackground(new Color(100, 149, 237));
             toggleButton.setForeground(Color.BLACK);
             toggleButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -240,11 +292,14 @@ public class InterchangeCardPanel extends JPanel {
             toggleButton.addActionListener(e -> {
                 boolean visible = contenidoPanel.isVisible();
                 contenidoPanel.setVisible(!visible);
-                toggleButton.setText(visible
-                        ? this.titulo.replace("▼", "▶")
-                        : this.titulo.replace("▶", "▼"));
-                revalidate();
-                repaint();
+                // Mostrar la flecha correcta en función del nuevo estado
+                toggleButton.setText(contenidoPanel.isVisible()
+                        ? this.titulo.replace("▶", "▼")
+                        : this.titulo.replace("▼", "▶"));
+                // Revalidar / repintar la card contenedora para que el JScrollPane
+                // en el padre actualice correctamente su tamaño.
+                InterchangeCardPanel.this.revalidate();
+                InterchangeCardPanel.this.repaint();
             });
 
             setLayout(new BorderLayout());
@@ -330,5 +385,63 @@ public class InterchangeCardPanel extends JPanel {
             setText(value == null ? "+" : value.toString());
             return this;
         }
+    }
+
+    private static Color adjustColor(Color c, float factor) {
+        int r = Math.min(255, Math.max(0, Math.round(c.getRed() * factor)));
+        int g = Math.min(255, Math.max(0, Math.round(c.getGreen() * factor)));
+        int b = Math.min(255, Math.max(0, Math.round(c.getBlue() * factor)));
+        return new Color(r, g, b, c.getAlpha());
+    }
+
+    // (removed custom rounded button helper — using plain JButtons with rectangular border)
+
+    /**
+     * Método estático de prueba para mostrar este panel aislado.
+     * Puedes ejecutarlo desde Eclipse o desde la línea de comandos
+     * llamando a InterchangeCardPanel.mostrarPanelDePrueba();
+     */
+    public static void mostrarPanelDePrueba() {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Prueba InterchangeCardPanel");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            InterchangeCardPanel p1 = new InterchangeCardPanel(
+                    "FROM: Alice", 12.50,
+                    new String[][] { { "Comic A", "Comics", "New", "12.50" } },
+                    new String[][] { { "Figure X", "Figures", "Good", "7.00" } },
+                    Modo.INCOME);
+
+            InterchangeCardPanel p2 = new InterchangeCardPanel(
+                    "TO: Bob", 0.0,
+                    new String[][] { { "My Game", "Games", "Used", "15.00" } },
+                    new String[][] { { "Their Comic", "Comics", "New", "20.00" } },
+                    Modo.SENT);
+
+            JPanel container = new JPanel();
+            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+            container.setBackground(new Color(153, 180, 209));
+            container.setBorder(new EmptyBorder(10, 10, 10, 10));
+            container.add(p1);
+            container.add(Box.createVerticalStrut(10));
+            container.add(p2);
+
+            JScrollPane scroll = new JScrollPane(container,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            scroll.getVerticalScrollBar().setUnitIncrement(16);
+
+            frame.getContentPane().add(scroll);
+            frame.setSize(700, 500);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
+
+    /**
+     * Pequeño main para facilitar ejecución rápida desde línea de comandos.
+     */
+    public static void main(String[] args) {
+        mostrarPanelDePrueba();
     }
 }

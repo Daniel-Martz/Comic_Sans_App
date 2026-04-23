@@ -6,8 +6,8 @@ import modelo.producto.ProductoSegundaMano;
 import modelo.usuario.ClienteRegistrado;
 import vista.userPanels.InterchangeCardPanel;
 import vista.userPanels.InterchangeCardPanel.Modo;
+import vista.userWindows.ProposalsWindow;
 import vista.userPanels.ProposalsPanel;
-import vista.windows.ProposalsWindow;
 
 import java.util.List;
 import java.util.Set;
@@ -195,30 +195,30 @@ public class ControladorProposals {
     private void aceptarOferta(Oferta oferta, ClienteRegistrado cliente) {
         try {
             cliente.aceptarOferta(oferta);
-            panel.mostrarMensaje("¡Oferta aceptada! Se ha creado la solicitud de intercambio.");
+            ventana.mostrarVentanaExito("¡Oferta aceptada! Se ha creado la solicitud de intercambio.");
             recargar();
         } catch (IllegalStateException ex) {
-            panel.mostrarError("No se pudo aceptar la oferta: " + ex.getMessage());
+            ventana.mostrarVentanaError("No se pudo aceptar la oferta: " + ex.getMessage());
         }
     }
 
     private void rechazarOferta(Oferta oferta, ClienteRegistrado cliente) {
         try {
             cliente.rechazarOferta(oferta);
-            panel.mostrarMensaje("Oferta rechazada.");
+            ventana.mostrarVentanaExito("Oferta rechazada.");
             recargar();
         } catch (IllegalStateException ex) {
-            panel.mostrarError("No se pudo rechazar la oferta: " + ex.getMessage());
+            ventana.mostrarVentanaError("No se pudo rechazar la oferta: " + ex.getMessage());
         }
     }
 
     private void cancelarOferta(Oferta oferta, ClienteRegistrado cliente) {
         try {
             cliente.eliminarOferta(oferta);
-            panel.mostrarMensaje("Oferta cancelada.");
+            ventana.mostrarVentanaExito("Oferta cancelada.");
             recargar();
         } catch (IllegalStateException ex) {
-            panel.mostrarError("No se pudo cancelar la oferta: " + ex.getMessage());
+            ventana.mostrarVentanaError("No se pudo cancelar la oferta: " + ex.getMessage());
         }
     }
 
