@@ -1,6 +1,7 @@
 package vista.main;
 
 import controladores.MainController;
+import vista.userPanels.InterchangeCardPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,8 @@ public class MainFrame extends JFrame {
     // -------------------------------------------------------
     private CardLayout cardLayout;
     private JPanel contenedorPaneles;
+    // Referencia al panel de detalle de intercambio
+    private InterchangeCardPanel interchangeCardPanel;
 
     // -------------------------------------------------------
     // Paneles (vistas principales)
