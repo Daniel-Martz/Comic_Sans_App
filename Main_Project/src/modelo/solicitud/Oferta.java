@@ -28,7 +28,7 @@ public class Oferta implements Caducable, Serializable{
 	private ClienteRegistrado ofertante;
 	
 	/** Solicitud de intercambio vinculada a esta oferta (si es aceptada). */
-	private SolicitudIntercambio intercambio;
+	private SolicitudIntercambio intercambio = null;
 	
 	/** Productos que el ofertante está dispuesto a entregar. */
 	private Set<ProductoSegundaMano> productosOfertados;

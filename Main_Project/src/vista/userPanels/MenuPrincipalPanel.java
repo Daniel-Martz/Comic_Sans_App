@@ -97,10 +97,10 @@ public class MenuPrincipalPanel extends JPanel {
         btnFilters.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // Carga de iconos estricta (Te avisará por consola si algo falla)
-        btnCarrito = createImageIconButton("src/assets/carrito.jpg", 35, 35, "CART");
+        btnCarrito = createImageIconButton("src/assets/carrito.png", 35, 35, "CART");
         btnIntercambios = createImageIconButton("src/assets/intercambio.png", 35, 35, "INT");
         btnConfiguracion = createImageIconButton("src/assets/configuracion.png", 35, 35, "CFG"); 
-        btnPerfil = createImageIconButton("src/assets/fotoperfil.jpg", 35, 35, "PERF");
+        btnPerfil = createImageIconButton("src/assets/fotoperfil.png", 35, 35, "PERF");
         btnNotificaciones = createImageIconButton("src/assets/notificaciones.png", 35, 35, "NOTI"); 
     }
 
@@ -271,7 +271,7 @@ public class MenuPrincipalPanel extends JPanel {
         try {
             File imgFile = new File(imagePath);
             if (!imgFile.exists()) {
-                System.err.println("❌ ERROR: No se encuentra el archivo " + imagePath);
+                System.err.println(" ERROR: No se encuentra el archivo " + imagePath);
                 setFallback(btn, fallbackText);
                 return btn;
             }
@@ -279,7 +279,7 @@ public class MenuPrincipalPanel extends JPanel {
             // ImageIO leerá los bytes reales. Si es un falso PNG, devolverá null o lanzará excepción
             Image img = javax.imageio.ImageIO.read(imgFile);
             if (img == null) {
-                System.err.println("❌ ERROR: Java no reconoce el formato de " + imagePath + ". ¡Seguramente sea un AVIF renombrado a mano!");
+                System.err.println(" ERROR: Java no reconoce el formato de " + imagePath + ". ¡Seguramente sea un AVIF renombrado a mano!");
                 setFallback(btn, fallbackText);
                 return btn;
             }
@@ -288,7 +288,7 @@ public class MenuPrincipalPanel extends JPanel {
             btn.setIcon(new ImageIcon(scaledImg));
             
         } catch (Exception e) {
-            System.err.println("❌ ERROR al leer la imagen " + imagePath + ": " + e.getMessage());
+            System.err.println(" ERROR al leer la imagen " + imagePath + ": " + e.getMessage());
             setFallback(btn, fallbackText);
         }
         return btn;

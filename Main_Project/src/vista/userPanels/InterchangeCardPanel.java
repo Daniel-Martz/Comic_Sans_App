@@ -314,19 +314,31 @@ public class InterchangeCardPanel extends JPanel {
     // Columnas: Product | Category | Condition | Price | + Info
     // data[][]: {nombre, categoría, estado, precio}
     // -------------------------------------------------------
+ // -------------------------------------------------------
+    // Subpanel: tabla de productos
+    // Columnas: Product | Condition | Price | + Info
+    // data[][]: {nombre, estado, precio}
+    // -------------------------------------------------------
     private class TablaProductosPanel extends JPanel {
         private static final long serialVersionUID = 1L;
 
         public TablaProductosPanel(String[][] data) {
-            String[] columnNames = {"Product", "Category", "Condition", "Price", "+ Info"};
+            // 1. Nombres de columnas sin "Category"
+            String[] columnNames = {"Product", "Condition", "Price", "+ Info"};
 
-            Object[][] tableData = new Object[data.length][5];
+            // 2. Reducimos el array a 4 columnas
+            Object[][] tableData = new Object[data.length][4];
             for (int i = 0; i < data.length; i++) {
                 tableData[i][0] = data[i].length > 0 ? data[i][0] : "";
-                tableData[i][1] = data[i].length > 1 ? data[i][1] : "";
-                tableData[i][2] = data[i].length > 2 ? data[i][2] : "";
-                tableData[i][3] = data[i].length > 3 ? data[i][3] : "";
-                tableData[i][4] = "+";
+                
+                // Mapeamos los datos (asumiendo que el controlador ahora envía arrays de tamaño 3)
+                // Usamos un pequeño control por si pasas 4 datos antiguos por error
+                int indexEstado = data[i].length >= 4 ? 2 : 1;
+                int indexPrecio = data[i].length >= 4 ? 3 : 2;
+                
+                tableData[i][1] = data[i].length > indexEstado ? data[i][indexEstado] : "";
+                tableData[i][2] = data[i].length > indexPrecio ? data[i][indexPrecio] : "";
+                tableData[i][3] = "+"; // El botón
             }
 
             DefaultTableModel model = new DefaultTableModel(tableData, columnNames) {
@@ -337,7 +349,9 @@ public class InterchangeCardPanel extends JPanel {
             table.setRowHeight(22);
             table.getTableHeader().setBackground(new Color(240, 128, 128));
             table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 11));
-            table.getColumnModel().getColumn(4).setMaxWidth(50);
+            
+            // 3. La columna del botón ahora es la de índice 3 (0, 1, 2, 3)
+            table.getColumnModel().getColumn(3).setMaxWidth(50);
             table.getColumn("+ Info").setCellRenderer(new ButtonRenderer());
 
             table.addMouseListener(new MouseAdapter() {
@@ -345,12 +359,13 @@ public class InterchangeCardPanel extends JPanel {
                 public void mouseClicked(MouseEvent e) {
                     int col = table.columnAtPoint(e.getPoint());
                     int row = table.rowAtPoint(e.getPoint());
-                    if (row >= 0 && col == 4) {
+                    
+                    // 4. Escuchamos el clic en el nuevo índice 3
+                    if (row >= 0 && col == 3) {
                         JOptionPane.showMessageDialog(null,
                                 "Producto: "   + table.getValueAt(row, 0) + "\n" +
-                                "Categoría: "  + table.getValueAt(row, 1) + "\n" +
-                                "Estado: "     + table.getValueAt(row, 2) + "\n" +
-                                "Precio: "     + table.getValueAt(row, 3),
+                                "Estado: "     + table.getValueAt(row, 1) + "\n" +
+                                "Precio: "     + table.getValueAt(row, 2),
                                 "Detalles del producto",
                                 JOptionPane.INFORMATION_MESSAGE);
                     }
@@ -365,7 +380,6 @@ public class InterchangeCardPanel extends JPanel {
             add(scroll, BorderLayout.CENTER);
         }
     }
-
     // -------------------------------------------------------
     // Renderer: botón verde "+" en la columna "+ Info"
     // -------------------------------------------------------
