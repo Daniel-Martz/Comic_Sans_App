@@ -12,7 +12,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.*;
-
+import modelo.aplicacion.*;
 /**
  * Clase principal que agrupa y gestiona los datos globales de la aplicación.
  * Implementa el patrón singleton para asegurar una única instancia en
@@ -140,11 +140,11 @@ public class Aplicacion implements Serializable {
 		}
 
 		if (contraseña == null || !contraseñaLower(contraseña) || !contraseñaUpper(contraseña) || !contraseñaSymbol(contraseña) || !contraseñaNumber(contraseña) || !contraseñaLength(contraseña)) {
-			throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
+			throw new IllegalArgumentException("La contraseña introducida no cumple con los requisitos");
 		}
 
-		if (DNI == null || DNI.length() != 10) {
-			throw new IllegalArgumentException("DNI inválido al crear al empleado");
+		if (!dniFormat(DNI)) {
+			throw new IllegalArgumentException("El DNI introducido no es válido");
 		}
 
 		for (Usuario u : usuariosRegistrados) {
@@ -205,6 +205,23 @@ public class Aplicacion implements Serializable {
 	public boolean contraseñaSymbol(String contraseña) {
 	    // Busca cualquier cosa que NO sea una letra ni un número
 	    return contraseña.matches(".*[^a-zA-Z0-9].*");
+	}
+	
+	/**
+	 * Verifica que el dni introducido sea válido
+	 * @param dni 
+	 * @return true o false
+	 */
+	public boolean dniFormat(String dni) {
+		String dniPattern = "\\d{8}[A-HJ-NP-TV-Z]";
+		if (!dni.matches(dniPattern))
+			return false;
+	
+		String letters = "TRWAGMYFPDXBNJZSQVHLCKE";
+		int dniNumber = Integer.valueOf(dni.substring(0, 8));
+		char letterDNI = letters.charAt(dniNumber % 23);
+		if (dni.charAt(8)!=letterDNI) return false;
+		return true;
 	}
 
 	/**

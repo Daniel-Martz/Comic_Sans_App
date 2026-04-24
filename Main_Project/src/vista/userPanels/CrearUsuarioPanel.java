@@ -1,132 +1,400 @@
 package vista.userPanels;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.BasicStroke;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.AbstractBorder;
+
+import controlador.CreateAccountController;
+import controlador.NewPasswordController;
 
 public class CrearUsuarioPanel extends JPanel {
 
-    private JLabel titleLabel;
-    private JPanel panelInferior;
-    private JPanel panelIntermedio;
+  // ── Paleta de colores ────────────────────────────────────────────
+  static final Color BG           = new Color(74, 144, 210);
+  static final Color FIELD_LINE   = new Color(220, 235, 255);
+  static final Color WHITE        = Color.WHITE;
+  static final Color REQ_HEADER   = new Color(60, 100, 200);
 
-    public CrearUsuarioPanel() {
+  private JLabel titleLabel;
+  private PanelInferior panelInferior;
+  private PanelIntermedio panelIntermedio;
+
+  public CrearUsuarioPanel() {
+    initComponents();
+    initLayout();
+  }
+
+  private void initComponents() {
+    titleLabel = new JLabel("Create Account");
+    titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
+    titleLabel.setForeground(WHITE);
+    panelIntermedio = new PanelIntermedio(this);
+    panelInferior   = new PanelInferior(this);
+  }
+
+  private void initLayout() {
+    setBackground(BG);
+    setLayout(new BorderLayout());
+
+    add(titleLabel, BorderLayout.NORTH);
+    titleLabel.setPreferredSize(new Dimension(0, 90));
+    titleLabel.setAlignmentX(CENTER_ALIGNMENT);
+    titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+    panelIntermedio.setAlignmentX(CENTER_ALIGNMENT);
+    add(panelIntermedio, BorderLayout.CENTER);
+
+    panelInferior.setAlignmentX(CENTER_ALIGNMENT);
+    panelInferior.setPreferredSize(new Dimension(0, 120));
+    add(panelInferior, BorderLayout.SOUTH);
+  }
+
+  public String getUsername()          { return panelIntermedio.fieldsPanel.usernameField.getText().trim(); }
+  public String getDni()               { return panelIntermedio.fieldsPanel.dniField.getText().trim(); }
+  public String getPassword()          { return panelIntermedio.fieldsPanel.passwordField.getText().trim(); }
+  public String getConfirmedPassword() { return panelIntermedio.fieldsPanel.confirmPasswordField.getText().trim(); }
+
+  public void setStatusLabelText(String text)     { 
+	  panelInferior.statusLabel.setText(text); 
+  }
+  public void setTenCharactersBox(boolean status) { 
+	  panelIntermedio.tenCharacters.setSelected(status); 
+	  panelIntermedio.applyCheckboxStyle(panelIntermedio.tenCharacters, status ? new Color(90, 210, 90) : new Color(220, 70, 70));
+  }
+  public void setUpperAndLowerBox(boolean status) { 
+	  panelIntermedio.upperAndLowerCase.setSelected(status); 
+	  panelIntermedio.applyCheckboxStyle(panelIntermedio.upperAndLowerCase, status ? new Color(90, 210, 90) : new Color(220, 70, 70));
+  }
+  public void setSymbolBox(boolean status)        { 
+	  panelIntermedio.symbol.setSelected(status); 
+	  panelIntermedio.applyCheckboxStyle(panelIntermedio.symbol, status ? new Color(90, 210, 90) : new Color(220, 70, 70));
+  }
+  public void setNumberBox(boolean status)        { 
+	  panelIntermedio.number.setSelected(status); 
+	  panelIntermedio.applyCheckboxStyle(panelIntermedio.number, status ? new Color(90, 210, 90) : new Color(220, 70, 70));
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  //  PANEL INTERMEDIO
+  // ════════════════════════════════════════════════════════════════
+  public class PanelIntermedio extends JPanel {
+
+    FieldsPanel      fieldsPanel;
+    RequirementsPanel requirementsPanel;
+
+    // Checkboxes (mismos nombres que en el original para que los setters funcionen)
+    JCheckBox tenCharacters   = new JCheckBox("10 characters");
+    JCheckBox upperAndLowerCase = new JCheckBox("Uppercase and lowercase letters.");
+    JCheckBox number          = new JCheckBox("Number");
+    JCheckBox symbol          = new JCheckBox("Symbol");
+
+    private CrearUsuarioPanel c;
+
+    public PanelIntermedio(CrearUsuarioPanel c) {
+      this.c = c;
+      initComponents();
+      initLayout();
+    }
+
+    void initComponents() {
+      fieldsPanel      = new FieldsPanel(c);
+      requirementsPanel = new RequirementsPanel();
+
+      // Icono verde (aprobado) y colores de advertencia por requisito
+      applyCheckboxStyle(tenCharacters,           new Color(220,  70,  70));
+      applyCheckboxStyle(upperAndLowerCase,       new Color(220,  70,  70));
+      applyCheckboxStyle(number,           new Color(220,  70,  70));
+      applyCheckboxStyle(symbol,           new Color(220,  70,  70));
+    }
+
+    /** Aplica estilos visuales al JCheckBox usando iconos de colores. */
+    public void applyCheckboxStyle(JCheckBox cb, Color uncheckedColor) {
+      cb.setBackground(new Color(50, 100, 180));
+      cb.setForeground(WHITE);
+      cb.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+      cb.setFocusPainted(false);
+      cb.setIcon(new SquareIcon(uncheckedColor, false));
+      cb.setSelectedIcon(new SquareIcon(new Color(80, 210, 80), true));
+      cb.setOpaque(false);
+    }
+
+    void initLayout() {
+      setBackground(BG);
+      setLayout(new BorderLayout(30, 0));
+      setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
+      add(fieldsPanel,      BorderLayout.WEST);
+      add(requirementsPanel, BorderLayout.EAST);
+    }
+
+    // ── FieldsPanel ─────────────────────────────────────────────
+    public class FieldsPanel extends JPanel {
+
+      private JLabel usernameLabel;
+      private JLabel dniLabel;
+      private JLabel passwordLabel;
+      private JLabel confirmPasswordLabel;
+
+      JTextField usernameField;
+      JTextField dniField;
+      JTextField passwordField;
+      JTextField confirmPasswordField;
+
+      private CrearUsuarioPanel c;
+
+      public FieldsPanel(CrearUsuarioPanel c) {
+        this.c = c;
         initComponents();
         initLayout();
+      }
+
+      void initComponents() {
+        usernameField        = styledField();
+        dniField             = styledField();
+        passwordField        = styledField();
+        confirmPasswordField = styledField();
+
+        usernameLabel        = iconLabel("\uD83D\uDC64", "Username");          // 👤
+        dniLabel             = iconLabel("\uD83C\uDD94", "DNI");               // 🆔
+        passwordLabel        = iconLabel("\uD83D\uDD12", "New Password");      // 🔒
+        confirmPasswordLabel = iconLabel("\uD83D\uDD12", "Repeat New Password"); // 🔒
+
+        passwordField.getDocument().addDocumentListener(new NewPasswordController(c));
+      }
+
+      /** Crea un JTextField con estilo subrayado (sin borde exterior). */
+      private JTextField styledField() {
+        JTextField f = new JTextField(25);
+        f.setBackground(new Color(74, 144, 210, 0));   // mismo color que fondo
+        f.setOpaque(false);
+        f.setForeground(WHITE);
+        f.setCaretColor(WHITE);
+        f.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+        f.setBorder(new UnderlineBorder(FIELD_LINE, 2));
+        f.setPreferredSize(new Dimension(320, 36));
+        f.setMaximumSize(new Dimension(320, 36));
+        return f;
+      }
+
+      /** Crea una etiqueta con emoji + texto, blanca y en Comic Sans. */
+      private JLabel iconLabel(String icon, String text) {
+        JLabel lbl = new JLabel(icon + "  " + text);
+        lbl.setForeground(WHITE);
+        lbl.setFont(new Font("Comic Sans MS", Font.PLAIN, 16));
+        lbl.setAlignmentX(LEFT_ALIGNMENT);
+        return lbl;
+      }
+
+      void initLayout() {
+        setOpaque(false);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+
+        addRow(usernameLabel,        usernameField);
+        add(Box.createVerticalStrut(18));
+        addRow(dniLabel,             dniField);
+        add(Box.createVerticalStrut(18));
+        addRow(passwordLabel,        passwordField);
+        add(Box.createVerticalStrut(18));
+        addRow(confirmPasswordLabel, confirmPasswordField);
+      }
+
+      private void addRow(JLabel label, JTextField field) {
+        label.setAlignmentX(LEFT_ALIGNMENT);
+        field.setAlignmentX(LEFT_ALIGNMENT);
+        add(label);
+        add(Box.createVerticalStrut(4));
+        add(field);
+      }
+
+      void reset() {
+        usernameField.setText("");
+        dniField.setText("");
+        passwordField.setText("");
+        confirmPasswordField.setText("");
+      }
     }
 
-    private void initComponents() {
-        titleLabel = new JLabel("Crear usuario");
-        panelInferior = new PanelInferior();
-        panelIntermedio = new PanelIntermedio();
+    // ── RequirementsPanel ────────────────────────────────────────
+    public class RequirementsPanel extends JPanel {
+
+      public RequirementsPanel() {
+        initComponents();
+        initLayout();
+      }
+
+      void initComponents() {
+        tenCharacters.setEnabled(false);
+        upperAndLowerCase.setEnabled(false);
+        number.setEnabled(false);
+        symbol.setEnabled(false);
+      }
+
+      void initLayout() {
+        setOpaque(false);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Cabecera "REQUIREMENTS"
+        JLabel header = new JLabel("REQUIREMENTS");
+        header.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        header.setForeground(WHITE);
+        header.setOpaque(true);
+        header.setBackground(REQ_HEADER);
+        header.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        header.setAlignmentX(LEFT_ALIGNMENT);
+
+        // Panel contenedor con fondo semitransparente
+        JPanel box = new JPanel();
+        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+        box.setBackground(new Color(50, 100, 180));
+        box.setBorder(BorderFactory.createEmptyBorder(10, 12, 12, 12));
+
+        for (JCheckBox cb : new JCheckBox[]{tenCharacters, upperAndLowerCase, number, symbol}) {
+          cb.setAlignmentX(LEFT_ALIGNMENT);
+          box.add(cb);
+          box.add(Box.createVerticalStrut(6));
+        }
+
+        add(header);
+        add(box);
+      }
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════
+  //  PANEL INFERIOR
+  // ════════════════════════════════════════════════════════════════
+  public class PanelInferior extends JPanel {
+
+    private JButton botonCrear;
+    JLabel statusLabel = new JLabel();
+    private CrearUsuarioPanel c;
+
+    public PanelInferior(CrearUsuarioPanel c) {
+      this.c = c;
+      initComponents();
+      initLayout();
     }
 
-    private void initLayout() {
+    void initComponents() {
+      botonCrear = new JButton("Crear");
+      botonCrear.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+      botonCrear.setBackground(WHITE);
+      botonCrear.setForeground(new Color(60, 60, 60));
+      botonCrear.setFocusPainted(false);
+      botonCrear.setBorderPainted(false);
+      botonCrear.setCursor(new Cursor(Cursor.HAND_CURSOR));
+      botonCrear.setPreferredSize(new Dimension(180, 44));
+      botonCrear.setMaximumSize(new Dimension(180, 44));
+      botonCrear.setOpaque(true);
+      botonCrear.addActionListener(new CreateAccountController(c));
 
-        setLayout(new BorderLayout());
-
-        add(titleLabel, BorderLayout.NORTH);
-        add(panelIntermedio, BorderLayout.CENTER);
-        add(panelInferior, BorderLayout.SOUTH);
+      statusLabel.setForeground(new Color(255, 220, 80));
+      statusLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
     }
 
-
-//    public String getUsername() {
-//        return usernameField.getText().trim();
-//    }
-//
-//	public String getDni() {
-//        return dniField.getText().trim();
-//    }
-//
-//    public String getPassword() {
-//        return passwordField.getText().trim();
-//    }
-//
-//    public String getConfirmedPassword() {
-//        return confirmPasswordField.getText().trim();
-//    }
-//
-//    public void addAddUserListener(ActionListener listener) {
-//        createButton.addActionListener(listener);
-//    }
-
-
-    public void reset() {
+    void initLayout() {
+      setBackground(BG);
+      setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+      setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+      botonCrear.setAlignmentX(CENTER_ALIGNMENT);
+      statusLabel.setAlignmentX(CENTER_ALIGNMENT);
+      add(botonCrear);
+      add(Box.createVerticalStrut(8));
+      add(statusLabel);
     }
-    
-    private class PanelIntermedio extends JPanel{
-    	JPanel fieldsPanel;
-    	JPanel requirementsPanel;
-    	
-    	public PanelIntermedio() {
-    		this.initComponents();
-    		this.initLayout();
-    	}
-    	
-    	void initComponents(){
-    		fieldsPanel = new FieldsPanel();
-    		requirementsPanel = new RequirementsPanel();
-    	}
-		void initLayout(){
-			this.setLayout(new BorderLayout());
-			add(fieldsPanel, BorderLayout.EAST);
-			add(requirementsPanel, BorderLayout.WEST);
-    	}
-    }
-    
-    private class FieldsPanel extends JPanel{
-		private JTextField usernameField;
-		private JTextField dniField;
-		private JTextField passwordField;
-		private JTextField confirmPasswordField;
-		
-		public FieldsPanel() {
-			initComponents();
-			initLayout();
-		}
+  }
 
-		void initComponents() {
-			usernameField = new JTextField(25);
-			dniField = new JTextField(25);
-			passwordField = new JTextField(25);
-			confirmPasswordField = new JTextField(25);
-		}
-		
-		void initLayout() {
-			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-			add(usernameField);
-			add(dniField);
-			add(passwordField);
-			add(confirmPasswordField);
-		}
-		void reset() {
-			usernameField.setText("");
-			dniField.setText("");
-			passwordField.setText("");
-			confirmPasswordField.setText("");
-		}
-    	
+  // ════════════════════════════════════════════════════════════════
+  //  UTILIDADES VISUALES
+  // ════════════════════════════════════════════════════════════════
+
+  /**
+   * Borde que dibuja únicamente una línea inferior (estilo subrayado).
+   */
+  private static class UnderlineBorder extends AbstractBorder {
+    private final Color color;
+    private final int   thickness;
+
+    UnderlineBorder(Color color, int thickness) {
+      this.color     = color;
+      this.thickness = thickness;
     }
-	private class RequirementsPanel extends JPanel{
-    	
+
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setColor(color);
+      g2.setStroke(new BasicStroke(thickness));
+      g2.drawLine(x, y + height - thickness, x + width, y + height - thickness);
+      g2.dispose();
     }
-	
-	private class PanelInferior extends JPanel{
-		private JButton botonCrear;
-		
-		public PanelInferior() {
-			initComponents();
-			initLayout();
-		}
-		
-		void initComponents() {
-			botonCrear = new JButton();
-			botonCrear.setText("Crear");
-		}
-		
-		void initLayout() {
-			this.add(botonCrear);
-		}
-	}
+
+    @Override
+    public Insets getBorderInsets(Component c)            { return new Insets(0, 0, thickness + 2, 0); }
+    @Override
+    public Insets getBorderInsets(Component c, Insets i)  { i.set(0, 0, thickness + 2, 0); return i; }
+  }
+
+  /**
+   * Icono cuadrado de color con o sin tilde de verificación.
+   */
+  private static class SquareIcon implements Icon {
+    private final Color   color;
+    private final boolean checked;
+    private static final int SIZE = 20;
+
+    SquareIcon(Color color, boolean checked) {
+      this.color   = color;
+      this.checked = checked;
+    }
+
+    @Override
+    public void paintIcon(Component c, Graphics g, int x, int y) {
+      Graphics2D g2 = (Graphics2D) g.create();
+      g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+      // Relleno
+      g2.setColor(color);
+      g2.fillRoundRect(x, y, SIZE, SIZE, 5, 5);
+
+      // Borde
+      g2.setColor(color.darker());
+      g2.setStroke(new BasicStroke(1.5f));
+      g2.drawRoundRect(x, y, SIZE, SIZE, 5, 5);
+
+      // Tilde
+      if (checked) {
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(2.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        g2.drawLine(x + 4,  y + 10, x + 8,  y + 15);
+        g2.drawLine(x + 8,  y + 15, x + 16, y + 5);
+      }
+
+      g2.dispose();
+    }
+
+    @Override public int getIconWidth()  { return SIZE; }
+    @Override public int getIconHeight() { return SIZE; }
+  }
 }
