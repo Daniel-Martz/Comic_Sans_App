@@ -79,10 +79,6 @@ public class MainController {
         // 3. Mostramos la ventana
         ventanaPropuestas.mostrar();
     }
-    
-    public void mostrarVentanaOpcionesIntercambio() {
-    	VentanaInterchangeOptions opciones = new VentanaInterchangeOptions(mainFrame);
-    }
 
     /**
      * Muestra la lista de ofertas del cliente. 
@@ -109,13 +105,13 @@ public class MainController {
         controladorFiltros.mostrarVentana();
     }
     
-	public void mostrarOpcionesIntercambio() {
+	public void mostrarVentanaOpcionesIntercambio() {
 	    VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
 	    v.setControlador(e -> {
 	        String command = e.getActionCommand();
 	        if (command.equals("PROPOSALS")) {
 	            v.cerrar();
-	            mostrarVentanaOpcionesIntercambio();
+	            mostrarMisIntercambios();
 	        }
 	    });
 	    v.setVisible(true);
