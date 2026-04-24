@@ -107,4 +107,18 @@ public class MainController {
         }
         mostrarVentanaPropuestas();
     }
+    
+    /**
+     * Instancia y muestra el JDialog de los filtros avanzados.
+     */
+    public void abrirVentanaFiltros() {
+        // 1. Creamos la vista (JDialog), pasándole el MainFrame como padre
+        vista.userWindows.FiltrosDialog dialogFiltros = new vista.userWindows.FiltrosDialog(mainFrame);
+        
+        // 2. Creamos su controlador específico
+        ControladorFiltros controladorFiltros = new ControladorFiltros(dialogFiltros);
+        
+        // 3. Mostramos la ventana (se quedará bloqueada hasta que el usuario la cierre porque es modal)
+        controladorFiltros.mostrarVentana();
+    }
 }

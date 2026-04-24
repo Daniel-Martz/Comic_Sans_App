@@ -411,7 +411,11 @@ public class MenuPrincipalPanel extends JPanel {
     public void addHomeListener(ActionListener l) { btnHome.addActionListener(l); }
     public void addDescuentosListener(ActionListener l) { btnDescuentos.addActionListener(l); }
     public void addOutstandingListener(ActionListener l) { btnOutstanding.addActionListener(l); }
-    public void addSearchListener(ActionListener l) { txtSearch.addActionListener(l); btnFilters.addActionListener(l); }
+    
+    
+    public void addSearchListener(ActionListener l) { txtSearch.addActionListener(l); }
+    public void addFiltrosListener(ActionListener l) { btnFilters.addActionListener(l); }
+    
     public void addCarritoListener(ActionListener l) { btnCarrito.addActionListener(l); }
     public void addIntercambiosListener(ActionListener l) { btnIntercambios.addActionListener(l); }
     public void addConfiguracionListener(ActionListener l) { btnConfiguracion.addActionListener(l); }
@@ -429,4 +433,5 @@ public class MenuPrincipalPanel extends JPanel {
             btn.addActionListener(l);
         }
     }
+    
 }

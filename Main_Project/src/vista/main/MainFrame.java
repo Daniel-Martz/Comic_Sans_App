@@ -88,9 +88,11 @@ public class MainFrame extends JFrame {
         menuEmpleadoPanel.addPerfilListener(e -> mainController.navegarA(MainController.PANEL_PERFIL));
         menuEmpleadoPanel.addNotificacionesListener(e -> mainController.navegarA(MainController.PANEL_NOTIFICACIONES));
 
-        // Búsqueda / filtros -> reusar panel productos filtrados
+        // Búsqueda en texto -> va a panel de productos
         menuEmpleadoPanel.addSearchListener(e -> mainController.navegarA(MainController.PANEL_PRODUCTOS_FILTRADOS));
 
+        // Botón de engranaje (Filtros) -> ABRE LA VENTANA EMERGENTE
+        menuEmpleadoPanel.addFiltrosListener(e -> mainController.abrirVentanaFiltros());
         // Buy Now -> mostrar panel productos filtrados (en una app real abriría detalle compra)
         menuEmpleadoPanel.addBuyNowListener(e -> mainController.navegarA(MainController.PANEL_PRODUCTOS_FILTRADOS));
 
