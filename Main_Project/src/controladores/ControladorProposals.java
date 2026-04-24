@@ -208,7 +208,7 @@ public class ControladorProposals {
 
     private void cancelarOferta(Oferta oferta, ClienteRegistrado cliente) {
         try {
-            cliente.eliminarOferta(oferta);
+            cliente.cancelarOferta(oferta);
             ventana.mostrarVentanaExito("Oferta cancelada.");
             recargar();
         } catch (IllegalStateException ex) {
