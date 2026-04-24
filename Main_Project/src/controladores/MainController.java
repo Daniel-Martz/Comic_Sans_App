@@ -5,6 +5,7 @@ import modelo.solicitud.Oferta;
 import modelo.usuario.ClienteRegistrado;
 import vista.main.MainFrame;
 import vista.userWindows.ProposalsWindow;
+import vista.userWindows.VentanaInterchangeOptions;
 
 import java.util.List;
 
@@ -78,6 +79,10 @@ public class MainController {
         // 3. Mostramos la ventana
         ventanaPropuestas.mostrar();
     }
+    
+    public void mostrarVentanaOpcionesIntercambio() {
+    	VentanaInterchangeOptions opciones = new VentanaInterchangeOptions(mainFrame);
+    }
 
     /**
      * Muestra la lista de ofertas del cliente. 
@@ -90,8 +95,7 @@ public class MainController {
         }
         mostrarVentanaPropuestas();
     }
-    
-    /**
+     /**
      * Instancia y muestra el JDialog de los filtros avanzados.
      */
     public void abrirVentanaFiltros() {
@@ -104,4 +108,16 @@ public class MainController {
         // 3. Mostramos la ventana (se quedará bloqueada hasta que el usuario la cierre porque es modal)
         controladorFiltros.mostrarVentana();
     }
+    
+	public void mostrarOpcionesIntercambio() {
+	    VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
+	    v.setControlador(e -> {
+	        String command = e.getActionCommand();
+	        if (command.equals("PROPOSALS")) {
+	            v.cerrar();
+	            mostrarVentanaOpcionesIntercambio();
+	        }
+	    });
+	    v.setVisible(true);
+	}
 }
