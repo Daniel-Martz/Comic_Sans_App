@@ -5,6 +5,7 @@ import vista.userPanels.*;
 
 import javax.swing.*;
 import java.awt.*;
+import vista.userPanels.*;
 
 /**
  * Ventana principal de la aplicación.
@@ -61,12 +62,11 @@ public class MainFrame extends JFrame {
         controladorCarrito = new ControladorCarrito(carritoPanel, this);
         
         // Paneles placeholder para zonas no implementadas aún
-        vista.userPanels.PlaceholderPanel descuentosPanel = new vista.userPanels.PlaceholderPanel("Descuentos");
-        vista.userPanels.PlaceholderPanel productosFiltradosPanel = new vista.userPanels.PlaceholderPanel("Productos - Filtros activos");
-        vista.userPanels.PlaceholderPanel intercambiosPanel = new vista.userPanels.PlaceholderPanel("Intercambios");
-        vista.userPanels.PlaceholderPanel configuracionPanel = new vista.userPanels.PlaceholderPanel("Configuración");
-        vista.userPanels.PlaceholderPanel perfilPanel = new vista.userPanels.PlaceholderPanel("Perfil");
-        vista.userPanels.PlaceholderPanel notificacionesPanel = new vista.userPanels.PlaceholderPanel("Notificaciones");
+        PlaceholderPanel descuentosPanel = new vista.userPanels.PlaceholderPanel("Descuentos");
+        PlaceholderPanel productosFiltradosPanel = new vista.userPanels.PlaceholderPanel("Productos - Filtros activos");
+        PlaceholderPanel configuracionPanel = new vista.userPanels.PlaceholderPanel("Configuración");
+        PlaceholderPanel perfilPanel = new vista.userPanels.PlaceholderPanel("Perfil");
+        PlaceholderPanel notificacionesPanel = new vista.userPanels.PlaceholderPanel("Notificaciones");
 
         // 3. Añadir vistas al contenedor con sus nombres
         contenedorPaneles.add(interchangeCardPanel, MainController.PANEL_DETALLE_INTERCAMBIO);
@@ -74,7 +74,6 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(descuentosPanel, MainController.PANEL_DESCUENTOS);
         contenedorPaneles.add(productosFiltradosPanel, MainController.PANEL_PRODUCTOS_FILTRADOS);
         contenedorPaneles.add(carritoPanel, MainController.PANEL_CARRITO);
-        contenedorPaneles.add(intercambiosPanel, MainController.PANEL_MIS_INTERCAMBIOS);
         contenedorPaneles.add(configuracionPanel, MainController.PANEL_CONFIGURACION);
         contenedorPaneles.add(perfilPanel, MainController.PANEL_PERFIL);
         contenedorPaneles.add(notificacionesPanel, MainController.PANEL_NOTIFICACIONES);
@@ -86,7 +85,8 @@ public class MainFrame extends JFrame {
         menuEmpleadoPanel.addHomeListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         menuEmpleadoPanel.addDescuentosListener(e -> mainController.navegarA(MainController.PANEL_DESCUENTOS));
         menuEmpleadoPanel.addOutstandingListener(e -> mainController.navegarA(MainController.PANEL_PRODUCTOS_FILTRADOS));
-        menuEmpleadoPanel.addIntercambiosListener(e -> mainController.navegarA(MainController.PANEL_MIS_INTERCAMBIOS));
+        menuEmpleadoPanel.addCarritoListener(e -> mainController.navegarA(MainController.PANEL_CARRITO));
+        menuEmpleadoPanel.addIntercambiosListener(e -> mainController.mostrarOpcionesIntercambio());
         menuEmpleadoPanel.addConfiguracionListener(e -> mainController.navegarA(MainController.PANEL_CONFIGURACION));
         menuEmpleadoPanel.addPerfilListener(e -> mainController.navegarA(MainController.PANEL_PERFIL));
         menuEmpleadoPanel.addNotificacionesListener(e -> mainController.navegarA(MainController.PANEL_NOTIFICACIONES));
@@ -140,15 +140,11 @@ public class MainFrame extends JFrame {
         //VAMOS A TENER QUE IR BORRANDO A MEDIDA QUE IMPLEMENTEMOS
         descuentosPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         productosFiltradosPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
-        intercambiosPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
+        carritoPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         configuracionPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         perfilPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         notificacionesPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
     }
-
-    // -------------------------------------------------------
-    // Métodos públicos para el MainController
-    // -------------------------------------------------------
 
     /**
      * Cambia el panel visible. Lo llama el MainController.
