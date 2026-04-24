@@ -9,7 +9,6 @@ import vista.userPanels.InterchangeCardPanel.Modo;
 import vista.userWindows.ProposalsWindow;
 import vista.userPanels.ProposalsPanel;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -60,14 +59,14 @@ public class ControladorProposals {
         ClienteRegistrado cliente =
                 (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
 
-        // ── Ofertas RECIBIDAS (columna INCOME) ──────────────
+        // ── Ofertas RECIBIDAS (columna INCOME)
         for (Oferta oferta : cliente.getOfertasRecibidas()) {
             InterchangeCardPanel card = crearCard(oferta, Modo.INCOME);
             registrarListenersIncome(card, oferta, cliente);
             panel.añadirCardIncome(card);
         }
 
-        // ── Ofertas ENVIADAS (columna SENT) ──────────────────
+        // ── Ofertas ENVIADAS (columna SENT)
         for (Oferta oferta : cliente.getOfertasRealizadas()) {
             InterchangeCardPanel card = crearCard(oferta, Modo.SENT);
             registrarListenersSent(card, oferta, cliente);
@@ -113,21 +112,16 @@ public class ControladorProposals {
      * Columnas: {nombre, categorías, estado, precio}
      */
     private String[][] convertirProductos(Set<ProductoSegundaMano> productos) {
-        String[][] data = new String[productos.size()][4];
+        String[][] data = new String[productos.size()][3];
         int i = 0;
         for (ProductoSegundaMano p : productos) {
             data[i][0] = p.getNombre();
 
-            // Categorías: las cogemos del producto si está validado
-            // (los productos de segunda mano no tienen categorías directas,
-            //  usamos el estado de conservación como sustituto visual)
-            data[i][1] = "-";
-
-            data[i][2] = p.getDatosValidacion() != null
+            data[i][1] = p.getDatosValidacion() != null
                     ? p.getDatosValidacion().getEstadoConservacion().toString()
                     : "Pendiente";
 
-            data[i][3] = p.getDatosValidacion() != null
+            data[i][2] = p.getDatosValidacion() != null
                     ? String.format("%.2f €", p.getDatosValidacion().getPrecioEstimadoProducto())
                     : "N/A";
             i++;
@@ -214,7 +208,7 @@ public class ControladorProposals {
 
     private void cancelarOferta(Oferta oferta, ClienteRegistrado cliente) {
         try {
-            cliente.eliminarOferta(oferta);
+            cliente.cancelarOferta(oferta);
             ventana.mostrarVentanaExito("Oferta cancelada.");
             recargar();
         } catch (IllegalStateException ex) {

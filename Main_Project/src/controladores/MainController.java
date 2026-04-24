@@ -15,23 +15,6 @@ import java.util.List;
  * - Gestiona la navegación entre paneles del MainFrame (CardLayout).
  * - Coordina la apertura de ventanas modales (JDialog).
  * - Crea los controladores de nivel superior cuando se necesitan.
- *
- * ┌─────────────────────────────────────────────────────┐
- * │                   MainFrame                         │
- * │  (contiene CardLayout con paneles: Login, Menú...)  │
- * └──────────────────────┬──────────────────────────────┘
- * │ usa
- * ┌──────────────────────▼──────────────────────────────┐
- * │                 MainController                      │
- * │  - navegarA(panel)                                  │
- * │  - mostrarVentanaPropuestas() ──┐                   │
- * └─────────────────────────────────│───────────────────┘
- * │ crea
- * ▼
- * ┌─────────────────────────────────────────────────────┐
- * │             ControladorProposals                    │
- * │  (Gestiona la lógica de la lista de intercambios)   │
- * └─────────────────────────────────────────────────────┘
  */
 public class MainController {
 

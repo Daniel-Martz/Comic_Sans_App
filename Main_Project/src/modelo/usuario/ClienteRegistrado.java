@@ -189,14 +189,17 @@ public class ClienteRegistrado extends Usuario {
 	 * @param o la oferta a aceptar
 	 */
 	public void aceptarOferta(Oferta o) {
-		actualizarOfertas();
-		if (!this.ofertasRecibidas.contains(o)) {
-			throw new IllegalStateException("La oferta ya no existe");
-		}
+	    actualizarOfertas();
+	    if (!this.ofertasRecibidas.contains(o)) {
+	        throw new IllegalStateException("La oferta ya no existe");
+	    }
 
-		Aplicacion app = Aplicacion.getInstancia();
-		app.crearSolicitudIntercambio(o);
-		System.out.println("Oferta aceptada.");
+	    Aplicacion app = Aplicacion.getInstancia();
+	    app.crearSolicitudIntercambio(o);
+	    //la oferta se elimina de la lista de ofertas recibidas
+	    this.ofertasRecibidas.remove(o);
+	    o.getOfertante().eliminarOfertaRealizada(o);
+	    System.out.println("Oferta aceptada.");
 	}
 
 	/**
@@ -284,8 +287,8 @@ public class ClienteRegistrado extends Usuario {
 				temp.add(o);
 			} else {
 				// Se rechaza la oferta automáticamente si caduca
-				o.getOfertante().rechazarOferta(o);
-				o.getDestinatario().rechazarOferta(o);
+				o.getOfertante().eliminarOfertaRealizada(o);
+				o.getDestinatario().eliminarOfertaRecibida(o);
 			}
 		}
 		this.ofertasRecibidas = temp;
@@ -296,8 +299,8 @@ public class ClienteRegistrado extends Usuario {
 			if (o.haCaducado() == false) {
 				temp2.add(o);
 			} else {
-				o.getOfertante().eliminarOferta(o);
-				o.getDestinatario().eliminarOferta(o);
+				o.getOfertante().eliminarOfertaRealizada(o);
+				o.getDestinatario().eliminarOfertaRecibida(o);
 			}
 		}
 		this.ofertasRealizadas = temp2;
@@ -321,11 +324,20 @@ public class ClienteRegistrado extends Usuario {
 	 */
 	public void rechazarOferta(Oferta o) {
 		actualizarOfertas();
-		if (!this.ofertasRecibidas.contains(o)) {
-			throw new IllegalStateException("La oferta ya no existe");
-		}
 		this.ofertasRecibidas.remove(o);
-		o.getOfertante().eliminarOferta(o);
+		o.getOfertante().eliminarOfertaRealizada(o);
+		System.out.println("Oferta rechazada.");
+	}
+	
+	/**
+	 * Cancela una oferta realizada.
+	 *
+	 * @param o la oferta a cancelar
+	 */
+	public void cancelarOferta(Oferta o) {
+		actualizarOfertas();
+		this.eliminarOfertaRealizada(o);
+		o.getDestinatario().eliminarOfertaRecibida(o);
 		System.out.println("Oferta rechazada.");
 	}
 
@@ -334,11 +346,17 @@ public class ClienteRegistrado extends Usuario {
 	 *
 	 * @param o la oferta a eliminar
 	 */
-	public void eliminarOferta(Oferta o) {
-		if (!this.ofertasRealizadas.contains(o)) {
-			throw new IllegalStateException("La oferta ya no existe en el sistema");
-		}
+	public void eliminarOfertaRealizada(Oferta o) {
 		this.ofertasRealizadas.remove(o);
+	}
+	
+	/**
+	 * Elimina una oferta de la lista de ofertas realizadas.
+	 *
+	 * @param o la oferta a eliminar
+	 */
+	public void eliminarOfertaRecibida(Oferta o) {
+		this.ofertasRecibidas.remove(o);
 	}
 
 	/**

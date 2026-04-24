@@ -130,7 +130,7 @@ class ClienteRegistradoTest {
 	void testEliminarOferta() {
 		ClienteRegistrado destinatario = new ClienteRegistrado("Marcos", "91122233A", "123456");
 		Oferta o = cliente.realizarOferta(new HashSet<>(), new HashSet<>(), destinatario);
-		cliente.eliminarOferta(o);
+		cliente.eliminarOfertaRealizada(o);
 		assertFalse(cliente.getOfertasRealizadas().contains(o));
 	}
 
