@@ -1,12 +1,14 @@
 src/vista/main/MainFrame.java
 src/vista/userPanels/ProposalsPanel.java
 src/vista/userPanels/CrearUsuarioPanel.java
+src/vista/userPanels/MySecondHandProductsPanel.java
 src/vista/userPanels/CarritoPanel.java
 src/vista/userPanels/ProductosFiltradosPanel.java
 src/vista/userPanels/PlaceholderPanel.java
 src/vista/userPanels/MenuPrincipalPanel.java
 src/vista/userPanels/InterchangeCardPanel.java
 src/vista/userPanels/mainMenuEmpleadoPanel.java
+src/vista/userPanels/NuevoProductoSegundaManoPanel.java
 src/vista/userWindows/VentanaInterchangeOptions.java
 src/vista/userWindows/ProposalsWindow.java
 src/vista/userWindows/VentanaPagoPedido.java
@@ -14,6 +16,7 @@ src/vista/userWindows/VentanaError.java
 src/vista/userWindows/VentanaPagoValidacion.java
 src/vista/userWindows/FiltrosDialog.java
 src/vista/userWindows/VentanaExito.java
+src/vista/userWindows/VentanaNuevoProductoSegundaMano.java
 src/vista/userWindows/VentanaDetallesProducto.java
 src/app/App.java
 src/gui/NotificationsPanel.java
@@ -24,7 +27,9 @@ src/controladores/ControladorFiltros.java
 src/controladores/MainController.java
 src/controladores/ControladorProductosFiltrados.java
 src/controladores/ControladorCarrito.java
+src/controladores/ControladorNuevoProductoSegundaMano.java
 src/controladores/ControladorPagoPedido.java
+src/controladores/ControladorMySecondHandProducts.java
 src/controladores/ControladorProposals.java
 src/modelo/notificacion/NotificacionOferta.java
 src/modelo/notificacion/NotificacionPedido.java

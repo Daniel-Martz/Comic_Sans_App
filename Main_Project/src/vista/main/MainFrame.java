@@ -60,8 +60,8 @@ public class MainFrame extends JFrame {
         vista.userPanels.MenuPrincipalPanel menuEmpleadoPanel = new vista.userPanels.MenuPrincipalPanel();
         MySecondHandProductsPanel mySecondHandProductsPanel = new MySecondHandProductsPanel();
 
-      //  CarritoPanel carritoPanel = new CarritoPanel();
-      //  controladorCarrito = new ControladorCarrito(carritoPanel, this);
+        CarritoPanel carritoPanel = new CarritoPanel();
+        controladorCarrito = new ControladorCarrito(carritoPanel, this);
         
         // Paneles placeholder para zonas no implementadas aún
         PlaceholderPanel descuentosPanel = new vista.userPanels.PlaceholderPanel("Descuentos");
@@ -76,7 +76,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(mySecondHandProductsPanel, MainController.PANEL_MY_SECOND_HAND_PRODUCTS);
         contenedorPaneles.add(descuentosPanel, MainController.PANEL_DESCUENTOS);
         contenedorPaneles.add(productosFiltradosPanel, MainController.PANEL_PRODUCTOS_FILTRADOS);
-    //    contenedorPaneles.add(carritoPanel, MainController.PANEL_CARRITO);
+        contenedorPaneles.add(carritoPanel, MainController.PANEL_CARRITO);
         contenedorPaneles.add(configuracionPanel, MainController.PANEL_CONFIGURACION);
         contenedorPaneles.add(perfilPanel, MainController.PANEL_PERFIL);
         contenedorPaneles.add(notificacionesPanel, MainController.PANEL_NOTIFICACIONES);
@@ -91,17 +91,16 @@ public class MainFrame extends JFrame {
         menuEmpleadoPanel.addHomeListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         menuEmpleadoPanel.addDescuentosListener(e -> mainController.navegarA(MainController.PANEL_DESCUENTOS));
         menuEmpleadoPanel.addOutstandingListener(e -> mainController.navegarA(MainController.PANEL_PRODUCTOS_FILTRADOS));
-        menuEmpleadoPanel.addCarritoListener(e -> mainController.navegarA(MainController.PANEL_CARRITO));
+        
+        menuEmpleadoPanel.addCarritoListener(e -> {
+            controladorCarrito.refrescarVista(); 
+            mainController.navegarA(MainController.PANEL_CARRITO);
+        });
+
         menuEmpleadoPanel.addIntercambiosListener(e -> mainController.mostrarVentanaOpcionesIntercambio());
         menuEmpleadoPanel.addConfiguracionListener(e -> mainController.navegarA(MainController.PANEL_CONFIGURACION));
         menuEmpleadoPanel.addPerfilListener(e -> mainController.navegarA(MainController.PANEL_PERFIL));
         menuEmpleadoPanel.addNotificacionesListener(e -> mainController.navegarA(MainController.PANEL_NOTIFICACIONES));
-        
-        
-      //  menuEmpleadoPanel.addCarritoListener(e -> {
-       //     controladorCarrito.refrescarVista(); 
-         //   mainController.navegarA(MainController.PANEL_CARRITO);
-        //});
 
         // Búsqueda en texto -> busca y muestra el panel de productos filtrados
         menuEmpleadoPanel.addSearchListener(e -> {
