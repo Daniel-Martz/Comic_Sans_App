@@ -28,11 +28,11 @@ public class MenuPrincipalPanel extends JPanel {
     private JButton btnDescuentos;
     private JButton btnOutstanding;
     private JTextField txtSearch;
+    private JButton btnSearch;
     private JButton btnFilters;
-    
+
     // Botones de iconos
-    private JButton btnCarrito;
-    private JButton btnIntercambios;
+    private JButton btnCarrito;    private JButton btnIntercambios;
     private JButton btnConfiguracion;
     private JButton btnPerfil;
     private JButton btnNotificaciones;
@@ -96,6 +96,8 @@ public class MenuPrincipalPanel extends JPanel {
         btnFilters.setBorderPainted(false);
         btnFilters.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+        btnSearch = createImageIconButton("src/assets/lupa.png", 25, 25, "SEARCH");
+
         // Carga de iconos estricta (Te avisará por consola si algo falla)
         btnCarrito = createImageIconButton("src/assets/carrito.png", 35, 35, "CART");
         btnIntercambios = createImageIconButton("src/assets/intercambio.png", 35, 35, "INT");
@@ -137,8 +139,9 @@ public class MenuPrincipalPanel extends JPanel {
 
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 20));
         searchPanel.setOpaque(false);
-        searchPanel.add(btnFilters);
         searchPanel.add(txtSearch);
+        searchPanel.add(btnSearch);
+        searchPanel.add(btnFilters);
 
         // Fila 1 de iconos
         JPanel iconsTop = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
@@ -203,15 +206,15 @@ public class MenuPrincipalPanel extends JPanel {
         bodyContent.add(scrollProducts);
         bodyContent.add(Box.createVerticalStrut(20));
 
-        bodyContent.add(createBanner("CATEGORIES", BANNER_SUB_COLOR, 18));
+        bodyContent.add(createBanner("TYPE OF PRODUCTS", BANNER_SUB_COLOR, 18));
         bodyContent.add(Box.createVerticalStrut(15));
 
         categoriesPanel = new JPanel(new GridLayout(1, 3, 20, 0));
         categoriesPanel.setOpaque(false);
         
-        categoriesPanel.add(createCategoryCard("BOARD GAMES", "BOARD_GAMES"));
-        categoriesPanel.add(createCategoryCard("COMICS", "COMICS"));
-        categoriesPanel.add(createCategoryCard("FIGURES", "FIGURES"));
+        categoriesPanel.add(createCategoryCard("BOARD GAMES", "BOARD_GAMES", "src/assets/juegodemesa.png"));
+        categoriesPanel.add(createCategoryCard("COMICS", "COMICS", "src/assets/comic.png"));
+        categoriesPanel.add(createCategoryCard("FIGURES", "FIGURES", "src/assets/figuraGoku.png"));
 
         bodyContent.add(categoriesPanel);
 
@@ -370,7 +373,7 @@ public class MenuPrincipalPanel extends JPanel {
         return card;
     }
 
-    private JPanel createCategoryCard(String title, String actionCommand) {
+    private JPanel createCategoryCard(String title, String actionCommand, String imagePath) {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(new Color(136, 212, 204)); 
         card.setBorder(BorderFactory.createCompoundBorder(
@@ -387,20 +390,28 @@ public class MenuPrincipalPanel extends JPanel {
         
         categoryButtons.add(btnCat);
 
-        JPanel imagePlaceholder = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.setColor(Color.GRAY);
-                g.drawLine(0, 0, getWidth(), getHeight());
-                g.drawLine(getWidth(), 0, 0, getHeight());
-                g.drawRect(0, 0, getWidth()-1, getHeight()-1);
+        JLabel imgLabel = new JLabel("", SwingConstants.CENTER);
+        imgLabel.setOpaque(true);
+        imgLabel.setBackground(Color.WHITE);
+        try {
+            File imgFile = new File(imagePath);
+            if (imgFile.exists()) {
+                Image img = javax.imageio.ImageIO.read(imgFile);
+                if (img != null) {
+                    Image scaledImg = img.getScaledInstance(180, 140, Image.SCALE_SMOOTH);
+                    imgLabel.setIcon(new ImageIcon(scaledImg));
+                } else {
+                    imgLabel.setText("NO IMAGE");
+                }
+            } else {
+                imgLabel.setText("NO IMAGE");
             }
-        };
-        imagePlaceholder.setBackground(Color.WHITE);
+        } catch (Exception e) {
+            imgLabel.setText("NO IMAGE");
+        }
 
         card.add(btnCat, BorderLayout.NORTH);
-        card.add(imagePlaceholder, BorderLayout.CENTER);
+        card.add(imgLabel, BorderLayout.CENTER);
 
         return card;
     }
@@ -413,7 +424,12 @@ public class MenuPrincipalPanel extends JPanel {
     public void addOutstandingListener(ActionListener l) { btnOutstanding.addActionListener(l); }
     
     
-    public void addSearchListener(ActionListener l) { txtSearch.addActionListener(l); }
+    public void addSearchListener(ActionListener l) { 
+        txtSearch.addActionListener(l); 
+        btnSearch.addActionListener(e -> {
+            l.actionPerformed(new java.awt.event.ActionEvent(txtSearch, java.awt.event.ActionEvent.ACTION_PERFORMED, txtSearch.getText()));
+        });
+    }
     public void addFiltrosListener(ActionListener l) { btnFilters.addActionListener(l); }
     
     public void addCarritoListener(ActionListener l) { btnCarrito.addActionListener(l); }

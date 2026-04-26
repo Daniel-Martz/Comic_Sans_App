@@ -26,10 +26,21 @@ public class ProductosFiltradosPanel extends JPanel {
         setBackground(COLOR_FONDO);
         setBorder(new EmptyBorder(20,20,20,20));
 
-        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         top.setBackground(COLOR_FONDO);
+        top.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        top.setAlignmentX(Component.LEFT_ALIGNMENT);
         
-        btnVolver = new JButton("Volver al Menú Principal");
+        btnVolver = new JButton("Volver");
+        btnVolver.setFont(new Font("SansSerif", Font.BOLD, 13));
+        btnVolver.setBackground(new Color(74, 118, 201));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setFocusPainted(false);
+        btnVolver.setBorderPainted(false);
+        btnVolver.setOpaque(true);
+        btnVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnVolver.setPreferredSize(new Dimension(130, 32));
+        
         top.add(btnVolver);
 
         add(top, BorderLayout.NORTH);
@@ -80,12 +91,6 @@ public class ProductosFiltradosPanel extends JPanel {
         lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblNombre);
-
-        JLabel lblDesc = new JLabel(prod.getDescripcion() != null ? prod.getDescripcion() : "");
-        lblDesc.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        lblDesc.setForeground(Color.GRAY);
-        lblDesc.setAlignmentX(Component.CENTER_ALIGNMENT);
-        tarjeta.add(lblDesc);
 
         tarjeta.add(Box.createVerticalStrut(10));
 

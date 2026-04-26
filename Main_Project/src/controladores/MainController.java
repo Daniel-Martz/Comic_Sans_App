@@ -111,6 +111,31 @@ public class MainController {
     }
 
     /**
+     * Configura el filtro para una categoría y muestra los productos.
+     */
+    public void mostrarProductosPorCategoria(String categoria) {
+        if (this.dialogFiltros == null) {
+            this.dialogFiltros = new vista.userWindows.FiltrosDialog(mainFrame);
+            this.controladorFiltros = new ControladorFiltros(this.dialogFiltros);
+        }
+        
+        // Reset old filters first
+        this.dialogFiltros.resetFiltros();
+        
+        // Check the requested category
+        if ("COMICS".equals(categoria)) {
+            this.dialogFiltros.getChkComics().setSelected(true);
+        } else if ("FIGURES".equals(categoria)) {
+            this.dialogFiltros.getChkFigures().setSelected(true);
+        } else if ("BOARD_GAMES".equals(categoria)) {
+            this.dialogFiltros.getChkBoardGames().setSelected(true);
+        }
+        
+        // Show filtered products
+        mostrarProductosFiltrados("");
+    }
+
+    /**
      * Muestra el panel de productos filtrados y lo actualiza con el prompt dado.
      */
     public void mostrarProductosFiltrados(String prompt) {

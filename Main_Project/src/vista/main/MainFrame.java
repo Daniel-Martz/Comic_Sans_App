@@ -113,8 +113,7 @@ public class MainFrame extends JFrame {
         menuEmpleadoPanel.addCategoryListener(e -> {
             // el action command contiene la categoría seleccionada
             String categoria = ((java.awt.event.ActionEvent)e).getActionCommand();
-            // En una implementación real pasaríamos el filtro al controlador
-            mainController.navegarA(MainController.PANEL_PRODUCTOS_FILTRADOS);
+            mainController.mostrarProductosPorCategoria(categoria);
         });
 
         // 5. Configurar la ventana

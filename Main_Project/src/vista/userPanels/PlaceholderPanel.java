@@ -18,14 +18,27 @@ public class PlaceholderPanel extends JPanel {
     public PlaceholderPanel(String title) {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        
+        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        topBar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        topBar.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        btnVolver = new JButton("Volver");
+        btnVolver.setFont(new Font("SansSerif", Font.BOLD, 13));
+        btnVolver.setBackground(new Color(74, 118, 201));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setFocusPainted(false);
+        btnVolver.setBorderPainted(false);
+        btnVolver.setOpaque(true);
+        btnVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnVolver.setPreferredSize(new Dimension(130, 32));
+        
+        topBar.add(btnVolver);
+        add(topBar, BorderLayout.NORTH);
+
         lblTitle = new JLabel(title);
         lblTitle.setFont(new Font("SansSerif", Font.BOLD, 24));
         add(lblTitle, BorderLayout.CENTER);
-
-        btnVolver = new JButton("Volver");
-        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        bottom.add(btnVolver);
-        add(bottom, BorderLayout.SOUTH);
     }
 
     public void addVolverListener(ActionListener l) {
