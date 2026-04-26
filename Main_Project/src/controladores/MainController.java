@@ -4,11 +4,15 @@ import modelo.aplicacion.Aplicacion;
 import modelo.solicitud.Oferta;
 import modelo.usuario.ClienteRegistrado;
 import vista.main.MainFrame;
+import vista.userWindows.CrearUsuarioDialog;
+import vista.userWindows.LoginDialog;
 import vista.userWindows.ProposalsWindow;
 import vista.userWindows.VentanaInterchangeOptions;
 
 import java.util.List;
 import vista.userPanels.ProductosFiltradosPanel;
+import controlador.CreateAccountController;
+
 
 /**
  * Controlador Principal (MainController).
@@ -42,6 +46,10 @@ public class MainController {
     // -------------------------------------------------------
     private final MainFrame mainFrame;
     private final Aplicacion modelo;
+    private vista.userWindows.CrearUsuarioDialog crearUsuarioDialog;
+    private vista.userWindows.LoginDialog loginDialog;
+    private vista.userWindows.FiltrosDialog dialogFiltros;
+    private ControladorFiltros controladorFiltros;
 
     // -------------------------------------------------------
     // Constructor
@@ -93,8 +101,7 @@ public class MainController {
         }
         mostrarVentanaPropuestas();
     }
-    private vista.userWindows.FiltrosDialog dialogFiltros;
-    private ControladorFiltros controladorFiltros;
+
 
     /**
      * Instancia y muestra el JDialog de los filtros avanzados.
@@ -169,4 +176,31 @@ public class MainController {
 	public void mostrarMisProductosSegundaMano() {
 		navegarA(PANEL_MY_SECOND_HAND_PRODUCTS);
 	}
+}
+    
+    public void abrirVentanaCrearUsuario(){
+    	this.crearUsuarioDialog = new CrearUsuarioDialog(mainFrame, this);
+    	crearUsuarioDialog.setVisible(true);
+    }
+    
+    public void abrirVentanaLogIn(){
+    	this.loginDialog = new LoginDialog(mainFrame, this);
+    	loginDialog.setVisible(true);
+    }
+    
+    public void cerrarVentanaCrearUsuario() {
+    	this.crearUsuarioDialog.setVisible(false);
+    }
+
+    public void cerrarVentanaLogIn() {
+    	this.loginDialog.setVisible(false);
+    }
+    
+    public void navegarBotonPerfil() {
+    	if(Aplicacion.getInstancia().getUsuarioActual() != null) {
+    		abrirVentanaLogIn();
+    	}else {
+    		
+    	}
+    }
 }

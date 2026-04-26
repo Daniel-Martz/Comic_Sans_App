@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -22,9 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.AbstractBorder;
 
-import controlador.CreateAccountController;
 import controlador.NewPasswordController;
 
 public class CrearUsuarioPanel extends JPanel {
@@ -33,6 +32,8 @@ public class CrearUsuarioPanel extends JPanel {
   static final Color BG           = new Color(74, 144, 210);
   static final Color FIELD_LINE   = new Color(220, 235, 255);
   static final Color WHITE        = Color.WHITE;
+  static final Color RED        =  new Color(220, 70, 70);
+  static final Color GREEN        =  new Color(90, 210, 90);
   static final Color REQ_HEADER   = new Color(60, 100, 200);
 
   private JLabel titleLabel;
@@ -49,7 +50,7 @@ public class CrearUsuarioPanel extends JPanel {
     titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
     titleLabel.setForeground(WHITE);
     panelIntermedio = new PanelIntermedio(this);
-    panelInferior   = new PanelInferior(this);
+    panelInferior   = new PanelInferior();
   }
 
   private void initLayout() {
@@ -94,6 +95,10 @@ public class CrearUsuarioPanel extends JPanel {
 	  panelIntermedio.applyCheckboxStyle(panelIntermedio.number, status ? new Color(90, 210, 90) : new Color(220, 70, 70));
   }
 
+  public void añadirListenerBotonCrear(ActionListener a){
+    panelInferior.botonCrear.addActionListener(a);
+  }
+
   // ════════════════════════════════════════════════════════════════
   //  PANEL INTERMEDIO
   // ════════════════════════════════════════════════════════════════
@@ -107,8 +112,7 @@ public class CrearUsuarioPanel extends JPanel {
     JCheckBox upperAndLowerCase = new JCheckBox("Uppercase and lowercase letters.");
     JCheckBox number          = new JCheckBox("Number");
     JCheckBox symbol          = new JCheckBox("Symbol");
-
-    private CrearUsuarioPanel c;
+    CrearUsuarioPanel c;
 
     public PanelIntermedio(CrearUsuarioPanel c) {
       this.c = c;
@@ -121,10 +125,10 @@ public class CrearUsuarioPanel extends JPanel {
       requirementsPanel = new RequirementsPanel();
 
       // Icono verde (aprobado) y colores de advertencia por requisito
-      applyCheckboxStyle(tenCharacters,           new Color(220,  70,  70));
-      applyCheckboxStyle(upperAndLowerCase,       new Color(220,  70,  70));
-      applyCheckboxStyle(number,           new Color(220,  70,  70));
-      applyCheckboxStyle(symbol,           new Color(220,  70,  70));
+      applyCheckboxStyle(tenCharacters, RED);
+      applyCheckboxStyle(upperAndLowerCase, RED);
+      applyCheckboxStyle(number,     RED);
+      applyCheckboxStyle(symbol,     RED);
     }
 
     /** Aplica estilos visuales al JCheckBox usando iconos de colores. */
@@ -159,7 +163,7 @@ public class CrearUsuarioPanel extends JPanel {
       JTextField passwordField;
       JTextField confirmPasswordField;
 
-      private CrearUsuarioPanel c;
+      CrearUsuarioPanel c;
 
       public FieldsPanel(CrearUsuarioPanel c) {
         this.c = c;
@@ -189,7 +193,6 @@ public class CrearUsuarioPanel extends JPanel {
         f.setForeground(WHITE);
         f.setCaretColor(WHITE);
         f.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
-        f.setBorder(new UnderlineBorder(FIELD_LINE, 2));
         f.setPreferredSize(new Dimension(320, 36));
         f.setMaximumSize(new Dimension(320, 36));
         return f;
@@ -287,11 +290,9 @@ public class CrearUsuarioPanel extends JPanel {
   public class PanelInferior extends JPanel {
 
     private JButton botonCrear;
-    JLabel statusLabel = new JLabel();
-    private CrearUsuarioPanel c;
+    private JLabel statusLabel = new JLabel();
 
-    public PanelInferior(CrearUsuarioPanel c) {
-      this.c = c;
+    public PanelInferior() {
       initComponents();
       initLayout();
     }
@@ -307,7 +308,6 @@ public class CrearUsuarioPanel extends JPanel {
       botonCrear.setPreferredSize(new Dimension(180, 44));
       botonCrear.setMaximumSize(new Dimension(180, 44));
       botonCrear.setOpaque(true);
-      botonCrear.addActionListener(new CreateAccountController(c));
 
       statusLabel.setForeground(new Color(255, 220, 80));
       statusLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
@@ -328,34 +328,6 @@ public class CrearUsuarioPanel extends JPanel {
   // ════════════════════════════════════════════════════════════════
   //  UTILIDADES VISUALES
   // ════════════════════════════════════════════════════════════════
-
-  /**
-   * Borde que dibuja únicamente una línea inferior (estilo subrayado).
-   */
-  private static class UnderlineBorder extends AbstractBorder {
-    private final Color color;
-    private final int   thickness;
-
-    UnderlineBorder(Color color, int thickness) {
-      this.color     = color;
-      this.thickness = thickness;
-    }
-
-    @Override
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-      Graphics2D g2 = (Graphics2D) g.create();
-      g2.setColor(color);
-      g2.setStroke(new BasicStroke(thickness));
-      g2.drawLine(x, y + height - thickness, x + width, y + height - thickness);
-      g2.dispose();
-    }
-
-    @Override
-    public Insets getBorderInsets(Component c)            { return new Insets(0, 0, thickness + 2, 0); }
-    @Override
-    public Insets getBorderInsets(Component c, Insets i)  { i.set(0, 0, thickness + 2, 0); return i; }
-  }
-
   /**
    * Icono cuadrado de color con o sin tilde de verificación.
    */

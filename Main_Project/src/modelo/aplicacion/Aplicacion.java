@@ -314,11 +314,12 @@ public class Aplicacion implements Serializable {
 	                this.usuarioActual = u;
                   System.out.println("Sesión iniciada con éxito para: " + nombreUsuario);
 	                return;
+	            }else {
+	            	throw new IllegalArgumentException("La contraseña introducida no es correcta");
 	            }
-	            break; // Si el usuario coincide pero la pass no, dejamos de buscar
 	        }
 	    }
-	  throw new IllegalArgumentException("Usuario o contraseña incorrectos.");
+	  throw new IllegalArgumentException("El usuario introducido no existe en la aplicación");
 	}
 
 	/**

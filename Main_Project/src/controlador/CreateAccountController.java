@@ -6,14 +6,19 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import com.sun.tools.javac.Main;
+
+import controladores.MainController;
 import modelo.aplicacion.Aplicacion;
 import vista.userPanels.CrearUsuarioPanel;
 
 public class CreateAccountController implements ActionListener{
   CrearUsuarioPanel crearUsuarioPanel;
+  MainController mainController;
 	
-	public CreateAccountController(CrearUsuarioPanel crearUsuarioPanel) {
+	public CreateAccountController(CrearUsuarioPanel crearUsuarioPanel, MainController mainController) {
 		this.crearUsuarioPanel = crearUsuarioPanel;
+    this.mainController = mainController;
 	}
 	
 	@Override
@@ -29,6 +34,7 @@ public class CreateAccountController implements ActionListener{
 			try {
 				app.crearCuenta(usernameString, dniString, passwordString);
 				crearUsuarioPanel.setStatusLabelText("");
+        mainController.cerrarVentanaCrearUsuario();
 			}catch(IllegalArgumentException | IllegalStateException e) {
 				crearUsuarioPanel.setStatusLabelText(e.getMessage());
 			}

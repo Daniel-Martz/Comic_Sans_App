@@ -99,7 +99,7 @@ public class MainFrame extends JFrame {
 
         menuEmpleadoPanel.addIntercambiosListener(e -> mainController.mostrarVentanaOpcionesIntercambio());
         menuEmpleadoPanel.addConfiguracionListener(e -> mainController.navegarA(MainController.PANEL_CONFIGURACION));
-        menuEmpleadoPanel.addPerfilListener(e -> mainController.navegarA(MainController.PANEL_PERFIL));
+        menuEmpleadoPanel.addPerfilListener(e -> mainController.navegarBotonPerfil());
         menuEmpleadoPanel.addNotificacionesListener(e -> mainController.navegarA(MainController.PANEL_NOTIFICACIONES));
 
         // Búsqueda en texto -> busca y muestra el panel de productos filtrados

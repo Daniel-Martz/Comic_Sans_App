@@ -32,8 +32,8 @@ public class MenuPrincipalPanel extends JPanel {
     private JButton btnFilters;
 
     // Botones de iconos
-    private JButton btnCarrito;    private JButton btnIntercambios;
-    private JButton btnConfiguracion;
+    private JButton btnCarrito;
+    private JButton btnIntercambios;
     private JButton btnPerfil;
     private JButton btnNotificaciones;
 
@@ -101,7 +101,6 @@ public class MenuPrincipalPanel extends JPanel {
         // Carga de iconos estricta (Te avisará por consola si algo falla)
         btnCarrito = createImageIconButton("src/assets/carrito.png", 35, 35, "CART");
         btnIntercambios = createImageIconButton("src/assets/intercambio.png", 35, 35, "INT");
-        btnConfiguracion = createImageIconButton("src/assets/configuracion.png", 35, 35, "CFG"); 
         btnPerfil = createImageIconButton("src/assets/fotoperfil.png", 35, 35, "PERF");
         btnNotificaciones = createImageIconButton("src/assets/notificaciones.png", 35, 35, "NOTI"); 
     }
@@ -148,7 +147,6 @@ public class MenuPrincipalPanel extends JPanel {
         iconsTop.setOpaque(false);
         iconsTop.add(btnCarrito);
         iconsTop.add(btnIntercambios);
-        iconsTop.add(btnConfiguracion);
         iconsTop.add(btnPerfil);
 
         // Fila 2 de iconos (Notificaciones debajo)
@@ -434,7 +432,6 @@ public class MenuPrincipalPanel extends JPanel {
     
     public void addCarritoListener(ActionListener l) { btnCarrito.addActionListener(l); }
     public void addIntercambiosListener(ActionListener l) { btnIntercambios.addActionListener(l); }
-    public void addConfiguracionListener(ActionListener l) { btnConfiguracion.addActionListener(l); }
     public void addPerfilListener(ActionListener l) { btnPerfil.addActionListener(l); }
     public void addNotificacionesListener(ActionListener l) { btnNotificaciones.addActionListener(l); }
 

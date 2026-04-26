@@ -14,7 +14,7 @@ import vista.userPanels.CrearUsuarioPanel;
 public class NewPasswordController implements DocumentListener {
   CrearUsuarioPanel crearUsuarioPanel;
 	public NewPasswordController(CrearUsuarioPanel crearUsuarioPanel) {
-    this.crearUsuarioPanel = crearUsuarioPanel;
+		this.crearUsuarioPanel = crearUsuarioPanel;
 	}
 	private void cambio() {
 		Aplicacion app = Aplicacion.getInstancia();
