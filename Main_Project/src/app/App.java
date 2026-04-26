@@ -14,7 +14,7 @@ import modelo.aplicacion.Aplicacion;
 import modelo.aplicacion.Catalogo;
 import modelo.categoria.Categoria;
 import modelo.descuento.Precio;
-import modelo.producto.Comic;
+import modelo.producto.*;
 import modelo.producto.EstadoConservacion;
 import modelo.producto.Figura;
 import modelo.producto.JuegoDeMesa;
@@ -301,15 +301,6 @@ public class App {
 
         app.setUsuarioActual(yo);
 
-        // ─────────────────────────────────────────────────────────────────
-        // 5. OFERTAS RECIBIDAS (INCOME)
-        // ─────────────────────────────────────────────────────────────────
-        ProductoSegundaMano comicBob = new ProductoSegundaMano(
-                "Spider-Man Vol.1", "Primera edición", null, bob);
-        comicBob.getSolicitudValidacion().validarProducto(5.0, 150.0, EstadoConservacion.USO_LIGERO);
-
-        ProductoSegundaMano juegoMio = new ProductoSegundaMano(
-                "Catan", "Casi nuevo", null, yo);
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // CARGA DE DATOS ADICIONAL PARA PRUEBAS
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
