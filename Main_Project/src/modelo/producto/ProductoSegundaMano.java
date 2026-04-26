@@ -32,7 +32,7 @@ public class ProductoSegundaMano extends Producto {
 	private final SolicitudValidacion solicitudValidacion;
 	
 	/** Datos resultantes del proceso de validación (estado, precio estimado, etc.). */
-	private DatosValidacion datosValidacion;
+	private DatosValidacion datosValidacion = null;
 	
 	/** Cliente propietario de este producto de segunda mano. */
 	private ClienteRegistrado clienteProducto;

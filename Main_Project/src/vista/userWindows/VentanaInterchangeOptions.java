@@ -141,7 +141,7 @@ public class VentanaInterchangeOptions extends JDialog {
         btnSearch.addActionListener(c);
         btnProposals.addActionListener(c);
         
-        btnMyProducts.setActionCommand("MY_PRODUCTS");
+        btnMyProducts.setActionCommand("MY SECOND-HAND PRODUCTS");
         btnSearch.setActionCommand("SEARCH_INTERCHANGES");
         btnProposals.setActionCommand("PROPOSALS");
     }
