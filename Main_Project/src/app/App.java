@@ -1,6 +1,7 @@
 package app;
 import vista.main.MainFrame;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,11 +14,21 @@ import modelo.producto.ProductoSegundaMano;
 import modelo.solicitud.Oferta;
 import modelo.tiempo.DateTimeSimulado;
 import modelo.usuario.ClienteRegistrado;
+import modelo.usuario.Gestor;
 
 public class App {
     public static void main(String[] args) {
         // runs in AWT thread
         Aplicacion app = Aplicacion.getInstancia();
+        
+        Gestor gestor= new Gestor("gestor", "123456", "Passw0rd!");
+        
+        gestor.añadirProducto("Comic de Spiderman Adventures, Volumen 3",
+				"Un cómic de auténtico colleccionista, preservado en el envoltorio original. Parte de la colección Spiderman Adventures tan valorada por los fans del personaje.",
+				new File("/images/SpidermanAdventures2.jpg"), 20, 19.99);
+		gestor.añadirProducto("Comic de Spiderman Chronicles, Volumen 5",
+				"Un cómic de auténtico colleccionista, preservado en el envoltorio original. Parte de la colección Spiderman Adventures tan valorada por los fans del personaje.",
+				new File("/images/SpidermanChronicles5.jpg"), 20, 19.99);
 
         // 2. Crear usuarios de prueba
         ClienteRegistrado yo = new ClienteRegistrado("demoUser", "123456789A", "Passw0rd!");

@@ -8,6 +8,7 @@ import vista.userWindows.ProposalsWindow;
 import vista.userWindows.VentanaInterchangeOptions;
 
 import java.util.List;
+import vista.userPanels.ProductosFiltradosPanel;
 
 /**
  * Controlador Principal (MainController).
@@ -107,6 +108,17 @@ public class MainController {
         
         // 3. Mostramos la ventana (se quedará bloqueada hasta que el usuario la cierre porque es modal)
         controladorFiltros.mostrarVentana();
+    }
+
+    /**
+     * Muestra el panel de productos filtrados y lo actualiza con el prompt dado.
+     */
+    public void mostrarProductosFiltrados(String prompt) {
+        ProductosFiltradosPanel panel = mainFrame.getProductosFiltradosPanel();
+        // Creamos un controlador específico para manejar acciones dentro del panel
+        ControladorProductosFiltrados controlador = new ControladorProductosFiltrados(panel);
+        controlador.buscarYActualizar(prompt);
+        mainFrame.mostrarPanel(PANEL_PRODUCTOS_FILTRADOS);
     }
     
 	public void mostrarOpcionesIntercambio() {

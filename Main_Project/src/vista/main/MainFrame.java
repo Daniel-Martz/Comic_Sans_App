@@ -42,6 +42,7 @@ public class MainFrame extends JFrame {
     private MainController mainController;
     
     private ControladorCarrito controladorCarrito;
+    private vista.userPanels.ProductosFiltradosPanel productosFiltradosPanel;
 
     // -------------------------------------------------------
     // Constructor
@@ -63,7 +64,7 @@ public class MainFrame extends JFrame {
         
         // Paneles placeholder para zonas no implementadas aún
         PlaceholderPanel descuentosPanel = new vista.userPanels.PlaceholderPanel("Descuentos");
-        PlaceholderPanel productosFiltradosPanel = new vista.userPanels.PlaceholderPanel("Productos - Filtros activos");
+        this.productosFiltradosPanel = new vista.userPanels.ProductosFiltradosPanel();
         PlaceholderPanel configuracionPanel = new vista.userPanels.PlaceholderPanel("Configuración");
         PlaceholderPanel perfilPanel = new vista.userPanels.PlaceholderPanel("Perfil");
         PlaceholderPanel notificacionesPanel = new vista.userPanels.PlaceholderPanel("Notificaciones");
@@ -97,8 +98,11 @@ public class MainFrame extends JFrame {
             mainController.navegarA(MainController.PANEL_CARRITO);
         });
 
-        // Búsqueda en texto -> va a panel de productos
-        menuEmpleadoPanel.addSearchListener(e -> mainController.navegarA(MainController.PANEL_PRODUCTOS_FILTRADOS));
+        // Búsqueda en texto -> busca y muestra el panel de productos filtrados
+        menuEmpleadoPanel.addSearchListener(e -> {
+            String prompt = ((java.awt.event.ActionEvent)e).getActionCommand();
+            mainController.mostrarProductosFiltrados(prompt);
+        });
 
         // Botón de engranaje (Filtros) -> ABRE LA VENTANA EMERGENTE
         menuEmpleadoPanel.addFiltrosListener(e -> mainController.abrirVentanaFiltros());
@@ -139,8 +143,7 @@ public class MainFrame extends JFrame {
         // Registrar listeners "Volver" en los placeholders para regresar al menú
         //VAMOS A TENER QUE IR BORRANDO A MEDIDA QUE IMPLEMENTEMOS
         descuentosPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
-        productosFiltradosPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
-        carritoPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
+        // productosFiltradosPanel no tiene boton "volver" específico aún
         configuracionPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         perfilPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         notificacionesPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
@@ -155,6 +158,10 @@ public class MainFrame extends JFrame {
 
     public ControladorCarrito getControladorCarrito() {
         return controladorCarrito;
+    }
+
+    public vista.userPanels.ProductosFiltradosPanel getProductosFiltradosPanel() {
+        return this.productosFiltradosPanel;
     }
     
     // Aquí irías añadiendo getters para tus paneles principales si el MainController necesita
