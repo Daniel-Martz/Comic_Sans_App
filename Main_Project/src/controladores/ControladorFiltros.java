@@ -71,9 +71,6 @@ public class ControladorFiltros {
      * Muestra la ventana modal.
      */
     public void mostrarVentana() {
-        // Por defecto arranca sin categoría seleccionada
-        vista.cambiarVistaDerecha("NO_CATEGORY");
-        vista.setTitle("No Category Filters");
         vista.setVisible(true);
     }
 }

@@ -5,6 +5,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.stream.Collectors;
+import modelo.aplicacion.Catalogo;
+import modelo.producto.Comic;
+import modelo.producto.Figura;
+import modelo.producto.LineaProductoVenta;
 
 /**
  * Ventana emergente (JDialog) para los filtros avanzados.
@@ -29,6 +34,8 @@ public class FiltrosDialog extends JDialog {
     // --- Componentes para Layout Dinámico ---
     private JPanel rightPanel;
     private CardLayout cardLayout;
+    private JTextField txtPrecioMin;
+    private JTextField txtPrecioMax;
 
     public FiltrosDialog(JFrame parent) {
         super(parent, "Interchange No Category Filters", true); // true = Modal
@@ -109,6 +116,11 @@ public class FiltrosDialog extends JDialog {
         // Botón aplicar abajo
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBackground(BG_COLOR);
+        
+        JButton btnReset = new JButton("Reset Filters");
+        btnReset.addActionListener(e -> resetFiltros());
+        bottomPanel.add(btnReset);
+
         JButton btnAplicar = new JButton("Apply Filters");
         btnAplicar.addActionListener(e -> dispose()); // Cierra la ventana
         bottomPanel.add(btnAplicar);
@@ -139,15 +151,23 @@ public class FiltrosDialog extends JDialog {
         return wrapper;
     }
 
+    private JPanel pnlAutores;
+    private JPanel pnlEditoriales;
+    private JPanel pnlMarcas;
+    private JPanel pnlMateriales;
+
+    // ... inside createComicsCard ...
     private JPanel createComicsCard() {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBackground(BG_COLOR);
         p.add(createSection("EXTENSION", createCheckList(new String[]{"Single Issue (<48 pages)", "Standard Volume (48-150)", "Trade Paperback (150-300)", "Omnibus (>300)"})));
         p.add(Box.createVerticalStrut(10));
-        p.add(createSection("PUBLISHING HOUSE", createSearchableCheckList(new String[]{"Publishing House 1", "Publishing House 2", "Publishing House 3"})));
+        pnlEditoriales = createSearchableCheckList(getEditoriales());
+        p.add(createSection("PUBLISHING HOUSE", pnlEditoriales));
         p.add(Box.createVerticalStrut(10));
-        p.add(createSection("AUTHOR", createSearchableCheckList(new String[]{"Author 1", "Author 2", "Author 3"})));
+        pnlAutores = createSearchableCheckList(getAutores());
+        p.add(createSection("AUTHOR", pnlAutores));
         p.add(Box.createVerticalStrut(10));
         p.add(createSection("AGE", createCheckList(new String[]{"Golden Age (1938-1956)", "Silver Age (1956-1970)", "Bronze Age", "Modern Age"})));
         return p;
@@ -159,10 +179,148 @@ public class FiltrosDialog extends JDialog {
         p.setBackground(BG_COLOR);
         p.add(createSection("SIZE", createCheckList(new String[]{"Mini / Micro (< 5 cm)", "Small / Handheld (5 - 15 cm)", "Medium (15 - 40 cm)", "Large (> 40 cm)"})));
         p.add(Box.createVerticalStrut(10));
-        p.add(createSection("MATERIAL", createSearchableCheckList(new String[]{"PVC", "ABS", "Resin / Polystone", "Vinyl"})));
+        pnlMateriales = createSearchableCheckList(getMateriales());
+        p.add(createSection("MATERIAL", pnlMateriales));
         p.add(Box.createVerticalStrut(10));
-        p.add(createSection("BRAND", createSearchableCheckList(new String[]{"Brand 1", "Brand 2", "Brand 3", "Brand 4"})));
+        pnlMarcas = createSearchableCheckList(getMarcas());
+        p.add(createSection("BRAND", pnlMarcas));
         return p;
+    }
+
+    private java.util.List<String> getSelectedItems(JPanel searchableCheckListPanel) {
+        java.util.List<String> selected = new java.util.ArrayList<>();
+        if (searchableCheckListPanel == null) return selected;
+        // El JPanel devuelto por createSearchableCheckList es BorderLayout con JTextField al norte y JScrollPane al centro
+        for (Component c : searchableCheckListPanel.getComponents()) {
+            if (c instanceof JPanel) { // The wrapper
+                for (Component innerC : ((JPanel) c).getComponents()) {
+                    if (innerC instanceof JScrollPane) {
+                        JViewport viewport = ((JScrollPane) innerC).getViewport();
+                        Component view = viewport.getView();
+                        if (view instanceof JPanel) {
+                            for (Component chk : ((JPanel) view).getComponents()) {
+                                if (chk instanceof JCheckBox && ((JCheckBox) chk).isSelected()) {
+                                    selected.add(((JCheckBox) chk).getText());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return selected;
+    }
+
+    public boolean cumpleFiltrosAvanzados(LineaProductoVenta p) {
+        // Categorías generales
+        if (chkComics.isSelected() && !(p instanceof Comic)) return false;
+        if (chkFigures.isSelected() && !(p instanceof Figura)) return false;
+        if (chkBoardGames.isSelected() && !(p instanceof modelo.producto.JuegoDeMesa)) return false;
+
+        // Filtro de precio
+        if (txtPrecioMin != null && !txtPrecioMin.getText().trim().isEmpty()) {
+            try {
+                double min = Double.parseDouble(txtPrecioMin.getText().trim());
+                if (p.getPrecio() < min) return false;
+            } catch (NumberFormatException e) {
+                // ignorar
+            }
+        }
+        if (txtPrecioMax != null && !txtPrecioMax.getText().trim().isEmpty()) {
+            try {
+                double max = Double.parseDouble(txtPrecioMax.getText().trim());
+                if (p.getPrecio() > max) return false;
+            } catch (NumberFormatException e) {
+                // ignorar
+            }
+        }
+
+        if (p instanceof Comic) {
+            Comic c = (Comic) p;
+            java.util.List<String> selAutores = getSelectedItems(pnlAutores);
+            if (!selAutores.isEmpty() && !selAutores.contains(c.getAutor())) return false;
+            
+            java.util.List<String> selEditoriales = getSelectedItems(pnlEditoriales);
+            if (!selEditoriales.isEmpty() && !selEditoriales.contains(c.getEditorial())) return false;
+        } else if (p instanceof Figura) {
+            Figura f = (Figura) p;
+            java.util.List<String> selMarcas = getSelectedItems(pnlMarcas);
+            if (!selMarcas.isEmpty() && !selMarcas.contains(f.getMarca())) return false;
+            
+            java.util.List<String> selMateriales = getSelectedItems(pnlMateriales);
+            if (!selMateriales.isEmpty() && !selMateriales.contains(f.getMaterial())) return false;
+        }
+        return true;
+    }
+
+    public void resetFiltros() {
+        resetAllComponents(this.getContentPane());
+        cambiarVistaDerecha("NO_CATEGORY");
+        chkComics.setSelected(false);
+        chkFigures.setSelected(false);
+        chkBoardGames.setSelected(false);
+        chkSoloDisponibles.setSelected(false);
+    }
+
+    private void resetAllComponents(Container container) {
+        for (Component c : container.getComponents()) {
+            if (c instanceof JCheckBox) {
+                ((JCheckBox) c).setSelected(false);
+            } else if (c instanceof JTextField) {
+                if (c == txtPrecioMin) {
+                    ((JTextField) c).setText("0.00");
+                } else if (c == txtPrecioMax) {
+                    ((JTextField) c).setText("");
+                } else {
+                    if (((JTextField) c).getText().isEmpty() || !((JTextField) c).getText().equals("Search...")) {
+                        ((JTextField) c).setText("Search...");
+                        c.setForeground(Color.GRAY);
+                    }
+                }
+            } else if (c instanceof Container) {
+                resetAllComponents((Container) c);
+            }
+        }
+    }
+
+    private String[] getAutores() {
+        return Catalogo.getInstancia().getProductosNuevos().stream()
+                .filter(p -> p instanceof Comic)
+                .map(p -> ((Comic) p).getAutor())
+                .filter(a -> a != null && !a.trim().isEmpty())
+                .distinct()
+                .sorted()
+                .toArray(String[]::new);
+    }
+
+    private String[] getEditoriales() {
+        return Catalogo.getInstancia().getProductosNuevos().stream()
+                .filter(p -> p instanceof Comic)
+                .map(p -> ((Comic) p).getEditorial())
+                .filter(e -> e != null && !e.trim().isEmpty())
+                .distinct()
+                .sorted()
+                .toArray(String[]::new);
+    }
+
+    private String[] getMarcas() {
+        return Catalogo.getInstancia().getProductosNuevos().stream()
+                .filter(p -> p instanceof Figura)
+                .map(p -> ((Figura) p).getMarca())
+                .filter(m -> m != null && !m.trim().isEmpty())
+                .distinct()
+                .sorted()
+                .toArray(String[]::new);
+    }
+
+    private String[] getMateriales() {
+        return Catalogo.getInstancia().getProductosNuevos().stream()
+                .filter(p -> p instanceof Figura)
+                .map(p -> ((Figura) p).getMaterial())
+                .filter(m -> m != null && !m.trim().isEmpty())
+                .distinct()
+                .sorted()
+                .toArray(String[]::new);
     }
 
     private JPanel createBoardGamesCard() {
@@ -319,9 +477,11 @@ public class FiltrosDialog extends JDialog {
         
         JPanel range = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         range.setBackground(Color.WHITE);
-        range.add(new JTextField("0.00 €", 5));
+        txtPrecioMin = new JTextField("0.00", 5);
+        range.add(txtPrecioMin);
         range.add(new JLabel("-"));
-        range.add(new JTextField("Max €", 5));
+        txtPrecioMax = new JTextField("", 5);
+        range.add(txtPrecioMax);
         p.add(range);
         return p;
     }

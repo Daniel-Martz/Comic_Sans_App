@@ -92,18 +92,22 @@ public class MainController {
         }
         mostrarVentanaPropuestas();
     }
-     /**
+    private vista.userWindows.FiltrosDialog dialogFiltros;
+    private ControladorFiltros controladorFiltros;
+
+    /**
      * Instancia y muestra el JDialog de los filtros avanzados.
      */
     public void abrirVentanaFiltros() {
-        // 1. Creamos la vista (JDialog), pasándole el MainFrame como padre
-        vista.userWindows.FiltrosDialog dialogFiltros = new vista.userWindows.FiltrosDialog(mainFrame);
-        
-        // 2. Creamos su controlador específico
-        ControladorFiltros controladorFiltros = new ControladorFiltros(dialogFiltros);
+        if (this.dialogFiltros == null) {
+            // 1. Creamos la vista (JDialog), pasándole el MainFrame como padre
+            this.dialogFiltros = new vista.userWindows.FiltrosDialog(mainFrame);
+            // 2. Creamos su controlador específico solo una vez
+            this.controladorFiltros = new ControladorFiltros(this.dialogFiltros);
+        }
         
         // 3. Mostramos la ventana (se quedará bloqueada hasta que el usuario la cierre porque es modal)
-        controladorFiltros.mostrarVentana();
+        this.controladorFiltros.mostrarVentana();
     }
 
     /**
@@ -112,7 +116,7 @@ public class MainController {
     public void mostrarProductosFiltrados(String prompt) {
         ProductosFiltradosPanel panel = mainFrame.getProductosFiltradosPanel();
         // Creamos un controlador específico para manejar acciones dentro del panel
-        ControladorProductosFiltrados controlador = new ControladorProductosFiltrados(panel);
+        ControladorProductosFiltrados controlador = new ControladorProductosFiltrados(panel, this.dialogFiltros);
         controlador.buscarYActualizar(prompt);
         mainFrame.mostrarPanel(PANEL_PRODUCTOS_FILTRADOS);
     }

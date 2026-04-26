@@ -143,7 +143,7 @@ public class MainFrame extends JFrame {
         // Registrar listeners "Volver" en los placeholders para regresar al menú
         //VAMOS A TENER QUE IR BORRANDO A MEDIDA QUE IMPLEMENTEMOS
         descuentosPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
-        // productosFiltradosPanel no tiene boton "volver" específico aún
+        productosFiltradosPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         configuracionPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         perfilPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         notificacionesPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));

@@ -19,7 +19,7 @@ public class ProductosFiltradosPanel extends JPanel {
     private final Color COLOR_FONDO = new Color(153, 180, 209);
 
     private JPanel panelScrollProductos;
-    private JTextField txtBusqueda;
+    private JButton btnVolver;
 
     public ProductosFiltradosPanel() {
         setLayout(new BorderLayout());
@@ -28,12 +28,10 @@ public class ProductosFiltradosPanel extends JPanel {
 
         JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         top.setBackground(COLOR_FONDO);
-        JLabel lbl = new JLabel("Search results:");
-        lbl.setFont(new Font("SansSerif", Font.BOLD, 16));
-        top.add(lbl);
+        
+        btnVolver = new JButton("Volver");
 
-        txtBusqueda = new JTextField(30);
-        top.add(txtBusqueda);
+        top.add(btnVolver);
 
         add(top, BorderLayout.NORTH);
 
@@ -118,7 +116,9 @@ public class ProductosFiltradosPanel extends JPanel {
         return tarjeta;
     }
 
-    public void setBusquedaText(String text) { txtBusqueda.setText(text); }
+    public void addVolverListener(ActionListener l) {
+        btnVolver.addActionListener(l);
+    }
 
     public void mostrarMensaje(String msg, String titulo) {
         JOptionPane.showMessageDialog(this, msg, titulo, JOptionPane.INFORMATION_MESSAGE);

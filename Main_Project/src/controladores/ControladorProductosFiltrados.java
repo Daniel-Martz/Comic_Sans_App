@@ -16,9 +16,16 @@ import java.util.List;
 public class ControladorProductosFiltrados implements ActionListener {
 
     private final ProductosFiltradosPanel vista;
+    private final vista.userWindows.FiltrosDialog filtrosDialog;
+
+    public ControladorProductosFiltrados(ProductosFiltradosPanel vista, vista.userWindows.FiltrosDialog filtrosDialog) {
+        this.vista = vista;
+        this.filtrosDialog = filtrosDialog;
+    }
 
     public ControladorProductosFiltrados(ProductosFiltradosPanel vista) {
         this.vista = vista;
+        this.filtrosDialog = null;
     }
 
     @Override
@@ -55,7 +62,9 @@ public class ControladorProductosFiltrados implements ActionListener {
     /** Helper que consulta el catálogo y actualiza la vista con el prompt dado. */
     public void buscarYActualizar(String prompt) {
         List<LineaProductoVenta> resultados = Catalogo.getInstancia().obtenerProductosNuevosFiltrados(prompt);
-        vista.setBusquedaText(prompt != null ? prompt : "");
+        if (filtrosDialog != null) {
+            resultados = resultados.stream().filter(filtrosDialog::cumpleFiltrosAvanzados).toList();
+        }
         vista.actualizarProductos(resultados, this);
     }
 }
