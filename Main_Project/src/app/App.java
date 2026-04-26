@@ -21,6 +21,7 @@ import modelo.producto.JuegoDeMesa;
 import modelo.producto.LineaProductoVenta;
 import modelo.producto.ProductoSegundaMano;
 import modelo.producto.TipoJuegoMesa;
+import modelo.producto.LineaProductoVenta;
 import modelo.solicitud.Oferta;
 import modelo.tiempo.DateTimeSimulado;
 import modelo.usuario.ClienteRegistrado;
@@ -309,7 +310,42 @@ public class App {
 
         ProductoSegundaMano juegoMio = new ProductoSegundaMano(
                 "Catan", "Casi nuevo", null, yo);
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        // CARGA DE DATOS ADICIONAL PARA PRUEBAS
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        // A. AÑADIR PRODUCTOS NUEVOS AL CATÁLOGO GENERAL
+        Catalogo catalogo = app.getCatalogo();
+        catalogo.añadirProducto(new LineaProductoVenta("Comic Batman: The Killing Joke", "Edición de lujo tapa dura.", new File("src/assets/placeholder.png"), 50, 24.99));
+        catalogo.añadirProducto(new LineaProductoVenta("Comic Watchmen", "Clásico de Alan Moore.", new File("src/assets/placeholder.png"), 30, 35.50));
+        catalogo.añadirProducto(new LineaProductoVenta("Figura Funko The Mandalorian", "Figura de vinilo, 10cm.", new File("src/assets/placeholder.png"), 100, 15.00));
+        catalogo.añadirProducto(new LineaProductoVenta("Juego de Mesa: Dune Imperium", "Juego de estrategia y conquista.", new File("src/assets/placeholder.png"), 20, 59.95));
+        catalogo.añadirProducto(new LineaProductoVenta("Figura Son Goku SSJ", "Figura de alta calidad de Banpresto.", new File("src/assets/placeholder.png"), 40, 49.90));
+
+        // B. AÑADIR PRODUCTOS DE SEGUNDA MANO PARA EL USUARIO "yo" EN DIFERENTES ESTADOS
+        
+        // B1. Producto PENDIENTE DE VALIDACIÓN (recién añadido)
+        yo.añadirProductoACarteraDeIntercambio("Libro 'Elantris' de B. Sanderson", "Tapa blanda, leído una vez.", null);
+
+        // B2. Producto VALIDADO, PENDIENTE DE PAGO
+        ProductoSegundaMano pAwaitingPayment = yo.añadirProductoACarteraDeIntercambio("Ratón Logitech G502", "Usado pero funciona perfectamente.", null);
+        pAwaitingPayment.getSolicitudValidacion().validarProducto(2.0, 25.0, EstadoConservacion.USO_LIGERO);
+
+        // B3. Producto VALIDADO Y PAGADO (listo para intercambiar, pero no en una oferta)
+        ProductoSegundaMano pReady = yo.añadirProductoACarteraDeIntercambio("Teclado Mecánico Keychron K2", "Switches marrones, con su caja.", null);
+        pReady.getSolicitudValidacion().validarProducto(3.5, 60.0, EstadoConservacion.MUY_BUENO);
+        yo.pagarValidacion(pReady.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        // -------------------------------------------------------------------------
+        // 3. OFERTAS RECIBIDAS (INCOME): Otros me ofrecen cosas a mí
+        // -------------------------------------------------------------------------
+        
+        // Oferta 1: Bob me ofrece su Comic a cambio de mi Juego (Tu oferta original)
+        ProductoSegundaMano comicBob = new ProductoSegundaMano("Spider-Man Vol.1", "Primera edición",  null, bob);
+        comicBob.getSolicitudValidacion().validarProducto(5.0, 150.0, EstadoConservacion.USO_LIGERO);
+        ProductoSegundaMano juegoMio = yo.añadirProductoACarteraDeIntercambio("Catan", "Casi nuevo", null);
         juegoMio.getSolicitudValidacion().validarProducto(5.0, 45.0, EstadoConservacion.USO_LIGERO);
+        yo.pagarValidacion(juegoMio.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
         Oferta ofertaBob = new Oferta(
                 new DateTimeSimulado(), bob, yo,
@@ -322,9 +358,9 @@ public class App {
                     "Figura de Anime #" + i, "Buen estado", null, alice);
             pDaAlice.getSolicitudValidacion().validarProducto(2.0, 15.0 + i * 2, EstadoConservacion.USO_LIGERO);
 
-            ProductoSegundaMano pPideAlice = new ProductoSegundaMano(
-                    "Mi carta Magic #" + i, "Con funda", null, yo);
-            pPideAlice.getSolicitudValidacion().validarProducto(1.0, 12.0 + i * 2.5, EstadoConservacion.PERFECTO);
+            ProductoSegundaMano pPideAlice = yo.añadirProductoACarteraDeIntercambio("Mi carta Magic #" + i, "Con funda", null);
+            pPideAlice.getSolicitudValidacion().validarProducto(1.0, 12.0 + (i * 2.5), EstadoConservacion.PERFECTO);
+            yo.pagarValidacion(pPideAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
             yo.getOfertasRecibidas().add(new Oferta(
                     new DateTimeSimulado(), alice, yo,
@@ -332,15 +368,15 @@ public class App {
                     new HashSet<>(Arrays.asList(pPideAlice))));
         }
 
-        // ─────────────────────────────────────────────────────────────────
-        // 6. OFERTAS ENVIADAS (SENT)
-        // ─────────────────────────────────────────────────────────────────
-        ProductoSegundaMano comicMio = new ProductoSegundaMano(
-                "Batman: Año Uno", "Tapa dura", null, yo);
+        // -------------------------------------------------------------------------
+        // 4. OFERTAS ENVIADAS (SENT): Yo ofrezco cosas a los demás
+        // -------------------------------------------------------------------------
+        
+        // Oferta enviada 1: Yo ofrezco mi Cómic a Bob a cambio de su Figura (Tu oferta original)
+        ProductoSegundaMano comicMio = yo.añadirProductoACarteraDeIntercambio("Batman: Año Uno", "Tapa dura",  null);
         comicMio.getSolicitudValidacion().validarProducto(5.0, 20.0, EstadoConservacion.USO_LIGERO);
-
-        ProductoSegundaMano figuraBob = new ProductoSegundaMano(
-                "Figura Iron Man", "Sin caja", null, bob);
+        yo.pagarValidacion(comicMio.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+        ProductoSegundaMano figuraBob = new ProductoSegundaMano("Figura Iron Man", "Sin caja", null, bob);
         figuraBob.getSolicitudValidacion().validarProducto(5.0, 30.0, EstadoConservacion.USO_LIGERO);
 
         yo.getOfertasRealizadas().add(new Oferta(
@@ -349,9 +385,9 @@ public class App {
                 new HashSet<>(Arrays.asList(figuraBob))));
 
         for (int i = 1; i <= 4; i++) {
-            ProductoSegundaMano pDoyYo = new ProductoSegundaMano(
-                    "Mi videojuego #" + i, "Completo", null, yo);
+            ProductoSegundaMano pDoyYo = yo.añadirProductoACarteraDeIntercambio("Mi videojuego #" + i, "Completo", null);
             pDoyYo.getSolicitudValidacion().validarProducto(5.0, 40.0, EstadoConservacion.PERFECTO);
+            yo.pagarValidacion(pDoyYo.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
             ProductoSegundaMano pPidoCharlie = new ProductoSegundaMano(
                     "Juego de Rol de Charlie #" + i, "Nuevo", null, charlie);

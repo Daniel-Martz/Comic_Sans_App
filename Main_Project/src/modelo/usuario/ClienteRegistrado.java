@@ -546,6 +546,10 @@ public class ClienteRegistrado extends Usuario {
 		if (validacion.getPagoValidacion() != null) {
 			throw new IllegalArgumentException("La solicitud de validación ya tiene un pago asociado.");
 		}
+		
+		if(validacion.getProductoAValidar().getDatosValidacion() == null) {
+			throw new IllegalStateException("El producto aún no ha sido validado por un empleado.");
+		}
 
 		Pago pago = Aplicacion.getInstancia().getSistemaPago().procesarPago(validacion.getPrecioValidacion(),
 				numTarjeta, cvv, fechaCaducidad, validacion);
@@ -584,6 +588,22 @@ public class ClienteRegistrado extends Usuario {
 		return prods;
 	}
 
+	/**
+	 * Obtiene los productos de segunda mano que ya han sido validados
+	 * por un empleado pero cuya tasa de validación aún no ha sido abonada.
+	 *
+	 * @return lista de productos validados sin pago de validación
+	 */
+	public List<ProductoSegundaMano> getProductosValidadosSinPagar() {
+	    List<ProductoSegundaMano> sinPagar = new LinkedList<>();
+	    for (ProductoSegundaMano p : this.cartera.getProductos()) {
+	        if (p.isValidado() && p.getSolicitudValidacion().getPagoValidacion() == null) {
+	            sinPagar.add(p);
+	        }
+	    }
+	    return sinPagar;
+	}
+	
 	/**
 	 * Elimina el pedido
 	 * 

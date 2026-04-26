@@ -58,9 +58,10 @@ public class MainFrame extends JFrame {
         interchangeCardPanel = new InterchangeCardPanel();
         // panel principal del usuario con toda la UI descrita
         vista.userPanels.MenuPrincipalPanel menuEmpleadoPanel = new vista.userPanels.MenuPrincipalPanel();
+        MySecondHandProductsPanel mySecondHandProductsPanel = new MySecondHandProductsPanel();
 
-        CarritoPanel carritoPanel = new CarritoPanel();
-        controladorCarrito = new ControladorCarrito(carritoPanel, this);
+      //  CarritoPanel carritoPanel = new CarritoPanel();
+      //  controladorCarrito = new ControladorCarrito(carritoPanel, this);
         
         // Paneles placeholder para zonas no implementadas aún
         PlaceholderPanel descuentosPanel = new vista.userPanels.PlaceholderPanel("Descuentos");
@@ -72,15 +73,19 @@ public class MainFrame extends JFrame {
         // 3. Añadir vistas al contenedor con sus nombres
         contenedorPaneles.add(interchangeCardPanel, MainController.PANEL_DETALLE_INTERCAMBIO);
         contenedorPaneles.add(menuEmpleadoPanel, MainController.PANEL_MENU_PRINCIPAL);
+        contenedorPaneles.add(mySecondHandProductsPanel, MainController.PANEL_MY_SECOND_HAND_PRODUCTS);
         contenedorPaneles.add(descuentosPanel, MainController.PANEL_DESCUENTOS);
         contenedorPaneles.add(productosFiltradosPanel, MainController.PANEL_PRODUCTOS_FILTRADOS);
-        contenedorPaneles.add(carritoPanel, MainController.PANEL_CARRITO);
+    //    contenedorPaneles.add(carritoPanel, MainController.PANEL_CARRITO);
         contenedorPaneles.add(configuracionPanel, MainController.PANEL_CONFIGURACION);
         contenedorPaneles.add(perfilPanel, MainController.PANEL_PERFIL);
         contenedorPaneles.add(notificacionesPanel, MainController.PANEL_NOTIFICACIONES);
         
         // 4. Crear el controlador principal y pasarle this
         mainController = new MainController(this);
+
+        // Crear el controlador específico para el panel de productos de segunda mano
+        new ControladorMySecondHandProducts(mySecondHandProductsPanel, this);
 
         // Registrar listeners del panel principal para navegar entre vistas
         menuEmpleadoPanel.addHomeListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
@@ -93,10 +98,10 @@ public class MainFrame extends JFrame {
         menuEmpleadoPanel.addNotificacionesListener(e -> mainController.navegarA(MainController.PANEL_NOTIFICACIONES));
         
         
-        menuEmpleadoPanel.addCarritoListener(e -> {
-            controladorCarrito.refrescarVista(); 
-            mainController.navegarA(MainController.PANEL_CARRITO);
-        });
+      //  menuEmpleadoPanel.addCarritoListener(e -> {
+       //     controladorCarrito.refrescarVista(); 
+         //   mainController.navegarA(MainController.PANEL_CARRITO);
+        //});
 
         // Búsqueda en texto -> busca y muestra el panel de productos filtrados
         menuEmpleadoPanel.addSearchListener(e -> {
@@ -116,6 +121,9 @@ public class MainFrame extends JFrame {
             // En una implementación real pasaríamos el filtro al controlador
             mainController.navegarA(MainController.PANEL_PRODUCTOS_FILTRADOS);
         });
+
+        // Listener para el botón "Volver" del panel de productos de segunda mano
+        mySecondHandProductsPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
 
         // 5. Configurar la ventana
         setContentPane(contenedorPaneles);

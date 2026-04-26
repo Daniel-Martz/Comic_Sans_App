@@ -34,6 +34,7 @@ public class MainController {
     public static final String PANEL_CONFIGURACION      = "CONFIGURACION";
     public static final String PANEL_PERFIL             = "PERFIL";
     public static final String PANEL_NOTIFICACIONES     = "NOTIFICACIONES";
+    public static final String PANEL_MY_SECOND_HAND_PRODUCTS = "MY_SECOND_HAND_PRODUCTS";
     // Añade aquí más paneles según los necesites
 
     // -------------------------------------------------------
@@ -129,7 +130,18 @@ public class MainController {
 	            v.cerrar();
 	            mostrarMisIntercambios();
 	        }
+	        if(command.equals("MY SECOND-HAND PRODUCTS")) {
+	        	v.cerrar();
+	        	mostrarMisProductosSegundaMano();
+	        }
 	    });
 	    v.setVisible(true);
+	}
+
+    /**
+     * Navega al panel que muestra los productos de segunda mano del usuario.
+     */
+	public void mostrarMisProductosSegundaMano() {
+		navegarA(PANEL_MY_SECOND_HAND_PRODUCTS);
 	}
 }
