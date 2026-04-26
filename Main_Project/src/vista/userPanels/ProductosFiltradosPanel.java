@@ -29,8 +29,7 @@ public class ProductosFiltradosPanel extends JPanel {
         JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         top.setBackground(COLOR_FONDO);
         
-        btnVolver = new JButton("Volver");
-
+        btnVolver = new JButton("Volver al Menú Principal");
         top.add(btnVolver);
 
         add(top, BorderLayout.NORTH);
@@ -75,7 +74,7 @@ public class ProductosFiltradosPanel extends JPanel {
         tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
         tarjeta.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.DARK_GRAY, 2), new EmptyBorder(10,10,10,10)));
         tarjeta.setBackground(Color.WHITE);
-        tarjeta.setPreferredSize(new Dimension(220, 260));
+        tarjeta.setPreferredSize(new Dimension(220, 290));
 
         JLabel lblNombre = new JLabel(prod.getNombre());
         lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -112,6 +111,14 @@ public class ProductosFiltradosPanel extends JPanel {
         btnAdd.setActionCommand("ADD_" + prod.getID());
         btnAdd.addActionListener(controlador);
         tarjeta.add(btnAdd);
+
+        tarjeta.add(Box.createVerticalStrut(5));
+
+        JButton btnInfo = new JButton("More Information");
+        btnInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnInfo.setActionCommand("INFO_" + prod.getID());
+        btnInfo.addActionListener(controlador);
+        tarjeta.add(btnInfo);
 
         return tarjeta;
     }

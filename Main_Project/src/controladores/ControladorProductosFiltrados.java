@@ -6,6 +6,8 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Usuario;
 import vista.userPanels.ProductosFiltradosPanel;
 
+import javax.swing.SwingUtilities;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -53,6 +55,22 @@ public class ControladorProductosFiltrados implements ActionListener {
                 cliente.añadirProductoACarrito(p, 1);
                 vista.mostrarMensaje("Product added to cart.", "Added");
 
+            } catch (NumberFormatException ex) {
+                vista.mostrarMensaje("Invalid product id.", "Error");
+            }
+        } else if (cmd.startsWith("INFO_")) {
+            String idStr = cmd.substring(5);
+            try {
+                int id = Integer.parseInt(idStr);
+                LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
+                if (p == null) {
+                    vista.mostrarMensaje("Product not found.", "Error");
+                    return;
+                }
+                
+                Window parentWindow = SwingUtilities.getWindowAncestor(vista);
+                vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(parentWindow, p);
+                dialog.setVisible(true);
             } catch (NumberFormatException ex) {
                 vista.mostrarMensaje("Invalid product id.", "Error");
             }
