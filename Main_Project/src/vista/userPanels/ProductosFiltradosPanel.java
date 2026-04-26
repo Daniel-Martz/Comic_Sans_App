@@ -37,11 +37,15 @@ public class ProductosFiltradosPanel extends JPanel {
 
         add(top, BorderLayout.NORTH);
 
-        panelScrollProductos = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
+        panelScrollProductos = new JPanel(new GridLayout(0, 4, 15, 15));
         panelScrollProductos.setBackground(COLOR_FONDO);
 
-        JScrollPane scroll = new JScrollPane(panelScrollProductos);
-        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JPanel contenedorGrid = new JPanel(new BorderLayout());
+        contenedorGrid.setBackground(COLOR_FONDO);
+        contenedorGrid.add(panelScrollProductos, BorderLayout.NORTH);
+
+        JScrollPane scroll = new JScrollPane(contenedorGrid);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.getViewport().setBackground(COLOR_FONDO);
         add(scroll, BorderLayout.CENTER);
@@ -57,7 +61,10 @@ public class ProductosFiltradosPanel extends JPanel {
         } else {
             for (LineaProductoVenta p : productos) {
                 JPanel tarjeta = crearTarjeta(p, controlador);
-                panelScrollProductos.add(tarjeta);
+                JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+                wrapper.setBackground(COLOR_FONDO);
+                wrapper.add(tarjeta);
+                panelScrollProductos.add(wrapper);
             }
         }
 
