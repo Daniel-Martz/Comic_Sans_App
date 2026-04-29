@@ -9,6 +9,7 @@ import vista.userWindows.LoginDialog;
 import vista.userWindows.ProposalsWindow;
 import vista.userWindows.VentanaInterchangeOptions;
 import vista.userWindows.VentanaRegistroRequerido;
+import vista.userWindows.VentanaUsuarioOptions;
 
 import javax.swing.JOptionPane;
 
@@ -37,6 +38,7 @@ public class MainController {
     private vista.userWindows.CrearUsuarioDialog crearUsuarioDialog;
     private vista.userWindows.LoginDialog loginDialog;
     private vista.userWindows.FiltrosDialog dialogFiltros;
+    private vista.userWindows.VentanaUsuarioOptions dialogOpcionesUsuario;
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
@@ -325,6 +327,11 @@ public class MainController {
     	loginDialog.setVisible(true);
     }
     
+    public void abrirVentanaOpcionesUsuario(){
+    	this.dialogOpcionesUsuario = new VentanaUsuarioOptions(mainFrame, this);
+    	loginDialog.setVisible(true);
+    }
+    
     public void cerrarVentanaCrearUsuario() {
     	this.crearUsuarioDialog.setVisible(false);
     }
@@ -337,7 +344,7 @@ public class MainController {
     	if(Aplicacion.getInstancia().getUsuarioActual() == null) {
     		abrirVentanaLogIn();
     	}else {
-    		
+    		abrirVentanaOpcionesUsuario();
     	}
     }
 }
