@@ -21,7 +21,7 @@ public class VentanaDetallesProducto extends JDialog {
 
     public VentanaDetallesProducto(Window parent, LineaProductoVenta producto) {
         super(parent, "Detalles del Producto", Dialog.ModalityType.APPLICATION_MODAL);
-        setSize(550, 600);
+        setSize(600, 750);
         setLocationRelativeTo(parent);
         initComponents(producto);
     }
@@ -115,7 +115,11 @@ public class VentanaDetallesProducto extends JDialog {
         scrollDetails.setBorder(null);
         centerPanel.add(scrollDetails, BorderLayout.CENTER);
 
-        // South Center: Descripción
+        // South Center: Descripción y Reseñas
+        JPanel bottomCenterPanel = new JPanel();
+        bottomCenterPanel.setLayout(new BoxLayout(bottomCenterPanel, BoxLayout.Y_AXIS));
+        bottomCenterPanel.setBackground(COLOR_FONDO);
+
         JPanel descPanel = new JPanel(new BorderLayout());
         descPanel.setBackground(COLOR_FONDO);
         JLabel lblDescTitle = new JLabel("Descripción:");
@@ -130,7 +134,53 @@ public class VentanaDetallesProducto extends JDialog {
         txtDesc.setFont(new Font("SansSerif", Font.PLAIN, 14));
         descPanel.add(txtDesc, BorderLayout.CENTER);
         
-        centerPanel.add(descPanel, BorderLayout.SOUTH);
+        bottomCenterPanel.add(descPanel);
+        bottomCenterPanel.add(Box.createVerticalStrut(15));
+
+        // Panel de Reseñas
+        JPanel reviewsPanel = new JPanel(new BorderLayout());
+        reviewsPanel.setBackground(COLOR_FONDO);
+        JLabel lblReviewsTitle = new JLabel("Reseñas:");
+        lblReviewsTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
+        reviewsPanel.add(lblReviewsTitle, BorderLayout.NORTH);
+
+        JPanel reviewsListPanel = new JPanel();
+        reviewsListPanel.setLayout(new BoxLayout(reviewsListPanel, BoxLayout.Y_AXIS));
+        reviewsListPanel.setBackground(Color.WHITE);
+
+        java.util.List<Reseña> resenas = p.getReseña();
+        if (resenas == null || resenas.isEmpty()) {
+            JLabel lblNoReviews = new JLabel("No hay reseñas todavía.");
+            lblNoReviews.setBorder(new EmptyBorder(5, 5, 5, 5));
+            reviewsListPanel.add(lblNoReviews);
+        } else {
+            for (Reseña r : resenas) {
+                JPanel rPanel = new JPanel(new BorderLayout());
+                rPanel.setBackground(Color.WHITE);
+                rPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+                JLabel lblPuntuacion = new JLabel("Valoración: " + r.getPuntuacion() + " / 5.0");
+                lblPuntuacion.setFont(new Font("SansSerif", Font.BOLD, 12));
+                lblPuntuacion.setForeground(new Color(255, 153, 0)); // Color naranja para destacar
+                JTextArea txtComentario = new JTextArea(r.getDescripcion());
+                txtComentario.setLineWrap(true);
+                txtComentario.setWrapStyleWord(true);
+                txtComentario.setEditable(false);
+                txtComentario.setFont(new Font("SansSerif", Font.ITALIC, 12));
+                rPanel.add(lblPuntuacion, BorderLayout.NORTH);
+                rPanel.add(txtComentario, BorderLayout.CENTER);
+                reviewsListPanel.add(rPanel);
+                reviewsListPanel.add(new JSeparator());
+            }
+        }
+
+        JScrollPane scrollReviews = new JScrollPane(reviewsListPanel);
+        scrollReviews.setPreferredSize(new Dimension(500, 120));
+        scrollReviews.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+        reviewsPanel.add(scrollReviews, BorderLayout.CENTER);
+
+        bottomCenterPanel.add(reviewsPanel);
+
+        centerPanel.add(bottomCenterPanel, BorderLayout.SOUTH);
 
         mainPanel.add(centerPanel, BorderLayout.CENTER);
 

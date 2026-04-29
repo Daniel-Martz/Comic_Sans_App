@@ -234,7 +234,7 @@ public class VentanaPagoPedido extends JDialog {
         // Abrir la ventana
         SwingUtilities.invokeLater(() -> {
             VentanaPagoPedido vista = new VentanaPagoPedido(null, pedido);
-            ControladorPagoPedido controlador = new ControladorPagoPedido(vista, pedido);
+            ControladorPagoPedido controlador = new ControladorPagoPedido(vista);
             vista.setControlador(controlador);
             vista.setVisible(true);
         });

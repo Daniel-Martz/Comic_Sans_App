@@ -36,6 +36,7 @@ public class FiltrosDialog extends JDialog {
     private CardLayout cardLayout;
     private JTextField txtPrecioMin;
     private JTextField txtPrecioMax;
+    private JComboBox<String> cbCalifications;
 
     public FiltrosDialog(JFrame parent) {
         super(parent, "Interchange No Category Filters", true); // true = Modal
@@ -212,6 +213,9 @@ public class FiltrosDialog extends JDialog {
     }
 
     public boolean cumpleFiltrosAvanzados(LineaProductoVenta p) {
+        // Filtro de solo disponibles
+        if (chkSoloDisponibles.isSelected() && p.getStock() <= 0) return false;
+
         // Categorías generales
         if (chkComics.isSelected() && !(p instanceof Comic)) return false;
         if (chkFigures.isSelected() && !(p instanceof Figura)) return false;
@@ -232,6 +236,14 @@ public class FiltrosDialog extends JDialog {
                 if (p.getPrecio() > max) return false;
             } catch (NumberFormatException e) {
                 // ignorar
+            }
+        }
+
+        // Filtro de Calificaciones (Reseñas)
+        if (cbCalifications != null && cbCalifications.getSelectedIndex() > 0) {
+            int minRating = cbCalifications.getSelectedIndex(); // "1 Star" -> index 1
+            if (p.obtenerPuntuacionMedia() < minRating) {
+                return false;
             }
         }
 
@@ -266,6 +278,8 @@ public class FiltrosDialog extends JDialog {
         for (Component c : container.getComponents()) {
             if (c instanceof JCheckBox) {
                 ((JCheckBox) c).setSelected(false);
+            } else if (c instanceof JComboBox) {
+                ((JComboBox<?>) c).setSelectedIndex(0);
             } else if (c instanceof JTextField) {
                 if (c == txtPrecioMin) {
                     ((JTextField) c).setText("0.00");
@@ -466,7 +480,8 @@ public class FiltrosDialog extends JDialog {
     private JPanel createCalificationsContent() {
         JPanel p = new JPanel(new GridLayout(2, 1));
         p.setBackground(Color.WHITE);
-        p.add(new JComboBox<>(new String[]{"No preference", "1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"}));
+        cbCalifications = new JComboBox<>(new String[]{"No preference", "1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"});
+        p.add(cbCalifications);
         return p;
     }
 

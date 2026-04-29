@@ -4,7 +4,7 @@ import modelo.aplicacion.Catalogo;
 import modelo.producto.LineaProductoVenta;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Usuario;
-import vista.userPanels.ProductosFiltradosPanel;
+import vista.userPanels.OutstandingPanel;
 
 import javax.swing.SwingUtilities;
 import java.awt.Window;
@@ -13,21 +13,15 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Controlador para la vista de productos filtrados.
+ * Controlador para la vista de productos destacados.
  */
-public class ControladorProductosFiltrados implements ActionListener {
+public class ControladorOutstanding implements ActionListener {
 
-    private final ProductosFiltradosPanel vista;
-    private final vista.userWindows.FiltrosDialog filtrosDialog;
+    private final OutstandingPanel vista;
 
-    public ControladorProductosFiltrados(ProductosFiltradosPanel vista, vista.userWindows.FiltrosDialog filtrosDialog) {
+    public ControladorOutstanding(OutstandingPanel vista) {
         this.vista = vista;
-        this.filtrosDialog = filtrosDialog;
-    }
-
-    public ControladorProductosFiltrados(ProductosFiltradosPanel vista) {
-        this.vista = vista;
-        this.filtrosDialog = null;
+        buscarYActualizarOutstanding();
     }
 
     @Override
@@ -75,15 +69,6 @@ public class ControladorProductosFiltrados implements ActionListener {
                 vista.mostrarMensaje("Invalid product id.", "Error");
             }
         }
-    }
-
-    /** Helper que consulta el catálogo y actualiza la vista con el prompt dado. */
-    public void buscarYActualizar(String prompt) {
-        List<LineaProductoVenta> resultados = Catalogo.getInstancia().obtenerProductosNuevosFiltrados(prompt);
-        if (filtrosDialog != null) {
-            resultados = resultados.stream().filter(filtrosDialog::cumpleFiltrosAvanzados).toList();
-        }
-        vista.actualizarProductos(resultados, this);
     }
 
     /** Helper que consulta el catálogo y actualiza la vista con los productos destacados (valoración entre 4 y 5). */

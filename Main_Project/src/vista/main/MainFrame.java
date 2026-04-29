@@ -42,7 +42,8 @@ public class MainFrame extends JFrame {
     private MainController mainController;
     
     private ControladorCarrito controladorCarrito;
-    private ProductosFiltradosPanel productosFiltradosPanel;
+    private vista.userPanels.ProductosFiltradosPanel productosFiltradosPanel;
+    private vista.userPanels.OutstandingPanel outstandingPanel;
 
     // -------------------------------------------------------
     // Constructor
@@ -68,6 +69,7 @@ public class MainFrame extends JFrame {
         // Paneles placeholder para zonas no implementadas aún
         PlaceholderPanel descuentosPanel = new vista.userPanels.PlaceholderPanel("Descuentos");
         this.productosFiltradosPanel = new vista.userPanels.ProductosFiltradosPanel();
+        this.outstandingPanel = new vista.userPanels.OutstandingPanel();
         PlaceholderPanel configuracionPanel = new vista.userPanels.PlaceholderPanel("Configuración");
         PlaceholderPanel perfilPanel = new vista.userPanels.PlaceholderPanel("Perfil");
         PlaceholderPanel notificacionesPanel = new vista.userPanels.PlaceholderPanel("Notificaciones");
@@ -78,6 +80,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(mySecondHandProductsPanel, MainController.PANEL_MY_SECOND_HAND_PRODUCTS);
         contenedorPaneles.add(descuentosPanel, MainController.PANEL_DESCUENTOS);
         contenedorPaneles.add(productosFiltradosPanel, MainController.PANEL_PRODUCTOS_FILTRADOS);
+        contenedorPaneles.add(outstandingPanel, MainController.PANEL_OUTSTANDING);
         contenedorPaneles.add(carritoPanel, MainController.PANEL_CARRITO);
         contenedorPaneles.add(configuracionPanel, MainController.PANEL_CONFIGURACION);
         contenedorPaneles.add(perfilPanel, MainController.PANEL_PERFIL);
@@ -89,7 +92,7 @@ public class MainFrame extends JFrame {
         // Registrar listeners del panel principal para navegar entre vistas
         menuEmpleadoPanel.addHomeListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         menuEmpleadoPanel.addDescuentosListener(e -> mainController.navegarA(MainController.PANEL_DESCUENTOS));
-        menuEmpleadoPanel.addOutstandingListener(e -> mainController.navegarA(MainController.PANEL_PRODUCTOS_FILTRADOS));
+        menuEmpleadoPanel.addOutstandingListener(e -> mainController.mostrarProductosOutstanding());
         
         menuEmpleadoPanel.addCarritoListener(e -> {
             controladorCarrito.refrescarVista(); 
@@ -148,6 +151,7 @@ public class MainFrame extends JFrame {
         //VAMOS A TENER QUE IR BORRANDO A MEDIDA QUE IMPLEMENTEMOS
         descuentosPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         productosFiltradosPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
+        outstandingPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         configuracionPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         perfilPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
         notificacionesPanel.addVolverListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));
@@ -166,6 +170,10 @@ public class MainFrame extends JFrame {
 
     public vista.userPanels.ProductosFiltradosPanel getProductosFiltradosPanel() {
         return this.productosFiltradosPanel;
+    }
+
+    public vista.userPanels.OutstandingPanel getOutstandingPanel() {
+        return this.outstandingPanel;
     }
     
     // Aquí irías añadiendo getters para tus paneles principales si el MainController necesita

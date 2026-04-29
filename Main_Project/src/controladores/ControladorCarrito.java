@@ -79,11 +79,12 @@ public class ControladorCarrito implements ActionListener {
         }
 
         try {
-            SolicitudPedido pedido = clienteActual.realizarPedido();
+            // Creamos un pedido simulado solo para mostrar en la ventana de pago
+            SolicitudPedido pedidoSimulado = new SolicitudPedido(clienteActual, clienteActual.getCarrito().getProductos());
 
             VentanaPagoPedido ventanaPago = new VentanaPagoPedido(
-                    SwingUtilities.getWindowAncestor(vista), pedido);
-            ControladorPagoPedido controladorPago = new ControladorPagoPedido(ventanaPago, pedido);
+                    SwingUtilities.getWindowAncestor(vista), pedidoSimulado);
+            ControladorPagoPedido controladorPago = new ControladorPagoPedido(ventanaPago);
             ventanaPago.setControlador(controladorPago);
             ventanaPago.setVisible(true);
 

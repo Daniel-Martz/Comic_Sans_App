@@ -15,13 +15,6 @@ import modelo.aplicacion.Catalogo;
 import modelo.categoria.Categoria;
 import modelo.descuento.Precio;
 import modelo.producto.*;
-import modelo.producto.EstadoConservacion;
-import modelo.producto.Figura;
-import modelo.producto.JuegoDeMesa;
-import modelo.producto.LineaProductoVenta;
-import modelo.producto.ProductoSegundaMano;
-import modelo.producto.TipoJuegoMesa;
-import modelo.producto.LineaProductoVenta;
 import modelo.solicitud.Oferta;
 import modelo.tiempo.DateTimeSimulado;
 import modelo.usuario.ClienteRegistrado;
@@ -60,7 +53,7 @@ public class App {
         // ─────────────────────────────────────────────────────────────────
 
         // ── Comics (6) ──────────────────────────────────────────────────
-        Comic spidermanAdv = new Comic(
+        Comic   spidermanAdv = new Comic(
                 "Spiderman Adventures Vol.3",
                 "Un cómic de auténtico coleccionista preservado en su envoltorio original.",
                 new File("images/SpidermanAdventures3.jpg"),
@@ -283,6 +276,40 @@ public class App {
         manga1.añadirCategoria(catAnime);
         cat.añadirProducto(manga1);
 
+        // ─────────────────────────────────────────────────────────────────
+        // AÑADIR RESEÑAS PARA PROBAR FILTROS DE VALORACIÓN Y OUTSTANDING
+        // ─────────────────────────────────────────────────────────────────
+        spidermanAdv.añadirReseña(new modelo.producto.Reseña("¡Excelente estado, muy recomendado!", 5.0, new DateTimeSimulado(), spidermanAdv));
+        spidermanAdv.añadirReseña(new modelo.producto.Reseña("Buen cómic", 4.0, new DateTimeSimulado(), spidermanAdv));
+        spidermanAdv.añadirReseña(new modelo.producto.Reseña("Mediocre, SuperMan es mejor", 2.0, new DateTimeSimulado(), spidermanAdv));
+        spidermanAdv.añadirReseña(new modelo.producto.Reseña("Me ha encantado", 4.0, new DateTimeSimulado(), spidermanAdv));
+        spidermanAdv.añadirReseña(new modelo.producto.Reseña("Al releerlo me pareció una pasada", 5.0, new DateTimeSimulado(), spidermanAdv));
+
+
+        batmanYearOne.añadirReseña(new modelo.producto.Reseña("Una obra maestra, imprescindible", 5.0, new DateTimeSimulado(), batmanYearOne));
+        batmanYearOne.añadirReseña(new modelo.producto.Reseña("Frank Miller en su máximo esplendor", 5.0, new DateTimeSimulado(), batmanYearOne));
+        
+        watchmen.añadirReseña(new modelo.producto.Reseña("Está bien, pero la peli me gustó más", 3.0, new DateTimeSimulado(), watchmen));
+        watchmen.añadirReseña(new modelo.producto.Reseña("Un poco denso", 2.0, new DateTimeSimulado(), watchmen));
+
+        ironManFigure.añadirReseña(new modelo.producto.Reseña("Calidad increíble", 5.0, new DateTimeSimulado(), ironManFigure));
+        
+        catan.añadirReseña(new modelo.producto.Reseña("Ideal para jugar con amigos", 4.0, new DateTimeSimulado(), catan));
+        catan.añadirReseña(new modelo.producto.Reseña("Las partidas se hacen largas", 3.0, new DateTimeSimulado(), catan));
+        
+        funkoPop.añadirReseña(new modelo.producto.Reseña("Vino la caja un poco abollada", 1.0, new DateTimeSimulado(), funkoPop));
+
+        spidermanChron.añadirReseña(new modelo.producto.Reseña("La portada alternativa es brutal", 4.5, new DateTimeSimulado(), spidermanChron));
+        spidermanChron.añadirReseña(new modelo.producto.Reseña("De lo mejor de Dan Slott", 4.0, new DateTimeSimulado(), spidermanChron));
+
+        zeldaFigure.añadirReseña(new modelo.producto.Reseña("Acabado perfecto y fiel al juego", 5.0, new DateTimeSimulado(), zeldaFigure));
+        zeldaFigure.añadirReseña(new modelo.producto.Reseña("Impresionante nivel de detalle", 4.5, new DateTimeSimulado(), zeldaFigure));
+
+        codenames.añadirReseña(new modelo.producto.Reseña("Muy divertido para fiestas", 4.0, new DateTimeSimulado(), codenames));
+        codenames.añadirReseña(new modelo.producto.Reseña("Nunca falla, muy recomendable", 5.0, new DateTimeSimulado(), codenames));
+        
+        dominion.añadirReseña(new modelo.producto.Reseña("El mejor deckbuilder, una maravilla", 4.5, new DateTimeSimulado(), dominion));
+        
         // ── Descuento de ejemplo (10 % en Watchmen) ─────────────────────
         Precio descWatchmen = new Precio(
                 new DateTimeSimulado(),

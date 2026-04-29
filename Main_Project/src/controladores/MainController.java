@@ -148,12 +148,23 @@ public class MainController {
     /**
      * Muestra el panel de productos filtrados y lo actualiza con el prompt dado.
      */
+    public static final String PANEL_OUTSTANDING        = "OUTSTANDING";
+
     public void mostrarProductosFiltrados(String prompt) {
         ProductosFiltradosPanel panel = mainFrame.getProductosFiltradosPanel();
         // Creamos un controlador específico para manejar acciones dentro del panel
         ControladorProductosFiltrados controlador = new ControladorProductosFiltrados(panel, this.dialogFiltros);
         controlador.buscarYActualizar(prompt);
         mainFrame.mostrarPanel(PANEL_PRODUCTOS_FILTRADOS);
+    }
+
+    /**
+     * Muestra el panel de productos filtrados pero solo con los productos destacados (valoración 4-5).
+     */
+    public void mostrarProductosOutstanding() {
+        vista.userPanels.OutstandingPanel panel = mainFrame.getOutstandingPanel();
+        new ControladorOutstanding(panel);
+        mainFrame.mostrarPanel(PANEL_OUTSTANDING);
     }
     
 	public void mostrarVentanaOpcionesIntercambio() {
@@ -199,7 +210,6 @@ public class MainController {
 	public void mostrarMisProductosSegundaMano() {
 		navegarA(PANEL_MY_SECOND_HAND_PRODUCTS);
 	}
-
     
     public void abrirVentanaCrearUsuario(){
     	this.crearUsuarioDialog = new CrearUsuarioDialog(mainFrame, this);

@@ -16,11 +16,9 @@ import java.awt.event.ActionListener;
 public class ControladorPagoPedido implements ActionListener {
 
     private VentanaPagoPedido vista;
-    private SolicitudPedido pedidoModelo;
 
-    public ControladorPagoPedido(VentanaPagoPedido vista, SolicitudPedido pedidoModelo) {
+    public ControladorPagoPedido(VentanaPagoPedido vista) {
         this.vista = vista;
-        this.pedidoModelo = pedidoModelo;
     }
 
     @Override
@@ -48,15 +46,46 @@ public class ControladorPagoPedido implements ActionListener {
         }
 
         // 2. Llamar al modelo
+        SolicitudPedido pedidoReal = null;
+        ClienteRegistrado cliente = null;
         try {
-            ClienteRegistrado cliente = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
-            cliente.pagarPedido(pedidoModelo, numTarjeta, cvv, fechaCaducidad);
+            cliente = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
+            
+            // Creamos el pedido AHORA que se va a pagar
+            pedidoReal = cliente.realizarPedido();
+
+            // Pagamos el pedido
+            cliente.pagarPedido(pedidoReal, numTarjeta, cvv, fechaCaducidad);
 
             // 3. Mostrar resultado y cerrar ventana
             vista.mostrarVentanaExito();
             vista.dispose();
 
         } catch (Exception ex) {
+            if (pedidoReal != null && cliente != null && !pedidoReal.pagado()) {
+                // 1. Restaurar stock y carrito
+                for (java.util.Map.Entry<modelo.producto.LineaProductoVenta, Integer> entry : pedidoReal.getProductosDiferentes().entrySet()) {
+                    modelo.producto.LineaProductoVenta prod = entry.getKey();
+                    int cantidad = entry.getValue();
+                    prod.setStock(prod.getStock() + cantidad);
+                    cliente.getCarrito().añadirProducto(prod, cantidad);
+                }
+                
+                // 2. Cancelar el pedido
+                cliente.cancelarPedido(pedidoReal);
+                
+                // 3. Limpiar notificaciones generadas para este pedido
+                java.util.List<modelo.notificacion.NotificacionCliente> notifs = cliente.getNotificaciones();
+                java.util.Iterator<modelo.notificacion.NotificacionCliente> it = notifs.iterator();
+                while (it.hasNext()) {
+                    modelo.notificacion.NotificacionCliente n = it.next();
+                    if (n instanceof modelo.notificacion.NotificacionPedido) {
+                        if (((modelo.notificacion.NotificacionPedido) n).getPedido() == pedidoReal) {
+                            it.remove();
+                        }
+                    }
+                }
+            }
             vista.mostrarVentanaError(ex.getMessage());
         }
     }
