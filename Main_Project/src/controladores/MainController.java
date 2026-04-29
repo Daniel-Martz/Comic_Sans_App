@@ -8,6 +8,9 @@ import vista.userWindows.CrearUsuarioDialog;
 import vista.userWindows.LoginDialog;
 import vista.userWindows.ProposalsWindow;
 import vista.userWindows.VentanaInterchangeOptions;
+import vista.userWindows.VentanaRegistroRequerido;
+
+import javax.swing.JOptionPane;
 
 import java.util.List;
 import vista.userPanels.ProductosFiltradosPanel;
@@ -101,6 +104,14 @@ public class MainController {
         }
         mostrarVentanaPropuestas();
     }
+    
+    /**
+     * Navega al panel que muestra los productos de segunda mano del usuario.
+     */
+	public void mostrarMisProductosSegundaMano() {
+		navegarA(PANEL_MY_SECOND_HAND_PRODUCTS);
+	}
+    
 
 
     /**
@@ -155,7 +166,28 @@ public class MainController {
     }
     
 	public void mostrarVentanaOpcionesIntercambio() {
-	    VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
+      // Si el usuario no es un ClienteRegistrado, informamos y ofrecemos registrar
+      if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
+       // Instanciamos nuestra nueva ventana bonita
+          VentanaRegistroRequerido dialogoRequerido = new VentanaRegistroRequerido(mainFrame);
+
+          // Mostramos la ventana y guardamos la elección del usuario
+          int eleccion = dialogoRequerido.mostrarVentana();
+
+          // Procesamos la decisión
+          if (eleccion == VentanaRegistroRequerido.INICIAR_SESION) {
+              // Aquí abrimos la ventana de login. 
+              // abrirVentanaLogin();
+              System.out.println("Llevando al usuario a Iniciar Sesión...");
+          } 
+          else if (eleccion == VentanaRegistroRequerido.REGISTRARSE) {
+              abrirVentanaCrearUsuario();
+          }
+          // Si elige CANCELAR o cierra la ventana, simplemente no hacemos nada (o vuelves a la vista anterior)
+          return;
+      }
+
+      VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
 	    v.setControlador(e -> {
 	        String command = e.getActionCommand();
 	        if (command.equals("PROPOSALS")) {
@@ -170,14 +202,6 @@ public class MainController {
 	    v.setVisible(true);
 	}
 
-    /**
-     * Navega al panel que muestra los productos de segunda mano del usuario.
-     */
-	public void mostrarMisProductosSegundaMano() {
-		navegarA(PANEL_MY_SECOND_HAND_PRODUCTS);
-	}
-}
-    
     public void abrirVentanaCrearUsuario(){
     	this.crearUsuarioDialog = new CrearUsuarioDialog(mainFrame, this);
     	crearUsuarioDialog.setVisible(true);

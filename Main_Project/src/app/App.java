@@ -367,7 +367,7 @@ public class App {
         ProductoSegundaMano comicMio = yo.añadirProductoACarteraDeIntercambio("Batman: Año Uno", "Tapa dura",  null);
         comicMio.getSolicitudValidacion().validarProducto(5.0, 20.0, EstadoConservacion.USO_LIGERO);
         yo.pagarValidacion(comicMio.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
-        ProductoSegundaMano figuraBob = new ProductoSegundaMano("Figura Iron Man", "Sin caja", null, bob);
+        ProductoSegundaMano figuraBob = bob.añadirProductoACarteraDeIntercambio("Figura Iron Man", "Sin caja", null);
         figuraBob.getSolicitudValidacion().validarProducto(5.0, 30.0, EstadoConservacion.USO_LIGERO);
 
         yo.getOfertasRealizadas().add(new Oferta(
@@ -389,6 +389,7 @@ public class App {
                     new HashSet<>(Arrays.asList(pDoyYo)),
                     new HashSet<>(Arrays.asList(pPidoCharlie))));
         }
+        app.setUsuarioActual(null);
 
         // ─────────────────────────────────────────────────────────────────
         // 7. ARRANCAR LA UI
