@@ -56,31 +56,32 @@ public class MainController {
     
     private void registrarListeners() {
         // --- Conectar Menu Empleado ---
-        mainFrame.getMenuEmpleadoPanel().addHomeListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
-        mainFrame.getMenuEmpleadoPanel().addDescuentosListener(e -> navegarA(MainFrame.PANEL_DESCUENTOS));
-        mainFrame.getMenuEmpleadoPanel().addOutstandingListener(e -> navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS));
+        mainFrame.getMenuPrincipalPanel().addHomeListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+        mainFrame.getMenuPrincipalPanel().addDescuentosListener(e -> navegarA(MainFrame.PANEL_DESCUENTOS));
+        mainFrame.getMenuPrincipalPanel().addOutstandingListener(e -> mostrarProductosOutstanding());
         
         // Búsqueda
-        mainFrame.getMenuEmpleadoPanel().addSearchListener(e -> {
+        mainFrame.getMenuPrincipalPanel().addSearchListener(e -> {
             String prompt = e.getActionCommand();
             mostrarProductosFiltrados(prompt);
         });
 
         // Botón Intercambios
-        mainFrame.getMenuEmpleadoPanel().addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
+        mainFrame.getMenuPrincipalPanel().addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
         
         // Botón Perfil y Notificaciones
-        mainFrame.getMenuEmpleadoPanel().addPerfilListener(e -> navegarBotonPerfil());
-        mainFrame.getMenuEmpleadoPanel().addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
-        mainFrame.getMenuEmpleadoPanel().addFiltrosListener(e -> abrirVentanaFiltros());
-        mainFrame.getMenuEmpleadoPanel().addBuyNowListener(e -> navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS));
+        mainFrame.getMenuPrincipalPanel().addPerfilListener(e -> navegarBotonPerfil());
+        mainFrame.getMenuPrincipalPanel().addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
+        mainFrame.getMenuPrincipalPanel().addFiltrosListener(e -> abrirVentanaFiltros());
+        mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS));
 
-        mainFrame.getMenuEmpleadoPanel().addCategoryListener(e -> {
+        mainFrame.getMenuPrincipalPanel().addCategoryListener(e -> {
             String categoria = e.getActionCommand();
             mostrarProductosPorCategoria(categoria);
         });
 
         // --- Conectar Volver de otros paneles ---
+        mainFrame.getOutstandingPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
         mainFrame.getMySecondHandProductsPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
         mainFrame.getDescuentosPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
         mainFrame.getProductosFiltradosPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
@@ -175,8 +176,6 @@ public class MainController {
     /**
      * Muestra el panel de productos filtrados y lo actualiza con el prompt dado.
      */
-    public static final String PANEL_OUTSTANDING        = "OUTSTANDING";
-
     public void mostrarProductosFiltrados(String prompt) {
         ProductosFiltradosPanel panel = mainFrame.getProductosFiltradosPanel();
         // Creamos un controlador específico para manejar acciones dentro del panel
@@ -191,32 +190,35 @@ public class MainController {
     public void mostrarProductosOutstanding() {
         vista.userPanels.OutstandingPanel panel = mainFrame.getOutstandingPanel();
         new ControladorOutstanding(panel);
-        mainFrame.mostrarPanel(PANEL_OUTSTANDING);
+        mainFrame.mostrarPanel(MainFrame.PANEL_OUTSTANDING);
     }
     
-	public void mostrarVentanaOpcionesIntercambio() {
-      // Si el usuario no es un ClienteRegistrado, informamos y ofrecemos registrar
-      if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
-       // Instanciamos nuestra nueva ventana bonita
-          VentanaRegistroRequerido dialogoRequerido = new VentanaRegistroRequerido(mainFrame);
+    /**
+     * Verifica si el usuario actual es un cliente registrado. 
+     * Si no lo es, muestra la ventana de aviso para iniciar sesión o registrarse.
+     * @return true si el usuario es cliente registrado, false en caso contrario.
+     */
+    private boolean verificarAccesoClienteRegistrado() {
+        if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
+            VentanaRegistroRequerido dialogoRequerido = new VentanaRegistroRequerido(mainFrame);
+            int eleccion = dialogoRequerido.mostrarVentana();
 
-          // Mostramos la ventana y guardamos la elección del usuario
-          int eleccion = dialogoRequerido.mostrarVentana();
+            if (eleccion == VentanaRegistroRequerido.INICIAR_SESION) {
+                abrirVentanaLogIn();
+            } else if (eleccion == VentanaRegistroRequerido.REGISTRARSE) {
+                abrirVentanaCrearUsuario();
+            }
+            return false;
+        }
+        return true;
+    }
 
-          // Procesamos la decisión
-          if (eleccion == VentanaRegistroRequerido.INICIAR_SESION) {
-              // Aquí abrimos la ventana de login. 
-              // abrirVentanaLogin();
-              System.out.println("Llevando al usuario a Iniciar Sesión...");
-          } 
-          else if (eleccion == VentanaRegistroRequerido.REGISTRARSE) {
-              abrirVentanaCrearUsuario();
-          }
-          // Si elige CANCELAR o cierra la ventana, simplemente no hacemos nada (o vuelves a la vista anterior)
-          return;
-      }
+    public void mostrarVentanaOpcionesIntercambio() {
+        if (!verificarAccesoClienteRegistrado()) {
+            return;
+        }
 
-      VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
+        VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
 	    v.setControlador(e -> {
 	        String command = e.getActionCommand();
 	        if (command.equals("PROPOSALS")) {
@@ -232,10 +234,21 @@ public class MainController {
 	}
 
     /**
+     * Gestiona el flujo de entrada al carrito.
+     * @param ctrlCarrito El controlador del carrito para refrescar los datos.
+     */
+    public void gestionarAccesoCarrito(ControladorCarrito ctrlCarrito) {
+        if (verificarAccesoClienteRegistrado()) {
+            ctrlCarrito.refrescarVista();
+            navegarA(MainFrame.PANEL_CARRITO);
+        }
+    }
+
+    /**
      * Navega al panel que muestra los productos de segunda mano del usuario.
      */
 	public void mostrarMisProductosSegundaMano() {
-		navegarA(PANEL_MY_SECOND_HAND_PRODUCTS);
+		navegarA(MainFrame.PANEL_MY_SECOND_HAND_PRODUCTS);
 	}
     
     public void abrirVentanaCrearUsuario(){
@@ -257,7 +270,7 @@ public class MainController {
     }
     
     public void navegarBotonPerfil() {
-    	if(Aplicacion.getInstancia().getUsuarioActual() != null) {
+    	if(Aplicacion.getInstancia().getUsuarioActual() == null) {
     		abrirVentanaLogIn();
     	}else {
     		

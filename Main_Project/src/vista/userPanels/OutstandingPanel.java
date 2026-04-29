@@ -31,7 +31,7 @@ public class OutstandingPanel extends JPanel {
         top.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         top.setAlignmentX(Component.LEFT_ALIGNMENT);
         
-        btnVolver = new JButton("Volver");
+        btnVolver = new JButton("Back to Menu");
         btnVolver.setFont(new Font("SansSerif", Font.BOLD, 13));
         btnVolver.setBackground(new Color(74, 118, 201));
         btnVolver.setForeground(Color.WHITE);
@@ -44,7 +44,7 @@ public class OutstandingPanel extends JPanel {
         top.add(btnVolver);
 
         // Titulo
-        JLabel lblTitulo = new JLabel("PRODUCTOS DESTACADOS ⭐", SwingConstants.CENTER);
+        JLabel lblTitulo = new JLabel("OUTSTANDING PRODUCTS ⭐", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
         lblTitulo.setForeground(Color.DARK_GRAY);
         lblTitulo.setBorder(new EmptyBorder(10, 0, 20, 0));

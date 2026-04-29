@@ -208,35 +208,4 @@ public class VentanaPagoPedido extends JDialog {
     public void mostrarAvisoIncompleto(String mensaje, String titulo) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.WARNING_MESSAGE);
     }
-    
-    public static void main(String[] args) {
-        // Inicializar la aplicación
-        Aplicacion app = Aplicacion.getInstancia();
-
-        // Crear y loguear un cliente
-        ClienteRegistrado cliente = new ClienteRegistrado("demoUser", "123456789A", "Passw0rd!");
-        app.setUsuarioActual(cliente);
-
-        // Crear productos con stock suficiente
-        LineaProductoVenta p1 = new LineaProductoVenta("Spider-Man Vol.1", "Cómic", new File("f.png"), 50, 9.99);
-        LineaProductoVenta p2 = new LineaProductoVenta("Figura Iron Man", "Figura", new File("f.png"), 50, 24.99);
-        LineaProductoVenta p3 = new LineaProductoVenta("DanielYRodiro", "Figura", new File("f.png"), 50, 40.99);
-        app.getCatalogo().añadirProducto(p1);
-        app.getCatalogo().añadirProducto(p2);
-        app.getCatalogo().añadirProducto(p3);
-
-        // Añadir al carrito y crear el pedido
-        cliente.añadirProductoACarrito(p1, 2);
-        cliente.añadirProductoACarrito(p2, 1);
-        cliente.añadirProductoACarrito(p3, 6);
-        SolicitudPedido pedido = cliente.realizarPedido();
-
-        // Abrir la ventana
-        SwingUtilities.invokeLater(() -> {
-            VentanaPagoPedido vista = new VentanaPagoPedido(null, pedido);
-            ControladorPagoPedido controlador = new ControladorPagoPedido(vista);
-            vista.setControlador(controlador);
-            vista.setVisible(true);
-        });
-    }
 }

@@ -436,10 +436,7 @@ import modelo.tiempo.*;
 
             // Importante: Si el botón de Carrito del Menú lo gestiona MainController, 
             // podemos registrar el listener aquí (o pasárselo al MainController)
-            vistaPrincipal.getMenuEmpleadoPanel().addCarritoListener(e -> {
-                ctrlCarrito.refrescarVista(); 
-                mainController.navegarA(MainFrame.PANEL_CARRITO);
-            });
+            vistaPrincipal.getMenuPrincipalPanel().addCarritoListener(e -> mainController.gestionarAccesoCarrito(ctrlCarrito));
 
             // 4. Iniciar la aplicación
             mainController.iniciar(); 
