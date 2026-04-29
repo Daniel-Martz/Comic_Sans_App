@@ -16,10 +16,13 @@ public class CreateAccountController implements ActionListener{
   CrearUsuarioPanel crearUsuarioPanel;
   MainController mainController;
 	
-	public CreateAccountController(CrearUsuarioPanel crearUsuarioPanel, MainController mainController) {
-		this.crearUsuarioPanel = crearUsuarioPanel;
+	public CreateAccountController(MainController mainController) {
     this.mainController = mainController;
 	}
+
+  public void addListeningPanel(CrearUsuarioPanel crearUsuarioPanel){
+    this.crearUsuarioPanel = crearUsuarioPanel;
+  }
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

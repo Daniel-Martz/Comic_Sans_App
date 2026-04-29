@@ -5,6 +5,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import controladores.MainController;
+import controladores.UsuarioOptionsController;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -15,9 +16,10 @@ import java.awt.event.MouseEvent;
  * Ventana de opciones de intercambio con bordes estilizados, 
  * diseño plano y soporte para imagen de fondo.
  */
-public class VentanaUsuarioOptions extends JDialog {
+public class UsuarioOptionsDialog extends JDialog {
 
     private JButton btnEditProfile;
+    private JButton btnCerrarSesion;
     private JButton btnPurchaseHistory;
     private JButton btnNotificationCentre;
     private JPanel mainPanel;
@@ -28,7 +30,7 @@ public class VentanaUsuarioOptions extends JDialog {
     private final Color COLOR_HOVER = new Color(53, 122, 189);      // Azul oscuro al pasar el ratón
     private final Color COLOR_TEXTO = new Color(44, 62, 80);        // Gris oscuro para bordes y textos
 
-    public VentanaUsuarioOptions(JFrame parent, MainController m) {
+    public UsuarioOptionsDialog(JFrame parent) {
         super(parent, "Profile Menu", true);
         
         setSize(500, 450); 
@@ -40,15 +42,10 @@ public class VentanaUsuarioOptions extends JDialog {
     }
 
     private void initComponents() {
-        // 1. Crear un panel principal que soporte una IMAGEN DE FONDO
         mainPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // --- FONDO DE VENTANA ---
-                // Si tienes una imagen de fondo en tus assets, pon su ruta aquí:
-                // ImageIcon fondo = new ImageIcon("src/assets/tu_fondo.png");
-                // g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
         mainPanel.setBackground(COLOR_FONDO); // Color base por si no hay imagen
@@ -63,19 +60,16 @@ public class VentanaUsuarioOptions extends JDialog {
         btnEditProfile = new JButton("EDIT MY PROFILE");
         btnPurchaseHistory = new JButton("PURCHASE HISTORY");
         btnNotificationCentre = new JButton("NOTIFICATION CENTER");
+        btnCerrarSesion = new JButton("CERRAR SESION");
         
-        //Establecemos el action listener
-        ActionListener a = new VentanaUsuarioOptionsController(MainController m);
-        btnEditProfile.addActionListener(a);
-        btnPurchaseHistory.addActionListener(a);
-        btnNotificationCentre.addActionListener(a);
 
         btnEditProfile.setActionCommand("Edit Profile");
+        btnCerrarSesion.setActionCommand("Cerrar Sesión");
         btnPurchaseHistory.setActionCommand("Purchase History");
         btnNotificationCentre.setActionCommand("Notification Center");
 
         // 3. Aplicar estilos y BORDES a los botones
-        JButton[] buttons = {btnEditProfile, btnPurchaseHistory, btnNotificationCentre};
+        JButton[] buttons = {btnEditProfile, btnPurchaseHistory, btnNotificationCentre, btnCerrarSesion};
         
         // Crear un borde redondeado para los botones
         Border bordeBoton = BorderFactory.createLineBorder(COLOR_TEXTO, 2, true); // Borde oscuro de 2px
@@ -138,10 +132,20 @@ public class VentanaUsuarioOptions extends JDialog {
         gbc.gridy = 3;
         mainPanel.add(btnNotificationCentre, gbc);
 
+        gbc.gridy = 4;
+        mainPanel.add(btnCerrarSesion, gbc);
+
         setContentPane(mainPanel);
     }
 
     public void cerrar() {
         this.dispose();
+    }
+
+    public void addListener(UsuarioOptionsController a){
+        btnEditProfile.addActionListener(a);
+        btnPurchaseHistory.addActionListener(a);
+        btnNotificationCentre.addActionListener(a);
+        btnCerrarSesion.addActionListener(a);
     }
 }

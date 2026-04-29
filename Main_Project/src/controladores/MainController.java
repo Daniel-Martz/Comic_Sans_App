@@ -9,7 +9,7 @@ import vista.userWindows.LoginDialog;
 import vista.userWindows.ProposalsWindow;
 import vista.userWindows.VentanaInterchangeOptions;
 import vista.userWindows.VentanaRegistroRequerido;
-import vista.userWindows.VentanaUsuarioOptions;
+import vista.userWindows.UsuarioOptionsDialog;
 
 import javax.swing.JOptionPane;
 
@@ -19,6 +19,8 @@ import vista.userPanels.ProductosFiltradosPanel;
 import vista.userPanels.SearchInterchangesPanel;
 import vista.userPanels.HeaderPanel;
 import controlador.CreateAccountController;
+import controlador.LoginController;
+import controlador.LoginToCreateAccountController;
 
 
 /**
@@ -38,7 +40,7 @@ public class MainController {
     private vista.userWindows.CrearUsuarioDialog crearUsuarioDialog;
     private vista.userWindows.LoginDialog loginDialog;
     private vista.userWindows.FiltrosDialog dialogFiltros;
-    private vista.userWindows.VentanaUsuarioOptions dialogOpcionesUsuario;
+    private vista.userWindows.UsuarioOptionsDialog dialogOpcionesUsuario;
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
@@ -318,23 +320,37 @@ public class MainController {
     }
     
     public void abrirVentanaCrearUsuario(){
-    	this.crearUsuarioDialog = new CrearUsuarioDialog(mainFrame, this);
+    	this.crearUsuarioDialog = new CrearUsuarioDialog(mainFrame);
+      this.crearUsuarioDialog.addListener(new CreateAccountController( this));
     	crearUsuarioDialog.setVisible(true);
     }
     
     public void abrirVentanaLogIn(){
-    	this.loginDialog = new LoginDialog(mainFrame, this);
+    	this.loginDialog = new LoginDialog(mainFrame );
+      this.loginDialog.addListenerLogin(new LoginController(this));
+      this.loginDialog.addListenerCreateAccount(new LoginToCreateAccountController(this));
     	loginDialog.setVisible(true);
     }
     
     public void abrirVentanaOpcionesUsuario(){
-    	this.dialogOpcionesUsuario = new VentanaUsuarioOptions(mainFrame, this);
-    	loginDialog.setVisible(true);
+    	this.dialogOpcionesUsuario = new UsuarioOptionsDialog(mainFrame);
+      this.dialogOpcionesUsuario.addListener(new UsuarioOptionsController(mainFrame, this));
+    	dialogOpcionesUsuario.setVisible(true);
+    }
+
+	public void cerrarVentanaOpcionesUsuario(){
+    	dialogOpcionesUsuario.setVisible(false);
     }
     
     public void cerrarVentanaCrearUsuario() {
     	this.crearUsuarioDialog.setVisible(false);
     }
+
+    public void abrirVentanaEditarUsuario(){
+    } 
+
+    public void cerrarVentanaEditarUsuario(){
+    } 
 
     public void cerrarVentanaLogIn() {
     	this.loginDialog.setVisible(false);

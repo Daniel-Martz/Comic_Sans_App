@@ -16,10 +16,13 @@ public class LoginController implements ActionListener{
   LogInPanel loginPanel;
   MainController mainController;
 	
-	public LoginController(LogInPanel loginPanel, MainController m) {
-		this.loginPanel = loginPanel;
+	public LoginController(MainController m) {
 		this.mainController = m;
 	}
+
+  public void addListeningPanel(LogInPanel l){
+    this.loginPanel = l;
+  }
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
