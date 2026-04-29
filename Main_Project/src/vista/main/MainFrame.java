@@ -98,7 +98,6 @@ public class MainFrame extends JFrame {
         });
 
         menuEmpleadoPanel.addIntercambiosListener(e -> mainController.mostrarVentanaOpcionesIntercambio());
-        menuEmpleadoPanel.addConfiguracionListener(e -> mainController.navegarA(MainController.PANEL_CONFIGURACION));
         menuEmpleadoPanel.addPerfilListener(e -> mainController.navegarBotonPerfil());
         menuEmpleadoPanel.addNotificacionesListener(e -> mainController.navegarA(MainController.PANEL_NOTIFICACIONES));
 

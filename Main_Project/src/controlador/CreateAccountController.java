@@ -34,7 +34,7 @@ public class CreateAccountController implements ActionListener{
 			try {
 				app.crearCuenta(usernameString, dniString, passwordString);
 				crearUsuarioPanel.setStatusLabelText("");
-        mainController.cerrarVentanaCrearUsuario();
+				mainController.cerrarVentanaCrearUsuario();
 			}catch(IllegalArgumentException | IllegalStateException e) {
 				crearUsuarioPanel.setStatusLabelText(e.getMessage());
 			}

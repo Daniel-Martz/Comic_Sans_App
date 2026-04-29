@@ -176,7 +176,7 @@ public class MainController {
 	public void mostrarMisProductosSegundaMano() {
 		navegarA(PANEL_MY_SECOND_HAND_PRODUCTS);
 	}
-}
+
     
     public void abrirVentanaCrearUsuario(){
     	this.crearUsuarioDialog = new CrearUsuarioDialog(mainFrame, this);

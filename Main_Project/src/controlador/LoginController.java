@@ -18,21 +18,21 @@ public class LoginController implements ActionListener{
 	
 	public LoginController(LogInPanel loginPanel, MainController m) {
 		this.loginPanel = loginPanel;
-    this.mainController = m;
+		this.mainController = m;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String usernameString = loginPanel.getUsername();
 		String passwordString = loginPanel.getPassword(); 
-    Aplicacion app = Aplicacion.getInstancia();
-    try {
-      app.iniciarSesion(usernameString, passwordString);
-      loginPanel.setStatusLabelText("");
-      mainController.cerrarVentanaLogIn();
-    }catch(IllegalArgumentException | IllegalStateException e) {
-      loginPanel.setStatusLabelText(e.getMessage());
-    }
+		Aplicacion app = Aplicacion.getInstancia();
+		try {
+		  app.iniciarSesion(usernameString, passwordString);
+		  loginPanel.setStatusLabelText("");
+		  mainController.cerrarVentanaLogIn();
+		}catch(IllegalArgumentException | IllegalStateException e) {
+		  loginPanel.setStatusLabelText(e.getMessage());
+		}
 	}
 	
 }
