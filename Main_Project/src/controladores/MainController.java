@@ -106,15 +106,6 @@ public class MainController {
     }
     
     /**
-     * Navega al panel que muestra los productos de segunda mano del usuario.
-     */
-	public void mostrarMisProductosSegundaMano() {
-		navegarA(PANEL_MY_SECOND_HAND_PRODUCTS);
-	}
-    
-
-
-    /**
      * Instancia y muestra el JDialog de los filtros avanzados.
      */
     public void abrirVentanaFiltros() {
