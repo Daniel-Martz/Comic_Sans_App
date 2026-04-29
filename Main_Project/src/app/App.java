@@ -1,29 +1,28 @@
 package app;
+
 import vista.main.MainFrame;
+import controladores.MainController;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import javax.swing.*;
-
-import modelo.aplicacion.Aplicacion;
-import modelo.aplicacion.Catalogo;
-import modelo.categoria.Categoria;
-import modelo.descuento.Precio;
+import controladores.ControladorCarrito;
+import controladores.ControladorMySecondHandProducts;
+import modelo.aplicacion.*;
+import modelo.categoria.*;
 import modelo.producto.*;
-import modelo.solicitud.Oferta;
-import modelo.tiempo.DateTimeSimulado;
-import modelo.usuario.ClienteRegistrado;
-import modelo.usuario.Gestor;
+import modelo.usuario.*;
+import modelo.solicitud.*;
+import modelo.descuento.*;
+import modelo.tiempo.*;
 
-public class App {
-    public static void main(String[] args) {
 
-        // ─────────────────────────────────────────────────────────────────
+
+	
+	public class App {
+	    public static void main(String[] args) {
+
+	        // ─────────────────────────────────────────────────────────────────
         // 1. INICIALIZACIÓN
         // ─────────────────────────────────────────────────────────────────
         Aplicacion app = Aplicacion.getInstancia();
@@ -417,11 +416,36 @@ public class App {
                     new HashSet<>(Arrays.asList(pPidoCharlie))));
         }
         app.setUsuarioActual(null);
+    	
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            
+            // 1. Instanciar el MODELO
+            // Aplicacion modelo = Aplicacion.getInstance(); // O new Aplicacion();
 
-        // ─────────────────────────────────────────────────────────────────
-        // 7. ARRANCAR LA UI
-        // ─────────────────────────────────────────────────────────────────
-        SwingUtilities.invokeLater(MainFrame::new);
+            // 2. Instanciar la VISTA (ahora no tiene controladores)
+            MainFrame vistaPrincipal = new MainFrame();
+
+            // 3. Instanciar los CONTROLADORES inyectando la Vista (y el Modelo)
+            MainController mainController = new MainController(vistaPrincipal /*, modelo */);
+            
+            // Fíjate cómo al Controlador del Carrito le pasamos sólo SU panel y el MainFrame si lo necesita
+            ControladorCarrito ctrlCarrito = new ControladorCarrito(vistaPrincipal.getCarritoPanel(), vistaPrincipal);
+            
+            // Instanciamos el controlador de Segunda Mano
+            ControladorMySecondHandProducts ctrlSecondHand = new ControladorMySecondHandProducts(vistaPrincipal.getMySecondHandProductsPanel(), vistaPrincipal);
+
+            // Importante: Si el botón de Carrito del Menú lo gestiona MainController, 
+            // podemos registrar el listener aquí (o pasárselo al MainController)
+            vistaPrincipal.getMenuEmpleadoPanel().addCarritoListener(e -> {
+                ctrlCarrito.refrescarVista(); 
+                mainController.navegarA(MainFrame.PANEL_CARRITO);
+            });
+
+            // 4. Iniciar la aplicación
+            mainController.iniciar(); 
+            
+        });
     }
 }
+
  

@@ -26,24 +26,6 @@ import controlador.CreateAccountController;
  * - Crea los controladores de nivel superior cuando se necesitan.
  */
 public class MainController {
-
-    // -------------------------------------------------------
-    // Constantes de navegación (nombres de paneles en CardLayout)
-    // -------------------------------------------------------
-    public static final String PANEL_LOGIN              = "LOGIN";
-    public static final String PANEL_MENU_PRINCIPAL     = "MENU_PRINCIPAL";
-    public static final String PANEL_MIS_INTERCAMBIOS   = "MIS_INTERCAMBIOS";
-    public static final String PANEL_DETALLE_INTERCAMBIO = "DETALLE_INTERCAMBIO";
-    // Paneles añadidos para navegación desde el menú principal
-    public static final String PANEL_DESCUENTOS         = "DESCUENTOS";
-    public static final String PANEL_PRODUCTOS_FILTRADOS= "PRODUCTOS_FILTRADOS";
-    public static final String PANEL_CARRITO            = "CARRITO";
-    public static final String PANEL_CONFIGURACION      = "CONFIGURACION";
-    public static final String PANEL_PERFIL             = "PERFIL";
-    public static final String PANEL_NOTIFICACIONES     = "NOTIFICACIONES";
-    public static final String PANEL_MY_SECOND_HAND_PRODUCTS = "MY_SECOND_HAND_PRODUCTS";
-    // Añade aquí más paneles según los necesites
-
     // -------------------------------------------------------
     // Referencias
     // -------------------------------------------------------
@@ -62,6 +44,51 @@ public class MainController {
         this.modelo    = Aplicacion.getInstancia();
     }
 
+    public void iniciar() {
+        registrarListeners();
+        
+        // Mostrar panel inicial
+        navegarA(MainFrame.PANEL_MENU_PRINCIPAL);
+        
+        // Hacer visible la ventana
+        mainFrame.setVisible(true);
+    }
+    
+    private void registrarListeners() {
+        // --- Conectar Menu Empleado ---
+        mainFrame.getMenuEmpleadoPanel().addHomeListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+        mainFrame.getMenuEmpleadoPanel().addDescuentosListener(e -> navegarA(MainFrame.PANEL_DESCUENTOS));
+        mainFrame.getMenuEmpleadoPanel().addOutstandingListener(e -> navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS));
+        
+        // Búsqueda
+        mainFrame.getMenuEmpleadoPanel().addSearchListener(e -> {
+            String prompt = e.getActionCommand();
+            mostrarProductosFiltrados(prompt);
+        });
+
+        // Botón Intercambios
+        mainFrame.getMenuEmpleadoPanel().addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
+        
+        // Botón Perfil y Notificaciones
+        mainFrame.getMenuEmpleadoPanel().addPerfilListener(e -> navegarBotonPerfil());
+        mainFrame.getMenuEmpleadoPanel().addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
+        mainFrame.getMenuEmpleadoPanel().addFiltrosListener(e -> abrirVentanaFiltros());
+        mainFrame.getMenuEmpleadoPanel().addBuyNowListener(e -> navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS));
+
+        mainFrame.getMenuEmpleadoPanel().addCategoryListener(e -> {
+            String categoria = e.getActionCommand();
+            mostrarProductosPorCategoria(categoria);
+        });
+
+        // --- Conectar Volver de otros paneles ---
+        mainFrame.getMySecondHandProductsPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+        mainFrame.getDescuentosPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+        mainFrame.getProductosFiltradosPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+        mainFrame.getConfiguracionPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+        mainFrame.getPerfilPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+        mainFrame.getNotificacionesPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+    }
+    
     // -------------------------------------------------------
     // Navegación de Paneles (CardLayout)
     // -------------------------------------------------------
@@ -155,7 +182,7 @@ public class MainController {
         // Creamos un controlador específico para manejar acciones dentro del panel
         ControladorProductosFiltrados controlador = new ControladorProductosFiltrados(panel, this.dialogFiltros);
         controlador.buscarYActualizar(prompt);
-        mainFrame.mostrarPanel(PANEL_PRODUCTOS_FILTRADOS);
+        mainFrame.mostrarPanel(mainFrame.PANEL_PRODUCTOS_FILTRADOS);
     }
 
     /**
