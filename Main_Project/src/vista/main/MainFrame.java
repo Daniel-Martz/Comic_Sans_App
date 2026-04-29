@@ -42,7 +42,7 @@ public class MainFrame extends JFrame {
     private MainController mainController;
     
     private ControladorCarrito controladorCarrito;
-    private vista.userPanels.ProductosFiltradosPanel productosFiltradosPanel;
+    private ProductosFiltradosPanel productosFiltradosPanel;
 
     // -------------------------------------------------------
     // Constructor
@@ -62,6 +62,8 @@ public class MainFrame extends JFrame {
 
         CarritoPanel carritoPanel = new CarritoPanel();
         controladorCarrito = new ControladorCarrito(carritoPanel, this);
+        
+        new ControladorMySecondHandProducts(mySecondHandProductsPanel, this);
         
         // Paneles placeholder para zonas no implementadas aún
         PlaceholderPanel descuentosPanel = new vista.userPanels.PlaceholderPanel("Descuentos");
@@ -83,9 +85,6 @@ public class MainFrame extends JFrame {
         
         // 4. Crear el controlador principal y pasarle this
         mainController = new MainController(this);
-
-        // Crear el controlador específico para el panel de productos de segunda mano
-        new ControladorMySecondHandProducts(mySecondHandProductsPanel, this);
 
         // Registrar listeners del panel principal para navegar entre vistas
         menuEmpleadoPanel.addHomeListener(e -> mainController.navegarA(MainController.PANEL_MENU_PRINCIPAL));

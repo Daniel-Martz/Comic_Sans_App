@@ -61,6 +61,8 @@ public class MySecondHandProductsPanel extends JPanel {
 
     // ── Listeners registrados por el controlador ────────────────────────────
     private ActionListener addProductListener;
+    // Listener para botones PAY_VALIDATION; el controlador lo registrará aquí
+    private ActionListener payValidationListener;
 
     // =====================================================================
     //  Constructor
@@ -186,42 +188,39 @@ public class MySecondHandProductsPanel extends JPanel {
      * También puede llamarse cuando cambia el estado de un producto.
      */
     public void cargarProductos() {
+        // NOTE: Este método quedará obsoleto en favor de la responsabilidad del controlador.
+        // Mantenerlo por compatibilidad llamando a los nuevos helpers.
         readyContainer.removeAll();
         validationContainer.removeAll();
+        readyContainer.revalidate();
+        validationContainer.revalidate();
+    }
 
-        Aplicacion app = Aplicacion.getInstancia();
-        if (!(app.getUsuarioActual() instanceof ClienteRegistrado)) {
-            readyContainer.revalidate();
-            validationContainer.revalidate();
-            return;
-        }
+    // ------------------------------------------------------------------
+    // API que el controlador usará para poblar la vista (sin lógica de negocio)
+    // ------------------------------------------------------------------
+    public void clearProducts() {
+        readyContainer.removeAll();
+        validationContainer.removeAll();
+    }
 
-        ClienteRegistrado cliente = (ClienteRegistrado) app.getUsuarioActual();
+    public void addReadyProduct(ProductoSegundaMano producto) {
+        readyContainer.add(buildReadyCard(producto));
+        readyContainer.add(Box.createVerticalStrut(10));
+    }
 
-        for (ProductoSegundaMano p : cliente.getCartera().getProductos()) {
-            boolean validado    = p.isValidado();
-            boolean pagado      = p.getSolicitudValidacion().getPagoValidacion() != null;
-            boolean bloqueado   = p.estaBloqueado();
+    public void addValidationProduct(ProductoSegundaMano producto, boolean pagado) {
+        validationContainer.add(buildValidationCard(producto, pagado));
+        validationContainer.add(Box.createVerticalStrut(10));
+    }
 
-            if (validado && !bloqueado) {
-                // Columna izquierda: listo para intercambiar
-                readyContainer.add(buildReadyCard(p));
-                readyContainer.add(Box.createVerticalStrut(10));
-            } else {
-                // Columna derecha: pendiente de validación / pago
-                validationContainer.add(buildValidationCard(p, pagado));
-                validationContainer.add(Box.createVerticalStrut(10));
-            }
-        }
-
-        // Si no hay productos en alguna columna mostramos un placeholder
+    public void ensurePlaceholdersIfEmpty() {
         if (readyContainer.getComponentCount() == 0) {
             readyContainer.add(buildEmptyPlaceholder("No products ready for interchange"));
         }
         if (validationContainer.getComponentCount() == 0) {
             validationContainer.add(buildEmptyPlaceholder("No products awaiting validation"));
         }
-
         readyContainer.revalidate();
         readyContainer.repaint();
         validationContainer.revalidate();
@@ -319,6 +318,10 @@ public class MySecondHandProductsPanel extends JPanel {
             @Override public void mouseEntered(MouseEvent e) { btn.setBackground(BTN_PAY_BG.darker()); }
             @Override public void mouseExited(MouseEvent e)  { btn.setBackground(BTN_PAY_BG); }
         });
+        // Si el controlador ya registró un listener global, lo añadimos aquí
+        if (this.payValidationListener != null) {
+            btn.addActionListener(this.payValidationListener);
+        }
         return btn;
     }
 
@@ -402,8 +405,9 @@ public class MySecondHandProductsPanel extends JPanel {
      * futuras también reciban el listener, o vuelve a llamarlo tras recargar.
      */
     public void addPayValidationListener(ActionListener l) {
-        // Buscamos todos los JButton dentro de validationContainer
-        attachListenerToButtons(validationContainer, l, "PAY_VALIDATION");
+        // Guardamos el listener para que los botones creados posteriormente lo reciban.
+        // El controlador debe llamar a este método ANTES de poblar la vista.
+        this.payValidationListener = l;
     }
 
     private void attachListenerToButtons(Container parent, ActionListener l, String commandPrefix) {

@@ -34,11 +34,12 @@ public class ControladorMySecondHandProducts implements ActionListener {
 
         // Registrar listeners
         this.vista.addAddProductListener(e -> onAddNewProduct());
-        // Pay buttons use action commands of the form "PAY_VALIDATION:<id>"
+        // Registramos este controlador como listener global para los botones PAY_VALIDATION
+        // (la vista guardará el listener y lo añadirá a los botones cuando los cree)
         this.vista.addPayValidationListener(this);
 
-        // Cargar inicialmente los productos
-        this.vista.cargarProductos();
+        // Cargar inicialmente los productos desde el modelo y poblar la vista
+        cargarProductosDesdeModelo();
     }
 
     @Override
@@ -79,9 +80,9 @@ public class ControladorMySecondHandProducts implements ActionListener {
         
         // 3. Mostrar la ventana (es modal, el código se detiene aquí hasta que se cierre)
         ventanaNuevo.mostrar();
-        
+
         // 4. Cuando la ventana se cierra, recargamos la vista para reflejar el nuevo producto
-        vista.cargarProductos();
+        cargarProductosDesdeModelo();
     }
 
     /** Abre la ventana de pago para la solicitud asociada al producto indicado por id. */
@@ -114,6 +115,36 @@ public class ControladorMySecondHandProducts implements ActionListener {
 
         // ventanaPago es modal; tras cerrarla recargamos la vista para reflejar cambios
         ventanaPago.setVisible(true);
-        vista.cargarProductos();
+        cargarProductosDesdeModelo();
+    }
+
+    /** Carga los productos del usuario actual desde el modelo y los añade a la vista.
+     *  Toda la lógica de negocio queda en el controlador; la vista solo expone
+     *  métodos para añadir tarjetas y mostrar placeholders. */
+    private void cargarProductosDesdeModelo() {
+        vista.clearProducts();
+
+        Aplicacion app = Aplicacion.getInstancia();
+        if (!(app.getUsuarioActual() instanceof ClienteRegistrado)) {
+            // Usuario no registrado: dejamos que la vista muestre los placeholders vacíos
+            vista.ensurePlaceholdersIfEmpty();
+            return;
+        }
+
+        ClienteRegistrado cliente = (ClienteRegistrado) app.getUsuarioActual();
+
+        for (ProductoSegundaMano p : cliente.getCartera().getProductos()) {
+            boolean validado  = p.isValidado();
+            boolean pagado    = p.getSolicitudValidacion() != null && p.getSolicitudValidacion().getPagoValidacion() != null;
+            boolean bloqueado = p.estaBloqueado();
+
+            if (validado && !bloqueado) {
+                vista.addReadyProduct(p);
+            } else {
+                vista.addValidationProduct(p, pagado);
+            }
+        }
+
+        vista.ensurePlaceholdersIfEmpty();
     }
 }
