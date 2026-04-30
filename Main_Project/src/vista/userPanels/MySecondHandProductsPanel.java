@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.List;
+import java.io.File;
 
 /**
  * Panel que muestra los productos de segunda mano del cliente.
@@ -52,12 +53,12 @@ public class MySecondHandProductsPanel extends JPanel {
     private static final Font BTN_PAY_FONT = new Font("Comic Sans MS", Font.BOLD, 11);
 
     // ── Contenedores de tarjetas ────────────────────────────────────────────
+    private HeaderPanel headerPanel;
     private JPanel readyContainer;        // columna izquierda
     private JPanel validationContainer;   // columna derecha
 
     // ── Botón de añadir ─────────────────────────────────────────────────────
     private JButton btnAddProduct;
-    private JButton btnVolver;
 
     // ── Listeners registrados por el controlador ────────────────────────────
     private ActionListener addProductListener;
@@ -97,19 +98,17 @@ public class MySecondHandProductsPanel extends JPanel {
                 btnAddProduct.setBackground(BTN_ADD_BG);
             }
         });
-
-        btnVolver = new JButton("VOLVER");
-        btnVolver.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-        btnVolver.setBackground(new Color(110, 130, 160));
-        btnVolver.setForeground(Color.WHITE);
-        btnVolver.setFocusPainted(false);
-        btnVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnVolver.setPreferredSize(new Dimension(160, 44));
     }
 
     private void initLayout() {
         setBackground(BG_COLOR);
         setLayout(new BorderLayout(0, 0));
+        
+        // ── Cabecera Global ────────────────────────────────────────────────
+        headerPanel = new HeaderPanel();
+        JPanel topWrapper = new JPanel(new BorderLayout());
+        topWrapper.setBackground(BG_COLOR);
+        topWrapper.add(headerPanel, BorderLayout.NORTH);
 
         // ── Banner ─────────────────────────────────────────────────────────
         JLabel banner = new JLabel("MY SECOND-HAND PRODUCTS", SwingConstants.CENTER);
@@ -118,7 +117,9 @@ public class MySecondHandProductsPanel extends JPanel {
         banner.setOpaque(true);
         banner.setBackground(BANNER_COLOR);
         banner.setBorder(new EmptyBorder(14, 0, 14, 0));
-        add(banner, BorderLayout.NORTH);
+        topWrapper.add(banner, BorderLayout.SOUTH);
+        
+        add(topWrapper, BorderLayout.NORTH);
 
         // ── Cuerpo: dos columnas ───────────────────────────────────────────
         JPanel body = new JPanel(new GridLayout(1, 2, 12, 0));
@@ -134,7 +135,6 @@ public class MySecondHandProductsPanel extends JPanel {
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         bottom.setBackground(BG_COLOR);
         bottom.setBorder(new EmptyBorder(6, 0, 12, 0));
-        bottom.add(btnVolver);
         bottom.add(btnAddProduct);
         add(bottom, BorderLayout.SOUTH);
     }
@@ -231,8 +231,8 @@ public class MySecondHandProductsPanel extends JPanel {
     private JPanel buildReadyCard(ProductoSegundaMano producto) {
         JPanel card = createCardPanel();
 
-        // Imagen placeholder
-        card.add(createImagePlaceholder(), BorderLayout.WEST);
+        // Imagen del producto (o placeholder si no tiene)
+        card.add(createImagePanel(producto.getFoto()), BorderLayout.WEST);
 
         // Info
         JPanel info = new JPanel(new GridLayout(0, 1, 2, 2));
@@ -258,8 +258,8 @@ public class MySecondHandProductsPanel extends JPanel {
     private JPanel buildValidationCard(ProductoSegundaMano producto, boolean pagado) {
         JPanel card = createCardPanel();
 
-        // Imagen placeholder
-        card.add(createImagePlaceholder(), BorderLayout.WEST);
+        // Imagen del producto (o placeholder si no tiene)
+        card.add(createImagePanel(producto.getFoto()), BorderLayout.WEST);
 
         // Info + botón
         JPanel rightSide = new JPanel(new BorderLayout(0, 6));
@@ -338,7 +338,23 @@ public class MySecondHandProductsPanel extends JPanel {
         return card;
     }
 
-    private JPanel createImagePlaceholder() {
+    private JPanel createImagePanel(File imageFile) {
+        if (imageFile != null && imageFile.exists()) {
+            JPanel imgPanel = new JPanel(new BorderLayout());
+            imgPanel.setBackground(new Color(200, 215, 230));
+            imgPanel.setPreferredSize(new Dimension(150, 140));
+            imgPanel.setMinimumSize(new Dimension(150, 140));
+            imgPanel.setMaximumSize(new Dimension(150, 140));
+
+            JLabel lblFoto = new JLabel("", SwingConstants.CENTER);
+            ImageIcon icon = new ImageIcon(imageFile.getAbsolutePath());
+            Image img = icon.getImage().getScaledInstance(150, 140, Image.SCALE_SMOOTH);
+            lblFoto.setIcon(new ImageIcon(img));
+            imgPanel.add(lblFoto, BorderLayout.CENTER);
+            return imgPanel;
+        }
+
+        // Si no hay archivo, mostramos el placeholder original
         JPanel img = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -393,11 +409,6 @@ public class MySecondHandProductsPanel extends JPanel {
         btnAddProduct.setActionCommand("ADD_NEW_PRODUCT");
     }
 
-    /** Registra un listener para el botón "VOLVER". */
-    public void addVolverListener(ActionListener l) {
-        btnVolver.addActionListener(l);
-    }
-
     /**
      * Registra un listener global para todos los botones "PAY VALIDATION".
      * El action command tiene el formato "PAY_VALIDATION:<idProducto>".
@@ -427,6 +438,7 @@ public class MySecondHandProductsPanel extends JPanel {
     // =====================================================================
     //  Acceso a subpaneles (por si el controlador necesita referencias)
     // =====================================================================
+    public HeaderPanel getHeaderPanel()    { return headerPanel; }
     public JPanel getReadyContainer()      { return readyContainer; }
     public JPanel getValidationContainer() { return validationContainer; }
     public JButton getBtnAddProduct()      { return btnAddProduct; }
@@ -464,7 +476,7 @@ public class MySecondHandProductsPanel extends JPanel {
     // Helpers solo para el main de demo
     private JPanel buildDemoReadyCard(String name, String condition, String desc, String value) {
         JPanel card = createCardPanel();
-        card.add(createImagePlaceholder(), BorderLayout.WEST);
+        card.add(createImagePanel(null), BorderLayout.WEST);
         JPanel info = new JPanel(new GridLayout(0, 1, 2, 2));
         info.setOpaque(false);
         info.setBorder(new EmptyBorder(6, 10, 6, 6));
@@ -478,7 +490,7 @@ public class MySecondHandProductsPanel extends JPanel {
 
     private JPanel buildDemoValidationCard(String name, String desc, String state, boolean paid) {
         JPanel card = createCardPanel();
-        card.add(createImagePlaceholder(), BorderLayout.WEST);
+        card.add(createImagePanel(null), BorderLayout.WEST);
         JPanel right = new JPanel(new BorderLayout(0, 6));
         right.setOpaque(false);
         right.setBorder(new EmptyBorder(6, 10, 6, 6));

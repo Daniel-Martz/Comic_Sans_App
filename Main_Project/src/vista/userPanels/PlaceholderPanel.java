@@ -13,35 +13,25 @@ public class PlaceholderPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private JLabel lblTitle;
-    private JButton btnVolver;
+    private HeaderPanel headerPanel;
 
     public PlaceholderPanel(String title) {
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        topBar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        topBar.setAlignmentX(Component.LEFT_ALIGNMENT);
+        headerPanel = new HeaderPanel();
+        add(headerPanel, BorderLayout.NORTH);
         
-        btnVolver = new JButton("Volver");
-        btnVolver.setFont(new Font("SansSerif", Font.BOLD, 13));
-        btnVolver.setBackground(new Color(74, 118, 201));
-        btnVolver.setForeground(Color.WHITE);
-        btnVolver.setFocusPainted(false);
-        btnVolver.setBorderPainted(false);
-        btnVolver.setOpaque(true);
-        btnVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnVolver.setPreferredSize(new Dimension(130, 32));
+        JPanel contentWrapper = new JPanel(new BorderLayout());
+        contentWrapper.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
-        topBar.add(btnVolver);
-        add(topBar, BorderLayout.NORTH);
-
         lblTitle = new JLabel(title);
         lblTitle.setFont(new Font("SansSerif", Font.BOLD, 24));
-        add(lblTitle, BorderLayout.CENTER);
+        contentWrapper.add(lblTitle, BorderLayout.CENTER);
+        
+        add(contentWrapper, BorderLayout.CENTER);
     }
 
-    public void addVolverListener(ActionListener l) {
-        btnVolver.addActionListener(l);
+    public HeaderPanel getHeaderPanel() {
+        return headerPanel;
     }
 }

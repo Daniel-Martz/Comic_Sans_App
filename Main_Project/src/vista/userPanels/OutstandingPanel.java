@@ -18,45 +18,30 @@ public class OutstandingPanel extends JPanel {
 
     private final Color COLOR_FONDO = new Color(153, 180, 209);
 
+    private HeaderPanel headerPanel;
     private JPanel panelScrollProductos;
-    private JButton btnVolver;
 
     public OutstandingPanel() {
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
-        setBorder(new EmptyBorder(20,20,20,20));
 
-        JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        top.setBackground(COLOR_FONDO);
-        top.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        top.setAlignmentX(Component.LEFT_ALIGNMENT);
+        headerPanel = new HeaderPanel();
+        add(headerPanel, BorderLayout.NORTH);
         
-        btnVolver = new JButton("Back to Menu");
-        btnVolver.setFont(new Font("SansSerif", Font.BOLD, 13));
-        btnVolver.setBackground(new Color(74, 118, 201));
-        btnVolver.setForeground(Color.WHITE);
-        btnVolver.setFocusPainted(false);
-        btnVolver.setBorderPainted(false);
-        btnVolver.setOpaque(true);
-        btnVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnVolver.setPreferredSize(new Dimension(130, 32));
-        
-        top.add(btnVolver);
+        JPanel contentWrapper = new JPanel(new BorderLayout());
+        contentWrapper.setBackground(COLOR_FONDO);
+        contentWrapper.setBorder(new EmptyBorder(0, 20, 20, 20));
 
         // Titulo
-        JLabel lblTitulo = new JLabel("OUTSTANDING PRODUCTS ⭐", SwingConstants.CENTER);
+        JLabel lblTitulo = new JLabel("PRODUCTOS DESTACADOS ⭐", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
         lblTitulo.setForeground(Color.DARK_GRAY);
         lblTitulo.setBorder(new EmptyBorder(10, 0, 20, 0));
-        
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(COLOR_FONDO);
-        headerPanel.add(top, BorderLayout.WEST);
-        headerPanel.add(lblTitulo, BorderLayout.CENTER);
-        add(headerPanel, BorderLayout.NORTH);
+        contentWrapper.add(lblTitulo, BorderLayout.NORTH);
 
         panelScrollProductos = new JPanel(new GridLayout(0, 4, 15, 15));
         panelScrollProductos.setBackground(COLOR_FONDO);
+        panelScrollProductos.setBorder(new EmptyBorder(20, 0, 20, 0));
 
         JPanel contenedorGrid = new JPanel(new BorderLayout());
         contenedorGrid.setBackground(COLOR_FONDO);
@@ -66,7 +51,8 @@ public class OutstandingPanel extends JPanel {
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.getViewport().setBackground(COLOR_FONDO);
-        add(scroll, BorderLayout.CENTER);
+        contentWrapper.add(scroll, BorderLayout.CENTER);
+        add(contentWrapper, BorderLayout.CENTER);
     }
 
     public void actualizarProductos(List<LineaProductoVenta> productos, ActionListener controlador) {
@@ -146,9 +132,7 @@ public class OutstandingPanel extends JPanel {
         return tarjeta;
     }
 
-    public void addVolverListener(ActionListener l) {
-        btnVolver.addActionListener(l);
-    }
+    public HeaderPanel getHeaderPanel() { return headerPanel; }
 
     public void mostrarMensaje(String msg, String titulo) {
         JOptionPane.showMessageDialog(this, msg, titulo, JOptionPane.INFORMATION_MESSAGE);

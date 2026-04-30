@@ -1,7 +1,6 @@
 package controladores;
 
 import modelo.aplicacion.Aplicacion;
-import vista.main.*;
 import modelo.producto.LineaProductoVenta;
 import modelo.usuario.ClienteRegistrado;
 import modelo.solicitud.SolicitudPedido;
@@ -33,12 +32,6 @@ public class ControladorCarrito implements ActionListener {
 
         if ("PAY_NOW".equals(comando)) {
             gestionarPago();
-            return;
-        }
-
-        // ── Botón Volver ─────────────────────────────────────────────────
-        if ("VOLVER".equals(comando)) {
-            mainFrame.mostrarPanel(MainFrame.PANEL_MENU_PRINCIPAL);
             return;
         }
 

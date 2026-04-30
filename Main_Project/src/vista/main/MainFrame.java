@@ -19,6 +19,7 @@ public class MainFrame extends JFrame {
     private CarritoPanel carritoPanel;
     private ProductosFiltradosPanel productosFiltradosPanel;
     private OutstandingPanel outstandingPanel;
+    private SearchInterchangesPanel searchInterchangesPanel;
     
     
     private PlaceholderPanel descuentosPanel;
@@ -39,6 +40,7 @@ public class MainFrame extends JFrame {
     public static final String PANEL_PERFIL = "Perfil";
     public static final String PANEL_NOTIFICACIONES = "Notificaciones";
     public static final String PANEL_OUTSTANDING = "Outstanding";
+    public static final String PANEL_SEARCH_INTERCHANGES = "SearchInterchanges";
 
     public MainFrame() {
         super("Comic Sans App");
@@ -55,6 +57,7 @@ public class MainFrame extends JFrame {
         carritoPanel = new CarritoPanel();
         productosFiltradosPanel = new ProductosFiltradosPanel();
         outstandingPanel = new OutstandingPanel();
+        searchInterchangesPanel = new SearchInterchangesPanel();
         
         descuentosPanel = new PlaceholderPanel("Descuentos");
         configuracionPanel = new PlaceholderPanel("Configuración");
@@ -73,6 +76,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(perfilPanel, PANEL_PERFIL);
         contenedorPaneles.add(notificacionesPanel, PANEL_NOTIFICACIONES);
         contenedorPaneles.add(outstandingPanel, PANEL_OUTSTANDING);
+        contenedorPaneles.add(searchInterchangesPanel, PANEL_SEARCH_INTERCHANGES);
 
         // 4. Configurar la ventana
         setContentPane(contenedorPaneles);
@@ -98,6 +102,7 @@ public class MainFrame extends JFrame {
     public MySecondHandProductsPanel getMySecondHandProductsPanel() { return mySecondHandProductsPanel; }
     public ProductosFiltradosPanel getProductosFiltradosPanel() { return productosFiltradosPanel; }
     public OutstandingPanel getOutstandingPanel() {return outstandingPanel;}
+    public SearchInterchangesPanel getSearchInterchangesPanel() { return searchInterchangesPanel; }
     
     public PlaceholderPanel getDescuentosPanel() { return descuentosPanel; }
     public PlaceholderPanel getConfiguracionPanel() { return configuracionPanel; }

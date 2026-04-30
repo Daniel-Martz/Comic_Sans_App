@@ -19,11 +19,11 @@ public class CarritoPanel extends JPanel {
 
     private final Color COLOR_FONDO = new Color(153, 180, 209);
 
+    private HeaderPanel headerPanel;
     private JPanel panelScrollCarrito;
     private JPanel panelScrollRecomendaciones;
     private JLabel labelTotal;
     private JButton botonPagar;
-    private JButton botonVolver;   
 
     public CarritoPanel() {
         setLayout(new BorderLayout());
@@ -32,30 +32,13 @@ public class CarritoPanel extends JPanel {
     }
 
     private void inicializarComponentes() {
+        headerPanel = new HeaderPanel();
+        add(headerPanel, BorderLayout.NORTH);
+        
         JPanel contenedorPrincipal = new JPanel();
         contenedorPrincipal.setLayout(new BoxLayout(contenedorPrincipal, BoxLayout.Y_AXIS));
         contenedorPrincipal.setBackground(COLOR_FONDO);
         contenedorPrincipal.setBorder(new EmptyBorder(20, 20, 20, 20));
-
-        // ── Barra superior con botón Volver ──────────────────────────────
-        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        topBar.setBackground(COLOR_FONDO);
-        topBar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        topBar.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        botonVolver = new JButton("Volver");
-        botonVolver.setFont(new Font("SansSerif", Font.BOLD, 13));
-        botonVolver.setBackground(new Color(74, 118, 201));
-        botonVolver.setForeground(Color.WHITE);
-        botonVolver.setFocusPainted(false);
-        botonVolver.setBorderPainted(false);
-        botonVolver.setOpaque(true);
-        botonVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        botonVolver.setPreferredSize(new Dimension(130, 32));
-        botonVolver.setActionCommand("VOLVER");
-        topBar.add(botonVolver);
-        contenedorPrincipal.add(topBar);
-        contenedorPrincipal.add(Box.createVerticalStrut(8));
 
         // ── 1. Banner "MY SHOPPING CART" ─────────────────────────────────
         JLabel tituloCarrito = new JLabel("  MY SHOPPING CART");
@@ -132,15 +115,13 @@ public class CarritoPanel extends JPanel {
     }
 
     // ── Métodos MVC ────────────────────────────────────────────────────────
+    public HeaderPanel getHeaderPanel() { return headerPanel; }
 
     /** Registra el controlador principal en los botones PAY NOW y VOLVER. */
     public void setControladorPrincipal(ActionListener c) {
         for (ActionListener al : botonPagar.getActionListeners())  botonPagar.removeActionListener(al);
-        for (ActionListener al : botonVolver.getActionListeners()) botonVolver.removeActionListener(al);
         botonPagar.addActionListener(c);
         botonPagar.setActionCommand("PAY_NOW");
-        botonVolver.addActionListener(c);
-        // ActionCommand "VOLVER" ya está fijado en initComponents
     }
 
     /** Actualiza el contenido del carrito. */

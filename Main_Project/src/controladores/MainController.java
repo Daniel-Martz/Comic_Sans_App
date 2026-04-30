@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 
 import java.util.List;
 import vista.userPanels.ProductosFiltradosPanel;
+import vista.userPanels.SearchInterchangesPanel;
+import vista.userPanels.HeaderPanel;
 import controlador.CreateAccountController;
 
 
@@ -35,6 +37,7 @@ public class MainController {
     private vista.userWindows.LoginDialog loginDialog;
     private vista.userWindows.FiltrosDialog dialogFiltros;
     private ControladorFiltros controladorFiltros;
+    private ControladorSearchInterchanges controladorSearchInterchanges;
 
     // -------------------------------------------------------
     // Constructor
@@ -55,39 +58,50 @@ public class MainController {
     }
     
     private void registrarListeners() {
-        // --- Conectar Menu Empleado ---
-        mainFrame.getMenuPrincipalPanel().addHomeListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
-        mainFrame.getMenuPrincipalPanel().addDescuentosListener(e -> navegarA(MainFrame.PANEL_DESCUENTOS));
-        mainFrame.getMenuPrincipalPanel().addOutstandingListener(e -> mostrarProductosOutstanding());
+        // --- Conectar Cabeceras de Navegación Global ---
+        conectarHeaderNormal(mainFrame.getMenuPrincipalPanel().getHeaderPanel());
+        conectarHeaderNormal(mainFrame.getMySecondHandProductsPanel().getHeaderPanel());
+        conectarHeaderNormal(mainFrame.getCarritoPanel().getHeaderPanel());
+        conectarHeaderNormal(mainFrame.getOutstandingPanel().getHeaderPanel());
+        conectarHeaderNormal(mainFrame.getProductosFiltradosPanel().getHeaderPanel());
+        conectarHeaderNormal(mainFrame.getDescuentosPanel().getHeaderPanel());
+        conectarHeaderNormal(mainFrame.getConfiguracionPanel().getHeaderPanel());
+        conectarHeaderNormal(mainFrame.getPerfilPanel().getHeaderPanel());
+        conectarHeaderNormal(mainFrame.getNotificacionesPanel().getHeaderPanel());
         
-        // Búsqueda
-        mainFrame.getMenuPrincipalPanel().addSearchListener(e -> {
-            String prompt = e.getActionCommand();
-            mostrarProductosFiltrados(prompt);
-        });
-
-        // Botón Intercambios
-        mainFrame.getMenuPrincipalPanel().addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
+        // La de búsqueda de intercambios lleva una búsqueda especial propia, así que la normal no
+        conectarHeaderGlobal(mainFrame.getSearchInterchangesPanel().getHeaderPanel());
         
-        // Botón Perfil y Notificaciones
-        mainFrame.getMenuPrincipalPanel().addPerfilListener(e -> navegarBotonPerfil());
-        mainFrame.getMenuPrincipalPanel().addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
-        mainFrame.getMenuPrincipalPanel().addFiltrosListener(e -> abrirVentanaFiltros());
         mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS));
 
         mainFrame.getMenuPrincipalPanel().addCategoryListener(e -> {
             String categoria = e.getActionCommand();
             mostrarProductosPorCategoria(categoria);
         });
+    }
 
-        // --- Conectar Volver de otros paneles ---
-        mainFrame.getOutstandingPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
-        mainFrame.getMySecondHandProductsPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
-        mainFrame.getDescuentosPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
-        mainFrame.getProductosFiltradosPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
-        mainFrame.getConfiguracionPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
-        mainFrame.getPerfilPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
-        mainFrame.getNotificacionesPanel().addVolverListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+    /**
+     * Asigna la lógica global junto con el buscador y filtros del catálogo.
+     */
+    private void conectarHeaderNormal(HeaderPanel header) {
+        conectarHeaderGlobal(header);
+        header.addSearchListener(e -> {
+            String prompt = e.getActionCommand();
+            mostrarProductosFiltrados(prompt);
+        });
+        header.addFiltrosListener(e -> abrirVentanaFiltros());
+    }
+
+    /**
+     * Asigna la lógica de navegación a todas las opciones de una cabecera global.
+     */
+    private void conectarHeaderGlobal(HeaderPanel header) {
+        header.addHomeListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+        header.addDescuentosListener(e -> navegarA(MainFrame.PANEL_DESCUENTOS));
+        header.addOutstandingListener(e -> mostrarProductosOutstanding());
+        header.addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
+        header.addPerfilListener(e -> navegarBotonPerfil());
+        header.addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
     }
     
     // -------------------------------------------------------
@@ -229,6 +243,10 @@ public class MainController {
 	        	v.cerrar();
 	        	mostrarMisProductosSegundaMano();
 	        }
+	        if(command.equals("SEARCH_INTERCHANGES")) {
+	            v.cerrar();
+	            mostrarBuscarIntercambios();
+	        }
 	    });
 	    v.setVisible(true);
 	}
@@ -245,11 +263,40 @@ public class MainController {
     }
 
     /**
+     * Asigna el listener del botón del carrito de compra a todas las cabeceras.
+     */
+    public void registrarListenerCarritoGlobal(ControladorCarrito ctrlCarrito) {
+        mainFrame.getMenuPrincipalPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getSearchInterchangesPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getMySecondHandProductsPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getCarritoPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getOutstandingPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getProductosFiltradosPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getDescuentosPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getConfiguracionPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getPerfilPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getNotificacionesPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+    }
+
+    /**
      * Navega al panel que muestra los productos de segunda mano del usuario.
      */
 	public void mostrarMisProductosSegundaMano() {
 		navegarA(MainFrame.PANEL_MY_SECOND_HAND_PRODUCTS);
 	}
+    
+    /**
+     * Navega al panel para buscar nuevos intercambios e instancia su controlador.
+     */
+    public void mostrarBuscarIntercambios() {
+        if (this.controladorSearchInterchanges == null) {
+            SearchInterchangesPanel panel = mainFrame.getSearchInterchangesPanel();
+            this.controladorSearchInterchanges = new ControladorSearchInterchanges(panel, this);
+        } else {
+            this.controladorSearchInterchanges.recargar();
+        }
+        navegarA(MainFrame.PANEL_SEARCH_INTERCHANGES);
+    }
     
     public void abrirVentanaCrearUsuario(){
     	this.crearUsuarioDialog = new CrearUsuarioDialog(mainFrame, this);

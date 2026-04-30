@@ -415,7 +415,6 @@ import modelo.tiempo.*;
                     new HashSet<>(Arrays.asList(pDoyYo)),
                     new HashSet<>(Arrays.asList(pPidoCharlie))));
         }
-        app.setUsuarioActual(null);
     	
         javax.swing.SwingUtilities.invokeLater(() -> {
             
@@ -434,9 +433,8 @@ import modelo.tiempo.*;
             // Instanciamos el controlador de Segunda Mano
             ControladorMySecondHandProducts ctrlSecondHand = new ControladorMySecondHandProducts(vistaPrincipal.getMySecondHandProductsPanel(), vistaPrincipal);
 
-            // Importante: Si el botón de Carrito del Menú lo gestiona MainController, 
-            // podemos registrar el listener aquí (o pasárselo al MainController)
-            vistaPrincipal.getMenuPrincipalPanel().addCarritoListener(e -> mainController.gestionarAccesoCarrito(ctrlCarrito));
+            // Registramos el acceso al carrito para todas las cabeceras de la aplicación
+            mainController.registrarListenerCarritoGlobal(ctrlCarrito);
 
             // 4. Iniciar la aplicación
             mainController.iniciar(); 

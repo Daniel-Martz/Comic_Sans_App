@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.*;
+import modelo.producto.ProductoSegundaMano;
 
 /**
  * Vista que muestra una tarjeta de intercambio entre dos usuarios.
@@ -33,6 +34,8 @@ public class InterchangeCardPanel extends JPanel {
     private PanelDesplegable  panelReceived;
     private ActionButtonPanel actionButtonPanel;
 
+    private ActionListener infoListener;
+
     /**
     /* Constructor principal
     /*
@@ -44,8 +47,8 @@ public class InterchangeCardPanel extends JPanel {
     */
     public InterchangeCardPanel(String headerLabel,
                                  double balance,
-                                 String[][] givenData,
-                                 String[][] receivedData,
+                                 ProductoSegundaMano[] givenData,
+                                 ProductoSegundaMano[] receivedData,
                                  Modo modo) {
         initComponents(headerLabel, balance, givenData, receivedData, modo);
         initLayout();
@@ -56,7 +59,7 @@ public class InterchangeCardPanel extends JPanel {
      * Útil para crear la vista antes de tener el modelo listo.
      */
     public InterchangeCardPanel() {
-        initComponents("", 0.0, new String[0][0], new String[0][0], Modo.INCOME);
+        initComponents("", 0.0, new ProductoSegundaMano[0], new ProductoSegundaMano[0], Modo.INCOME);
         initLayout();
     }
 
@@ -65,8 +68,8 @@ public class InterchangeCardPanel extends JPanel {
     // -------------------------------------------------------
     private void initComponents(String headerLabel,
                                   double balance,
-                                  String[][] givenData,
-                                  String[][] receivedData,
+                                  ProductoSegundaMano[] givenData,
+                                  ProductoSegundaMano[] receivedData,
                                   Modo modo) {
         headerPanel       = new HeaderPanel(headerLabel, balance);
         panelGiven        = new PanelDesplegable("PRODUCTS GIVEN ▼",    givenData);
@@ -111,14 +114,19 @@ public class InterchangeCardPanel extends JPanel {
         actionButtonPanel.addCancelListener(listener);
     }
 
+    /** Registra listener genérico para el botón "+ Info" de los productos. */
+    public void setInfoListener(ActionListener listener) {
+        this.infoListener = listener;
+    }
+
     /**
      * Recarga todos los datos de la card.
      * El controlador llama a este método cuando el modelo cambia.
      */
     public void update(String headerLabel,
                        double balance,
-                       String[][] givenData,
-                       String[][] receivedData,
+                       ProductoSegundaMano[] givenData,
+                       ProductoSegundaMano[] receivedData,
                        Modo modo) {
         removeAll();
         initComponents(headerLabel, balance, givenData, receivedData, modo);
@@ -272,7 +280,7 @@ public class InterchangeCardPanel extends JPanel {
         private JButton                 toggleButton;
         private TablaProductosPanel     contenidoPanel;
 
-        public PanelDesplegable(String titulo, String[][] data) {
+        public PanelDesplegable(String titulo, ProductoSegundaMano[] data) {
             this.titulo = titulo;
 
             toggleButton   = new JButton(titulo);
@@ -311,33 +319,26 @@ public class InterchangeCardPanel extends JPanel {
 
     // -------------------------------------------------------
     // Subpanel: tabla de productos
-    // Columnas: Product | Category | Condition | Price | + Info
-    // data[][]: {nombre, categoría, estado, precio}
-    // -------------------------------------------------------
- // -------------------------------------------------------
-    // Subpanel: tabla de productos
     // Columnas: Product | Condition | Price | + Info
-    // data[][]: {nombre, estado, precio}
     // -------------------------------------------------------
     private class TablaProductosPanel extends JPanel {
         private static final long serialVersionUID = 1L;
 
-        public TablaProductosPanel(String[][] data) {
+        public TablaProductosPanel(ProductoSegundaMano[] data) {
             // 1. Nombres de columnas sin "Category"
             String[] columnNames = {"Product", "Condition", "Price", "+ Info"};
 
             // 2. Reducimos el array a 4 columnas
             Object[][] tableData = new Object[data.length][4];
             for (int i = 0; i < data.length; i++) {
-                tableData[i][0] = data[i].length > 0 ? data[i][0] : "";
+                tableData[i][0] = data[i] != null ? data[i].getNombre() : "";
                 
-                // Mapeamos los datos (asumiendo que el controlador ahora envía arrays de tamaño 3)
-                // Usamos un pequeño control por si pasas 4 datos antiguos por error
-                int indexEstado = data[i].length >= 4 ? 2 : 1;
-                int indexPrecio = data[i].length >= 4 ? 3 : 2;
-                
-                tableData[i][1] = data[i].length > indexEstado ? data[i][indexEstado] : "";
-                tableData[i][2] = data[i].length > indexPrecio ? data[i][indexPrecio] : "";
+                tableData[i][1] = data[i] != null && data[i].getDatosValidacion() != null
+                        ? data[i].getDatosValidacion().getEstadoConservacion().toString()
+                        : "Pendiente";
+                tableData[i][2] = data[i] != null && data[i].getDatosValidacion() != null
+                        ? String.format("%.2f €", data[i].getDatosValidacion().getPrecioEstimadoProducto())
+                        : "N/A";
                 tableData[i][3] = "+"; // El botón
             }
 
@@ -362,12 +363,11 @@ public class InterchangeCardPanel extends JPanel {
                     
                     // 4. Escuchamos el clic en el nuevo índice 3
                     if (row >= 0 && col == 3) {
-                        JOptionPane.showMessageDialog(null,
-                                "Producto: "   + table.getValueAt(row, 0) + "\n" +
-                                "Estado: "     + table.getValueAt(row, 1) + "\n" +
-                                "Precio: "     + table.getValueAt(row, 2),
-                                "Detalles del producto",
-                                JOptionPane.INFORMATION_MESSAGE);
+                        if (InterchangeCardPanel.this.infoListener != null && data[row] != null) {
+                            InterchangeCardPanel.this.infoListener.actionPerformed(
+                                new ActionEvent(table, ActionEvent.ACTION_PERFORMED, "INFO_" + data[row].getID())
+                            );
+                        }
                     }
                 }
             });
@@ -422,14 +422,14 @@ public class InterchangeCardPanel extends JPanel {
 
             InterchangeCardPanel p1 = new InterchangeCardPanel(
                     "FROM: Alice", 12.50,
-                    new String[][] { { "Comic A", "Comics", "New", "12.50" } },
-                    new String[][] { { "Figure X", "Figures", "Good", "7.00" } },
+                    new ProductoSegundaMano[0],
+                    new ProductoSegundaMano[0],
                     Modo.INCOME);
 
             InterchangeCardPanel p2 = new InterchangeCardPanel(
                     "TO: Bob", 0.0,
-                    new String[][] { { "My Game", "Games", "Used", "15.00" } },
-                    new String[][] { { "Their Comic", "Comics", "New", "20.00" } },
+                    new ProductoSegundaMano[0],
+                    new ProductoSegundaMano[0],
                     Modo.SENT);
 
             JPanel container = new JPanel();

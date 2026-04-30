@@ -1,0 +1,190 @@
+package vista.userPanels;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+public class HeaderPanel extends JPanel {
+
+    private static final long serialVersionUID = 1L;
+
+    private JLabel logoLabel;
+    private JButton btnHome;
+    private JButton btnDescuentos;
+    private JButton btnOutstanding;
+    private JTextField txtSearch;
+    private JButton btnFilters;
+    private JButton btnCarrito;
+    private JButton btnIntercambios;
+    private JButton btnPerfil;
+    private JButton btnNotificaciones;
+    private JButton btnSearchIcon;
+
+    public HeaderPanel() {
+        initComponents();
+        initLayout();
+    }
+
+    private void initComponents() {
+        logoLabel = new JLabel();
+        try {
+            File logoFile = new File("src/assets/appicon.png");
+            if(logoFile.exists()) {
+                Image img = javax.imageio.ImageIO.read(logoFile);
+                Image scaledLogo = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+                logoLabel.setIcon(new ImageIcon(scaledLogo));
+            } else {
+                logoLabel.setText("COMIC SANS");
+            }
+        } catch (Exception e) {
+            logoLabel.setText("COMIC SANS");
+            logoLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
+        }
+
+        btnHome = createTopNavButton("HOME 🏠");
+        btnDescuentos = createTopNavButton("DISCOUNTS %");
+        btnOutstanding = createTopNavButton("OUTSTANDING ⭐");
+
+        txtSearch = new JTextField(20);
+        txtSearch.setOpaque(false);
+        txtSearch.setFont(new Font("SansSerif", Font.PLAIN, 14)); 
+        txtSearch.setBorder(null); // Sin borde, el borde lo dibujará el contenedor
+        
+        btnSearchIcon = new JButton();
+        btnSearchIcon.setContentAreaFilled(false);
+        btnSearchIcon.setBorderPainted(false);
+        btnSearchIcon.setFocusPainted(false);
+        btnSearchIcon.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnSearchIcon.setMargin(new Insets(0, 0, 0, 0));
+        try {
+            File lupaFile = new File("src/assets/lupa.png");
+            if(lupaFile.exists()) {
+                Image img = javax.imageio.ImageIO.read(lupaFile);
+                Image scaledLupa = img.getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+                btnSearchIcon.setIcon(new ImageIcon(scaledLupa));
+            } else {
+                btnSearchIcon.setText("🔍");
+            }
+        } catch (Exception e) {
+            btnSearchIcon.setText("🔍");
+        }
+
+        btnFilters = new JButton("⚙ Filtros");
+        btnFilters.setFont(new Font("SansSerif", Font.BOLD, 14)); 
+        btnFilters.setContentAreaFilled(false);
+        btnFilters.setBorderPainted(false);
+        btnFilters.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        btnCarrito = createImageIconButton("src/assets/carrito.png", 35, 35, "CART");
+        btnIntercambios = createImageIconButton("src/assets/intercambio.png", 35, 35, "INT");
+        btnPerfil = createImageIconButton("src/assets/fotoperfil.png", 35, 35, "PERF");
+        btnNotificaciones = createImageIconButton("src/assets/notificaciones.png", 35, 35, "NOTI"); 
+    }
+
+    private void initLayout() {
+        setLayout(new BorderLayout());
+        setOpaque(false);
+        setBorder(new EmptyBorder(10, 15, 10, 15));
+
+        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        leftPanel.setOpaque(false);
+        leftPanel.add(logoLabel);
+        
+        JLabel speechBubble = new JLabel("<html><center>YOUR FAVORITE STORE<br>IS NOW ONLINE!!</center></html>");
+        speechBubble.setBackground(Color.WHITE);
+        speechBubble.setOpaque(true);
+        speechBubble.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(Color.BLACK, 1, false), new EmptyBorder(10, 20, 10, 20)));
+        leftPanel.add(speechBubble);
+
+        JPanel centerNavPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 20));
+        centerNavPanel.setOpaque(false);
+        centerNavPanel.add(btnHome);
+        centerNavPanel.add(btnDescuentos);
+        centerNavPanel.add(btnOutstanding);
+
+        JPanel rightPanel = new JPanel(new BorderLayout(15, 0)); 
+        rightPanel.setOpaque(false);
+
+        // Contenedor con borde redondeado estilo "píldora" (Google)
+        JPanel searchBox = new JPanel(new BorderLayout(8, 0)) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(Color.WHITE);
+                g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getHeight(), getHeight()); // Completamente redondeado
+                super.paintComponent(g);
+                g2.dispose();
+            }
+        };
+        searchBox.setOpaque(false);
+        searchBox.setBorder(new EmptyBorder(6, 12, 6, 12));
+        searchBox.add(btnSearchIcon, BorderLayout.WEST);
+        searchBox.add(txtSearch, BorderLayout.CENTER);
+
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 20));
+        searchPanel.setOpaque(false);
+        searchPanel.add(btnFilters);
+        searchPanel.add(searchBox);
+
+        JPanel iconsTop = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        iconsTop.setOpaque(false);
+        iconsTop.add(btnCarrito);
+        iconsTop.add(btnIntercambios);
+        iconsTop.add(btnPerfil);
+
+        JPanel iconsBottom = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        iconsBottom.setOpaque(false);
+        iconsBottom.add(btnNotificaciones);
+
+        JPanel iconsContainer = new JPanel(new BorderLayout());
+        iconsContainer.setOpaque(false);
+        iconsContainer.add(iconsTop, BorderLayout.NORTH);
+        iconsContainer.add(iconsBottom, BorderLayout.SOUTH);
+
+        rightPanel.add(searchPanel, BorderLayout.CENTER);
+        rightPanel.add(iconsContainer, BorderLayout.EAST);
+
+        add(leftPanel, BorderLayout.WEST);
+        add(centerNavPanel, BorderLayout.CENTER);
+        add(rightPanel, BorderLayout.EAST);
+    }
+
+    private JButton createTopNavButton(String text) {
+        JButton btn = new JButton(text) {
+            @Override protected void paintComponent(Graphics g) { Graphics2D g2 = (Graphics2D) g.create(); g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); g2.setColor(getBackground()); g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20); super.paintComponent(g); g2.dispose(); }
+            @Override protected void paintBorder(Graphics g) { Graphics2D g2 = (Graphics2D) g.create(); g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); g2.setColor(Color.BLACK); g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20); g2.dispose(); }
+        };
+        btn.setContentAreaFilled(false); btn.setBackground(Color.WHITE); btn.setFocusPainted(false); btn.setFont(new Font("SansSerif", Font.BOLD, 14)); btn.setBorder(new EmptyBorder(10, 25, 10, 25)); btn.setCursor(new Cursor(Cursor.HAND_CURSOR)); return btn;
+    }
+
+    private JButton createImageIconButton(String imagePath, int width, int height, String fallbackText) {
+        JButton btn = new JButton(); btn.setContentAreaFilled(false); btn.setBorderPainted(false); btn.setFocusPainted(false); btn.setCursor(new Cursor(Cursor.HAND_CURSOR)); btn.setMargin(new Insets(0, 0, 0, 0)); btn.setPreferredSize(new Dimension(width + 5, height + 5)); 
+        try { File imgFile = new File(imagePath); if (!imgFile.exists()) { setFallback(btn, fallbackText); return btn; } Image img = javax.imageio.ImageIO.read(imgFile); if (img == null) { setFallback(btn, fallbackText); return btn; } Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH); btn.setIcon(new ImageIcon(scaledImg)); } catch (Exception e) { setFallback(btn, fallbackText); } return btn;
+    }
+
+    private void setFallback(JButton btn, String text) {
+        btn.setText(text); btn.setFont(new Font("SansSerif", Font.BOLD, 10)); btn.setForeground(Color.RED);
+    }
+
+    // --- Delegación de Listeners ---
+    public void addHomeListener(ActionListener l) { btnHome.addActionListener(l); }
+    public void addDescuentosListener(ActionListener l) { btnDescuentos.addActionListener(l); }
+    public void addOutstandingListener(ActionListener l) { btnOutstanding.addActionListener(l); }
+    public void addSearchListener(ActionListener l) { 
+        txtSearch.addActionListener(l); 
+        btnSearchIcon.addActionListener(e -> {
+            l.actionPerformed(new java.awt.event.ActionEvent(txtSearch, java.awt.event.ActionEvent.ACTION_PERFORMED, txtSearch.getText().trim()));
+        });
+    }
+    public void addFiltrosListener(ActionListener l) { btnFilters.addActionListener(l); }
+    public void addCarritoListener(ActionListener l) { btnCarrito.addActionListener(l); }
+    public void addIntercambiosListener(ActionListener l) { btnIntercambios.addActionListener(l); }
+    public void addPerfilListener(ActionListener l) { btnPerfil.addActionListener(l); }
+    public void addNotificacionesListener(ActionListener l) { btnNotificaciones.addActionListener(l); }
+    public String getSearchText() { return txtSearch.getText().trim(); }
+}
