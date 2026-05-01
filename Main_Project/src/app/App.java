@@ -452,7 +452,7 @@ import modelo.tiempo.*;
         app.cerrarSesion();
         app.iniciarSesion("gestor", "123456");
         Gestor gestor = (Gestor) app.getUsuarioActual();
-        gestor.crearEmpleado("demo", "123456789E");
+        gestor.crearEmpleado("demo", "14433331A");
         app.cerrarSesion();
         app.iniciarSesion("demo", "123456");
         
