@@ -333,11 +333,11 @@ import modelo.tiempo.*;
 
         // A. AÑADIR PRODUCTOS NUEVOS AL CATÁLOGO GENERAL
         Catalogo catalogo = app.getCatalogo();
-        catalogo.añadirProducto(new LineaProductoVenta("Comic Batman: The Killing Joke", "Edición de lujo tapa dura.", new File("src/assets/placeholder.png"), 50, 24.99));
-        catalogo.añadirProducto(new LineaProductoVenta("Comic Watchmen", "Clásico de Alan Moore.", new File("src/assets/placeholder.png"), 30, 35.50));
-        catalogo.añadirProducto(new LineaProductoVenta("Figura Funko The Mandalorian", "Figura de vinilo, 10cm.", new File("src/assets/placeholder.png"), 100, 15.00));
-        catalogo.añadirProducto(new LineaProductoVenta("Juego de Mesa: Dune Imperium", "Juego de estrategia y conquista.", new File("src/assets/placeholder.png"), 20, 59.95));
-        catalogo.añadirProducto(new LineaProductoVenta("Figura Son Goku SSJ", "Figura de alta calidad de Banpresto.", new File("src/assets/placeholder.png"), 40, 49.90));
+        catalogo.añadirProducto(new LineaProductoVenta("Comic Batman: The Killing Joke", "Edición de lujo tapa dura.", new File("src/assets/productos/nuevos/BatmanKillingJoke.jpg"), 50, 24.99));
+        catalogo.añadirProducto(new LineaProductoVenta("Comic Watchmen", "Clásico de Alan Moore.", new File("src/assets/productos/nuevos/Watchmen.jpg"), 30, 35.50));
+        catalogo.añadirProducto(new LineaProductoVenta("Figura Funko The Mandalorian", "Figura de vinilo, 10cm.", new File("src/assets/productos/nuevos/MandalorianFunko.jpg"), 100, 15.00));
+        catalogo.añadirProducto(new LineaProductoVenta("Juego de Mesa: Dune Imperium", "Juego de estrategia y conquista.", new File("src/assets/productos/nuevos/DuneImperium.jpg"), 20, 59.95));
+        catalogo.añadirProducto(new LineaProductoVenta("Figura Son Goku SSJ", "Figura de alta calidad de Banpresto.", new File("src/assets/productos/nuevos/GokuSSJ2.jpg"), 40, 49.90));
 
         // B. AÑADIR PRODUCTOS DE SEGUNDA MANO PARA EL USUARIO "yo" EN DIFERENTES ESTADOS
         
