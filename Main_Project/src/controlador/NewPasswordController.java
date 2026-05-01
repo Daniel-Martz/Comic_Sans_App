@@ -19,30 +19,34 @@ public class NewPasswordController implements DocumentListener {
 	private void cambio() {
 		Aplicacion app = Aplicacion.getInstancia();
 		String password = crearUsuarioPanel.getPassword();
-		if(app.contraseñaLength(password) == true) {
+		try{
+      app.validarContraseñaLength(password);
 			crearUsuarioPanel.setTenCharactersBox(true);
-		}else {
+		}catch (IllegalArgumentException e) {
 			crearUsuarioPanel.setTenCharactersBox(false);
 		}
-		if(app.contraseñaLower(password) == true && app.contraseñaUpper(password) == true) {
+
+    try{
+      app.validarContraseñaLower(password);
+      app.validarContraseñaUpper(password);
 			crearUsuarioPanel.setUpperAndLowerBox(true);
-		}else {
+		}catch (IllegalArgumentException e) {
 			crearUsuarioPanel.setUpperAndLowerBox(false);
 		}
 
-		if(app.contraseñaNumber(password) == true) {
+    try{
+      app.validarContraseñaNumber(password);
 			crearUsuarioPanel.setNumberBox(true);
-		}else {
+		}catch (IllegalArgumentException e) {
 			crearUsuarioPanel.setNumberBox(false);
 		}
-
-		if(app.contraseñaSymbol(password) == true) {
+		
+    try{
+      app.validarContraseñaSymbol(password);
 			crearUsuarioPanel.setSymbolBox(true);
-		}else {
+		}catch (IllegalArgumentException e) {
 			crearUsuarioPanel.setSymbolBox(false);
 		}
-
-
 	}
 	@Override
 	public void changedUpdate(DocumentEvent arg0) {

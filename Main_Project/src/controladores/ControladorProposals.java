@@ -85,8 +85,8 @@ public class ControladorProposals {
      */
     private InterchangeCardPanel crearCard(Oferta oferta, Modo modo) {
         String headerLabel;
-        String[][] givenData;
-        String[][] receivedData;
+        ProductoSegundaMano[] givenData;
+        ProductoSegundaMano[] receivedData;
 
         if (modo == Modo.INCOME) {
             // La oferta la recibo yo: el ofertante da, yo doy lo solicitado
@@ -108,25 +108,10 @@ public class ControladorProposals {
     }
 
     /**
-     * Convierte un Set de ProductoSegundaMano a String[][].
-     * Columnas: {nombre, categorías, estado, precio}
+     * Convierte un Set de ProductoSegundaMano a array de ProductoSegundaMano.
      */
-    private String[][] convertirProductos(Set<ProductoSegundaMano> productos) {
-        String[][] data = new String[productos.size()][3];
-        int i = 0;
-        for (ProductoSegundaMano p : productos) {
-            data[i][0] = p.getNombre();
-
-            data[i][1] = p.getDatosValidacion() != null
-                    ? p.getDatosValidacion().getEstadoConservacion().toString()
-                    : "Pendiente";
-
-            data[i][2] = p.getDatosValidacion() != null
-                    ? String.format("%.2f €", p.getDatosValidacion().getPrecioEstimadoProducto())
-                    : "N/A";
-            i++;
-        }
-        return data;
+    private ProductoSegundaMano[] convertirProductos(Set<ProductoSegundaMano> productos) {
+        return productos.toArray(new ProductoSegundaMano[0]);
     }
 
     /**
@@ -171,6 +156,7 @@ public class ControladorProposals {
                                            ClienteRegistrado cliente) {
         card.addAcceptListener(e -> aceptarOferta(oferta, cliente));
         card.addRejectListener(e -> rechazarOferta(oferta, cliente));
+        card.setInfoListener(e -> procesarClickInfo(e.getActionCommand(), cliente));
     }
 
     /**
@@ -180,6 +166,7 @@ public class ControladorProposals {
                                          Oferta oferta,
                                          ClienteRegistrado cliente) {
         card.addCancelListener(e -> cancelarOferta(oferta, cliente));
+        card.setInfoListener(e -> procesarClickInfo(e.getActionCommand(), cliente));
     }
 
     // -------------------------------------------------------
@@ -213,6 +200,54 @@ public class ControladorProposals {
             recargar();
         } catch (IllegalStateException ex) {
             ventana.mostrarVentanaError("No se pudo cancelar la oferta: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Procesa el evento de la vista para mostrar los detalles de un producto.
+     */
+    private void procesarClickInfo(String command, ClienteRegistrado cliente) {
+        if (command != null && command.startsWith("INFO_")) {
+            try {
+                int id = Integer.parseInt(command.substring(5));
+                mostrarDetallesProducto(id, cliente);
+            } catch (NumberFormatException ex) {
+                ventana.mostrarVentanaError("ID de producto inválido.");
+            }
+        }
+    }
+
+    /**
+     * Busca el producto en las ofertas y delega la apertura de la ventana (MVC correcto).
+     */
+    private void mostrarDetallesProducto(int idProducto, ClienteRegistrado cliente) {
+        ProductoSegundaMano target = null;
+        
+        // Buscar en ofertas recibidas
+        for (Oferta o : cliente.getOfertasRecibidas()) {
+            for (ProductoSegundaMano p : o.productosOfertados()) { if (p.getID() == idProducto) { target = p; break; } }
+            if (target != null) break;
+            for (ProductoSegundaMano p : o.productosSolicitados()) { if (p.getID() == idProducto) { target = p; break; } }
+            if (target != null) break;
+        }
+        
+        // Buscar en ofertas enviadas
+        if (target == null) {
+            for (Oferta o : cliente.getOfertasRealizadas()) {
+                for (ProductoSegundaMano p : o.productosOfertados()) { if (p.getID() == idProducto) { target = p; break; } }
+                if (target != null) break;
+                for (ProductoSegundaMano p : o.productosSolicitados()) { if (p.getID() == idProducto) { target = p; break; } }
+                if (target != null) break;
+            }
+        }
+
+        if (target != null) {
+            // Ahora sí, es el CONTROLADOR quien abre la ventana con los datos del Modelo
+            vista.userWindows.VentanaDetallesProductoSegundaMano dialog = 
+                new vista.userWindows.VentanaDetallesProductoSegundaMano(ventana, target);
+            dialog.setVisible(true);
+        } else {
+            ventana.mostrarVentanaError("Producto no encontrado.");
         }
     }
 

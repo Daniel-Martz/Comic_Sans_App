@@ -55,7 +55,7 @@ import modelo.tiempo.*;
         Comic   spidermanAdv = new Comic(
                 "Spiderman Adventures Vol.3",
                 "Un cómic de auténtico coleccionista preservado en su envoltorio original.",
-                new File("images/SpidermanAdventures3.jpg"),
+                new File("src/assets/productos/nuevos/SpidermanAdventures3.jpg"),
                 20, 19.99, 0,
                 120, "Stan Lee", "Marvel", 1995);
         spidermanAdv.añadirCategoria(catComics);
@@ -65,7 +65,7 @@ import modelo.tiempo.*;
         Comic spidermanChron = new Comic(
                 "Spiderman Chronicles Vol.5",
                 "Edición limitada de la saga Chronicles con portada alternativa.",
-                new File("images/SpidermanChronicles5.jpg"),
+                new File("src/assets/productos/nuevos/SpidermanChronicles5.jpg"),
                 20, 19.99, 0,
                 98, "Dan Slott", "Marvel", 2010);
         spidermanChron.añadirCategoria(catComics);
@@ -75,7 +75,7 @@ import modelo.tiempo.*;
         Comic batmanYearOne = new Comic(
                 "Batman: Year One",
                 "La historia de origen definitiva de Batman narrada por Frank Miller.",
-                new File("images/BatmanYearOne.jpg"),
+                new File("src/assets/productos/nuevos/BatmanYearOne.jpg"),
                 15, 24.99, 0,
                 144, "Frank Miller", "DC Comics", 1987);
         batmanYearOne.añadirCategoria(catComics);
@@ -85,7 +85,7 @@ import modelo.tiempo.*;
         Comic watchmen = new Comic(
                 "Watchmen",
                 "La obra maestra de Alan Moore que cambió el cómic para siempre.",
-                new File("images/Watchmen.jpg"),
+                new File("src/assets/productos/nuevos/Watchmen.jpg"),
                 10, 29.99, 0,
                 416, "Alan Moore", "DC Comics", 1986);
         watchmen.añadirCategoria(catComics);
@@ -94,7 +94,7 @@ import modelo.tiempo.*;
         Comic xmenGold = new Comic(
                 "X-Men: Gold Vol.1",
                 "La resurrección de los X-Men más clásicos en una aventura épica.",
-                new File("images/XmenGold.jpg"),
+                new File("src/assets/productos/nuevos/XmenGold.jpg"),
                 12, 17.99, 0,
                 136, "Marc Guggenheim", "Marvel", 2017);
         xmenGold.añadirCategoria(catComics);
@@ -104,7 +104,7 @@ import modelo.tiempo.*;
         Comic dragonBallZ = new Comic(
                 "Dragon Ball Z Vol.1",
                 "El inicio épico de la saga Z con Raditz llegando a la Tierra.",
-                new File("images/DragonBallZ1.jpg"),
+                new File("src/assets/productos/nuevos/DragonBallZ1.jpg"),
                 25, 8.99, 0,
                 200, "Akira Toriyama", "Shueisha", 1989);
         dragonBallZ.añadirCategoria(catManga);
@@ -115,7 +115,7 @@ import modelo.tiempo.*;
         Figura ironManFigure = new Figura(
                 "Figura Iron Man Mark 85 (30cm)",
                 "Figura de Iron Man con armadura Mark 85 de Endgame, escala 1/6 con LEDs.",
-                new File("images/IronManMark85.jpg"),
+                new File("src/assets/productos/nuevos/IronManMark85.jpg"),
                 8, 89.99, 0,
                 "Hot Toys", "PVC+ABS", 30.0, 22.0, 18.0);
         ironManFigure.añadirCategoria(catFiguras);
@@ -125,7 +125,7 @@ import modelo.tiempo.*;
         Figura gokuFigure = new Figura(
                 "Figura Son Goku Super Saiyan (25cm)",
                 "Figura de alta calidad de Goku en estado Super Saiyan con base de energía.",
-                new File("images/GokuSSJ.jpg"),
+                new File("src/assets/productos/nuevos/GokuSSJ.jpg"),
                 15, 49.99, 0,
                 "Bandai", "PVC", 25.0, 15.0, 12.0);
         gokuFigure.añadirCategoria(catFiguras);
@@ -135,7 +135,7 @@ import modelo.tiempo.*;
         Figura narutoFigure = new Figura(
                 "Figura Naruto Uzumaki (20cm)",
                 "Naruto en pose de ataque con Rasengan, edición especial con efecto de viento.",
-                new File("images/NarutoFigure.jpg"),
+                new File("src/assets/productos/nuevos/NarutoFigure.jpg"),
                 20, 39.99, 0,
                 "Megahouse", "PVC", 20.0, 12.0, 10.0);
         narutoFigure.añadirCategoria(catFiguras);
@@ -145,7 +145,7 @@ import modelo.tiempo.*;
         Figura batmanFigure = new Figura(
                 "Figura Batman Arkham Knight (35cm)",
                 "Figura premium de Batman con la armadura de Arkham Knight, articulada.",
-                new File("images/BatmanArkham.jpg"),
+                new File("src/assets/productos/nuevos/BatmanArkham.jpg"),
                 6, 119.99, 0,
                 "DC Collectibles", "Resina", 35.0, 18.0, 15.0);
         batmanFigure.añadirCategoria(catFiguras);
@@ -155,7 +155,7 @@ import modelo.tiempo.*;
         Figura lucinaFigure = new Figura(
                 "Figura Lucina Fire Emblem (22cm)",
                 "Figura oficial de Lucina con su espada Falchion y capa azul.",
-                new File("images/LucinaFigure.jpg"),
+                new File("src/assets/productos/nuevos/LucinaFigure.jpg"),
                 10, 64.99, 0,
                 "Good Smile", "PVC", 22.0, 10.0, 8.0);
         lucinaFigure.añadirCategoria(catFiguras);
@@ -164,7 +164,7 @@ import modelo.tiempo.*;
         Figura spidermanFigure = new Figura(
                 "Figura Spiderman Miles Morales (28cm)",
                 "Miles Morales en pleno salto, con telarañas y base diorama de ciudad.",
-                new File("images/MilesMorales.jpg"),
+                new File("src/assets/productos/nuevos/MilesMorales.jpg"),
                 12, 74.99, 0,
                 "Sideshow", "PVC+ABS", 28.0, 20.0, 20.0);
         spidermanFigure.añadirCategoria(catFiguras);
@@ -174,7 +174,7 @@ import modelo.tiempo.*;
         Figura zeldaFigure = new Figura(
                 "Figura Link (The Legend of Zelda, 26cm)",
                 "Link con el Maestro Espada y el Escudo Hyliano, edición Breath of the Wild.",
-                new File("images/LinkFigure.jpg"),
+                new File("src/assets/productos/nuevos/LinkFigure.jpg"),
                 9, 84.99, 0,
                 "First 4 Figures", "Resina", 26.0, 14.0, 14.0);
         zeldaFigure.añadirCategoria(catFiguras);
@@ -184,7 +184,7 @@ import modelo.tiempo.*;
         JuegoDeMesa catan = new JuegoDeMesa(
                 "Catan",
                 "El clásico juego de estrategia y negociación en una isla de recursos.",
-                new File("images/Catan.jpg"),
+                new File("src/assets/productos/nuevos/Catan.jpg"),
                 18, 39.99,
                 4, 10, 99, TipoJuegoMesa.DADOS);
         catan.añadirCategoria(catJuegos);
@@ -194,7 +194,7 @@ import modelo.tiempo.*;
         JuegoDeMesa pandemic = new JuegoDeMesa(
                 "Pandemic",
                 "Juego cooperativo: salva al mundo de cuatro enfermedades mortales.",
-                new File("images/Pandemic.jpg"),
+                new File("src/assets/productos/nuevos/Pandemic.jpg"),
                 14, 44.99,
                 4, 8, 99, TipoJuegoMesa.CARTAS);
         pandemic.añadirCategoria(catJuegos);
@@ -204,7 +204,7 @@ import modelo.tiempo.*;
         JuegoDeMesa ticket = new JuegoDeMesa(
                 "Ticket to Ride Europa",
                 "Conecta ciudades europeas con rutas de tren en este clásico familiar.",
-                new File("images/TicketToRide.jpg"),
+                new File("src/assets/productos/nuevos/TicketToRide.jpg"),
                 16, 49.99,
                 5, 8, 99, TipoJuegoMesa.CARTAS);
         ticket.añadirCategoria(catJuegos);
@@ -214,7 +214,7 @@ import modelo.tiempo.*;
         JuegoDeMesa codenames = new JuegoDeMesa(
                 "Codenames",
                 "El juego de palabras y espías más famoso del mundo. Adivina las contraseñas.",
-                new File("images/Codenames.jpg"),
+                new File("src/assets/productos/nuevos/Codenames.jpg"),
                 22, 22.99,
                 8, 10, 99, TipoJuegoMesa.CARTAS);
         codenames.añadirCategoria(catJuegos);
@@ -223,7 +223,7 @@ import modelo.tiempo.*;
         JuegoDeMesa dominion = new JuegoDeMesa(
                 "Dominion",
                 "El juego de construcción de mazo que definió un género entero.",
-                new File("images/Dominion.jpg"),
+                new File("src/assets/productos/nuevos/Dominion.jpg"),
                 10, 34.99,
                 4, 13, 99, TipoJuegoMesa.CARTAS);
         dominion.añadirCategoria(catJuegos);
@@ -234,7 +234,7 @@ import modelo.tiempo.*;
         LineaProductoVenta artbook = new LineaProductoVenta(
                 "Artbook Marvel: 80 Años de Maravillas",
                 "Recopilación visual de los mejores artes conceptuales de Marvel a lo largo de 80 años.",
-                new File("images/ArtbookMarvel.jpg"),
+                new File("src/assets/productos/nuevos/ArtbookMarvel.jpg"),
                 7, 59.99);
         artbook.añadirCategoria(catComics);
         artbook.añadirCategoria(catSuperheroes);
@@ -243,7 +243,7 @@ import modelo.tiempo.*;
         LineaProductoVenta funkoPop = new LineaProductoVenta(
                 "Funko Pop! Goku Black (Exclusive)",
                 "Funko Pop exclusivo de Goku Black SSJ Rose, edición especial de coleccionista.",
-                new File("images/FunkGokuBlack.jpg"),
+                new File("src/assets/productos/nuevos/FunkGokuBlack.jpg"),
                 30, 14.99);
         funkoPop.añadirCategoria(catFiguras);
         funkoPop.añadirCategoria(catAnime);
@@ -252,7 +252,7 @@ import modelo.tiempo.*;
         LineaProductoVenta sleeves = new LineaProductoVenta(
                 "Fundas Premium para Cartas (200 uds)",
                 "Fundas de PVC transparente de alta calidad, compatibles con Magic, Pokémon y más.",
-                new File("images/CardSleeves.jpg"),
+                new File("src/assets/productos/nuevos/CardSleeves.jpg"),
                 50, 9.99);
         sleeves.añadirCategoria(catJuegos);
         cat.añadirProducto(sleeves);
@@ -260,7 +260,7 @@ import modelo.tiempo.*;
         LineaProductoVenta dado20 = new LineaProductoVenta(
                 "Dado de 20 Caras Metálico (Dragones y Mazmorras)",
                 "Dado D20 de zinc chapado en oro con grabados rúnicos, edición de coleccionista.",
-                new File("images/D20Metal.jpg"),
+                new File("src/assets/productos/nuevos/D20Metal.jpg"),
                 40, 12.99);
         dado20.añadirCategoria(catJuegos);
         dado20.añadirCategoria(catEstrategia);
@@ -269,7 +269,7 @@ import modelo.tiempo.*;
         LineaProductoVenta manga1 = new LineaProductoVenta(
                 "One Piece Vol.1 - La Leyenda de Luffy",
                 "El comienzo de la aventura más larga del manga: Luffy y su búsqueda del tesoro.",
-                new File("images/OnePiece1.jpg"),
+                new File("src/assets/productos/nuevos/OnePiece1.jpg"),
                 35, 7.99);
         manga1.añadirCategoria(catManga);
         manga1.añadirCategoria(catAnime);
@@ -320,10 +320,10 @@ import modelo.tiempo.*;
         // ─────────────────────────────────────────────────────────────────
         // 4. USUARIOS DE PRUEBA
         // ─────────────────────────────────────────────────────────────────
-        ClienteRegistrado yo      = new ClienteRegistrado("demoUser",              "123456789A", "Passw0rd!");
-        ClienteRegistrado bob     = new ClienteRegistrado("BobElIntercambiador",   "987654321B", "Passw0rd!");
-        ClienteRegistrado alice   = new ClienteRegistrado("Alice_Geek",            "111222333C", "Passw0rd!");
-        ClienteRegistrado charlie = new ClienteRegistrado("Charlie_Coleccionista", "444555666D", "Passw0rd!");
+        ClienteRegistrado yo      = new ClienteRegistrado("demoUser",              "123456789A", "Passw0rd!!");
+        ClienteRegistrado bob     = new ClienteRegistrado("BobElIntercambiador",   "987654321B", "Passw0rd!!");
+        ClienteRegistrado alice   = new ClienteRegistrado("Alice_Geek",            "111222333C", "Passw0rd!!");
+        ClienteRegistrado charlie = new ClienteRegistrado("Charlie_Coleccionista", "444555666D", "Passw0rd!!");
 
         app.setUsuarioActual(yo);
 
@@ -333,11 +333,11 @@ import modelo.tiempo.*;
 
         // A. AÑADIR PRODUCTOS NUEVOS AL CATÁLOGO GENERAL
         Catalogo catalogo = app.getCatalogo();
-        catalogo.añadirProducto(new LineaProductoVenta("Comic Batman: The Killing Joke", "Edición de lujo tapa dura.", new File("src/assets/placeholder.png"), 50, 24.99));
-        catalogo.añadirProducto(new LineaProductoVenta("Comic Watchmen", "Clásico de Alan Moore.", new File("src/assets/placeholder.png"), 30, 35.50));
-        catalogo.añadirProducto(new LineaProductoVenta("Figura Funko The Mandalorian", "Figura de vinilo, 10cm.", new File("src/assets/placeholder.png"), 100, 15.00));
-        catalogo.añadirProducto(new LineaProductoVenta("Juego de Mesa: Dune Imperium", "Juego de estrategia y conquista.", new File("src/assets/placeholder.png"), 20, 59.95));
-        catalogo.añadirProducto(new LineaProductoVenta("Figura Son Goku SSJ", "Figura de alta calidad de Banpresto.", new File("src/assets/placeholder.png"), 40, 49.90));
+        catalogo.añadirProducto(new LineaProductoVenta("Comic Batman: The Killing Joke", "Edición de lujo tapa dura.", new File("src/assets/productos/nuevos/BatmanKillingJoke.jpg"), 50, 24.99));
+        catalogo.añadirProducto(new LineaProductoVenta("Comic Watchmen", "Clásico de Alan Moore.", new File("src/assets/productos/nuevos/Watchmen.jpg"), 30, 35.50));
+        catalogo.añadirProducto(new LineaProductoVenta("Figura Funko The Mandalorian", "Figura de vinilo, 10cm.", new File("src/assets/productos/nuevos/MandalorianFunko.jpg"), 100, 15.00));
+        catalogo.añadirProducto(new LineaProductoVenta("Juego de Mesa: Dune Imperium", "Juego de estrategia y conquista.", new File("src/assets/productos/nuevos/DuneImperium.jpg"), 20, 59.95));
+        catalogo.añadirProducto(new LineaProductoVenta("Figura Son Goku SSJ", "Figura de alta calidad de Banpresto.", new File("src/assets/productos/nuevos/GokuSSJ2.jpg"), 40, 49.90));
 
         // B. AÑADIR PRODUCTOS DE SEGUNDA MANO PARA EL USUARIO "yo" EN DIFERENTES ESTADOS
         
@@ -352,6 +352,26 @@ import modelo.tiempo.*;
         ProductoSegundaMano pReady = yo.añadirProductoACarteraDeIntercambio("Teclado Mecánico Keychron K2", "Switches marrones, con su caja.", null);
         pReady.getSolicitudValidacion().validarProducto(3.5, 60.0, EstadoConservacion.MUY_BUENO);
         yo.pagarValidacion(pReady.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        // -------------------------------------------------------------------------
+        // C. AÑADIR PRODUCTOS DE SEGUNDA MANO DISPONIBLES DE OTROS USUARIOS 
+        // (Para que aparezcan en la búsqueda de intercambios y puedas seleccionarlos)
+        // -------------------------------------------------------------------------
+        ProductoSegundaMano pBob1 = bob.añadirProductoACarteraDeIntercambio("Consola Retro Portátil", "Incluye 100 juegos clásicos.", null);
+        pBob1.getSolicitudValidacion().validarProducto(4.5, 45.0, EstadoConservacion.MUY_BUENO);
+        bob.pagarValidacion(pBob1.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano pBob2 = bob.añadirProductoACarteraDeIntercambio("Cómic X-Men #1", "Edición coleccionista, guardado en funda.", null);
+        pBob2.getSolicitudValidacion().validarProducto(5.0, 120.0, EstadoConservacion.PERFECTO);
+        bob.pagarValidacion(pBob2.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano pAlice1 = alice.añadirProductoACarteraDeIntercambio("Juego de Mesa Dixit", "Faltan un par de cartas pero es muy jugable.", null);
+        pAlice1.getSolicitudValidacion().validarProducto(3.0, 15.0, EstadoConservacion.USO_LIGERO);
+        alice.pagarValidacion(pAlice1.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano pCharlie1 = charlie.añadirProductoACarteraDeIntercambio("Figura Funko Pop Batman", "Caja ligeramente dañada en una esquina.", null);
+        pCharlie1.getSolicitudValidacion().validarProducto(4.0, 12.0, EstadoConservacion.DANADO);
+        charlie.pagarValidacion(pCharlie1.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
         // -------------------------------------------------------------------------
         // 3. OFERTAS RECIBIDAS (INCOME): Otros me ofrecen cosas a mí
@@ -415,7 +435,29 @@ import modelo.tiempo.*;
                     new HashSet<>(Arrays.asList(pDoyYo)),
                     new HashSet<>(Arrays.asList(pPidoCharlie))));
         }
-        app.setUsuarioActual(null);
+        app.cerrarSesion();
+
+        app.crearCuenta("demoUser", "14433331A", "Passw0rd!!", "Passw0rd!!");
+        app.iniciarSesion("demoUser", "Passw0rd!!");
+        
+        for(LineaProductoVenta p : app.buscarProductosNuevos("")){
+          yo = (ClienteRegistrado)app.getUsuarioActual();
+          yo.añadirProductoACarrito(p, 3);
+        }
+        SolicitudPedido pedido = yo.realizarPedido(); 
+        yo.pagarPedido(pedido, "1234567812345678", "123", new DateTimeSimulado());
+        
+        System.out.println("Java está mirando en: " + new java.io.File(".").getAbsolutePath());
+        
+        app.cerrarSesion();
+        app.iniciarSesion("gestor", "123456");
+        Gestor gestor = (Gestor) app.getUsuarioActual();
+        gestor.crearEmpleado("demo", "14433331A");
+        app.cerrarSesion();
+        app.iniciarSesion("demo", "123456");
+        
+		
+        
     	
         javax.swing.SwingUtilities.invokeLater(() -> {
             
@@ -434,9 +476,8 @@ import modelo.tiempo.*;
             // Instanciamos el controlador de Segunda Mano
             ControladorMySecondHandProducts ctrlSecondHand = new ControladorMySecondHandProducts(vistaPrincipal.getMySecondHandProductsPanel(), vistaPrincipal);
 
-            // Importante: Si el botón de Carrito del Menú lo gestiona MainController, 
-            // podemos registrar el listener aquí (o pasárselo al MainController)
-            vistaPrincipal.getMenuPrincipalPanel().addCarritoListener(e -> mainController.gestionarAccesoCarrito(ctrlCarrito));
+            // Registramos el acceso al carrito para todas las cabeceras de la aplicación
+            mainController.registrarListenerCarritoGlobal(ctrlCarrito);
 
             // 4. Iniciar la aplicación
             mainController.iniciar(); 

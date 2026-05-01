@@ -218,7 +218,7 @@ class ConfiguracionRecomendacionTest {
     @Test
     void testGetRecomendacionCatalogoVacioDevuelveVacio() {
         Aplicacion app = Aplicacion.getInstancia();
-        app.crearCuenta("ClienteA", "111111111A", "1234");
+        app.crearCuenta("ClienteA", "111111111A", "1234", "1234");
         app.iniciarSesion("ClienteA", "1234");
         Set<LineaProductoVenta> rec = app.getConfiguracionRecomendacion().getRecomendacion();
         assertTrue(rec.isEmpty(), "Con catálogo vacío debe devolver conjunto vacío");
@@ -243,7 +243,7 @@ class ConfiguracionRecomendacionTest {
         // Configuramos para recomendar 10
         app.getConfiguracionRecomendacion().configurarUnidades(10);
 
-        app.crearCuenta("ClienteB", "222222222B", "1234");
+        app.crearCuenta("ClienteB", "222222222B", "1234", "1234");
         app.iniciarSesion("ClienteB", "1234");
 
         Set<LineaProductoVenta> rec = app.getConfiguracionRecomendacion().getRecomendacion();

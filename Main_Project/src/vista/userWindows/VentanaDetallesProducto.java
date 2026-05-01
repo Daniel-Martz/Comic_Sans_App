@@ -21,7 +21,7 @@ public class VentanaDetallesProducto extends JDialog {
 
     public VentanaDetallesProducto(Window parent, LineaProductoVenta producto) {
         super(parent, "Detalles del Producto", Dialog.ModalityType.APPLICATION_MODAL);
-        setSize(600, 750);
+        setSize(550, 720); // Ampliamos la ventana para hacer hueco a las reseñas
         setLocationRelativeTo(parent);
         initComponents(producto);
     }
@@ -37,14 +37,14 @@ public class VentanaDetallesProducto extends JDialog {
         headerPanel.setBackground(COLOR_FONDO);
 
         JLabel lblNombre = new JLabel(p.getNombre());
-        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblNombre.setForeground(COLOR_TITULO);
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(lblNombre);
         
         String cats = p.getCategorias().stream().map(Categoria::getNombre).collect(Collectors.joining(", "));
         JLabel lblCats = new JLabel(cats.isEmpty() ? "Sin categoría" : "Categorías: " + cats);
-        lblCats.setFont(new Font("SansSerif", Font.ITALIC, 14));
+        lblCats.setFont(new Font("Comic Sans MS", Font.ITALIC, 14));
         lblCats.setForeground(Color.GRAY);
         lblCats.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(lblCats);
@@ -115,72 +115,86 @@ public class VentanaDetallesProducto extends JDialog {
         scrollDetails.setBorder(null);
         centerPanel.add(scrollDetails, BorderLayout.CENTER);
 
-        // South Center: Descripción y Reseñas
-        JPanel bottomCenterPanel = new JPanel();
-        bottomCenterPanel.setLayout(new BoxLayout(bottomCenterPanel, BoxLayout.Y_AXIS));
-        bottomCenterPanel.setBackground(COLOR_FONDO);
+        // Panel inferior del centro (Descripción y Reseñas combinadas)
+        JPanel southCenterPanel = new JPanel(new BorderLayout(0, 15));
+        southCenterPanel.setBackground(COLOR_FONDO);
 
+        // 1. Panel de Descripción
         JPanel descPanel = new JPanel(new BorderLayout());
         descPanel.setBackground(COLOR_FONDO);
         JLabel lblDescTitle = new JLabel("Descripción:");
-        lblDescTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblDescTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        lblDescTitle.setBorder(new EmptyBorder(10, 0, 5, 0));
         descPanel.add(lblDescTitle, BorderLayout.NORTH);
         
         JTextArea txtDesc = new JTextArea(p.getDescripcion() != null ? p.getDescripcion() : "Sin descripción.");
         txtDesc.setLineWrap(true);
         txtDesc.setWrapStyleWord(true);
         txtDesc.setEditable(false);
-        txtDesc.setBackground(COLOR_FONDO);
-        txtDesc.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        txtDesc.setFocusable(false);
+        txtDesc.setBackground(Color.WHITE);
+        txtDesc.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(Color.LIGHT_GRAY, 1),
+                new EmptyBorder(10, 10, 10, 10)
+        ));
+        txtDesc.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
         descPanel.add(txtDesc, BorderLayout.CENTER);
         
-        bottomCenterPanel.add(descPanel);
-        bottomCenterPanel.add(Box.createVerticalStrut(15));
+        southCenterPanel.add(descPanel, BorderLayout.NORTH);
 
-        // Panel de Reseñas
+        // 2. Panel de Reseñas
         JPanel reviewsPanel = new JPanel(new BorderLayout());
         reviewsPanel.setBackground(COLOR_FONDO);
-        JLabel lblReviewsTitle = new JLabel("Reseñas:");
-        lblReviewsTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
-        reviewsPanel.add(lblReviewsTitle, BorderLayout.NORTH);
+        JLabel lblRevTitle = new JLabel("Reseñas:");
+        lblRevTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        lblRevTitle.setBorder(new EmptyBorder(0, 0, 5, 0));
+        reviewsPanel.add(lblRevTitle, BorderLayout.NORTH);
 
-        JPanel reviewsListPanel = new JPanel();
-        reviewsListPanel.setLayout(new BoxLayout(reviewsListPanel, BoxLayout.Y_AXIS));
-        reviewsListPanel.setBackground(Color.WHITE);
+        JPanel reviewsList = new JPanel();
+        reviewsList.setLayout(new BoxLayout(reviewsList, BoxLayout.Y_AXIS));
+        reviewsList.setBackground(Color.WHITE);
 
-        java.util.List<Reseña> resenas = p.getReseña();
-        if (resenas == null || resenas.isEmpty()) {
-            JLabel lblNoReviews = new JLabel("No hay reseñas todavía.");
-            lblNoReviews.setBorder(new EmptyBorder(5, 5, 5, 5));
-            reviewsListPanel.add(lblNoReviews);
-        } else {
-            for (Reseña r : resenas) {
-                JPanel rPanel = new JPanel(new BorderLayout());
-                rPanel.setBackground(Color.WHITE);
-                rPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-                JLabel lblPuntuacion = new JLabel("Valoración: " + r.getPuntuacion() + " / 5.0");
-                lblPuntuacion.setFont(new Font("SansSerif", Font.BOLD, 12));
-                lblPuntuacion.setForeground(new Color(255, 153, 0)); // Color naranja para destacar
-                JTextArea txtComentario = new JTextArea(r.getDescripcion());
+        if (p.getReseña() != null && !p.getReseña().isEmpty()) {
+            for (Reseña r : p.getReseña()) {
+                JPanel revCard = new JPanel(new BorderLayout());
+                revCard.setBackground(Color.WHITE);
+                revCard.setBorder(BorderFactory.createCompoundBorder(
+                        new LineBorder(Color.LIGHT_GRAY, 1),
+                        new EmptyBorder(8, 8, 8, 8)
+                ));
+                
+                JLabel lblScore = new JLabel("⭐ " + r.getPuntuacion() + " / 5.0");
+                lblScore.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
+                lblScore.setForeground(new Color(255, 140, 0));
+                revCard.add(lblScore, BorderLayout.NORTH);
+                
+                JTextArea txtComentario = new JTextArea(r.getDescripcion() != null ? r.getDescripcion() : "");
                 txtComentario.setLineWrap(true);
                 txtComentario.setWrapStyleWord(true);
                 txtComentario.setEditable(false);
-                txtComentario.setFont(new Font("SansSerif", Font.ITALIC, 12));
-                rPanel.add(lblPuntuacion, BorderLayout.NORTH);
-                rPanel.add(txtComentario, BorderLayout.CENTER);
-                reviewsListPanel.add(rPanel);
-                reviewsListPanel.add(new JSeparator());
+                txtComentario.setFocusable(false);
+                txtComentario.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
+                revCard.add(txtComentario, BorderLayout.CENTER);
+                
+                reviewsList.add(revCard);
+                reviewsList.add(Box.createVerticalStrut(5));
             }
+        } else {
+            JLabel noReviews = new JLabel("No hay reseñas aún.");
+            noReviews.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
+            noReviews.setForeground(Color.GRAY);
+            noReviews.setBorder(new EmptyBorder(5, 5, 5, 5));
+            reviewsList.add(noReviews);
         }
 
-        JScrollPane scrollReviews = new JScrollPane(reviewsListPanel);
-        scrollReviews.setPreferredSize(new Dimension(500, 120));
-        scrollReviews.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+        JScrollPane scrollReviews = new JScrollPane(reviewsList);
+        scrollReviews.setPreferredSize(new Dimension(500, 150));
+        scrollReviews.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
         reviewsPanel.add(scrollReviews, BorderLayout.CENTER);
 
-        bottomCenterPanel.add(reviewsPanel);
+        southCenterPanel.add(reviewsPanel, BorderLayout.CENTER);
 
-        centerPanel.add(bottomCenterPanel, BorderLayout.SOUTH);
+        centerPanel.add(southCenterPanel, BorderLayout.SOUTH);
 
         mainPanel.add(centerPanel, BorderLayout.CENTER);
 
@@ -201,10 +215,10 @@ public class VentanaDetallesProducto extends JDialog {
         row.setBackground(Color.WHITE);
         
         JLabel lbl = new JLabel(label + ": ");
-        lbl.setFont(new Font("SansSerif", Font.BOLD, 13));
+        lbl.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
         
         JLabel val = new JLabel(value != null ? value : "N/A");
-        val.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        val.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
         
         row.add(lbl, BorderLayout.WEST);
         row.add(val, BorderLayout.CENTER);

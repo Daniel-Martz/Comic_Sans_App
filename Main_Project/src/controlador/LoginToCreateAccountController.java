@@ -17,10 +17,14 @@ public class LoginToCreateAccountController implements ActionListener{
   LogInPanel loginPanel;
   MainController mainController;
 	
-	public LoginToCreateAccountController(LogInPanel loginPanel, MainController mainController) {
+	public LoginToCreateAccountController(MainController mainController) {
 		this.loginPanel = loginPanel;
 		this.mainController = mainController;
 	}
+
+  public void addListeningPanel(LogInPanel l){
+    
+  }
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

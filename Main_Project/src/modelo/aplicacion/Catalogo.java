@@ -1009,6 +1009,15 @@ public class Catalogo implements Serializable {
 	    ois.defaultReadObject();
 	    instancia = this;
 	}
+	
+	public void añadirProductoSegundaMano(ProductoSegundaMano producto) {
+		if (producto == null) {
+			throw new IllegalArgumentException("El producto de segunda mano no puede ser nulo.");
+		}
+		productosSegundaMano.add(producto);
+		
+		
+	}
 
 	@Override
 	public String toString() {
@@ -1022,6 +1031,7 @@ public class Catalogo implements Serializable {
 				+ "\nUltimo lanzamiento de la tienda:\n" + ultimoLanzamiento + "]";
 
 	}
+
     
     
  }

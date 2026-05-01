@@ -25,7 +25,7 @@ public class VentanaError extends JDialog {
         panel.setBackground(new Color(255, 200, 200)); // Rojo pastel
 
         JLabel lblTitulo = new JLabel(tituloMensaje, SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 13));
+        lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
         panel.add(lblTitulo);
         
         // Convertimos los \n a <br> de HTML para poder tener múltiples líneas fácilmente

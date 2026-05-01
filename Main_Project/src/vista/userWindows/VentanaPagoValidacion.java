@@ -61,7 +61,7 @@ public class VentanaPagoValidacion extends JDialog {
         
         // Estilo igual al de la otra ventana (Fondo Azul, Letras Blancas)
         JLabel labelCheckout = new JLabel("CHECKOUT", SwingConstants.CENTER);
-        labelCheckout.setFont(new Font("SansSerif", Font.BOLD, 15));
+        labelCheckout.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
         labelCheckout.setOpaque(true);
         labelCheckout.setBackground(new Color(100, 130, 200));
         labelCheckout.setForeground(Color.WHITE);
@@ -72,7 +72,7 @@ public class VentanaPagoValidacion extends JDialog {
         labelTotal = new JLabel(
                 String.format("TOTAL TO PAY FOR VALIDATION: %.2f €", precioValidacion),
                 SwingConstants.CENTER);
-        labelTotal.setFont(new Font("SansSerif", Font.BOLD, 13));
+        labelTotal.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
         labelTotal.setOpaque(true);
         labelTotal.setBackground(new Color(220, 220, 220));
         labelTotal.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
@@ -107,7 +107,7 @@ public class VentanaPagoValidacion extends JDialog {
         botonConfirmar = new JButton("CONFIRM");
         botonConfirmar.setBackground(new Color(50, 200, 80));
         botonConfirmar.setForeground(Color.WHITE);
-        botonConfirmar.setFont(new Font("SansSerif", Font.BOLD, 13));
+        botonConfirmar.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
         panelCampos.add(botonConfirmar);
 
         panelPrincipal.add(panelCampos, BorderLayout.CENTER);

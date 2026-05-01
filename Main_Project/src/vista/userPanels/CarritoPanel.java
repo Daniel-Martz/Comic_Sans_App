@@ -19,11 +19,11 @@ public class CarritoPanel extends JPanel {
 
     private final Color COLOR_FONDO = new Color(153, 180, 209);
 
+    private HeaderPanel headerPanel;
     private JPanel panelScrollCarrito;
     private JPanel panelScrollRecomendaciones;
     private JLabel labelTotal;
     private JButton botonPagar;
-    private JButton botonVolver;   
 
     public CarritoPanel() {
         setLayout(new BorderLayout());
@@ -32,34 +32,17 @@ public class CarritoPanel extends JPanel {
     }
 
     private void inicializarComponentes() {
+        headerPanel = new HeaderPanel();
+        add(headerPanel, BorderLayout.NORTH);
+        
         JPanel contenedorPrincipal = new JPanel();
         contenedorPrincipal.setLayout(new BoxLayout(contenedorPrincipal, BoxLayout.Y_AXIS));
         contenedorPrincipal.setBackground(COLOR_FONDO);
         contenedorPrincipal.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // ── Barra superior con botón Volver ──────────────────────────────
-        JPanel topBar = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        topBar.setBackground(COLOR_FONDO);
-        topBar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        topBar.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        botonVolver = new JButton("Volver");
-        botonVolver.setFont(new Font("SansSerif", Font.BOLD, 13));
-        botonVolver.setBackground(new Color(74, 118, 201));
-        botonVolver.setForeground(Color.WHITE);
-        botonVolver.setFocusPainted(false);
-        botonVolver.setBorderPainted(false);
-        botonVolver.setOpaque(true);
-        botonVolver.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        botonVolver.setPreferredSize(new Dimension(130, 32));
-        botonVolver.setActionCommand("VOLVER");
-        topBar.add(botonVolver);
-        contenedorPrincipal.add(topBar);
-        contenedorPrincipal.add(Box.createVerticalStrut(8));
-
         // ── 1. Banner "MY SHOPPING CART" ─────────────────────────────────
         JLabel tituloCarrito = new JLabel("  MY SHOPPING CART");
-        tituloCarrito.setFont(new Font("SansSerif", Font.BOLD, 16));
+        tituloCarrito.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         tituloCarrito.setOpaque(true);
         tituloCarrito.setBackground(Color.DARK_GRAY);
         tituloCarrito.setForeground(Color.WHITE);
@@ -90,13 +73,13 @@ public class CarritoPanel extends JPanel {
         panelPay.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         labelTotal = new JLabel("Total to pay: 0.00 €");
-        labelTotal.setFont(new Font("SansSerif", Font.BOLD, 16));
+        labelTotal.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         panelPay.add(labelTotal);
 
         botonPagar = new JButton("PAY NOW");
         botonPagar.setBackground(new Color(50, 200, 80));
         botonPagar.setForeground(Color.WHITE);
-        botonPagar.setFont(new Font("SansSerif", Font.BOLD, 14));
+        botonPagar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         panelPay.add(botonPagar);
 
         contenedorPrincipal.add(panelPay);
@@ -104,7 +87,7 @@ public class CarritoPanel extends JPanel {
 
         // ── 4. Banner Recomendaciones ─────────────────────────────────────
         JLabel tituloRecomendaciones = new JLabel("  YOU SHOULD ADD THESE PRODUCTS!!");
-        tituloRecomendaciones.setFont(new Font("SansSerif", Font.BOLD, 16));
+        tituloRecomendaciones.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         tituloRecomendaciones.setOpaque(true);
         tituloRecomendaciones.setBackground(Color.DARK_GRAY);
         tituloRecomendaciones.setForeground(Color.WHITE);
@@ -132,15 +115,13 @@ public class CarritoPanel extends JPanel {
     }
 
     // ── Métodos MVC ────────────────────────────────────────────────────────
+    public HeaderPanel getHeaderPanel() { return headerPanel; }
 
     /** Registra el controlador principal en los botones PAY NOW y VOLVER. */
     public void setControladorPrincipal(ActionListener c) {
         for (ActionListener al : botonPagar.getActionListeners())  botonPagar.removeActionListener(al);
-        for (ActionListener al : botonVolver.getActionListeners()) botonVolver.removeActionListener(al);
         botonPagar.addActionListener(c);
         botonPagar.setActionCommand("PAY_NOW");
-        botonVolver.addActionListener(c);
-        // ActionCommand "VOLVER" ya está fijado en initComponents
     }
 
     /** Actualiza el contenido del carrito. */
@@ -151,7 +132,7 @@ public class CarritoPanel extends JPanel {
 
         if (productos.isEmpty()) {
             JLabel vacio = new JLabel("Your shopping cart is empty.");
-            vacio.setFont(new Font("SansSerif", Font.BOLD, 16));
+            vacio.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
             panelScrollCarrito.add(vacio);
         } else {
             for (Map.Entry<LineaProductoVenta, Integer> entry : productos.entrySet()) {
@@ -176,12 +157,12 @@ public class CarritoPanel extends JPanel {
         tarjeta.setMaximumSize(new Dimension(200, 250));
 
         JLabel lblNombre = new JLabel(prod.getNombre());
-        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblNombre);
 
         JLabel lblCat = new JLabel(prod.getDescripcion() != null ? prod.getDescripcion() : "");
-        lblCat.setFont(new Font("SansSerif", Font.PLAIN, 11));
+        lblCat.setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
         lblCat.setForeground(Color.GRAY);
         lblCat.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblCat);
@@ -207,7 +188,7 @@ public class CarritoPanel extends JPanel {
         btnMenos.addActionListener(controlador);
 
         JLabel lblCantidad = new JLabel(String.valueOf(cantidad));
-        lblCantidad.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblCantidad.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
         JButton btnMas = new JButton("+");
         btnMas.setMargin(new Insets(2, 6, 2, 6));
@@ -225,7 +206,7 @@ public class CarritoPanel extends JPanel {
         panelInferior.setBackground(Color.WHITE);
 
         JLabel lblPrecio = new JLabel(String.format("%.2f €", prod.getPrecio() * cantidad));
-        lblPrecio.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblPrecio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
         JButton btnBorrar = new JButton("🗑");
         btnBorrar.setForeground(Color.RED);

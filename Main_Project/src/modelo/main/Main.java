@@ -42,15 +42,15 @@ public class Main {
 		}
 
 		System.out.println("\n[->] Creando empleado Federico y asignando permisos...");
-		federico = gestor.crearEmpleado("Federico", "132435468B");
+		federico = gestor.crearEmpleado("Federico", "30745615C");
 		gestor.añadirPermiso(federico, Permiso.VALIDACIONES);
 		gestor.añadirPermiso(federico, Permiso.INTERCAMBIOS);
 
 		app.cerrarSesion();
 
 		System.out.println("\n[->] Registrando nuevos clientes: Matteo y Rodrigo...");
-		matteo = app.crearCuenta("Matteo", "123456789B", "1111");
-		rodrigo = app.crearCuenta("Rodrigo", "123456789C", "2222");
+		matteo = app.crearCuenta("Matteo", "04904700L", "HolasoyMatteo@1", "HolasoyMatteo@1");
+		rodrigo = app.crearCuenta("Rodrigo", "42015418F", "HolasoyRodrigo@1", "HolasoyRodrigo@1");
 
 		// *********************************************************************************************************
 		// CONFIGURACIÓN DE NOTIFICACIONES DESEADAS POR EL CLIENTE
@@ -58,14 +58,14 @@ public class Main {
 		System.out.println("      CONFIGURACIÓN DE NOTIFICACIONES DEL CLIENTE");
 		System.out.println("====================================================");
 		System.out.println("[->] Matteo activa notificaciones de DESCUENTOS y RECOMENDACIONES...");
-		app.iniciarSesion("Matteo", "1111");
+		app.iniciarSesion("Matteo", "HolasoyMatteo@1");
 		matteo.getConfiguracionNotificacionClientees().add(NotificacionDeseada.DESCUENTOS);
 		matteo.getConfiguracionNotificacionClientees().add(NotificacionDeseada.RECOMENDACIONES);
 		System.out.println("     Notificaciones activas de Matteo: " + matteo.getConfiguracionNotificacionClientees());
 		app.cerrarSesion();
 
 		System.out.println("[->] Rodrigo activa únicamente notificaciones de RECOMENDACIONES...");
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 		rodrigo.getConfiguracionNotificacionClientees().add(NotificacionDeseada.RECOMENDACIONES);
 		System.out
 				.println("     Notificaciones activas de Rodrigo: " + rodrigo.getConfiguracionNotificacionClientees());
@@ -78,11 +78,11 @@ public class Main {
 		System.out.println("====================================================");
 		System.out.println("[->] Matteo y Rodrigo añaden productos a sus carteras de intercambio...");
 
-		app.iniciarSesion("Matteo", "1111");
+		app.iniciarSesion("Matteo", "HolasoyMatteo@1");
 		matteo.añadirProductoACarteraDeIntercambio("Peluche de perro", "Es un peluche muy bonito y suavecito", null);
 		app.cerrarSesion();
 
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 		rodrigo.añadirProductoACarteraDeIntercambio("Camion de bomberos", "Un camion con 4 ruedas, es increible!",
 				null);
 		app.cerrarSesion();
@@ -95,16 +95,16 @@ public class Main {
 		app.cerrarSesion();
 
 		System.out.println("\n[->] Rodrigo y Matteo pagan las tasas de validación de sus productos...");
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 		List<ProductoSegundaMano> productosRodrigo = new ArrayList<>(rodrigo.getCartera().getProductos());
-		rodrigo.pagarValidacion(productosRodrigo.get(0).getSolicitudValidacion(), "1234567890123456", "123",
+		rodrigo.pagarValidacion(productosRodrigo.get(0).getSolicitudValidacion(), "1234567812345678", "123",
 				new DateTimeSimulado());
 		app.cerrarSesion();
 
 		// Matteo inicia sesion para realizar una oferta a Rodrigo
-		app.iniciarSesion("Matteo", "1111");
+		app.iniciarSesion("Matteo", "HolasoyMatteo@1");
 		List<ProductoSegundaMano> productosMatteo = new ArrayList<>(matteo.getCartera().getProductos());
-		matteo.pagarValidacion(productosMatteo.get(0).getSolicitudValidacion(), "1234567890123456", "123",
+		matteo.pagarValidacion(productosMatteo.get(0).getSolicitudValidacion(), "1234567812345678", "123",
 				new DateTimeSimulado());
 
 		System.out.println("\n[->] Matteo realiza una oferta de intercambio a Rodrigo...");
@@ -116,7 +116,7 @@ public class Main {
 
 		System.out.println("\n[->] Rodrigo revisa sus ofertas y ACEPTA la oferta de Matteo...");
 		// Rodrigo inicia sesion para aceptar la oferta
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 		List<Oferta> ofertasRecibidasRodrigo = rodrigo.getOfertasRecibidas();
 		Oferta ofertaAceptar = ofertasRecibidasRodrigo.get(0);
 		rodrigo.aceptarOferta(ofertaAceptar);
@@ -124,7 +124,7 @@ public class Main {
 
 		System.out.println("\n[->] Extrayendo códigos de intercambio de las notificaciones...");
 		// Matteo inicia sesion para acceder a sus notificaciones
-		app.iniciarSesion("Matteo", "1111");
+		app.iniciarSesion("Matteo", "HolasoyMatteo@1");
 		List<NotificacionCliente> notifsMatteo = matteo.getNotificaciones();
 		NotificacionIntercambio notifIntercambioMatteo = null;
 		for (NotificacionCliente notif : notifsMatteo) {
@@ -136,7 +136,7 @@ public class Main {
 		app.cerrarSesion();
 
 		// Rodrigo inicia sesión para acceder a sus notificaciones
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 		List<NotificacionCliente> notifsRodrigo = rodrigo.getNotificaciones();
 		NotificacionIntercambio notifIntercambioRodrigo = null;
 		for (NotificacionCliente notif : notifsRodrigo) {
@@ -273,7 +273,7 @@ public class Main {
 		// Comprobemos que el interés de un cliente funciona correctamente tras las
 		// búsquedas de productos
 		System.out.println("[Iniciando sesión como Rodrigo...]");
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 
 		System.out.println("\nRodrigo busca: 'Comic Spiderman'");
 		app.buscarProductosNuevos("Comic de Spiderman Chronicles, Volumen 5");
@@ -293,7 +293,7 @@ public class Main {
 		System.out.println("           PRUEBA DE PEDIDO Y PAGO");
 		System.out.println("====================================================");
 
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 
 		// Rodrigo añade productos al carrito
 		List<LineaProductoVenta> productosDisponibles = new ArrayList<>(cat.getProductosNuevos());
@@ -314,7 +314,7 @@ public class Main {
 
 		// Rodrigo paga el pedido
 		System.out.println("\nProcesando pago del pedido...");
-		rodrigo.pagarPedido(pedidoRodrigo, "1234567890123456", "123", new DateTimeSimulado());
+		rodrigo.pagarPedido(pedidoRodrigo, "1234567812345678", "123", new DateTimeSimulado());
 		System.out.println("Estado del pedido tras el pago: " + pedidoRodrigo.getEstado());
 
 		System.out.println("\nVemos que a Federico le aparece una notificación correspondiente al pedido:\n"
@@ -376,7 +376,7 @@ public class Main {
 		System.out.println("====================================================");
 
 		// Rodrigo inicia sesión para recoger el pedido
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 
 		List<NotificacionCliente> notifsRodrigoPedido = rodrigo.getNotificaciones();
 		System.out.println("\nNotificaciones de Rodrigo tras la validación (Debería tener aviso de recogida):");
@@ -408,7 +408,7 @@ public class Main {
 		app.cerrarSesion();
 
 		// Rodrigo entra y revisa sus notificaciones
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 		System.out.println("\n[->] Rodrigo entra en la aplicación y revisa sus notificaciones...");
 
 		// Rodrigo tenía activas las notificaciones de Recomendaciones y Descuentos
@@ -423,7 +423,7 @@ public class Main {
 		double precioAntesDePagar = pedidoDescuento.getCostePedido();
 		System.out.println("Importe total del pedido (con descuento aplicado): " + precioAntesDePagar + "€");
 
-		rodrigo.pagarPedido(pedidoDescuento, "1234567890123456", "123", new DateTimeSimulado());
+		rodrigo.pagarPedido(pedidoDescuento, "1234567812345678", "123", new DateTimeSimulado());
 
 		// 5. Verificación final del ahorro
 		System.out.println("Verificación: El precio pagado es " + precioAntesDePagar 
@@ -485,7 +485,7 @@ public class Main {
 		gestor.configurarUnidadesRecomendadas(1);
 		app.cerrarSesion();
 
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 		System.out.println("\n[Escenario A] Prioridad: NOVEDAD");
 		System.out.println("Producto recomendado (debe ser el último añadido al catálogo):");
 		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
@@ -496,7 +496,7 @@ public class Main {
 		// 2. ESCENARIO B: PRIORIDAD RESEÑAS (Valoración)
 		// Vamos a añadir una reseña excelente a un producto antiguo para que destaque
 		// sobre los nuevos
-		app.iniciarSesion("Matteo", "1111");
+		app.iniciarSesion("Matteo", "HolasoyMatteo@1");
 		List<LineaProductoVenta> todos = new ArrayList<>(cat.getProductosNuevos());
 		LineaProductoVenta productoAntiguo = todos.get(0); // El primer comic de Spiderman
 		matteo.escribirReseña(productoAntiguo, "Increíble. Es el mejor cómic que he leído", 5, new DateTimeSimulado());
@@ -506,7 +506,7 @@ public class Main {
 		gestor.configurarImportancia(0, 1, 0); // Solo importan las reseñas
 		app.cerrarSesion();
 
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 		System.out.println("\n[Escenario B] Prioridad: RESEÑAS (Valoración)");
 		System.out.println("Producto recomendado (debe ser el que tiene la mejor puntuación media):");
 		for (LineaProductoVenta p : app.getConfiguracionRecomendacion().getRecomendacion()) {
@@ -521,7 +521,7 @@ public class Main {
 		gestor.configurarImportancia(1, 0, 0); // Solo importa el interés generado por el usuario
 		app.cerrarSesion();
 
-		app.iniciarSesion("Rodrigo", "2222");
+		app.iniciarSesion("Rodrigo", "HolasoyRodrigo@1");
 		System.out.println("\n[Escenario C] Prioridad: INTERÉS");
 		System.out.println("Rodrigo va a buscar 'Figuras' repetidamente...");
 		app.buscarProductosNuevos("Figura");

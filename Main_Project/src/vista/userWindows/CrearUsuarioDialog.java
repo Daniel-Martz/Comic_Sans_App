@@ -7,7 +7,6 @@ import javax.swing.*;
 import controlador.CreateAccountController;
 import controladores.MainController;
 import vista.userPanels.CrearUsuarioPanel;
-import vista.userPanels.LogInPanel;
 
 
 /**
@@ -16,13 +15,18 @@ import vista.userPanels.LogInPanel;
  * cambia dinámicamente según lo seleccionado en la columna izquierda (Filtros Generales).
  */
 public class CrearUsuarioDialog extends JDialog {
-  public CrearUsuarioDialog(JFrame parent, MainController m) {
+  CrearUsuarioPanel crearUsuarioPanel;
+  public CrearUsuarioDialog(JFrame parent) {
       super(parent, "Crar usuario", true); // true = Modal
       setSize(800, 750);
       setLocationRelativeTo(parent);
-      CrearUsuarioPanel crearUsuarioPanel = new CrearUsuarioPanel();
-      crearUsuarioPanel.añadirListenerBotonCrear(new CreateAccountController(crearUsuarioPanel, m));
+      this.crearUsuarioPanel = new CrearUsuarioPanel();
       this.setContentPane(crearUsuarioPanel);
+  }
+
+  public void addListener(CreateAccountController a){
+    a.addListeningPanel(crearUsuarioPanel);
+      this.crearUsuarioPanel.añadirListenerBotonCrear(a);
   }
 
   

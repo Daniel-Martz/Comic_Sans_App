@@ -26,19 +26,7 @@ public class MenuPrincipalPanel extends JPanel {
     private final Color BUY_NOW_COLOR = new Color(255, 204, 0);      
 
     // --- Componentes de la Cabecera ---
-    private JLabel logoLabel;
-    private JButton btnHome;
-    private JButton btnDescuentos;
-    private JButton btnOutstanding;
-    private JTextField txtSearch;
-    private JButton btnSearch;
-    private JButton btnFilters;
-
-    // Botones de iconos
-    private JButton btnCarrito;
-    private JButton btnIntercambios;
-    private JButton btnPerfil;
-    private JButton btnNotificaciones;
+    private HeaderPanel headerPanel;
 
     // --- Contenedores Principales ---
     private JPanel recommendedPanel;
@@ -56,57 +44,10 @@ public class MenuPrincipalPanel extends JPanel {
         initComponents();
         initLayout();
     }
+    
 
     private void initComponents() {
-        // Logo de la app
-        logoLabel = new JLabel();
-        try {
-            File logoFile = new File("src/assets/appicon.png");
-            if(logoFile.exists()) {
-                Image img = javax.imageio.ImageIO.read(logoFile);
-                Image scaledLogo = img.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-                logoLabel.setIcon(new ImageIcon(scaledLogo));
-            } else {
-                logoLabel.setText("COMIC SANS");
-            }
-        } catch (Exception e) {
-            logoLabel.setText("COMIC SANS");
-            logoLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
-        }
-
-        // Navegación izquierda 
-        btnHome = createTopNavButton("HOME 🏠");
-        btnDescuentos = createTopNavButton("DISCOUNTS %");
-        btnOutstanding = createTopNavButton("OUTSTANDING ⭐");
-
-        // Búsqueda y filtros 
-        txtSearch = new JTextField(20) { 
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.WHITE);
-                g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 12, 12);
-                super.paintComponent(g);
-            }
-        };
-        txtSearch.setOpaque(false);
-        txtSearch.setFont(new Font("SansSerif", Font.PLAIN, 14)); 
-        txtSearch.setBorder(new EmptyBorder(6, 12, 6, 12)); 
-        
-        btnFilters = new JButton("⚙ Filtros");
-        btnFilters.setFont(new Font("SansSerif", Font.BOLD, 14)); 
-        btnFilters.setContentAreaFilled(false);
-        btnFilters.setBorderPainted(false);
-        btnFilters.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        btnSearch = createImageIconButton("src/assets/lupa.png", 25, 25, "SEARCH");
-
-        // Carga de iconos estricta (Te avisará por consola si algo falla)
-        btnCarrito = createImageIconButton("src/assets/carrito.png", 35, 35, "CART");
-        btnIntercambios = createImageIconButton("src/assets/intercambio.png", 35, 35, "INT");
-        btnPerfil = createImageIconButton("src/assets/fotoperfil.png", 35, 35, "PERF");
-        btnNotificaciones = createImageIconButton("src/assets/notificaciones.png", 35, 35, "NOTI"); 
+        headerPanel = new HeaderPanel();
     }
 
     private void initLayout() {
@@ -116,61 +57,7 @@ public class MenuPrincipalPanel extends JPanel {
         // ==========================================
         // 1. HEADER (NORTE)
         // ==========================================
-        JPanel header = new JPanel(new BorderLayout());
-        header.setOpaque(false);
-        header.setBorder(new EmptyBorder(10, 15, 10, 15));
-
-        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
-        leftPanel.setOpaque(false);
-        leftPanel.add(logoLabel);
-        
-        JLabel speechBubble = new JLabel("<html><center>YOUR FAVORITE STORE<br>IS NOW ONLINE!!</center></html>");
-        speechBubble.setBackground(Color.WHITE);
-        speechBubble.setOpaque(true);
-        speechBubble.setBorder(BorderFactory.createCompoundBorder(
-                new LineBorder(Color.BLACK, 1, false), new EmptyBorder(10, 20, 10, 20)));
-        leftPanel.add(speechBubble);
-
-        JPanel centerNavPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 20));
-        centerNavPanel.setOpaque(false);
-        centerNavPanel.add(btnHome);
-        centerNavPanel.add(btnDescuentos);
-        centerNavPanel.add(btnOutstanding);
-
-        JPanel rightPanel = new JPanel(new BorderLayout(15, 0)); 
-        rightPanel.setOpaque(false);
-
-        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 20));
-        searchPanel.setOpaque(false);
-        searchPanel.add(txtSearch);
-        searchPanel.add(btnSearch);
-        searchPanel.add(btnFilters);
-
-        // Fila 1 de iconos
-        JPanel iconsTop = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        iconsTop.setOpaque(false);
-        iconsTop.add(btnCarrito);
-        iconsTop.add(btnIntercambios);
-        iconsTop.add(btnPerfil);
-
-        // Fila 2 de iconos (Notificaciones debajo)
-        JPanel iconsBottom = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
-        iconsBottom.setOpaque(false);
-        iconsBottom.add(btnNotificaciones);
-
-        JPanel iconsContainer = new JPanel(new BorderLayout());
-        iconsContainer.setOpaque(false);
-        iconsContainer.add(iconsTop, BorderLayout.NORTH);
-        iconsContainer.add(iconsBottom, BorderLayout.SOUTH);
-
-        rightPanel.add(searchPanel, BorderLayout.CENTER);
-        rightPanel.add(iconsContainer, BorderLayout.EAST);
-
-        header.add(leftPanel, BorderLayout.WEST);
-        header.add(centerNavPanel, BorderLayout.CENTER);
-        header.add(rightPanel, BorderLayout.EAST);
-
-        add(header, BorderLayout.NORTH);
+        add(headerPanel, BorderLayout.NORTH);
 
         // ==========================================
         // 2. BODY (CENTRO)
@@ -204,7 +91,7 @@ public class MenuPrincipalPanel extends JPanel {
         bodyContent.add(scrollProducts);
         bodyContent.add(Box.createVerticalStrut(20));
 
-        bodyContent.add(createBanner("TYPE OF PRODUCTS", BANNER_SUB_COLOR, 18));
+        bodyContent.add(createBanner("CATEGORIES", BANNER_SUB_COLOR, 18));
         bodyContent.add(Box.createVerticalStrut(15));
 
         categoriesPanel = new JPanel(new GridLayout(1, 3, 20, 0));
@@ -226,88 +113,13 @@ public class MenuPrincipalPanel extends JPanel {
     // MÉTODOS AUXILIARES DE CREACIÓN DE UI
     // ==========================================
 
-    private JButton createTopNavButton(String text) {
-        JButton btn = new JButton(text) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(getBackground());
-                g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
-                super.paintComponent(g);
-                g2.dispose();
-            }
-            @Override
-            protected void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(Color.BLACK);
-                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
-                g2.dispose();
-            }
-        };
-        btn.setContentAreaFilled(false);
-        btn.setBackground(Color.WHITE);
-        btn.setFocusPainted(false);
-        btn.setFont(new Font("SansSerif", Font.BOLD, 14));
-        btn.setBorder(new EmptyBorder(10, 25, 10, 25));
-        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        return btn;
-    }
-
-    /**
-     * Crea un botón cargando una imagen desde los assets.
-     * Utiliza ImageIO para detectar "falsos PNG" y anula los márgenes para evitar los "..."
-     */
-    private JButton createImageIconButton(String imagePath, int width, int height, String fallbackText) {
-        JButton btn = new JButton();
-        btn.setContentAreaFilled(false);
-        btn.setBorderPainted(false);
-        btn.setFocusPainted(false);
-        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        // Quitamos los márgenes por defecto de Swing para que quepa el texto de emergencia
-        btn.setMargin(new Insets(0, 0, 0, 0));
-        btn.setPreferredSize(new Dimension(width + 5, height + 5)); 
-        
-        try {
-            File imgFile = new File(imagePath);
-            if (!imgFile.exists()) {
-                System.err.println(" ERROR: No se encuentra el archivo " + imagePath);
-                setFallback(btn, fallbackText);
-                return btn;
-            }
-            
-            // ImageIO leerá los bytes reales. Si es un falso PNG, devolverá null o lanzará excepción
-            Image img = javax.imageio.ImageIO.read(imgFile);
-            if (img == null) {
-                System.err.println(" ERROR: Java no reconoce el formato de " + imagePath + ". ¡Seguramente sea un AVIF renombrado a mano!");
-                setFallback(btn, fallbackText);
-                return btn;
-            }
-            
-            Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            btn.setIcon(new ImageIcon(scaledImg));
-            
-        } catch (Exception e) {
-            System.err.println(" ERROR al leer la imagen " + imagePath + ": " + e.getMessage());
-            setFallback(btn, fallbackText);
-        }
-        return btn;
-    }
-
-    private void setFallback(JButton btn, String text) {
-        btn.setText(text);
-        btn.setFont(new Font("SansSerif", Font.BOLD, 10)); // Letra pequeña para que no se recorte
-        btn.setForeground(Color.RED); // En rojo para que veas claramente que ha fallado
-    }
-
     private JPanel createBanner(String text, Color bgColor, int fontSize) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(bgColor);
         panel.setBorder(new LineBorder(Color.DARK_GRAY, 1));
         
         JLabel label = new JLabel(text, SwingConstants.CENTER);
-        label.setFont(new Font("SansSerif", Font.BOLD, fontSize));
+        label.setFont(new Font("Comic Sans MS", Font.BOLD, fontSize));
         label.setForeground(Color.WHITE);
         label.setBorder(new EmptyBorder(8, 0, 8, 0));
         
@@ -360,7 +172,7 @@ public class MenuPrincipalPanel extends JPanel {
         btnBuy.setContentAreaFilled(false);
         btnBuy.setBackground(BUY_NOW_COLOR);
         btnBuy.setForeground(Color.RED);
-        btnBuy.setFont(new Font("SansSerif", Font.BOLD, 10));
+        btnBuy.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
         btnBuy.setBorder(new EmptyBorder(5, 10, 5, 10));
         btnBuy.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBuy.setActionCommand("ADD_" + productId);
@@ -411,7 +223,7 @@ public class MenuPrincipalPanel extends JPanel {
         card.setPreferredSize(new Dimension(300, 200));
 
         JButton btnCat = new JButton(title);
-        btnCat.setFont(new Font("SansSerif", Font.BOLD, 16));
+        btnCat.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         btnCat.setBackground(Color.WHITE);
         btnCat.setFocusPainted(false);
         btnCat.setActionCommand(actionCommand);
@@ -448,23 +260,10 @@ public class MenuPrincipalPanel extends JPanel {
     // ==========================================
     // MÉTODOS PARA REGISTRAR LISTENERS
     // ==========================================
-    public void addHomeListener(ActionListener l) { btnHome.addActionListener(l); }
-    public void addDescuentosListener(ActionListener l) { btnDescuentos.addActionListener(l); }
-    public void addOutstandingListener(ActionListener l) { btnOutstanding.addActionListener(l); }
     
-    
-    public void addSearchListener(ActionListener l) { 
-        txtSearch.addActionListener(l); 
-        btnSearch.addActionListener(e -> {
-            l.actionPerformed(new java.awt.event.ActionEvent(txtSearch, java.awt.event.ActionEvent.ACTION_PERFORMED, txtSearch.getText()));
-        });
+    public HeaderPanel getHeaderPanel() {
+        return headerPanel;
     }
-    public void addFiltrosListener(ActionListener l) { btnFilters.addActionListener(l); }
-    
-    public void addCarritoListener(ActionListener l) { btnCarrito.addActionListener(l); }
-    public void addIntercambiosListener(ActionListener l) { btnIntercambios.addActionListener(l); }
-    public void addPerfilListener(ActionListener l) { btnPerfil.addActionListener(l); }
-    public void addNotificacionesListener(ActionListener l) { btnNotificaciones.addActionListener(l); }
 
     public void addBuyNowListener(ActionListener l) {
         this.buyNowListener = l;

@@ -16,10 +16,13 @@ public class LoginController implements ActionListener{
   LogInPanel loginPanel;
   MainController mainController;
 	
-	public LoginController(LogInPanel loginPanel, MainController m) {
-		this.loginPanel = loginPanel;
+	public LoginController(MainController m) {
 		this.mainController = m;
 	}
+
+  public void addListeningPanel(LogInPanel l){
+    this.loginPanel = l;
+  }
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -30,8 +33,10 @@ public class LoginController implements ActionListener{
 		  app.iniciarSesion(usernameString, passwordString);
 		  loginPanel.setStatusLabelText("");
 		  mainController.cerrarVentanaLogIn();
+		  mainController.refreshIconImage(true);
 		}catch(IllegalArgumentException | IllegalStateException e) {
 		  loginPanel.setStatusLabelText(e.getMessage());
+		  mainController.refreshIconImage(false);
 		}
 	}
 	

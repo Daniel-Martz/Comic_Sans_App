@@ -11,7 +11,7 @@ public class MainParaPruebas extends JFrame {
     public MainParaPruebas() {
         super("Java Swing MVC");
         cardLayout = new CardLayout();
-         JPanel panel = new LogInPanel();
+         JPanel panel = new HistorialPedidosPanel();
         // sets our layout as a card layout
         setLayout(cardLayout);
 
@@ -29,5 +29,16 @@ public class MainParaPruebas extends JFrame {
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+    
+    public static void main(String[] args) {
+        // Ejecutar en el hilo de eventos de Swing (Event Dispatch Thread)
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                // Instanciamos la clase, lo que ejecutará su constructor y mostrará la ventana
+                new MainParaPruebas();
+            }
+        });
     }
 }
