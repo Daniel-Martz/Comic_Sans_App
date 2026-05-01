@@ -4,20 +4,11 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import com.sun.tools.javac.Main;
-
-import controladores.MainController;
 import modelo.aplicacion.Aplicacion;
-import modelo.usuario.ClienteRegistrado;
-import modelo.usuario.Usuario;
-import vista.main.MainFrame;
+import modelo.aplicacion.Catalogo;
 import vista.userPanels.HistorialPedidosPanel;
-import vista.userPanels.LogInPanel;
 
 public class ControladorHistorialPedidos implements ActionListener{
   HistorialPedidosPanel historialPedidosPanel;
@@ -32,7 +23,7 @@ public class ControladorHistorialPedidos implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 	  int productId = Integer.parseInt(e.getActionCommand());
     Window parentWindow = SwingUtilities.getWindowAncestor(historialPedidosPanel);
-    vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(parentWindow, Aplicacion.getInstancia().buscarProductoNuevo(productId));
+    vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(parentWindow, Catalogo.getInstancia().buscarProductoNuevo(productId));
     dialog.setVisible(true);
 	}
 }

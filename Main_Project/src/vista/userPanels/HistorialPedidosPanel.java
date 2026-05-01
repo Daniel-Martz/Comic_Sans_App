@@ -44,87 +44,102 @@ public class HistorialPedidosPanel extends JPanel {
   public void agregarPedido(List<SolicitudPedido> pedido){
     pedido.forEach(p -> agregarPedido(p));
   }
+  /**
+    * Método para construir y añadir dinámicamente un pedido a la interfaz.
+    */
+  public void agregarPedido(SolicitudPedido pedido) {
+    double precioTotal = pedido.getCostePedido(); 
+    String fecha = pedido.getFechaRealizacion().toString();
+    Map<SimpleEntry<LineaProductoVenta, Integer>, Double> mapaProductos = pedido.getRecaudacionProductos();
 
-    /**
-     * Método para construir y añadir dinámicamente un pedido a la interfaz.
-     */
-    public void agregarPedido(SolicitudPedido pedido) {
-        double precioTotal = pedido.getCostePedido(); 
-        String fecha = pedido.getFechaRealizacion().toString();
-        Map<SimpleEntry<LineaProductoVenta, Integer>, Double> mapaProductos = pedido.getRecaudacionProductos();
+    JPanel panelPedido = new JPanel();
+    panelPedido.setLayout(new BorderLayout(5, 5));
+    
+    panelPedido.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Pedido realizado el:  " + fecha),
+            BorderFactory.createEmptyBorder(5, 10, 10, 10)
+    ));
+    
+    // Ajustamos la altura máxima del bloque del pedido
+    panelPedido.setMaximumSize(new Dimension(Integer.MAX_VALUE, 400));
 
-        // Panel contenedor del pedido individual
-        JPanel panelPedido = new JPanel();
-        panelPedido.setLayout(new BorderLayout(5, 5));
+    JLabel lblPrecio = new JLabel("Total pagado: " + String.format("%.2f", precioTotal) + " €");
+    lblPrecio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+    lblPrecio.setForeground(new Color(34, 139, 34)); 
+    panelPedido.add(lblPrecio, BorderLayout.NORTH);
+
+    // --- CAMBIO CRÍTICO 1: Usamos un JPanel con FlowLayout para que actúe como "ancla" ---
+    // FlowLayout permite que el contenido mantenga su tamaño preferido y se desborde a lo ancho.
+    JPanel panelProductos = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+    
+    for (SimpleEntry<LineaProductoVenta, Integer> entrada : mapaProductos.keySet()) {
+        JPanel panelProductoConcreto = new JPanel();
+        panelProductoConcreto.setLayout(new BoxLayout(panelProductoConcreto, BoxLayout.Y_AXIS));
         
-        // Borde decorativo con el título de la fecha
-        panelPedido.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Pedido realizado el:  " + fecha),
-                BorderFactory.createEmptyBorder(5, 10, 10, 10)
+        // --- CAMBIO CRÍTICO 2: Forzar un tamaño preferido a la tarjeta ---
+        // Si no fijamos el ancho, el BoxLayout lo colapsará al mínimo posible.
+        panelProductoConcreto.setPreferredSize(new Dimension(300, 200));
+        
+        panelProductoConcreto.setBackground(new Color(240, 248, 255));
+        panelProductoConcreto.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(176, 196, 222)), 
+                BorderFactory.createEmptyBorder(10, 15, 10, 15)
         ));
-        
-        // Evitar que el BoxLayout lo estire verticalmente más de lo necesario
-        panelPedido.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
 
-        // --- CABECERA DEL PEDIDO (Precio) ---
-        JLabel lblPrecio = new JLabel("Total pagado: " + String.format("%.2f", precioTotal) + " €");
-        lblPrecio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-        lblPrecio.setForeground(new Color(34, 139, 34)); // Verde oscuro
-        panelPedido.add(lblPrecio, BorderLayout.NORTH);
+        JLabel nameLabel = new JLabel(entrada.getKey().getNombre());
+        JLabel unitsLabel = new JLabel("Units bought: " + entrada.getValue());
+        JLabel priceLabel = new JLabel("Total price: " + mapaProductos.get(entrada) + " €");
+        JButton infoButton = new JButton("Product Information");
+        infoButton.addActionListener(controladorHistorialPedidos);
 
-        // --- LISTA DE PRODUCTOS (Scroll Horizontal) ---
-        // Usamos FlowLayout configurado sin saltos de línea (ideal para scroll horizontal)
-        JPanel panelProductos = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        
-        // Crear una "tarjeta" visual para cada producto
-        for (SimpleEntry<LineaProductoVenta, Integer> entrada : mapaProductos.keySet()) {
-            JPanel panelProductoConcreto = new JPanel();
-            panelProductoConcreto.setLayout(new BoxLayout(panelProductoConcreto, BoxLayout.Y_AXIS));
-            JLabel nameLabel = new JLabel(entrada.getKey().getNombre());
-            JLabel unitsLabel = new JLabel("Units bought: " + entrada.getValue());
-            JLabel priceLabel = new JLabel("Total price for the product: " + mapaProductos.get(entrada));
-            JButton infoButton = new JButton("Product information");
+        ImageIcon iconoOriginal = new ImageIcon(entrada.getKey().getFoto().getPath()); 
+        Image imgEscalada = iconoOriginal.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imgEscalada);
+        JLabel imagenLabel = new JLabel(iconoEscalado);
 
-            infoButton.setActionCommand("" + entrada.getKey().getID());
+        infoButton.setActionCommand("" + entrada.getKey().getID());
+        this.botonesInformation.add(infoButton);
 
-            formatLabel(nameLabel); formatLabel(unitsLabel); formatLabel(priceLabel);
-            panelProductoConcreto.add(nameLabel);
-            panelProductoConcreto.add(unitsLabel);
-            panelProductoConcreto.add(priceLabel);
-            panelProductoConcreto.add(infoButton);
+        nameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        unitsLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        priceLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        infoButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            panelProductos.add(panelProductoConcreto);
-        }
+        panelProductoConcreto.add(nameLabel);
+        panelProductoConcreto.add(Box.createVerticalGlue()); 
+        panelProductoConcreto.add(imagenLabel);
+        panelProductoConcreto.add(Box.createVerticalGlue()); 
+        panelProductoConcreto.add(unitsLabel);
+        panelProductoConcreto.add(priceLabel);
+        panelProductoConcreto.add(Box.createRigidArea(new Dimension(0, 10))); 
+        panelProductoConcreto.add(infoButton);
 
-        // Envolver los productos en su propio JScrollPane horizontal
-        JScrollPane scrollHorizontal = new JScrollPane(panelProductos);
-        scrollHorizontal.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        scrollHorizontal.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollHorizontal.getHorizontalScrollBar().setUnitIncrement(16);
-        scrollHorizontal.setBorder(BorderFactory.createEmptyBorder()); // Quitar el borde extra del scroll
-
-        panelPedido.add(scrollHorizontal, BorderLayout.CENTER);
-
-        // --- AÑADIR AL CONTENEDOR PRINCIPAL ---
-        contenedorPedidos.add(panelPedido);
-        // Añadir un espacio rígido para separar visualmente los pedidos
-        contenedorPedidos.add(Box.createRigidArea(new Dimension(0, 15)));
-
-        // Refrescar la UI
-        contenedorPedidos.revalidate();
-        contenedorPedidos.repaint();
+        panelProductos.add(panelProductoConcreto);
     }
 
-  private void formatLabel(JLabel label){
-    label.setOpaque(true);
-    label.setBackground(new Color(240, 248, 255)); // Azul claro
-    label.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(176, 196, 222)), // Borde azul claro
-            BorderFactory.createEmptyBorder(10, 15, 10, 15) // Padding interno
-    ));
+    // --- CAMBIO CRÍTICO 3: Configuración del JScrollPane ---
+    JScrollPane scrollHorizontal = new JScrollPane(panelProductos);
+    scrollHorizontal.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+    scrollHorizontal.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    
+    // Esto es vital: obliga al JScrollPane a reconocer el tamaño del panelProductos
+    scrollHorizontal.setViewportView(panelProductos); 
+    scrollHorizontal.getHorizontalScrollBar().setUnitIncrement(16);
+    scrollHorizontal.setBorder(BorderFactory.createEmptyBorder()); 
+
+    // Ajustamos el tamaño preferido del scroll para que el BorderLayout sepa cuánto espacio ocupar
+    scrollHorizontal.setPreferredSize(new Dimension(400, 180));
+
+    panelPedido.add(scrollHorizontal, BorderLayout.CENTER);
+
+    contenedorPedidos.add(panelPedido);
+    contenedorPedidos.add(Box.createRigidArea(new Dimension(0, 15)));
+
+    contenedorPedidos.revalidate();
+    contenedorPedidos.repaint();
   }
 
   public void addListenerForButtons(ControladorHistorialPedidos c){
-    this.botonesInformation.forEach(b -> b.addActionListener(c));
+    this.controladorHistorialPedidos = c;
   }
 }

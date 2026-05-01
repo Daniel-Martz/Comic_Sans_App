@@ -89,7 +89,11 @@ public class ProductosFiltradosPanel extends JPanel {
 
         tarjeta.add(Box.createVerticalStrut(10));
 
-        JLabel img = new JLabel("IMAGE", SwingConstants.CENTER);
+        ImageIcon iconoOriginal = new ImageIcon(prod.getFoto().getPath()); 
+        Image imgEscalada = iconoOriginal.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imgEscalada);
+
+        JLabel img = new JLabel(iconoEscalado, SwingConstants.CENTER);
         img.setOpaque(true);
         img.setBackground(new Color(220,220,220));
         img.setPreferredSize(new Dimension(160, 90));
