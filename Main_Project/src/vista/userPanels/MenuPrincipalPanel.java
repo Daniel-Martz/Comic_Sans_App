@@ -127,7 +127,11 @@ public class MenuPrincipalPanel extends JPanel {
         return panel;
     }
 
-    private JPanel createProductCard(String name, String price, String productId) {
+    private JPanel createProductCard(LineaProductoVenta prod) {
+        String name = prod.getNombre();
+        String price = String.format("%.2f €", prod.getPrecio());
+        String productId = String.valueOf(prod.getID());
+
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(BG_COLOR);
         card.setPreferredSize(new Dimension(180, 230));
@@ -138,17 +142,21 @@ public class MenuPrincipalPanel extends JPanel {
         lblName.setForeground(Color.DARK_GRAY);
         lblName.setBorder(new EmptyBorder(0, 0, 5, 0));
 
-        JPanel imagePlaceholder = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.setColor(Color.GRAY);
-                g.drawLine(0, 0, getWidth(), getHeight());
-                g.drawLine(getWidth(), 0, 0, getHeight());
-                g.drawRect(0, 0, getWidth()-1, getHeight()-1);
-            }
-        };
+        JLabel imagePlaceholder = new JLabel();
+        imagePlaceholder.setHorizontalAlignment(SwingConstants.CENTER);
         imagePlaceholder.setBackground(Color.WHITE);
+        imagePlaceholder.setOpaque(true);
+        try {
+            if (prod.getFoto() != null && prod.getFoto().getPath() != null) {
+                ImageIcon iconoOriginal = new ImageIcon(prod.getFoto().getPath()); 
+                Image imgEscalada = iconoOriginal.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+                imagePlaceholder.setIcon(new ImageIcon(imgEscalada));
+            } else {
+                imagePlaceholder.setText("NO IMAGE");
+            }
+        } catch (Exception e) {
+            imagePlaceholder.setText("NO IMAGE");
+        }
 
         JPanel bottom = new JPanel(new BorderLayout());
         bottom.setOpaque(false);
@@ -283,7 +291,7 @@ public class MenuPrincipalPanel extends JPanel {
             recommendedPanel.add(lbl);
         } else {
             for (LineaProductoVenta p : recomendados) {
-                JPanel card = createProductCard(p.getNombre(), String.format("%.2f €", p.getPrecio()), String.valueOf(p.getID()));
+                JPanel card = createProductCard(p);
                 recommendedPanel.add(card);
             }
         }

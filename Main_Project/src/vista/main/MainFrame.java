@@ -1,6 +1,7 @@
 package vista.main;
 
 import vista.userPanels.*;
+import vista.empleadoPanel.*;
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,6 +24,8 @@ public class MainFrame extends JFrame {
     private MakeOfferPanel makeOfferPanel;
     private HistorialPedidosPanel historialPedidosPanel;
     
+    private ManageProductsPanel manageProductsPanel;
+    private ModifyProductsPanel modifyProductsPanel;
     
     private PlaceholderPanel descuentosPanel;
     private PlaceholderPanel configuracionPanel;
@@ -45,6 +48,9 @@ public class MainFrame extends JFrame {
     public static final String PANEL_SEARCH_INTERCHANGES = "SearchInterchanges";
     public static final String PANEL_MAKE_OFFER = "MakeOffer";
     public static final String PANEL_HISTORIAL_PEDIDOS = "HistorialPedidos";
+    public static final String PANEL_MANAGE_PRODUCTS = "ManageProducts";
+    public static final String PANEL_MODIFY_PRODUCTS = "ModifyProducts";
+    public static final String PANEL_MODIFY_A_PRODUCT = "ModifyAProduct";
 
     public MainFrame() {
         super("Comic Sans App");
@@ -64,6 +70,9 @@ public class MainFrame extends JFrame {
         searchInterchangesPanel = new SearchInterchangesPanel();
         makeOfferPanel = new MakeOfferPanel();
         historialPedidosPanel = new HistorialPedidosPanel();
+        
+        manageProductsPanel = new ManageProductsPanel();
+        modifyProductsPanel = new ModifyProductsPanel();
         
         descuentosPanel = new PlaceholderPanel("Descuentos");
         configuracionPanel = new PlaceholderPanel("Configuración");
@@ -85,6 +94,9 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(searchInterchangesPanel, PANEL_SEARCH_INTERCHANGES);
         contenedorPaneles.add(makeOfferPanel, PANEL_MAKE_OFFER);
         contenedorPaneles.add(historialPedidosPanel, PANEL_HISTORIAL_PEDIDOS);
+        
+        contenedorPaneles.add(manageProductsPanel, PANEL_MANAGE_PRODUCTS);
+        contenedorPaneles.add(modifyProductsPanel, PANEL_MODIFY_PRODUCTS);
 
         // 4. Configurar la ventana
         setContentPane(contenedorPaneles);
@@ -113,6 +125,9 @@ public class MainFrame extends JFrame {
     public SearchInterchangesPanel getSearchInterchangesPanel() { return searchInterchangesPanel; }
     public MakeOfferPanel getMakeOfferPanel() { return makeOfferPanel; }
     public HistorialPedidosPanel getHistorialPedidosPanel() { return historialPedidosPanel; }
+    
+    public ManageProductsPanel getManageProductsPanel() { return manageProductsPanel; }
+    public ModifyProductsPanel getModifyProductsPanel() { return modifyProductsPanel; }
     
     public PlaceholderPanel getDescuentosPanel() { return descuentosPanel; }
     public PlaceholderPanel getConfiguracionPanel() { return configuracionPanel; }

@@ -89,10 +89,10 @@ public class MainController {
         conectarHeaderGlobal(mainFrame.getSearchInterchangesPanel().getHeaderPanel());
         conectarHeaderGlobal(mainFrame.getMakeOfferPanel().getHeaderPanel());
         
-        // Botón Perfil y Notificaciones
-        mainFrame.getMenuPrincipalPanel().addPerfilListener(e -> navegarBotonPerfil());
-        mainFrame.getMenuPrincipalPanel().addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
-        mainFrame.getMenuPrincipalPanel().addFiltrosListener(e -> abrirVentanaFiltros());
+        conectarHeaderEmpleado(mainFrame.getManageProductsPanel().getHeaderPanel());
+        
+        new ControladorManageProducts(mainFrame, this);
+        
         mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> {
             String cmd = e.getActionCommand();
             if (cmd != null && cmd.startsWith("ADD_")) {

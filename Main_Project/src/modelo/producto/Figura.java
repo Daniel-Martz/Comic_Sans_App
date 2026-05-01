@@ -16,19 +16,19 @@ public class Figura extends LineaProductoVenta {
 	private static final long serialVersionUID = 1L;
 
 	/** Marca del producto. */
-	private final String marca;
+	private String marca;
 
 	/** Material del producto. */
-	private final String material;
+	private String material;
 
 	/** Dimensión en el eje X. */
-	private final double dimensionX;
+	private double dimensionX;
 
 	/** Dimensión en el eje Y. */
-	private final double dimensionY;
+	private double dimensionY;
 
 	/** Dimensión en el eje Z. */
-	private final double dimensionZ;
+	private double dimensionZ;
 
 	/**
 	 * Construye una figura coleccionable.
@@ -100,5 +100,25 @@ public class Figura extends LineaProductoVenta {
 	 */
 	public double getDimensionZ() {
 		return dimensionZ;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public void setMaterial(String material) {
+		this.material = material;
+	}
+
+	public void setDimensionX(double dimensionX) {
+		this.dimensionX = dimensionX;
+	}
+
+	public void setDimensionY(double dimensionY) {
+		this.dimensionY = dimensionY;
+	}
+
+	public void setDimensionZ(double dimensionZ) {
+		this.dimensionZ = dimensionZ;
 	}
 }

@@ -19,16 +19,16 @@ public class JuegoDeMesa extends LineaProductoVenta {
 	private static final long serialVersionUID = 1L;
 
 	/** Número de jugadores permitidos. */
-	private final int numeroJugadores;
+	private int numeroJugadores;
 
 	/** Edad mínima recomendada. */
-	private final int edadMinima;
+	private int edadMinima;
 
 	/** Edad máxima recomendada. */
-	private final int edadMaxima;
+	private int edadMaxima;
 
 	/** Tipo de juego de mesa. */
-	private final TipoJuegoMesa tipo;
+	private TipoJuegoMesa tipo;
 
 	/**
 	 * Construye un juego de mesa.
@@ -88,5 +88,21 @@ public class JuegoDeMesa extends LineaProductoVenta {
 	 */
 	public TipoJuegoMesa getTipoJuegoDeMesa() {
 		return this.tipo;
+	}
+
+	public void setNumeroJugadores(int numeroJugadores) {
+		this.numeroJugadores = numeroJugadores;
+	}
+
+	public void setEdadMinima(int edadMinima) {
+		this.edadMinima = edadMinima;
+	}
+
+	public void setEdadMaxima(int edadMaxima) {
+		this.edadMaxima = edadMaxima;
+	}
+
+	public void setTipoJuegoDeMesa(TipoJuegoMesa tipo) {
+		this.tipo = tipo;
 	}
 }

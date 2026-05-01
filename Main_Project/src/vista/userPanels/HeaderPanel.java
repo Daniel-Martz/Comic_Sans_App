@@ -27,8 +27,8 @@ public class HeaderPanel extends JPanel {
     private JPanel leftPanel;
     private JPanel rightPanel;
 
-    ImageIcon iconoSinLogIn = getSclaedIcon("/assets/fotoperfil.png");
-    ImageIcon iconoConLogIn = getSclaedIcon("/assets/fotoperfilLoggedIn.png");
+    ImageIcon iconoSinLogIn = getSclaedIcon("src/assets/fotoperfil.png");
+    ImageIcon iconoConLogIn = getSclaedIcon("src/assets/fotoperfilLoggedIn.png");
 
     public HeaderPanel() {
         initComponents();
@@ -36,10 +36,17 @@ public class HeaderPanel extends JPanel {
     }
     
     public ImageIcon getSclaedIcon(String path) {
-		ImageIcon icono= new ImageIcon(getClass().getResource(path));
-		Image imagenEscalada = icono.getImage().getScaledInstance(
-    35, 35, Image.SCALE_SMOOTH);
-		return new ImageIcon(imagenEscalada);
+        try {
+            File imgFile = new File(path);
+            if (imgFile.exists()) {
+                Image img = javax.imageio.ImageIO.read(imgFile);
+                Image scaledImg = img.getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+                return new ImageIcon(scaledImg);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ImageIcon();
     }
     
     public void refreshIconImage(boolean isLoggedIn) {

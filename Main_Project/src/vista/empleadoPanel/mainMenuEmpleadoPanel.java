@@ -1,5 +1,6 @@
-package vista.userPanels;
+package vista.empleadoPanel;
 
+import vista.userPanels.HeaderPanel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -109,5 +110,9 @@ public class mainMenuEmpleadoPanel extends JPanel {
 
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
+    }
+    
+    public void addManageProductsListener(java.awt.event.ActionListener l) {
+        btnManageProducts.addActionListener(l);
     }
 }

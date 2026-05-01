@@ -12,16 +12,16 @@ public class Comic extends LineaProductoVenta {
 	private static final long serialVersionUID = 1L;
 
 	/** Cantidad total de páginas del ejemplar. */
-	private final int numeroPaginas;
+	private int numeroPaginas;
 	
 	/** Nombre del autor o autores (guionistas/dibujantes). */
-	private final String autor;
+	private String autor;
 	
 	/** Empresa encargada de la edición y publicación. */
-	private final String editorial;
+	private String editorial;
 	
 	/** Año en el que se publicó esta edición específica. */
-	private final int añoPublicacion;
+	private int añoPublicacion;
 	
 	/**
 	 * Construye un nuevo Comic con sus atributos detallados.
@@ -80,5 +80,21 @@ public class Comic extends LineaProductoVenta {
 	 */
 	public int getAñoPublicacion() {
 		return añoPublicacion;
+	}
+
+	public void setNumeroPaginas(int numeroPaginas) {
+		this.numeroPaginas = numeroPaginas;
+	}
+
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
+
+	public void setEditorial(String editorial) {
+		this.editorial = editorial;
+	}
+
+	public void setAñoPublicacion(int añoPublicacion) {
+		this.añoPublicacion = añoPublicacion;
 	}
 }

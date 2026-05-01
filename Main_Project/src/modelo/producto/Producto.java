@@ -21,7 +21,7 @@ public abstract class Producto implements Comparable<Producto>, Serializable{
 	private static int contadorID = 1;
 	
 	/** Identificador único e inmutable del producto. */
-	private final int ID;
+	private int ID;
 	
 	/** Nombre del producto. */
 	private String nombre;
@@ -119,6 +119,10 @@ public abstract class Producto implements Comparable<Producto>, Serializable{
 	 * @return El identificador único del producto. */
 	public int getID() {
 		return ID;
+	}
+
+	public void setID(int id) {
+		this.ID = id;
 	}
 	
 	/** 
