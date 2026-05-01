@@ -141,7 +141,7 @@ public class FiltrosDialog extends JDialog {
         p.setBorder(new LineBorder(Color.DARK_GRAY));
         p.setPreferredSize(new Dimension(300, 50));
         JLabel lbl = new JLabel("NO CATEGORY SELECTED", SwingConstants.CENTER);
-        lbl.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lbl.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lbl.setForeground(Color.WHITE);
         p.add(lbl, BorderLayout.CENTER);
         
@@ -360,7 +360,7 @@ public class FiltrosDialog extends JDialog {
         lbl.setOpaque(true);
         lbl.setBackground(HEADER_COLOR);
         lbl.setForeground(Color.WHITE);
-        lbl.setFont(new Font("SansSerif", Font.BOLD, 18));
+        lbl.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
         lbl.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.DARK_GRAY), new EmptyBorder(6, 10, 6, 10)));
         lbl.setPreferredSize(new Dimension(300, 46));
         lbl.setMaximumSize(new Dimension(Integer.MAX_VALUE, 46));
@@ -380,7 +380,7 @@ public class FiltrosDialog extends JDialog {
         lblTitle.setOpaque(true);
         lblTitle.setBackground(SECTION_BG);
         lblTitle.setForeground(Color.WHITE);
-        lblTitle.setFont(new Font("SansSerif", Font.BOLD, 12));
+        lblTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         lblTitle.setBorder(new EmptyBorder(5, 0, 5, 0));
 
         panel.add(lblTitle, BorderLayout.NORTH);

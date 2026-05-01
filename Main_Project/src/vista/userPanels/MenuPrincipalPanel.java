@@ -120,7 +120,7 @@ public class MenuPrincipalPanel extends JPanel {
         panel.setBorder(new LineBorder(Color.DARK_GRAY, 1));
         
         JLabel label = new JLabel(text, SwingConstants.CENTER);
-        label.setFont(new Font("SansSerif", Font.BOLD, fontSize));
+        label.setFont(new Font("Comic Sans MS", Font.BOLD, fontSize));
         label.setForeground(Color.WHITE);
         label.setBorder(new EmptyBorder(8, 0, 8, 0));
         
@@ -168,7 +168,7 @@ public class MenuPrincipalPanel extends JPanel {
         btnBuy.setContentAreaFilled(false);
         btnBuy.setBackground(BUY_NOW_COLOR);
         btnBuy.setForeground(Color.RED);
-        btnBuy.setFont(new Font("SansSerif", Font.BOLD, 10));
+        btnBuy.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
         btnBuy.setBorder(new EmptyBorder(5, 10, 5, 10));
         btnBuy.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBuy.setActionCommand(productId);
@@ -193,7 +193,7 @@ public class MenuPrincipalPanel extends JPanel {
         card.setPreferredSize(new Dimension(300, 200));
 
         JButton btnCat = new JButton(title);
-        btnCat.setFont(new Font("SansSerif", Font.BOLD, 16));
+        btnCat.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         btnCat.setBackground(Color.WHITE);
         btnCat.setFocusPainted(false);
         btnCat.setActionCommand(actionCommand);

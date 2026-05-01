@@ -35,7 +35,7 @@ public class MakeOfferPanel extends JPanel {
         contentWrapper.setBorder(new EmptyBorder(10, 20, 20, 20));
 
         JLabel lblTitulo = new JLabel("MAKE AN OFFER", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblTitulo.setForeground(Color.DARK_GRAY);
         lblTitulo.setBorder(new EmptyBorder(0, 0, 15, 0));
         contentWrapper.add(lblTitulo, BorderLayout.NORTH);
@@ -59,7 +59,7 @@ public class MakeOfferPanel extends JPanel {
         btnSubmitOffer = new JButton("SUBMIT OFFER 🤝");
         btnSubmitOffer.setBackground(new Color(50, 205, 50));
         btnSubmitOffer.setForeground(Color.WHITE);
-        btnSubmitOffer.setFont(new Font("SansSerif", Font.BOLD, 18));
+        btnSubmitOffer.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
         btnSubmitOffer.setPreferredSize(new Dimension(250, 50));
         btnSubmitOffer.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSubmitOffer.setActionCommand("SUBMIT_OFFER");
@@ -98,7 +98,7 @@ public class MakeOfferPanel extends JPanel {
             top.setBorder(new EmptyBorder(8, 10, 8, 10));
             JLabel lblTitle = new JLabel(title, SwingConstants.CENTER);
             lblTitle.setForeground(Color.WHITE);
-            lblTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
+            lblTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
             top.add(lblTitle, BorderLayout.NORTH);
 
             // Buscador interno
@@ -130,7 +130,7 @@ public class MakeOfferPanel extends JPanel {
             bottom.setBackground(Color.DARK_GRAY);
             lblStatus = new JLabel("Selected: 0 | Total: 0.00 €");
             lblStatus.setForeground(Color.WHITE);
-            lblStatus.setFont(new Font("SansSerif", Font.BOLD, 13));
+            lblStatus.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
             bottom.add(lblStatus);
             add(bottom, BorderLayout.SOUTH);
         }
@@ -183,13 +183,13 @@ public class MakeOfferPanel extends JPanel {
             tarjeta.add(Box.createVerticalStrut(5));
 
             JLabel lblNombre = new JLabel(prod.getNombre());
-            lblNombre.setFont(new Font("SansSerif", Font.BOLD, 12));
+            lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
             lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
             tarjeta.add(lblNombre);
             
             if ("REQ".equals(commandPrefix) && prod.getClienteProducto() != null) {
                 JLabel lblOwner = new JLabel("Owner: " + prod.getClienteProducto().getNombreUsuario());
-                lblOwner.setFont(new Font("SansSerif", Font.ITALIC, 11));
+                lblOwner.setFont(new Font("Comic Sans MS", Font.ITALIC, 11));
                 lblOwner.setForeground(Color.GRAY);
                 lblOwner.setAlignmentX(Component.CENTER_ALIGNMENT);
                 tarjeta.add(lblOwner);
@@ -211,7 +211,7 @@ public class MakeOfferPanel extends JPanel {
             tarjeta.add(Box.createVerticalStrut(5));
 
             JButton btnInfo = new JButton("+ More Info");
-            btnInfo.setFont(new Font("SansSerif", Font.PLAIN, 11));
+            btnInfo.setFont(new Font("Comic Sans MS", Font.PLAIN, 11));
             btnInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
             btnInfo.setActionCommand("INFO_" + prod.getID());
             btnInfo.addActionListener(actionCtrl);

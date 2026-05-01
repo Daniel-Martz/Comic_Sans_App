@@ -21,6 +21,7 @@ public class MainFrame extends JFrame {
     private OutstandingPanel outstandingPanel;
     private SearchInterchangesPanel searchInterchangesPanel;
     private MakeOfferPanel makeOfferPanel;
+    private HistorialPedidosPanel historialPedidosPanel;
     
     
     private PlaceholderPanel descuentosPanel;
@@ -43,6 +44,7 @@ public class MainFrame extends JFrame {
     public static final String PANEL_OUTSTANDING = "Outstanding";
     public static final String PANEL_SEARCH_INTERCHANGES = "SearchInterchanges";
     public static final String PANEL_MAKE_OFFER = "MakeOffer";
+    public static final String PANEL_HISTORIAL_PEDIDOS = "HistorialPedidos";
 
     public MainFrame() {
         super("Comic Sans App");
@@ -61,6 +63,7 @@ public class MainFrame extends JFrame {
         outstandingPanel = new OutstandingPanel();
         searchInterchangesPanel = new SearchInterchangesPanel();
         makeOfferPanel = new MakeOfferPanel();
+        historialPedidosPanel = new HistorialPedidosPanel();
         
         descuentosPanel = new PlaceholderPanel("Descuentos");
         configuracionPanel = new PlaceholderPanel("Configuración");
@@ -81,6 +84,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(outstandingPanel, PANEL_OUTSTANDING);
         contenedorPaneles.add(searchInterchangesPanel, PANEL_SEARCH_INTERCHANGES);
         contenedorPaneles.add(makeOfferPanel, PANEL_MAKE_OFFER);
+        contenedorPaneles.add(historialPedidosPanel, PANEL_HISTORIAL_PEDIDOS);
 
         // 4. Configurar la ventana
         setContentPane(contenedorPaneles);
@@ -108,6 +112,7 @@ public class MainFrame extends JFrame {
     public OutstandingPanel getOutstandingPanel() {return outstandingPanel;}
     public SearchInterchangesPanel getSearchInterchangesPanel() { return searchInterchangesPanel; }
     public MakeOfferPanel getMakeOfferPanel() { return makeOfferPanel; }
+    public HistorialPedidosPanel getHistorialPedidosPanel() { return historialPedidosPanel; }
     
     public PlaceholderPanel getDescuentosPanel() { return descuentosPanel; }
     public PlaceholderPanel getConfiguracionPanel() { return configuracionPanel; }

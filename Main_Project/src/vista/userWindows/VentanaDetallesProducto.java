@@ -37,14 +37,14 @@ public class VentanaDetallesProducto extends JDialog {
         headerPanel.setBackground(COLOR_FONDO);
 
         JLabel lblNombre = new JLabel(p.getNombre());
-        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblNombre.setForeground(COLOR_TITULO);
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(lblNombre);
         
         String cats = p.getCategorias().stream().map(Categoria::getNombre).collect(Collectors.joining(", "));
         JLabel lblCats = new JLabel(cats.isEmpty() ? "Sin categoría" : "Categorías: " + cats);
-        lblCats.setFont(new Font("SansSerif", Font.ITALIC, 14));
+        lblCats.setFont(new Font("Comic Sans MS", Font.ITALIC, 14));
         lblCats.setForeground(Color.GRAY);
         lblCats.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(lblCats);
@@ -123,7 +123,7 @@ public class VentanaDetallesProducto extends JDialog {
         JPanel descPanel = new JPanel(new BorderLayout());
         descPanel.setBackground(COLOR_FONDO);
         JLabel lblDescTitle = new JLabel("Descripción:");
-        lblDescTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblDescTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblDescTitle.setBorder(new EmptyBorder(10, 0, 5, 0));
         descPanel.add(lblDescTitle, BorderLayout.NORTH);
         
@@ -137,7 +137,7 @@ public class VentanaDetallesProducto extends JDialog {
                 new LineBorder(Color.LIGHT_GRAY, 1),
                 new EmptyBorder(10, 10, 10, 10)
         ));
-        txtDesc.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        txtDesc.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
         descPanel.add(txtDesc, BorderLayout.CENTER);
         
         southCenterPanel.add(descPanel, BorderLayout.NORTH);
@@ -146,7 +146,7 @@ public class VentanaDetallesProducto extends JDialog {
         JPanel reviewsPanel = new JPanel(new BorderLayout());
         reviewsPanel.setBackground(COLOR_FONDO);
         JLabel lblRevTitle = new JLabel("Reseñas:");
-        lblRevTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblRevTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblRevTitle.setBorder(new EmptyBorder(0, 0, 5, 0));
         reviewsPanel.add(lblRevTitle, BorderLayout.NORTH);
 
@@ -164,7 +164,7 @@ public class VentanaDetallesProducto extends JDialog {
                 ));
                 
                 JLabel lblScore = new JLabel("⭐ " + r.getPuntuacion() + " / 5.0");
-                lblScore.setFont(new Font("SansSerif", Font.BOLD, 12));
+                lblScore.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
                 lblScore.setForeground(new Color(255, 140, 0));
                 revCard.add(lblScore, BorderLayout.NORTH);
                 
@@ -173,7 +173,7 @@ public class VentanaDetallesProducto extends JDialog {
                 txtComentario.setWrapStyleWord(true);
                 txtComentario.setEditable(false);
                 txtComentario.setFocusable(false);
-                txtComentario.setFont(new Font("SansSerif", Font.ITALIC, 13));
+                txtComentario.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
                 revCard.add(txtComentario, BorderLayout.CENTER);
                 
                 reviewsList.add(revCard);
@@ -181,7 +181,7 @@ public class VentanaDetallesProducto extends JDialog {
             }
         } else {
             JLabel noReviews = new JLabel("No hay reseñas aún.");
-            noReviews.setFont(new Font("SansSerif", Font.ITALIC, 13));
+            noReviews.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
             noReviews.setForeground(Color.GRAY);
             noReviews.setBorder(new EmptyBorder(5, 5, 5, 5));
             reviewsList.add(noReviews);
@@ -215,10 +215,10 @@ public class VentanaDetallesProducto extends JDialog {
         row.setBackground(Color.WHITE);
         
         JLabel lbl = new JLabel(label + ": ");
-        lbl.setFont(new Font("SansSerif", Font.BOLD, 13));
+        lbl.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
         
         JLabel val = new JLabel(value != null ? value : "N/A");
-        val.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        val.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
         
         row.add(lbl, BorderLayout.WEST);
         row.add(val, BorderLayout.CENTER);

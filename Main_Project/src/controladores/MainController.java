@@ -19,6 +19,7 @@ import java.util.Set;
 import vista.userPanels.ProductosFiltradosPanel;
 import vista.userPanels.SearchInterchangesPanel;
 import vista.userPanels.HeaderPanel;
+import vista.userPanels.HistorialPedidosPanel;
 import controlador.CreateAccountController;
 import controlador.LoginController;
 import controlador.LoginToCreateAccountController;
@@ -76,6 +77,7 @@ public class MainController {
         conectarHeaderNormal(mainFrame.getConfiguracionPanel().getHeaderPanel());
         conectarHeaderNormal(mainFrame.getPerfilPanel().getHeaderPanel());
         conectarHeaderNormal(mainFrame.getNotificacionesPanel().getHeaderPanel());
+        conectarHeaderNormal(mainFrame.getHistorialPedidosPanel().getHeaderPanel());
         
         // La de búsqueda de intercambios lleva una búsqueda especial propia, así que la normal no
         conectarHeaderGlobal(mainFrame.getSearchInterchangesPanel().getHeaderPanel());
@@ -87,6 +89,8 @@ public class MainController {
             String categoria = e.getActionCommand();
             mostrarProductosPorCategoria(categoria);
         });
+
+        mainFrame.getHistorialPedidosPanel().addListenerForButtons(new ControladorHistorialPedidos(mainFrame.getHistorialPedidosPanel(), this));
     }
 
     /**

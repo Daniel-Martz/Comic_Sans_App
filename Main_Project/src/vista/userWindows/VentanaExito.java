@@ -26,7 +26,7 @@ public class VentanaExito extends JDialog {
         panel.setBackground(new Color(200, 240, 200)); // Verde pastel
 
         JLabel lblTitulo = new JLabel(tituloMensaje, SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         panel.add(lblTitulo);
         
         // Si quieres que la descripción soporte saltos de línea con \n, usamos HTML

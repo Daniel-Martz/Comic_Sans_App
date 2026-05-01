@@ -27,7 +27,7 @@ public class mainMenuEmpleadoPanel extends JPanel {
         lblTitle.setBackground(new Color(74, 118, 201));
         lblTitle.setForeground(Color.WHITE);
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-        lblTitle.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
 
         // Botones e inicialización del sub-panel
         buttonPanel = new JPanel();

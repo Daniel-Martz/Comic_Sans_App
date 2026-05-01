@@ -11,6 +11,8 @@ import com.sun.tools.javac.Main;
 
 import controladores.MainController;
 import modelo.aplicacion.Aplicacion;
+import modelo.usuario.ClienteRegistrado;
+import modelo.usuario.Usuario;
 import vista.main.MainFrame;
 import vista.userPanels.LogInPanel;
 
@@ -29,7 +31,7 @@ public class UsuarioOptionsController implements ActionListener{
 		case "Edit Profile":
       actionEditProfile();
 			break;
-		case "Purhcase History":
+		case "Purchase History":
       actionPurchaseHistory();
 			break;
 		case "Cerrar Sesión":
@@ -46,11 +48,14 @@ public class UsuarioOptionsController implements ActionListener{
 	}
 
   private void actionPurchaseHistory() {
-    // mainController.navegarA(M);
-  }
+    Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual(); 
+    if(!(usuarioActual instanceof ClienteRegistrado clienteActual)){
+      throw new IllegalStateException("Solo un cliente registrado puede acceder a su historial de pedidos");
+    }
+    mainFrame.getHistorialPedidosPanel().agregarPedido(clienteActual.getPedidos());
 
-  private void actionNotificationCenter() {
-    // mainController.navegarA(M);
+	mainController.cerrarVentanaOpcionesUsuario();
+    mainController.navegarA(MainFrame.PANEL_HISTORIAL_PEDIDOS);
   }
 
   private void actionCerrarSesion() {

@@ -25,7 +25,7 @@ public class PlaceholderPanel extends JPanel {
         contentWrapper.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         lblTitle = new JLabel(title);
-        lblTitle.setFont(new Font("SansSerif", Font.BOLD, 24));
+        lblTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
         contentWrapper.add(lblTitle, BorderLayout.CENTER);
         
         add(contentWrapper, BorderLayout.CENTER);

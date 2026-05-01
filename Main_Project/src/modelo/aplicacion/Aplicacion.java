@@ -478,7 +478,7 @@ public class Aplicacion implements Serializable {
 			throw new IllegalArgumentException("Contraseña inválida al crear al empleado");
 		}
 
-		if (DNI == null || DNI.length() != 10) {
+		if (DNI == null || DNI.length() != 9) {
 			throw new IllegalArgumentException("DNI inválido al crear al empleado");
 		}
 

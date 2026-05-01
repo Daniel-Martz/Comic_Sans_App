@@ -43,7 +43,7 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
 
         // ── Título ──────────────────────────────────────────────
         JLabel lblTitulo = new JLabel("NEW SECOND-HAND PRODUCT", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setOpaque(true);
         lblTitulo.setBackground(new Color(74, 118, 201));
@@ -95,23 +95,23 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             // Fila 0: Nombre
             gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.2;
             JLabel lblNombre = new JLabel("Product Name:");
-            lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
+            lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
             add(lblNombre, gbc);
 
             gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 0.8;
             txtNombre = new JTextField(20);
-            txtNombre.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            txtNombre.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
             add(txtNombre, gbc);
 
             // Fila 1: Descripción
             gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0.2; gbc.anchor = GridBagConstraints.NORTH;
             JLabel lblDesc = new JLabel("Description:");
-            lblDesc.setFont(new Font("SansSerif", Font.BOLD, 14));
+            lblDesc.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
             add(lblDesc, gbc);
 
             gbc.gridx = 1; gbc.gridy = 1; gbc.weightx = 0.8;
             txtDescripcion = new JTextArea(4, 20);
-            txtDescripcion.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            txtDescripcion.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
             txtDescripcion.setLineWrap(true);
             txtDescripcion.setWrapStyleWord(true);
             JScrollPane scrollDesc = new JScrollPane(txtDescripcion);
@@ -120,7 +120,7 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             // Fila 2: Imagen
             gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0.2; gbc.anchor = GridBagConstraints.CENTER;
             JLabel lblImagen = new JLabel("Product Image:");
-            lblImagen.setFont(new Font("SansSerif", Font.BOLD, 14));
+            lblImagen.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
             add(lblImagen, gbc);
 
             gbc.gridx = 1; gbc.gridy = 2; gbc.weightx = 0.8;
@@ -129,7 +129,7 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             
             btnSubirImagen = new JButton("Upload Image...");
             lblNombreImagen = new JLabel(" No file selected");
-            lblNombreImagen.setFont(new Font("SansSerif", Font.ITALIC, 12));
+            lblNombreImagen.setFont(new Font("Comic Sans MS", Font.ITALIC, 12));
             
             panelImagen.add(btnSubirImagen);
             panelImagen.add(lblNombreImagen);
@@ -162,13 +162,13 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             btnConfirmar = new JButton("CONFIRM");
             btnConfirmar.setBackground(new Color(50, 205, 50));
             btnConfirmar.setForeground(Color.WHITE);
-            btnConfirmar.setFont(new Font("SansSerif", Font.BOLD, 14));
+            btnConfirmar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
             btnConfirmar.setPreferredSize(new Dimension(120, 35));
 
             btnCancelar = new JButton("CANCEL");
             btnCancelar.setBackground(new Color(178, 34, 34));
             btnCancelar.setForeground(Color.WHITE);
-            btnCancelar.setFont(new Font("SansSerif", Font.BOLD, 14));
+            btnCancelar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
             btnCancelar.setPreferredSize(new Dimension(120, 35));
 
             add(btnConfirmar);

@@ -210,8 +210,7 @@ public class DateTimeSimulado implements Comparable<DateTimeSimulado>, Serializa
 	 */
 	@Override
 	public String toString() {
-		return "Año: " + año + "-Mes: " + mes + "-Dia: " + dia + "-Hora: " + hora + "-Minuto: " + minuto
-				+ "-Segundo: " + segundo;
+    return hora + ":" + minuto + ":" + segundo + " " + dia + "/" + mes + "/" + año;
 	}
 	
 	/**

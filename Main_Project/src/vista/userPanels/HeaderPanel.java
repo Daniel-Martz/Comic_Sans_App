@@ -59,7 +59,7 @@ public class HeaderPanel extends JPanel {
             }
         } catch (Exception e) {
             logoLabel.setText("COMIC SANS");
-            logoLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
+            logoLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         }
 
         btnHome = createTopNavButton("HOME 🏠");
@@ -68,7 +68,7 @@ public class HeaderPanel extends JPanel {
 
         txtSearch = new JTextField(20);
         txtSearch.setOpaque(false);
-        txtSearch.setFont(new Font("SansSerif", Font.PLAIN, 14)); 
+        txtSearch.setFont(new Font("Comic Sans MS", Font.PLAIN, 14)); 
         txtSearch.setBorder(null); // Sin borde, el borde lo dibujará el contenedor
         
         btnSearchIcon = new JButton();
@@ -91,7 +91,7 @@ public class HeaderPanel extends JPanel {
         }
 
         btnFilters = new JButton("⚙ Filtros");
-        btnFilters.setFont(new Font("SansSerif", Font.BOLD, 14)); 
+        btnFilters.setFont(new Font("Comic Sans MS", Font.BOLD, 14)); 
         btnFilters.setContentAreaFilled(false);
         btnFilters.setBorderPainted(false);
         btnFilters.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -177,7 +177,7 @@ public class HeaderPanel extends JPanel {
             @Override protected void paintComponent(Graphics g) { Graphics2D g2 = (Graphics2D) g.create(); g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); g2.setColor(getBackground()); g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20); super.paintComponent(g); g2.dispose(); }
             @Override protected void paintBorder(Graphics g) { Graphics2D g2 = (Graphics2D) g.create(); g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); g2.setColor(Color.BLACK); g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20); g2.dispose(); }
         };
-        btn.setContentAreaFilled(false); btn.setBackground(Color.WHITE); btn.setFocusPainted(false); btn.setFont(new Font("SansSerif", Font.BOLD, 14)); btn.setBorder(new EmptyBorder(10, 25, 10, 25)); btn.setCursor(new Cursor(Cursor.HAND_CURSOR)); return btn;
+        btn.setContentAreaFilled(false); btn.setBackground(Color.WHITE); btn.setFocusPainted(false); btn.setFont(new Font("Comic Sans MS", Font.BOLD, 14)); btn.setBorder(new EmptyBorder(10, 25, 10, 25)); btn.setCursor(new Cursor(Cursor.HAND_CURSOR)); return btn;
     }
 
     private JButton createImageIconButton(String imagePath, int width, int height, String fallbackText) {
@@ -186,7 +186,7 @@ public class HeaderPanel extends JPanel {
     }
 
     private void setFallback(JButton btn, String text) {
-        btn.setText(text); btn.setFont(new Font("SansSerif", Font.BOLD, 10)); btn.setForeground(Color.RED);
+        btn.setText(text); btn.setFont(new Font("Comic Sans MS", Font.BOLD, 10)); btn.setForeground(Color.RED);
     }
 
     // --- Delegación de Listeners ---

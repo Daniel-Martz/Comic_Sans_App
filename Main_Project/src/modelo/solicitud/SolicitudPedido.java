@@ -50,6 +50,10 @@ public class SolicitudPedido extends Solicitud implements Caducable {
      */
     private DateTimeSimulado fechaRealizacion;
 
+    public DateTimeSimulado getFechaRealizacion() {
+      return fechaRealizacion;
+    }
+
     /**
      * Constructor de la clase.
      * Inicializa el pedido con un cliente, los productos seleccionados,

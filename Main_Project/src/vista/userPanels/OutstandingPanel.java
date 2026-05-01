@@ -34,7 +34,7 @@ public class OutstandingPanel extends JPanel {
 
         // Titulo
         JLabel lblTitulo = new JLabel("PRODUCTOS DESTACADOS ⭐", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblTitulo.setForeground(Color.DARK_GRAY);
         lblTitulo.setBorder(new EmptyBorder(10, 0, 20, 0));
         contentWrapper.add(lblTitulo, BorderLayout.NORTH);
@@ -60,7 +60,7 @@ public class OutstandingPanel extends JPanel {
 
         if (productos == null || productos.isEmpty()) {
             JLabel vacio = new JLabel("No hay productos destacados en este momento.");
-            vacio.setFont(new Font("SansSerif", Font.BOLD, 16));
+            vacio.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
             panelScrollProductos.add(vacio);
         } else {
             for (LineaProductoVenta p : productos) {
@@ -84,14 +84,14 @@ public class OutstandingPanel extends JPanel {
         tarjeta.setPreferredSize(new Dimension(220, 290));
 
         JLabel lblNombre = new JLabel(prod.getNombre());
-        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblNombre);
 
         tarjeta.add(Box.createVerticalStrut(5));
 
         JLabel lblRating = new JLabel(String.format("⭐ %.1f / 5", prod.obtenerPuntuacionMedia()));
-        lblRating.setFont(new Font("SansSerif", Font.BOLD, 12));
+        lblRating.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         lblRating.setForeground(new Color(255, 140, 0));
         lblRating.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblRating);
@@ -109,7 +109,7 @@ public class OutstandingPanel extends JPanel {
         tarjeta.add(Box.createVerticalStrut(10));
 
         JLabel lblPrecio = new JLabel(String.format("%.2f €", prod.getPrecio()));
-        lblPrecio.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblPrecio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblPrecio);
 

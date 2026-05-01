@@ -53,7 +53,7 @@ public class ProductosFiltradosPanel extends JPanel {
 
         if (productos == null || productos.isEmpty()) {
             JLabel vacio = new JLabel("No products found.");
-            vacio.setFont(new Font("SansSerif", Font.BOLD, 16));
+            vacio.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
             panelScrollProductos.add(vacio);
         } else {
             for (LineaProductoVenta p : productos) {
@@ -77,12 +77,12 @@ public class ProductosFiltradosPanel extends JPanel {
         tarjeta.setPreferredSize(new Dimension(220, 290));
 
         JLabel lblNombre = new JLabel(prod.getNombre());
-        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblNombre);
 
         JLabel lblDesc = new JLabel(prod.getDescripcion() != null ? prod.getDescripcion() : "");
-        lblDesc.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        lblDesc.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
         lblDesc.setForeground(Color.GRAY);
         lblDesc.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblDesc);
@@ -100,7 +100,7 @@ public class ProductosFiltradosPanel extends JPanel {
         tarjeta.add(Box.createVerticalStrut(10));
 
         JLabel lblPrecio = new JLabel(String.format("%.2f €", prod.getPrecio()));
-        lblPrecio.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblPrecio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblPrecio);
 

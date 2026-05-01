@@ -58,7 +58,7 @@ public class ProposalsPanel extends JPanel {
 
         // ── Título superior ──────────────────────────────────
         JLabel titulo = new JLabel("PROPOSALS", SwingConstants.CENTER);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 22));
+        titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         titulo.setForeground(Color.WHITE);
         titulo.setOpaque(true);
         titulo.setBackground(new Color(74, 118, 201));
@@ -85,7 +85,7 @@ public class ProposalsPanel extends JPanel {
 
         // Cabecera de columna
         JLabel cabecera = new JLabel(titulo, SwingConstants.CENTER);
-        cabecera.setFont(new Font("SansSerif", Font.BOLD, 16));
+        cabecera.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         cabecera.setForeground(Color.WHITE);
         cabecera.setOpaque(true);
         cabecera.setBackground(new Color(74, 118, 201));

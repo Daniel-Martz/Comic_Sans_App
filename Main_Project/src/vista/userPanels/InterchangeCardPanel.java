@@ -156,8 +156,8 @@ public class InterchangeCardPanel extends JPanel {
                 lblPrice.setForeground(Color.BLACK);
             }
 
-            lblHeader.setFont(new Font("SansSerif", Font.BOLD, 13));
-            lblPrice.setFont(new Font("SansSerif", Font.BOLD, 13));
+            lblHeader.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            lblPrice.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
 
             setLayout(new GridLayout(2, 1, 0, 2));
             setOpaque(false);
@@ -185,7 +185,7 @@ public class InterchangeCardPanel extends JPanel {
                 btnAccept = new JButton("ACCEPT");
                 btnAccept.setBackground(new Color(50, 205, 50));
                 btnAccept.setForeground(Color.WHITE);
-                btnAccept.setFont(new Font("SansSerif", Font.BOLD, 11));
+                btnAccept.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
                 btnAccept.setOpaque(true);
                 btnAccept.setContentAreaFilled(true);
                 btnAccept.setFocusPainted(false);
@@ -197,7 +197,7 @@ public class InterchangeCardPanel extends JPanel {
                 btnReject = new JButton("REJECT");
                 btnReject.setBackground(new Color(178, 34, 34));
                 btnReject.setForeground(Color.WHITE);
-                btnReject.setFont(new Font("SansSerif", Font.BOLD, 11));
+                btnReject.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
                 btnReject.setOpaque(true);
                 btnReject.setContentAreaFilled(true);
                 btnReject.setFocusPainted(false);
@@ -224,7 +224,7 @@ public class InterchangeCardPanel extends JPanel {
                 btnCancel = new JButton("CANCEL");
                 btnCancel.setBackground(new Color(178, 34, 34));
                 btnCancel.setForeground(Color.WHITE);
-                btnCancel.setFont(new Font("SansSerif", Font.BOLD, 11));
+                btnCancel.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
                 btnCancel.setOpaque(true);
                 btnCancel.setContentAreaFilled(true);
                 btnCancel.setFocusPainted(false);
@@ -349,7 +349,7 @@ public class InterchangeCardPanel extends JPanel {
             JTable table = new JTable(model);
             table.setRowHeight(22);
             table.getTableHeader().setBackground(new Color(240, 128, 128));
-            table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 11));
+            table.getTableHeader().setFont(new Font("Comic Sans MS", Font.BOLD, 11));
             
             // 3. La columna del botón ahora es la de índice 3 (0, 1, 2, 3)
             table.getColumnModel().getColumn(3).setMaxWidth(50);
@@ -390,7 +390,7 @@ public class InterchangeCardPanel extends JPanel {
             setOpaque(true);
             setBackground(new Color(50, 205, 50));
             setForeground(Color.WHITE);
-            setFont(new Font("SansSerif", Font.BOLD, 12));
+            setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         }
 
         @Override

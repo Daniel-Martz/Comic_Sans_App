@@ -48,7 +48,7 @@ public class VentanaPagoPedido extends JDialog {
 
         // ── Panel Norte: ORDER SUMMARY
         JLabel labelTitulo = new JLabel("ORDER SUMMARY", SwingConstants.CENTER);
-        labelTitulo.setFont(new Font("SansSerif", Font.BOLD, 16));
+        labelTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         labelTitulo.setOpaque(true);
         labelTitulo.setBackground(new Color(100, 130, 200));
         labelTitulo.setForeground(Color.WHITE);
@@ -82,7 +82,7 @@ public class VentanaPagoPedido extends JDialog {
         tablaProductos = new JTable(modeloTabla);
         tablaProductos.setRowHeight(24);
         tablaProductos.getTableHeader().setBackground(new Color(240, 150, 150));
-        tablaProductos.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 12));
+        tablaProductos.getTableHeader().setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         tablaProductos.getColumnModel().getColumn(0).setMaxWidth(35);
         tablaProductos.getColumnModel().getColumn(2).setMaxWidth(55);
         tablaProductos.getColumnModel().getColumn(3).setMinWidth(100);
@@ -95,7 +95,7 @@ public class VentanaPagoPedido extends JDialog {
         labelTotal = new JLabel(
                 String.format("TOTAL TO PAY: %.2f €", pedido.getCostePedido()),
                 SwingConstants.LEFT);
-        labelTotal.setFont(new Font("SansSerif", Font.BOLD, 13));
+        labelTotal.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
         labelTotal.setOpaque(true);
         labelTotal.setBackground(new Color(220, 220, 220));
         labelTotal.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
@@ -107,7 +107,7 @@ public class VentanaPagoPedido extends JDialog {
 
         // Título CHECKOUT
         JLabel labelCheckout = new JLabel("CHECKOUT", SwingConstants.CENTER);
-        labelCheckout.setFont(new Font("SansSerif", Font.BOLD, 15));
+        labelCheckout.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
         labelCheckout.setOpaque(true);
         labelCheckout.setBackground(new Color(100, 130, 200));
         labelCheckout.setForeground(Color.WHITE);
@@ -139,7 +139,7 @@ public class VentanaPagoPedido extends JDialog {
         botonConfirmar = new JButton("CONFIRM");
         botonConfirmar.setBackground(new Color(50, 200, 80));
         botonConfirmar.setForeground(Color.WHITE);
-        botonConfirmar.setFont(new Font("SansSerif", Font.BOLD, 13));
+        botonConfirmar.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
         panelFormulario.add(botonConfirmar);
 
         panelCentro.add(panelFormulario, BorderLayout.SOUTH);
@@ -177,7 +177,7 @@ public class VentanaPagoPedido extends JDialog {
         panel.setBackground(new Color(200, 240, 200));
 
         JLabel titulo = new JLabel("SUCCESSFUL PAYMENT!!", SwingConstants.CENTER);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 14));
+        titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         panel.add(titulo);
         panel.add(new JLabel("Your order is getting prepared you will be notified when it is ready", SwingConstants.CENTER));
 
@@ -194,7 +194,7 @@ public class VentanaPagoPedido extends JDialog {
         panel.setBackground(new Color(255, 200, 200));
 
         JLabel titulo = new JLabel("THERE WAS AN ERROR DURING THE PAYMENT", SwingConstants.CENTER);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 13));
+        titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
         panel.add(titulo);
         panel.add(new JLabel(motivo != null ? motivo : "Unknown error.", SwingConstants.CENTER));
         panel.add(new JLabel("You will get payed back.", SwingConstants.CENTER));

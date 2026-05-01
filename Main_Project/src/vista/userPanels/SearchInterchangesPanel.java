@@ -42,7 +42,7 @@ public class SearchInterchangesPanel extends JPanel {
         contentWrapper.setBorder(new EmptyBorder(0, 20, 0, 20));
         
         JLabel lblTitulo = new JLabel("SEARCH FOR INTERCHANGES", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblTitulo.setForeground(Color.DARK_GRAY);
         lblTitulo.setBorder(new EmptyBorder(10, 0, 20, 0));
         contentWrapper.add(lblTitulo, BorderLayout.NORTH);
@@ -70,7 +70,7 @@ public class SearchInterchangesPanel extends JPanel {
 
         lblStatus = new JLabel("Selected items: 0 | Total Estimated Value: 0.00 €");
         lblStatus.setForeground(Color.WHITE);
-        lblStatus.setFont(new Font("SansSerif", Font.BOLD, 16));
+        lblStatus.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
 
         JPanel bottomButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 0));
         bottomButtons.setOpaque(false);
@@ -78,12 +78,12 @@ public class SearchInterchangesPanel extends JPanel {
         btnReset = new JButton("Reset Selections");
         btnReset.setBackground(new Color(178, 34, 34));
         btnReset.setForeground(Color.WHITE);
-        btnReset.setFont(new Font("SansSerif", Font.BOLD, 14));
+        btnReset.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
         btnProceed = new JButton("Select Own Products to Offer ➔");
         btnProceed.setBackground(new Color(50, 205, 50));
         btnProceed.setForeground(Color.WHITE);
-        btnProceed.setFont(new Font("SansSerif", Font.BOLD, 14));
+        btnProceed.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
         bottomButtons.add(btnReset);
         bottomButtons.add(btnProceed);
@@ -101,7 +101,7 @@ public class SearchInterchangesPanel extends JPanel {
 
         if (productos == null || productos.isEmpty()) {
             JLabel vacio = new JLabel("No interchange products found.");
-            vacio.setFont(new Font("SansSerif", Font.BOLD, 16));
+            vacio.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
             panelScrollProductos.add(vacio);
         } else {
             for (ProductoSegundaMano p : productos) {
@@ -124,7 +124,7 @@ public class SearchInterchangesPanel extends JPanel {
         tarjeta.setPreferredSize(new Dimension(230, 340));
 
         JLabel lblNombre = new JLabel(prod.getNombre());
-        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblNombre);
 
@@ -149,14 +149,14 @@ public class SearchInterchangesPanel extends JPanel {
         
         double estimado = prod.getDatosValidacion() != null ? prod.getDatosValidacion().getPrecioEstimadoProducto() : 0.0;
         JLabel lblPrecio = new JLabel(String.format("Estimated: %.2f €", estimado));
-        lblPrecio.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblPrecio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(lblPrecio);
 
         tarjeta.add(Box.createVerticalStrut(10));
 
         JCheckBox chkSelect = new JCheckBox("Select for Interchange");
-        chkSelect.setFont(new Font("SansSerif", Font.BOLD, 12));
+        chkSelect.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         chkSelect.setBackground(Color.WHITE);
         chkSelect.setAlignmentX(Component.CENTER_ALIGNMENT);
         chkSelect.setActionCommand("SELECT_" + prod.getID());

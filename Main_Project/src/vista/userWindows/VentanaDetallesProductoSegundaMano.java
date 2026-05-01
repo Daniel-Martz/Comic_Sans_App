@@ -34,7 +34,7 @@ public class VentanaDetallesProductoSegundaMano extends JDialog {
         headerPanel.setBackground(COLOR_FONDO);
 
         JLabel lblNombre = new JLabel(p.getNombre());
-        lblNombre.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblNombre.setForeground(COLOR_TITULO);
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(lblNombre);
@@ -82,7 +82,7 @@ public class VentanaDetallesProductoSegundaMano extends JDialog {
         JPanel descPanel = new JPanel(new BorderLayout());
         descPanel.setBackground(COLOR_FONDO);
         JLabel lblDescTitle = new JLabel("Description:");
-        lblDescTitle.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblDescTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblDescTitle.setBorder(new EmptyBorder(10, 0, 5, 0));
         descPanel.add(lblDescTitle, BorderLayout.NORTH);
         
@@ -96,7 +96,7 @@ public class VentanaDetallesProductoSegundaMano extends JDialog {
                 new LineBorder(Color.LIGHT_GRAY, 1),
                 new EmptyBorder(10, 10, 10, 10)
         ));
-        txtDesc.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        txtDesc.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
         descPanel.add(txtDesc, BorderLayout.CENTER);
         
         centerPanel.add(descPanel, BorderLayout.SOUTH);
@@ -120,10 +120,10 @@ public class VentanaDetallesProductoSegundaMano extends JDialog {
         row.setBackground(Color.WHITE);
         
         JLabel lbl = new JLabel(label + ": ");
-        lbl.setFont(new Font("SansSerif", Font.BOLD, 13));
+        lbl.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
         
         JLabel val = new JLabel(value != null ? value : "N/A");
-        val.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        val.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
         
         row.add(lbl, BorderLayout.WEST);
         row.add(val, BorderLayout.CENTER);
