@@ -1,8 +1,11 @@
 package vista.userPanels;
-
+import java.util.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import modelo.producto.LineaProductoVenta;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -44,6 +47,7 @@ public class MenuPrincipalPanel extends JPanel {
     // --- Listas para gestión eficiente de Listeners ---
     private List<JButton> buyNowButtons;
     private List<JButton> categoryButtons;
+    private ActionListener buyNowListener;
 
     public MenuPrincipalPanel() {
         buyNowButtons = new ArrayList<>();
@@ -185,11 +189,7 @@ public class MenuPrincipalPanel extends JPanel {
         recommendedPanel.setBackground(BANNER_MAIN_COLOR); 
         recommendedPanel.setBorder(new LineBorder(Color.DARK_GRAY, 1));
         
-        //Esto hay que cambiarlo 100% por una consulta real a la base de datos, pero por ahora lo dejo hardcodeado para que veas el diseño con varios productos
-        
-        for (int i = 1; i <= 5; i++) {
-            recommendedPanel.add(createProductCard("19.99 $", "PROD_" + i));
-        }
+        // Los productos se añaden dinámicamente mediante actualizarRecomendados()
 
         JPanel recWrapper = new JPanel(new BorderLayout());
         recWrapper.setBackground(BANNER_MAIN_COLOR);
@@ -315,11 +315,16 @@ public class MenuPrincipalPanel extends JPanel {
         return panel;
     }
 
-    private JPanel createProductCard(String price, String productId) {
+    private JPanel createProductCard(String name, String price, String productId) {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(BG_COLOR);
-        card.setPreferredSize(new Dimension(180, 200));
+        card.setPreferredSize(new Dimension(180, 230));
         card.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        JLabel lblName = new JLabel(name, SwingConstants.CENTER);
+        lblName.setFont(new Font("SansSerif", Font.BOLD, 12));
+        lblName.setForeground(Color.DARK_GRAY);
+        lblName.setBorder(new EmptyBorder(0, 0, 5, 0));
 
         JPanel imagePlaceholder = new JPanel() {
             @Override
@@ -358,13 +363,39 @@ public class MenuPrincipalPanel extends JPanel {
         btnBuy.setFont(new Font("SansSerif", Font.BOLD, 10));
         btnBuy.setBorder(new EmptyBorder(5, 10, 5, 10));
         btnBuy.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnBuy.setActionCommand(productId);
+        btnBuy.setActionCommand("ADD_" + productId);
         
         buyNowButtons.add(btnBuy);
 
-        bottom.add(lblPrice, BorderLayout.CENTER);
-        bottom.add(btnBuy, BorderLayout.EAST);
+        JButton btnInfo = new JButton("INFO") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
+                super.paintComponent(g);
+            }
+        };
+        btnInfo.setContentAreaFilled(false);
+        btnInfo.setBackground(new Color(74, 118, 201));
+        btnInfo.setForeground(Color.WHITE);
+        btnInfo.setFont(new Font("SansSerif", Font.BOLD, 10));
+        btnInfo.setBorder(new EmptyBorder(5, 10, 5, 10));
+        btnInfo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnInfo.setActionCommand("INFO_" + productId);
 
+        buyNowButtons.add(btnInfo);
+
+        JPanel buttonsPanel = new JPanel(new GridLayout(2, 1, 0, 5));
+        buttonsPanel.setOpaque(false);
+        buttonsPanel.add(btnBuy);
+        buttonsPanel.add(btnInfo);
+
+        bottom.add(lblPrice, BorderLayout.CENTER);
+        bottom.add(buttonsPanel, BorderLayout.EAST);
+
+        card.add(lblName, BorderLayout.NORTH);
         card.add(imagePlaceholder, BorderLayout.CENTER);
         card.add(bottom, BorderLayout.SOUTH);
 
@@ -436,9 +467,36 @@ public class MenuPrincipalPanel extends JPanel {
     public void addNotificacionesListener(ActionListener l) { btnNotificaciones.addActionListener(l); }
 
     public void addBuyNowListener(ActionListener l) {
+        this.buyNowListener = l;
         for (JButton btn : buyNowButtons) {
             btn.addActionListener(l);
         }
+    }
+
+    public void actualizarRecomendados(Set<LineaProductoVenta> recomendados) {
+        recommendedPanel.removeAll();
+        buyNowButtons.clear();
+
+        if (recomendados == null || recomendados.isEmpty()) {
+            JLabel lbl = new JLabel("No recommendations available right now.", SwingConstants.CENTER);
+            lbl.setFont(new Font("SansSerif", Font.BOLD, 16));
+            lbl.setForeground(Color.WHITE);
+            recommendedPanel.add(lbl);
+        } else {
+            for (LineaProductoVenta p : recomendados) {
+                JPanel card = createProductCard(p.getNombre(), String.format("%.2f €", p.getPrecio()), String.valueOf(p.getID()));
+                recommendedPanel.add(card);
+            }
+        }
+
+        if (buyNowListener != null) {
+            for (JButton btn : buyNowButtons) {
+                btn.addActionListener(buyNowListener);
+            }
+        }
+
+        recommendedPanel.revalidate();
+        recommendedPanel.repaint();
     }
 
     public void addCategoryListener(ActionListener l) {

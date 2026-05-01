@@ -1,6 +1,7 @@
 package controladores;
 
 import modelo.aplicacion.Aplicacion;
+import modelo.aplicacion.Catalogo;
 import modelo.solicitud.Oferta;
 import modelo.usuario.ClienteRegistrado;
 import vista.main.MainFrame;
@@ -73,7 +74,41 @@ public class MainController {
         mainFrame.getMenuPrincipalPanel().addPerfilListener(e -> navegarBotonPerfil());
         mainFrame.getMenuPrincipalPanel().addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
         mainFrame.getMenuPrincipalPanel().addFiltrosListener(e -> abrirVentanaFiltros());
-        mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS));
+        mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> {
+            String cmd = e.getActionCommand();
+            if (cmd != null && cmd.startsWith("ADD_")) {
+                try {
+                    int id = Integer.parseInt(cmd.substring(4));
+                    modelo.producto.LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
+                    if (p != null) {
+                        modelo.usuario.Usuario u = modelo.getUsuarioActual();
+                        if (!(u instanceof ClienteRegistrado)) {
+                            JOptionPane.showMessageDialog(mainFrame, "You must be logged in as a customer to add products to the cart.", "Not logged in", JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                        }
+
+                        ClienteRegistrado cliente = (ClienteRegistrado) u;
+                        cliente.añadirProductoACarrito(p, 1);
+                        JOptionPane.showMessageDialog(mainFrame, "Product added to cart.", "Added", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                }
+            } else if (cmd != null && cmd.startsWith("INFO_")) {
+                try {
+                    int id = Integer.parseInt(cmd.substring(5));
+                    modelo.producto.LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
+                    if (p != null) {
+                        vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(mainFrame, p);
+                        dialog.setVisible(true);
+                    }
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS);
+            }
+        });
 
         mainFrame.getMenuPrincipalPanel().addCategoryListener(e -> {
             String categoria = e.getActionCommand();
@@ -98,6 +133,11 @@ public class MainController {
      * Cambia el panel visible en el CardLayout del MainFrame.
      */
     public void navegarA(String nombrePanel) {
+        if (nombrePanel.equals(MainFrame.PANEL_MENU_PRINCIPAL)) {
+            // Actualizar recomendaciones al volver al menú principal
+            java.util.Set<modelo.producto.LineaProductoVenta> rec = modelo.getConfiguracionRecomendacion().getRecomendacion();
+            mainFrame.getMenuPrincipalPanel().actualizarRecomendados(rec);
+        }
         mainFrame.mostrarPanel(nombrePanel);
     }
 

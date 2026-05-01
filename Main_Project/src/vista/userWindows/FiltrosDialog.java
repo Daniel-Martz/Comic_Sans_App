@@ -66,8 +66,7 @@ public class FiltrosDialog extends JDialog {
 
         // Secciones Generales
      // Secciones Generales con TOPES de tamaño para evitar espacios en blanco
-        JPanel pnlCalificaciones = createSection("CALIFICATIONS", createCalificationsContent());
-        // Integer.MAX_VALUE mantiene el ancho intacto. 55 es la altura (bájalo si quieres menos espacio)
+     JPanel pnlCalificaciones = createSection("RATINGS", createCalificationsContent());        // Integer.MAX_VALUE mantiene el ancho intacto. 55 es la altura (bájalo si quieres menos espacio)
         pnlCalificaciones.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50)); 
         leftPanel.add(pnlCalificaciones);
         leftPanel.add(Box.createVerticalStrut(10));
@@ -154,15 +153,23 @@ public class FiltrosDialog extends JDialog {
 
     private JPanel pnlAutores;
     private JPanel pnlEditoriales;
+    private JPanel pnlExtension;
+    private JPanel pnlEpoca;
     private JPanel pnlMarcas;
     private JPanel pnlMateriales;
+    private JPanel pnlTamano;
+    private JPanel pnlNumJugadores;
+    private JPanel pnlEdad;
+    private JPanel pnlTipoJuego;
+    private JPanel pnlDescuentos;
 
     // ... inside createComicsCard ...
     private JPanel createComicsCard() {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBackground(BG_COLOR);
-        p.add(createSection("EXTENSION", createCheckList(new String[]{"Single Issue (<48 pages)", "Standard Volume (48-150)", "Trade Paperback (150-300)", "Omnibus (>300)"})));
+        pnlExtension = createCheckList(new String[]{"Single Issue (<48 pages)", "Standard Volume (48-150)", "Trade Paperback (150-300)", "Omnibus (>300)"});
+        p.add(createSection("EXTENSION", pnlExtension));
         p.add(Box.createVerticalStrut(10));
         pnlEditoriales = createSearchableCheckList(getEditoriales());
         p.add(createSection("PUBLISHING HOUSE", pnlEditoriales));
@@ -170,7 +177,8 @@ public class FiltrosDialog extends JDialog {
         pnlAutores = createSearchableCheckList(getAutores());
         p.add(createSection("AUTHOR", pnlAutores));
         p.add(Box.createVerticalStrut(10));
-        p.add(createSection("AGE", createCheckList(new String[]{"Golden Age (1938-1956)", "Silver Age (1956-1970)", "Bronze Age", "Modern Age"})));
+        pnlEpoca = createCheckList(new String[]{"Golden Age (1938-1956)", "Silver Age (1956-1970)", "Bronze Age", "Modern Age"});
+        p.add(createSection("AGE", pnlEpoca));
         return p;
     }
 
@@ -178,7 +186,8 @@ public class FiltrosDialog extends JDialog {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBackground(BG_COLOR);
-        p.add(createSection("SIZE", createCheckList(new String[]{"Mini / Micro (< 5 cm)", "Small / Handheld (5 - 15 cm)", "Medium (15 - 40 cm)", "Large (> 40 cm)"})));
+        pnlTamano = createCheckList(new String[]{"Mini / Micro (< 5 cm)", "Small / Handheld (5 - 15 cm)", "Medium (15 - 40 cm)", "Large (> 40 cm)"});
+        p.add(createSection("SIZE", pnlTamano));
         p.add(Box.createVerticalStrut(10));
         pnlMateriales = createSearchableCheckList(getMateriales());
         p.add(createSection("MATERIAL", pnlMateriales));
@@ -204,6 +213,26 @@ public class FiltrosDialog extends JDialog {
                                     selected.add(((JCheckBox) chk).getText());
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        }
+        return selected;
+    }
+
+    private java.util.List<String> getSelectedItemsFromCheckList(JPanel checkListPanel) {
+        java.util.List<String> selected = new java.util.ArrayList<>();
+        if (checkListPanel == null) return selected;
+        // checkListPanel is returned by wrapInScroll: wrapper(BorderLayout) -> JScrollPane -> Viewport -> p(BoxLayout) -> JCheckBox
+        for (Component c : checkListPanel.getComponents()) {
+            if (c instanceof JScrollPane) {
+                JViewport viewport = ((JScrollPane) c).getViewport();
+                Component view = viewport.getView();
+                if (view instanceof JPanel) {
+                    for (Component chk : ((JPanel) view).getComponents()) {
+                        if (chk instanceof JCheckBox && ((JCheckBox) chk).isSelected()) {
+                            selected.add(((JCheckBox) chk).getText());
                         }
                     }
                 }
@@ -247,6 +276,20 @@ public class FiltrosDialog extends JDialog {
             }
         }
 
+        // Filtro Descuentos
+        java.util.List<String> selDescuentos = getSelectedItemsFromCheckList(pnlDescuentos);
+        if (!selDescuentos.isEmpty() && p.getDescuento() != null) {
+            String tipoDesc = p.getDescuento().getClass().getSimpleName();
+            boolean matchDesc = false;
+            if (selDescuentos.contains("Quantity Discount") && tipoDesc.equals("Cantidad")) matchDesc = true;
+            if (selDescuentos.contains("Price Reduction") && (tipoDesc.equals("Precio") || tipoDesc.equals("DePorcentaje"))) matchDesc = true;
+            if (selDescuentos.contains("Spending Volume") && tipoDesc.equals("UmbralGasto")) matchDesc = true;
+            if (selDescuentos.contains("Threshold Gift") && tipoDesc.equals("RebajaUmbral")) matchDesc = true; // or Regalo
+            if (!matchDesc) return false;
+        } else if (!selDescuentos.isEmpty() && p.getDescuento() == null) {
+            return false;
+        }
+
         if (p instanceof Comic) {
             Comic c = (Comic) p;
             java.util.List<String> selAutores = getSelectedItems(pnlAutores);
@@ -254,6 +297,29 @@ public class FiltrosDialog extends JDialog {
             
             java.util.List<String> selEditoriales = getSelectedItems(pnlEditoriales);
             if (!selEditoriales.isEmpty() && !selEditoriales.contains(c.getEditorial())) return false;
+            
+            java.util.List<String> selExtension = getSelectedItemsFromCheckList(pnlExtension);
+            if (!selExtension.isEmpty()) {
+                boolean matchExt = false;
+                int pag = c.getNumeroPaginas();
+                if (selExtension.contains("Single Issue (<48 pages)") && pag < 48) matchExt = true;
+                if (selExtension.contains("Standard Volume (48-150)") && pag >= 48 && pag <= 150) matchExt = true;
+                if (selExtension.contains("Trade Paperback (150-300)") && pag > 150 && pag <= 300) matchExt = true;
+                if (selExtension.contains("Omnibus (>300)") && pag > 300) matchExt = true;
+                if (!matchExt) return false;
+            }
+
+            java.util.List<String> selEpoca = getSelectedItemsFromCheckList(pnlEpoca);
+            if (!selEpoca.isEmpty()) {
+                boolean matchAge = false;
+                int year = c.getAñoPublicacion();
+                if (selEpoca.contains("Golden Age (1938-1956)") && year >= 1938 && year <= 1956) matchAge = true;
+                if (selEpoca.contains("Silver Age (1956-1970)") && year > 1956 && year <= 1970) matchAge = true;
+                if (selEpoca.contains("Bronze Age") && year > 1970 && year <= 1985) matchAge = true;
+                if (selEpoca.contains("Modern Age") && year > 1985) matchAge = true;
+                if (!matchAge) return false;
+            }
+
         } else if (p instanceof Figura) {
             Figura f = (Figura) p;
             java.util.List<String> selMarcas = getSelectedItems(pnlMarcas);
@@ -261,6 +327,48 @@ public class FiltrosDialog extends JDialog {
             
             java.util.List<String> selMateriales = getSelectedItems(pnlMateriales);
             if (!selMateriales.isEmpty() && !selMateriales.contains(f.getMaterial())) return false;
+
+            java.util.List<String> selTamano = getSelectedItemsFromCheckList(pnlTamano);
+            if (!selTamano.isEmpty()) {
+                boolean matchSize = false;
+                double maxDim = Math.max(f.getDimensionX(), Math.max(f.getDimensionY(), f.getDimensionZ()));
+                if (selTamano.contains("Mini / Micro (< 5 cm)") && maxDim < 5) matchSize = true;
+                if (selTamano.contains("Small / Handheld (5 - 15 cm)") && maxDim >= 5 && maxDim <= 15) matchSize = true;
+                if (selTamano.contains("Medium (15 - 40 cm)") && maxDim > 15 && maxDim <= 40) matchSize = true;
+                if (selTamano.contains("Large (> 40 cm)") && maxDim > 40) matchSize = true;
+                if (!matchSize) return false;
+            }
+        } else if (p instanceof modelo.producto.JuegoDeMesa) {
+            modelo.producto.JuegoDeMesa jm = (modelo.producto.JuegoDeMesa) p;
+            
+            java.util.List<String> selNumJugadores = getSelectedItemsFromCheckList(pnlNumJugadores);
+            if (!selNumJugadores.isEmpty()) {
+                boolean matchPlayers = false;
+                if (selNumJugadores.contains("1 Player") && jm.getNumeroJugadores() == 1) matchPlayers = true;
+                if (selNumJugadores.contains("2 Players") && jm.getNumeroJugadores() == 2) matchPlayers = true;
+                if (selNumJugadores.contains("3+ Players") && jm.getNumeroJugadores() >= 3) matchPlayers = true;
+                if (!matchPlayers) return false;
+            }
+
+            java.util.List<String> selEdad = getSelectedItemsFromCheckList(pnlEdad);
+            if (!selEdad.isEmpty()) {
+                boolean matchAge = false;
+                if (selEdad.contains("Kids (<8)") && jm.getEdadMinima() < 8) matchAge = true;
+                if (selEdad.contains("Family (8-12)") && jm.getEdadMinima() >= 8 && jm.getEdadMinima() <= 12) matchAge = true;
+                if (selEdad.contains("Teen (13-17)") && jm.getEdadMinima() >= 13 && jm.getEdadMinima() <= 17) matchAge = true;
+                if (selEdad.contains("Adult (18+)") && jm.getEdadMinima() >= 18) matchAge = true;
+                if (!matchAge) return false;
+            }
+
+            java.util.List<String> selTipoJuego = getSelectedItemsFromCheckList(pnlTipoJuego);
+            if (!selTipoJuego.isEmpty()) {
+                boolean matchTipo = false;
+                String tipoJm = jm.getTipoJuegoDeMesa().name();
+                if (selTipoJuego.contains("CARDS") && tipoJm.equals("CARTAS")) matchTipo = true;
+                if (selTipoJuego.contains("DICE") && tipoJm.equals("DADOS")) matchTipo = true;
+                if (selTipoJuego.contains("MINIATURES") && tipoJm.equals("MINIATURAS")) matchTipo = true;
+                if (!matchTipo) return false;
+            }
         }
         return true;
     }
@@ -282,7 +390,7 @@ public class FiltrosDialog extends JDialog {
                 ((JComboBox<?>) c).setSelectedIndex(0);
             } else if (c instanceof JTextField) {
                 if (c == txtPrecioMin) {
-                    ((JTextField) c).setText("0.00");
+                    ((JTextField) c).setText("");
                 } else if (c == txtPrecioMax) {
                     ((JTextField) c).setText("");
                 } else {
@@ -341,13 +449,14 @@ public class FiltrosDialog extends JDialog {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBackground(BG_COLOR);
-        p.add(createSection("NUMBER OF PLAYERS", createCheckList(new String[]{"Solo (1 Player)", "Duo (2 Players)", "Small Group (3-4)", "Party (5+)"})));
+        pnlNumJugadores = createCheckList(new String[]{"1 Player", "2 Players", "3+ Players"});
+        p.add(createSection("NUMBER OF PLAYERS", pnlNumJugadores));
         p.add(Box.createVerticalStrut(10));
-        p.add(createSection("AGE RANGE", createCheckList(new String[]{"Kids (3-7)", "Family (8-12)", "Teen (13-17)", "Adult (18+)"})));
+        pnlEdad = createCheckList(new String[]{"Kids (<8)", "Family (8-12)", "Teen (13-17)", "Adult (18+)"});
+        p.add(createSection("AGE RANGE", pnlEdad));
         p.add(Box.createVerticalStrut(10));
-        p.add(createSection("GAME TYPE", createCheckList(new String[]{"Strategy", "Party Games", "Card Games", "Cooperative"})));
-        p.add(Box.createVerticalStrut(10));
-        p.add(createSection("ESTIMATED PLAYTIME", createCheckList(new String[]{"Quick (Under 30 min)", "Standard (30-90 min)", "Long (90+ min)"})));
+        pnlTipoJuego = createCheckList(new String[]{"CARDS", "DICE", "MINIATURES"});
+        p.add(createSection("GAME TYPE", pnlTipoJuego));
         return p;
     }
 
@@ -433,6 +542,16 @@ public class FiltrosDialog extends JDialog {
         txtSearch.setForeground(Color.GRAY);
         txtSearch.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.LIGHT_GRAY), new EmptyBorder(4,6,4,6)));
         txtSearch.setMaximumSize(new Dimension(Integer.MAX_VALUE, 28));
+        
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.setBackground(Color.WHITE);
+        for (String item : items) {
+            JCheckBox chk = new JCheckBox(item);
+            chk.setBackground(Color.WHITE);
+            p.add(chk);
+        }
+
         txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent e) {
                 if (txtSearch.getText().equals("Search...")) {
@@ -447,16 +566,30 @@ public class FiltrosDialog extends JDialog {
                 }
             }
         });
+
+        txtSearch.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) { filter(); }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) { filter(); }
+            public void changedUpdate(javax.swing.event.DocumentEvent e) { filter(); }
+            private void filter() {
+                String text = txtSearch.getText().toLowerCase();
+                boolean isSearch = !text.equals("search...") && !text.trim().isEmpty();
+                for (Component c : p.getComponents()) {
+                    if (c instanceof JCheckBox) {
+                        JCheckBox chk = (JCheckBox) c;
+                        if (!isSearch || chk.getText().toLowerCase().contains(text)) {
+                            chk.setVisible(true);
+                        } else {
+                            chk.setVisible(false);
+                        }
+                    }
+                }
+                p.revalidate();
+                p.repaint();
+            }
+        });
+
         container.add(txtSearch, BorderLayout.NORTH);
-        
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        p.setBackground(Color.WHITE);
-        for (String item : items) {
-            JCheckBox chk = new JCheckBox(item);
-            chk.setBackground(Color.WHITE);
-            p.add(chk);
-        }
         container.add(wrapInScroll(p), BorderLayout.CENTER);
         return container;
     }
@@ -485,24 +618,49 @@ public class FiltrosDialog extends JDialog {
         return p;
     }
 
+    private JComboBox<String> cbPrices;
+
     private JPanel createPricesContent() {
         JPanel p = new JPanel(new GridLayout(3, 1));
         p.setBackground(Color.WHITE);
-        p.add(new JComboBox<>(new String[]{"No preference"}));
+        
+        cbPrices = new JComboBox<>(new String[]{"No preference", "Under 10 €", "10 € - 50 €", "Over 50 €"});
+        p.add(cbPrices);
         
         JPanel range = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         range.setBackground(Color.WHITE);
-        txtPrecioMin = new JTextField("0.00", 5);
+        txtPrecioMin = new JTextField("", 5);
         range.add(txtPrecioMin);
         range.add(new JLabel("-"));
         txtPrecioMax = new JTextField("", 5);
         range.add(txtPrecioMax);
         p.add(range);
+
+        cbPrices.addItemListener(e -> {
+            if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+                String val = (String) e.getItem();
+                if (val.equals("Under 10 €")) {
+                    txtPrecioMin.setText("0.00");
+                    txtPrecioMax.setText("10.00");
+                } else if (val.equals("10 € - 50 €")) {
+                    txtPrecioMin.setText("10.00");
+                    txtPrecioMax.setText("50.00");
+                } else if (val.equals("Over 50 €")) {
+                    txtPrecioMin.setText("50.00");
+                    txtPrecioMax.setText("");
+                } else {
+                    txtPrecioMin.setText("");
+                    txtPrecioMax.setText("");
+                }
+            }
+        });
+
         return p;
     }
 
     private JPanel createDiscountsContent() {
-        return createCheckList(new String[]{"Quantity Discount", "Price Reduction", "Spending Volume", "Threshold Gift"});
+        pnlDescuentos = createCheckList(new String[]{"Quantity Discount", "Price Reduction", "Spending Volume", "Threshold Gift"});
+        return pnlDescuentos;
     }
 
     // ==========================================
