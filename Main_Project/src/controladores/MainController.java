@@ -3,6 +3,9 @@ package controladores;
 import modelo.aplicacion.Aplicacion;
 import modelo.solicitud.Oferta;
 import modelo.usuario.ClienteRegistrado;
+import modelo.usuario.Empleado;
+import modelo.usuario.Gestor;
+import modelo.usuario.Usuario;
 import vista.main.MainFrame;
 import vista.userWindows.CrearUsuarioDialog;
 import vista.userWindows.EditProfileDialog;
@@ -60,7 +63,7 @@ public class MainController {
         registrarListeners();
         
         // Mostrar panel inicial
-        navegarA(MainFrame.PANEL_MENU_PRINCIPAL);
+        mostrarMenuPrincipal();
         
         // Hacer visible la ventana
         mainFrame.setVisible(true);
@@ -68,6 +71,8 @@ public class MainController {
     
     private void registrarListeners() {
         // --- Conectar Cabeceras de Navegación Global ---
+        conectarHeaderEmpleado(mainFrame.getMenuEmpleadoPanel().getHeaderPanel());
+
         conectarHeaderNormal(mainFrame.getMenuPrincipalPanel().getHeaderPanel());
         conectarHeaderNormal(mainFrame.getMySecondHandProductsPanel().getHeaderPanel());
         conectarHeaderNormal(mainFrame.getCarritoPanel().getHeaderPanel());
@@ -94,6 +99,15 @@ public class MainController {
     }
 
     /**
+     * Asigna la lógica global básica para un empleado/gestor.
+     */
+    private void conectarHeaderEmpleado(HeaderPanel header) {
+        header.addHomeListener(e -> mostrarMenuPrincipal());
+        header.addPerfilListener(e -> navegarBotonPerfil());
+        header.addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
+    }
+
+    /**
      * Asigna la lógica global junto con el buscador y filtros del catálogo.
      */
     private void conectarHeaderNormal(HeaderPanel header) {
@@ -109,7 +123,7 @@ public class MainController {
      * Asigna la lógica de navegación a todas las opciones de una cabecera global.
      */
     private void conectarHeaderGlobal(HeaderPanel header) {
-        header.addHomeListener(e -> navegarA(MainFrame.PANEL_MENU_PRINCIPAL));
+        header.addHomeListener(e -> mostrarMenuPrincipal());
         header.addDescuentosListener(e -> navegarA(MainFrame.PANEL_DESCUENTOS));
         header.addOutstandingListener(e -> mostrarProductosOutstanding());
         header.addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
@@ -126,6 +140,18 @@ public class MainController {
      */
     public void navegarA(String nombrePanel) {
         mainFrame.mostrarPanel(nombrePanel);
+    }
+
+    /**
+     * Navega al menú principal correspondiente según el tipo de usuario activo.
+     */
+    public void mostrarMenuPrincipal() {
+        Usuario u = modelo.getUsuarioActual();
+        if (u instanceof Empleado || u instanceof Gestor) {
+            navegarA(MainFrame.PANEL_MENU_EMPLEADO);
+        } else {
+            navegarA(MainFrame.PANEL_MENU_PRINCIPAL);
+        }
     }
 
     // -------------------------------------------------------

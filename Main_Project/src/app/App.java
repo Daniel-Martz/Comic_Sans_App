@@ -448,6 +448,17 @@ import modelo.tiempo.*;
         yo.pagarPedido(pedido, "1234567812345678", "123", new DateTimeSimulado());
         
         System.out.println("Java está mirando en: " + new java.io.File(".").getAbsolutePath());
+        
+        app.cerrarSesion();
+        app.iniciarSesion("gestor", "123456");
+        Gestor gestor = (Gestor) app.getUsuarioActual();
+        gestor.crearEmpleado("demo", "123456789E");
+        app.cerrarSesion();
+        app.iniciarSesion("demo", "123456");
+        
+		
+        
+    	
         javax.swing.SwingUtilities.invokeLater(() -> {
             
             // 1. Instanciar el MODELO

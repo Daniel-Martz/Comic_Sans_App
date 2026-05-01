@@ -22,6 +22,10 @@ public class HeaderPanel extends JPanel {
     private JButton btnPerfil;
     private JButton btnNotificaciones;
     private JButton btnSearchIcon;
+    private JLabel speechBubble;
+    private JPanel searchBox;
+    private JPanel leftPanel;
+    private JPanel rightPanel;
 
     ImageIcon iconoSinLogIn = getSclaedIcon("/assets/fotoperfil.png");
     ImageIcon iconoConLogIn = getSclaedIcon("/assets/fotoperfilLoggedIn.png");
@@ -107,11 +111,11 @@ public class HeaderPanel extends JPanel {
         setOpaque(false);
         setBorder(new EmptyBorder(10, 15, 10, 15));
 
-        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 5));
         leftPanel.setOpaque(false);
         leftPanel.add(logoLabel);
         
-        JLabel speechBubble = new JLabel("<html><center>YOUR FAVORITE STORE<br>IS NOW ONLINE!!</center></html>");
+        speechBubble = new JLabel("<html><center>YOUR FAVORITE STORE<br>IS NOW ONLINE!!</center></html>");
         speechBubble.setBackground(Color.WHITE);
         speechBubble.setOpaque(true);
         speechBubble.setBorder(BorderFactory.createCompoundBorder(
@@ -124,11 +128,11 @@ public class HeaderPanel extends JPanel {
         centerNavPanel.add(btnDescuentos);
         centerNavPanel.add(btnOutstanding);
 
-        JPanel rightPanel = new JPanel(new BorderLayout(15, 0)); 
+        rightPanel = new JPanel(new BorderLayout(15, 0)); 
         rightPanel.setOpaque(false);
 
         // Contenedor con borde redondeado estilo "píldora" (Google)
-        JPanel searchBox = new JPanel(new BorderLayout(8, 0)) {
+        searchBox = new JPanel(new BorderLayout(8, 0)) {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -170,6 +174,25 @@ public class HeaderPanel extends JPanel {
         add(leftPanel, BorderLayout.WEST);
         add(centerNavPanel, BorderLayout.CENTER);
         add(rightPanel, BorderLayout.EAST);
+    }
+
+    /**
+     * Configura la cabecera para la vista de empleados ocultando elementos de compra.
+     */
+    public void configurarMenuEmpleado() {
+        btnDescuentos.setVisible(false);
+        btnOutstanding.setVisible(false);
+        txtSearch.setVisible(false);
+        btnSearchIcon.setVisible(false);
+        if (searchBox != null) searchBox.setVisible(false);
+        btnFilters.setVisible(false);
+        btnCarrito.setVisible(false);
+        btnIntercambios.setVisible(false);
+        speechBubble.setText("<html><center>EMPLOYEE DASHBOARD<br>MANAGE THE STORE</center></html>");
+        
+        // Forzar simetría para que el botón Home quede perfectamente centrado
+        leftPanel.setPreferredSize(new Dimension(380, leftPanel.getPreferredSize().height));
+        rightPanel.setPreferredSize(new Dimension(380, rightPanel.getPreferredSize().height));
     }
 
     private JButton createTopNavButton(String text) {
