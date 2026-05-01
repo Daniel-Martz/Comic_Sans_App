@@ -33,8 +33,10 @@ public class LoginController implements ActionListener{
 		  app.iniciarSesion(usernameString, passwordString);
 		  loginPanel.setStatusLabelText("");
 		  mainController.cerrarVentanaLogIn();
+		  mainController.refreshIconImage(true);
 		}catch(IllegalArgumentException | IllegalStateException e) {
 		  loginPanel.setStatusLabelText(e.getMessage());
+		  mainController.refreshIconImage(false);
 		}
 	}
 	

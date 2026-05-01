@@ -26,14 +26,11 @@ public class UsuarioOptionsController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-		case "Edit profile":
+		case "Edit Profile":
       actionEditProfile();
 			break;
 		case "Purhcase History":
       actionPurchaseHistory();
-			break;
-		case "Notification Center":
-      actionNotificationCenter();
 			break;
 		case "Cerrar Sesión":
       actionCerrarSesion();
@@ -44,7 +41,8 @@ public class UsuarioOptionsController implements ActionListener{
 	}
 	
 	private void actionEditProfile() {
-		// mainController.abrirVentanaCrearUsuario();
+		mainController.cerrarVentanaOpcionesUsuario();
+		mainController.abrirVentanaEditarUsuario();
 	}
 
   private void actionPurchaseHistory() {
@@ -59,6 +57,7 @@ public class UsuarioOptionsController implements ActionListener{
     Object msg = "Log out completed";
     JOptionPane.showMessageDialog(mainFrame, msg ,"Log out", JOptionPane.INFORMATION_MESSAGE);
     mainController.cerrarVentanaOpcionesUsuario();
+    mainController.refreshIconImage(false);
     Aplicacion.getInstancia().cerrarSesion();
   }
 	

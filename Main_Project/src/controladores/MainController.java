@@ -5,6 +5,7 @@ import modelo.solicitud.Oferta;
 import modelo.usuario.ClienteRegistrado;
 import vista.main.MainFrame;
 import vista.userWindows.CrearUsuarioDialog;
+import vista.userWindows.EditProfileDialog;
 import vista.userWindows.LoginDialog;
 import vista.userWindows.ProposalsWindow;
 import vista.userWindows.VentanaInterchangeOptions;
@@ -39,6 +40,7 @@ public class MainController {
     private final Aplicacion modelo;
     private vista.userWindows.CrearUsuarioDialog crearUsuarioDialog;
     private vista.userWindows.LoginDialog loginDialog;
+    private vista.userWindows.EditProfileDialog editProfileDialog;
     private vista.userWindows.FiltrosDialog dialogFiltros;
     private vista.userWindows.UsuarioOptionsDialog dialogOpcionesUsuario;
     private ControladorFiltros controladorFiltros;
@@ -334,6 +336,7 @@ public class MainController {
     
     public void abrirVentanaOpcionesUsuario(){
     	this.dialogOpcionesUsuario = new UsuarioOptionsDialog(mainFrame);
+      //Aquí pasamos como argumento el mainFrame para que el dialog de cerrar sesión tenga un padre
       this.dialogOpcionesUsuario.addListener(new UsuarioOptionsController(mainFrame, this));
     	dialogOpcionesUsuario.setVisible(true);
     }
@@ -347,9 +350,13 @@ public class MainController {
     }
 
     public void abrirVentanaEditarUsuario(){
+    	this.editProfileDialog = new EditProfileDialog(mainFrame);
+    	this.editProfileDialog.addListenerChangeData(new EditProfileController( this));
+    	editProfileDialog.setVisible(true);
     } 
 
     public void cerrarVentanaEditarUsuario(){
+    	editProfileDialog.setVisible(false);
     } 
 
     public void cerrarVentanaLogIn() {
@@ -362,5 +369,9 @@ public class MainController {
     	}else {
     		abrirVentanaOpcionesUsuario();
     	}
+    }
+    
+    public void refreshIconImage(boolean isLoggedIn) {
+    	mainFrame.getMenuEmpleadoPanel().refreshIconImage(isLoggedIn);
     }
 }

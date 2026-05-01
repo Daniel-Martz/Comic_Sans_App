@@ -128,22 +128,36 @@ public class Aplicacion implements Serializable {
 	 * @throws IllegalStateException    si ya existe un usuario con el mismo
 	 *                                  nombre de usuario
 	 */
-	public ClienteRegistrado crearCuenta(String nombreUsuario, String DNI, String contraseña) {
+	public ClienteRegistrado crearCuenta(String nombreUsuario, String DNI, String contraseña, String confirmedContraseña) {
 		if (nombreUsuario == null) {
-			throw new IllegalArgumentException("Nombre de usuario inválido");
+			throw new IllegalArgumentException("Nombre de usuario no puede ser nulo");
 		}
 
 		String nombreUser = nombreUsuario.trim();
-
 		if (nombreUser.isEmpty()) {
 			throw new IllegalArgumentException("Nombre de usuario inválido");
 		}
 
-		if (contraseña == null || !contraseñaLower(contraseña) || !contraseñaUpper(contraseña) || !contraseñaSymbol(contraseña) || !contraseñaNumber(contraseña) || !contraseñaLength(contraseña)) {
-			throw new IllegalArgumentException("La contraseña introducida no cumple con los requisitos");
+		if (contraseña == null) {
+			throw new IllegalArgumentException("La contraseña no puede ser nula");
 		}
 
-		if (!dniFormat(DNI)) {
+		// Validaciones de la contraseña; cada método lanza su propia excepción si falla
+		validarContraseñaLength(contraseña);
+		validarContraseñaLower(contraseña);
+		validarContraseñaUpper(contraseña);
+		validarContraseñaNumber(contraseña);
+		validarContraseñaSymbol(contraseña);
+
+		if (confirmedContraseña == null || confirmedContraseña.isEmpty()) {
+			throw new IllegalArgumentException("Debes confirmar la contraseña.");
+		}
+
+		if (!contraseña.equals(confirmedContraseña)) {
+			throw new IllegalArgumentException("Las contraseñas no coinciden.");
+		}
+
+		if (DNI == null || !dniFormat(DNI)) {
 			throw new IllegalArgumentException("El DNI introducido no es válido");
 		}
 
@@ -159,14 +173,59 @@ public class Aplicacion implements Serializable {
 		System.out.println("Nueva cuenta de cliente creada con éxito para: " + nombreUser);
 		return nuevoUsuario;
 	}
+
+  /**
+	 * Crea una cuenta nueva de tipo {@link ClienteRegistrado} y la añade a la
+	 * lista de usuarios registrados.
+	 *
+	 * @param nombreUsuario nombre de usuario deseado; no {@code null} ni vacío
+	 * @param DNI            DNI del usuario; debe tener longitud 10
+	 * @param contraseña     contraseña; longitud mínima 4
+	 * @return el cliente registrado recién creado
+	 * @throws IllegalArgumentException si alguno de los parámetros no cumple las
+	 *                                  validaciones indicadas
+	 * @throws IllegalStateException    si ya existe un usuario con el mismo
+	 *                                  nombre de usuario
+	 */
+	public ClienteRegistrado modificarCuenta(String nombreUsuario, String DNI, String contraseñaAntigua, String contraseñaNueva) {
+		if (nombreUsuario == null || contraseñaAntigua == null || contraseñaNueva == null || DNI == null) {
+			throw new IllegalArgumentException("Ningún parámetro puede ser nulo para modificar la cuenta");
+		}
+
+		// Solo permitimos modificar cuentas de clientes registrados mediante este método
+		if (!(usuarioActual instanceof ClienteRegistrado)) {
+			throw new IllegalStateException("Solo se pueden modificar cuentas de cliente con este método");
+		}
+
+
+		// Verificamos contraseña antigua
+		if (!usuarioActual.verificarContraseña(contraseñaAntigua)) {
+			throw new IllegalArgumentException("La contraseña antigua no es correcta");
+		}
+
+		// Validamos nueva contraseña (cada método lanzará excepción con mensaje propio si falla)
+		validarContraseñaLength(contraseñaNueva);
+		validarContraseñaLower(contraseñaNueva);
+		validarContraseñaUpper(contraseñaNueva);
+		validarContraseñaNumber(contraseñaNueva);
+		validarContraseñaSymbol(contraseñaNueva);
+
+		// Aplicamos el cambio de contraseña
+		usuarioActual.setContraseña(contraseñaAntigua, contraseñaNueva);
+
+		System.out.println("Cuenta actualizada correctamente para: " + nombreUsuario);
+		return (ClienteRegistrado) usuarioActual;
+	}
 	
 	/**
 	 * Verifica tamaño de contraseña
 	 * @param contraseña
 	 * @return true o false
 	 */
-	public boolean contraseñaLength(String contraseña) {
-		return contraseña.length() >= 10;
+	public void validarContraseñaLength(String contraseña) {
+		if (contraseña == null || contraseña.length() < 10) {
+			throw new IllegalArgumentException("La contraseña debe tener al menos 10 caracteres");
+		}
 	}
 	
 	/**
@@ -174,8 +233,10 @@ public class Aplicacion implements Serializable {
 	 * @param contraseña
 	 * @return true o false
 	 */
-	public boolean contraseñaLower(String contraseña) {
-		return contraseña.matches(".*[a-z].*");
+	public void validarContraseñaLower(String contraseña) {
+		if (contraseña == null || !contraseña.matches(".*[a-z].*")) {
+			throw new IllegalArgumentException("La contraseña debe contener al menos una letra minúscula");
+		}
 	}
 	
 	/**
@@ -183,8 +244,10 @@ public class Aplicacion implements Serializable {
 	 * @param contraseña
 	 * @return true o false
 	 */
-	public boolean contraseñaUpper(String contraseña) {
-		return contraseña.matches(".*[A-Z].*");
+	public void validarContraseñaUpper(String contraseña) {
+		if (contraseña == null || !contraseña.matches(".*[A-Z].*")) {
+			throw new IllegalArgumentException("La contraseña debe contener al menos una letra mayúscula");
+		}
 	}
 	
 	/**
@@ -192,9 +255,10 @@ public class Aplicacion implements Serializable {
 	 * @param contraseña
 	 * @return true o false
 	 */
-	public boolean contraseñaNumber(String contraseña) {
-	    // Busca cualquier cosa que NO sea una letra ni un número
-	    return contraseña.matches(".*[0-9].*");
+	public void validarContraseñaNumber(String contraseña) {
+		if (contraseña == null || !contraseña.matches(".*[0-9].*")) {
+			throw new IllegalArgumentException("La contraseña debe contener al menos un dígito");
+		}
 	}
 	
 	/**
@@ -202,9 +266,10 @@ public class Aplicacion implements Serializable {
 	 * @param contraseña
 	 * @return true o false
 	 */
-	public boolean contraseñaSymbol(String contraseña) {
-	    // Busca cualquier cosa que NO sea una letra ni un número
-	    return contraseña.matches(".*[^a-zA-Z0-9].*");
+	public void validarContraseñaSymbol(String contraseña) {
+		if (contraseña == null || !contraseña.matches(".*[^a-zA-Z0-9].*")) {
+			throw new IllegalArgumentException("La contraseña debe contener al menos un símbolo (carácter especial)");
+		}
 	}
 	
 	/**
@@ -551,7 +616,7 @@ public class Aplicacion implements Serializable {
 			throw new IllegalStateException("Solo se pueden cancelar pedidos en estado pendiente de pago.");
 		}
 
-		// Reestablcemes el stock
+		// Reestablcemos el stock
 		for (LineaProductoVenta producto : pedido.getProductosDiferentes().keySet()) {
 			int unidades = pedido.getProductosDiferentes().get(producto);
 			producto.setStock(unidades + producto.getStock());

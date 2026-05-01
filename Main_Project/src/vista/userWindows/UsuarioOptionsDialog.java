@@ -21,7 +21,6 @@ public class UsuarioOptionsDialog extends JDialog {
     private JButton btnEditProfile;
     private JButton btnCerrarSesion;
     private JButton btnPurchaseHistory;
-    private JButton btnNotificationCentre;
     private JPanel mainPanel;
 
     // --- PALETA DE COLORES ---
@@ -59,17 +58,15 @@ public class UsuarioOptionsDialog extends JDialog {
 
         btnEditProfile = new JButton("EDIT MY PROFILE");
         btnPurchaseHistory = new JButton("PURCHASE HISTORY");
-        btnNotificationCentre = new JButton("NOTIFICATION CENTER");
         btnCerrarSesion = new JButton("CERRAR SESION");
         
 
         btnEditProfile.setActionCommand("Edit Profile");
         btnCerrarSesion.setActionCommand("Cerrar Sesión");
         btnPurchaseHistory.setActionCommand("Purchase History");
-        btnNotificationCentre.setActionCommand("Notification Center");
 
         // 3. Aplicar estilos y BORDES a los botones
-        JButton[] buttons = {btnEditProfile, btnPurchaseHistory, btnNotificationCentre, btnCerrarSesion};
+        JButton[] buttons = {btnEditProfile, btnPurchaseHistory, btnCerrarSesion};
         
         // Crear un borde redondeado para los botones
         Border bordeBoton = BorderFactory.createLineBorder(COLOR_TEXTO, 2, true); // Borde oscuro de 2px
@@ -111,7 +108,7 @@ public class UsuarioOptionsDialog extends JDialog {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // Título visual dentro del panel
-        JLabel lblTitle = new JLabel("INTERCHANGE OPTIONS");
+        JLabel lblTitle = new JLabel("PROFILE OPTIONS");
         lblTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblTitle.setForeground(COLOR_TEXTO); 
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -130,9 +127,6 @@ public class UsuarioOptionsDialog extends JDialog {
         mainPanel.add(btnPurchaseHistory, gbc);
         
         gbc.gridy = 3;
-        mainPanel.add(btnNotificationCentre, gbc);
-
-        gbc.gridy = 4;
         mainPanel.add(btnCerrarSesion, gbc);
 
         setContentPane(mainPanel);
@@ -145,7 +139,6 @@ public class UsuarioOptionsDialog extends JDialog {
     public void addListener(UsuarioOptionsController a){
         btnEditProfile.addActionListener(a);
         btnPurchaseHistory.addActionListener(a);
-        btnNotificationCentre.addActionListener(a);
         btnCerrarSesion.addActionListener(a);
     }
 }

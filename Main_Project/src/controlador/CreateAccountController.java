@@ -30,18 +30,17 @@ public class CreateAccountController implements ActionListener{
 		String dniString = crearUsuarioPanel.getDni();
 		String passwordString = crearUsuarioPanel.getPassword(); 
 		String confirmedPasswordString = crearUsuarioPanel.getConfirmedPassword();
-		if(!passwordString.equals(confirmedPasswordString)) {
-			crearUsuarioPanel.setStatusLabelText("The two passwords are not equal.");
-		}else {
-			Aplicacion app = Aplicacion.getInstancia();
-			try {
-				app.crearCuenta(usernameString, dniString, passwordString);
-				crearUsuarioPanel.setStatusLabelText("");
-				mainController.cerrarVentanaCrearUsuario();
-			}catch(IllegalArgumentException | IllegalStateException e) {
-				crearUsuarioPanel.setStatusLabelText(e.getMessage());
-			}
-		}
+    Aplicacion app = Aplicacion.getInstancia();
+    try {
+      app.crearCuenta(usernameString, dniString, passwordString, confirmedPasswordString);
+      app.iniciarSesion(usernameString, passwordString);
+      crearUsuarioPanel.setStatusLabelText("");
+      mainController.cerrarVentanaCrearUsuario();
+      mainController.refreshIconImage(true);
+    }catch(IllegalArgumentException | IllegalStateException e) {
+      crearUsuarioPanel.setStatusLabelText(e.getMessage());
+      mainController.refreshIconImage(false);
+    }
 	}
 	
 }
