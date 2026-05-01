@@ -372,6 +372,6 @@ public class MainController {
     }
     
     public void refreshIconImage(boolean isLoggedIn) {
-    	mainFrame.getMenuEmpleadoPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getMenuPrincipalPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     }
 }

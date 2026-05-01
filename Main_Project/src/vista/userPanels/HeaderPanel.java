@@ -23,9 +23,27 @@ public class HeaderPanel extends JPanel {
     private JButton btnNotificaciones;
     private JButton btnSearchIcon;
 
+    ImageIcon iconoSinLogIn = getSclaedIcon("/assets/fotoperfil.png");
+    ImageIcon iconoConLogIn = getSclaedIcon("/assets/fotoperfilLoggedIn.png");
+
     public HeaderPanel() {
         initComponents();
         initLayout();
+    }
+    
+    public ImageIcon getSclaedIcon(String path) {
+		ImageIcon icono= new ImageIcon(getClass().getResource(path));
+		Image imagenEscalada = icono.getImage().getScaledInstance(
+    35, 35, Image.SCALE_SMOOTH);
+		return new ImageIcon(imagenEscalada);
+    }
+    
+    public void refreshIconImage(boolean isLoggedIn) {
+    	if(isLoggedIn) {
+			btnPerfil.setIcon(this.iconoConLogIn);
+    	}else {
+    		btnPerfil.setIcon(this.iconoSinLogIn);
+    	}
     }
 
     private void initComponents() {
