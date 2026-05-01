@@ -64,6 +64,7 @@ public class UsuarioOptionsController implements ActionListener{
     mainController.cerrarVentanaOpcionesUsuario();
     mainController.refreshIconImage(false);
     Aplicacion.getInstancia().cerrarSesion();
+    mainController.mostrarMenuPrincipal();
   }
 	
 }
