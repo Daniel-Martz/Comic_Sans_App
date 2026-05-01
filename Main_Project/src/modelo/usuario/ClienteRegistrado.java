@@ -338,7 +338,7 @@ public class ClienteRegistrado extends Usuario {
 		actualizarOfertas();
 		this.eliminarOfertaRealizada(o);
 		o.getDestinatario().eliminarOfertaRecibida(o);
-		System.out.println("Oferta rechazada.");
+		System.out.println("Oferta cancelada.");
 	}
 
 	/**
@@ -348,6 +348,9 @@ public class ClienteRegistrado extends Usuario {
 	 */
 	public void eliminarOfertaRealizada(Oferta o) {
 		this.ofertasRealizadas.remove(o);
+		for (ProductoSegundaMano prod : o.productosOfertados()) {
+			prod.eliminarOfertaEnviada();
+		}
 	}
 	
 	/**
@@ -357,6 +360,9 @@ public class ClienteRegistrado extends Usuario {
 	 */
 	public void eliminarOfertaRecibida(Oferta o) {
 		this.ofertasRecibidas.remove(o);
+		for (ProductoSegundaMano prod : o.productosSolicitados()) {
+			prod.eliminarOfertaRecibida();
+		}
 	}
 
 	/**
@@ -569,6 +575,7 @@ public class ClienteRegistrado extends Usuario {
 				new DateTimeSimulado(), validacion);
 		anadirNotificacion(noti);
 
+		Aplicacion.getInstancia().getCatalogo().añadirProductoSegundaMano(validacion.getProductoAValidar());
 		System.out.println("Pago de validación realizado con éxito.");
 		return pago;
 	}

@@ -41,7 +41,6 @@ public class ControladorSearchInterchanges implements ActionListener, ItemListen
         cargarProductosDisponibles("");
         actualizarBarraEstado();
     }
-
     /**
      * Se llama cuando el usuario vuelve a entrar a la vista. 
      * Limpia la selección y refresca la lista.
@@ -77,12 +76,7 @@ public class ControladorSearchInterchanges implements ActionListener, ItemListen
             vista.desmarcarTodos();
             actualizarBarraEstado();
         } else if (cmd.equals("PROCEED")) {
-            if (seleccionados.isEmpty()) {
-                JOptionPane.showMessageDialog(vista, "Please select at least one product to interchange.", "Empty Selection", JOptionPane.WARNING_MESSAGE);
-            } else {
-                // TODO: Aquí iría la lógica o navegación hacia la selección de TUS propios productos a ofrecer.
-                JOptionPane.showMessageDialog(vista, "Next step: Select your own products to offer.\n(Feature pending to be implemented)", "Proceed", JOptionPane.INFORMATION_MESSAGE);
-            }
+            mainController.mostrarMakeOffer(seleccionados);
         } else if (cmd.startsWith("INFO_")) {
             int id = Integer.parseInt(cmd.substring(5));
             ProductoSegundaMano p = Catalogo.getInstancia().buscarProductoIntercambio(id);

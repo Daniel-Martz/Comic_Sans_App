@@ -13,6 +13,7 @@ import vista.userWindows.VentanaRegistroRequerido;
 import javax.swing.JOptionPane;
 
 import java.util.List;
+import java.util.Set;
 import vista.userPanels.ProductosFiltradosPanel;
 import vista.userPanels.SearchInterchangesPanel;
 import vista.userPanels.HeaderPanel;
@@ -38,6 +39,7 @@ public class MainController {
     private vista.userWindows.FiltrosDialog dialogFiltros;
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
+    private ControladorMakeOffer controladorMakeOffer;
 
     // -------------------------------------------------------
     // Constructor
@@ -71,6 +73,7 @@ public class MainController {
         
         // La de búsqueda de intercambios lleva una búsqueda especial propia, así que la normal no
         conectarHeaderGlobal(mainFrame.getSearchInterchangesPanel().getHeaderPanel());
+        conectarHeaderGlobal(mainFrame.getMakeOfferPanel().getHeaderPanel());
         
         mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS));
 
@@ -276,6 +279,7 @@ public class MainController {
         mainFrame.getConfiguracionPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
         mainFrame.getPerfilPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
         mainFrame.getNotificacionesPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
+        mainFrame.getMakeOfferPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
     }
 
     /**
@@ -296,6 +300,19 @@ public class MainController {
             this.controladorSearchInterchanges.recargar();
         }
         navegarA(MainFrame.PANEL_SEARCH_INTERCHANGES);
+    }
+
+    /**
+     * Navega al panel final para conformar la oferta, pre-cargando los productos seleccionados.
+     */
+    public void mostrarMakeOffer(Set<modelo.producto.ProductoSegundaMano> preseleccionados) {
+        if (this.controladorMakeOffer == null) {
+            vista.userPanels.MakeOfferPanel panel = mainFrame.getMakeOfferPanel();
+            this.controladorMakeOffer = new ControladorMakeOffer(panel, this, preseleccionados);
+        } else {
+            this.controladorMakeOffer.recargar(preseleccionados);
+        }
+        navegarA(MainFrame.PANEL_MAKE_OFFER);
     }
     
     public void abrirVentanaCrearUsuario(){

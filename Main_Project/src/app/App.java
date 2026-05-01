@@ -354,6 +354,26 @@ import modelo.tiempo.*;
         yo.pagarValidacion(pReady.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
         // -------------------------------------------------------------------------
+        // C. AÑADIR PRODUCTOS DE SEGUNDA MANO DISPONIBLES DE OTROS USUARIOS 
+        // (Para que aparezcan en la búsqueda de intercambios y puedas seleccionarlos)
+        // -------------------------------------------------------------------------
+        ProductoSegundaMano pBob1 = bob.añadirProductoACarteraDeIntercambio("Consola Retro Portátil", "Incluye 100 juegos clásicos.", null);
+        pBob1.getSolicitudValidacion().validarProducto(4.5, 45.0, EstadoConservacion.MUY_BUENO);
+        bob.pagarValidacion(pBob1.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano pBob2 = bob.añadirProductoACarteraDeIntercambio("Cómic X-Men #1", "Edición coleccionista, guardado en funda.", null);
+        pBob2.getSolicitudValidacion().validarProducto(5.0, 120.0, EstadoConservacion.PERFECTO);
+        bob.pagarValidacion(pBob2.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano pAlice1 = alice.añadirProductoACarteraDeIntercambio("Juego de Mesa Dixit", "Faltan un par de cartas pero es muy jugable.", null);
+        pAlice1.getSolicitudValidacion().validarProducto(3.0, 15.0, EstadoConservacion.USO_LIGERO);
+        alice.pagarValidacion(pAlice1.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano pCharlie1 = charlie.añadirProductoACarteraDeIntercambio("Figura Funko Pop Batman", "Caja ligeramente dañada en una esquina.", null);
+        pCharlie1.getSolicitudValidacion().validarProducto(4.0, 12.0, EstadoConservacion.DANADO);
+        charlie.pagarValidacion(pCharlie1.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        // -------------------------------------------------------------------------
         // 3. OFERTAS RECIBIDAS (INCOME): Otros me ofrecen cosas a mí
         // -------------------------------------------------------------------------
         
