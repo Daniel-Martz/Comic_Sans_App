@@ -27,6 +27,11 @@ public class MainFrame extends JFrame {
     private ManageProductsPanel manageProductsPanel;
     private ModifyProductsPanel modifyProductsPanel;
     
+    private AddProductsPanel addProductsPanel;
+    private LoadFromFilePanel loadFromFilePanel;
+    // El formulario de añadir producto manualmente ahora es una ventana independiente (AddProductManuallyWindow)
+    // por tanto no mantenemos aquí el panel como componente del CardLayout.
+    
     private PlaceholderPanel descuentosPanel;
     private PlaceholderPanel configuracionPanel;
     private PlaceholderPanel perfilPanel;
@@ -51,6 +56,9 @@ public class MainFrame extends JFrame {
     public static final String PANEL_MANAGE_PRODUCTS = "ManageProducts";
     public static final String PANEL_MODIFY_PRODUCTS = "ModifyProducts";
     public static final String PANEL_MODIFY_A_PRODUCT = "ModifyAProduct";
+    public static final String PANEL_ADD_PRODUCTS = "AddProducts";
+    public static final String PANEL_LOAD_FROM_FILE = "LoadFromFile";
+    public static final String PANEL_ADD_PRODUCT_MANUALLY = "AddProductManually";
 
     public MainFrame() {
         super("Comic Sans App");
@@ -73,6 +81,10 @@ public class MainFrame extends JFrame {
         
         manageProductsPanel = new ManageProductsPanel();
         modifyProductsPanel = new ModifyProductsPanel();
+        
+        addProductsPanel = new AddProductsPanel();
+        loadFromFilePanel = new LoadFromFilePanel();
+        // addProductManuallyPanel = new AddProductManuallyPanel();
         
         descuentosPanel = new PlaceholderPanel("Descuentos");
         configuracionPanel = new PlaceholderPanel("Configuración");
@@ -97,6 +109,10 @@ public class MainFrame extends JFrame {
         
         contenedorPaneles.add(manageProductsPanel, PANEL_MANAGE_PRODUCTS);
         contenedorPaneles.add(modifyProductsPanel, PANEL_MODIFY_PRODUCTS);
+        contenedorPaneles.add(addProductsPanel, PANEL_ADD_PRODUCTS);
+        contenedorPaneles.add(loadFromFilePanel, PANEL_LOAD_FROM_FILE);
+        // El panel para añadir producto manualmente ya no se añade al CardLayout porque se muestra
+        // mediante una ventana independiente (AddProductManuallyWindow).
 
         // 4. Configurar la ventana
         setContentPane(contenedorPaneles);
@@ -128,6 +144,10 @@ public class MainFrame extends JFrame {
     
     public ManageProductsPanel getManageProductsPanel() { return manageProductsPanel; }
     public ModifyProductsPanel getModifyProductsPanel() { return modifyProductsPanel; }
+    
+    public AddProductsPanel getAddProductsPanel() { return addProductsPanel; }
+    public LoadFromFilePanel getLoadFromFilePanel() { return loadFromFilePanel; }
+    // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.
     
     public PlaceholderPanel getDescuentosPanel() { return descuentosPanel; }
     public PlaceholderPanel getConfiguracionPanel() { return configuracionPanel; }

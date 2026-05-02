@@ -10,21 +10,19 @@ import modelo.usuario.Usuario;
 import vista.main.MainFrame;
 import vista.userWindows.CrearUsuarioDialog;
 import vista.userWindows.EditProfileDialog;
+import vista.userWindows.FiltrosDialog;
 import vista.userWindows.LoginDialog;
 import vista.userWindows.ProposalsWindow;
 import vista.userWindows.VentanaInterchangeOptions;
 import vista.userWindows.VentanaRegistroRequerido;
 import vista.userWindows.UsuarioOptionsDialog;
-
 import javax.swing.JOptionPane;
 
 import java.util.List;
 import java.util.Set;
-import vista.userPanels.ProductosFiltradosPanel;
-import vista.userPanels.SearchInterchangesPanel;
-import vista.userPanels.HeaderPanel;
-import vista.userPanels.HistorialPedidosPanel;
-import controlador.CreateAccountController;
+import vista.userPanels.*;
+import vista.empleadoPanel.*;
+import controlador.*;
 import controlador.LoginController;
 import controlador.LoginToCreateAccountController;
 
@@ -90,8 +88,11 @@ public class MainController {
         conectarHeaderGlobal(mainFrame.getMakeOfferPanel().getHeaderPanel());
         
         conectarHeaderEmpleado(mainFrame.getManageProductsPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getAddProductsPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getLoadFromFilePanel().getHeaderPanel());
         
         new ControladorManageProducts(mainFrame, this);
+        new ControladorAddProducts(mainFrame, this);
         
         mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> {
             String cmd = e.getActionCommand();

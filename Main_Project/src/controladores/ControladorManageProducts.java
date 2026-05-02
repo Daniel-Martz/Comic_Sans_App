@@ -44,6 +44,11 @@ public class ControladorManageProducts implements ActionListener {
             mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS)
         );
 
+        // Desde Manage Products -> Add Products
+        panelManage.addAddProductsListener(e -> 
+            mainController.navegarA(MainFrame.PANEL_ADD_PRODUCTS)
+        );
+
         // Desde Manage Products -> Modify Products
         panelManage.addModifyProductsListener(e -> {
             cargarProductos(""); // Carga todos la primera vez

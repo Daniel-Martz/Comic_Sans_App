@@ -8,20 +8,17 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-public class ManageProductsPanel extends JPanel {
+public class AddProductsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private HeaderPanel headerPanel;
-    private JButton btnAddProducts;
-    private JButton btnModifyProducts;
-    private JButton btnManageCategories;
-    private JButton btnManagePacks;
-    private JButton btnDiscounts;
+    private JButton btnAddManually;
+    private JButton btnLoadFromFile;
 
     private final Color BG_COLOR = new Color(162, 187, 210);      
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
 
-    public ManageProductsPanel() {
+    public AddProductsPanel() {
         initComponents();
         initLayout();
     }
@@ -31,11 +28,8 @@ public class ManageProductsPanel extends JPanel {
         headerPanel.configurarMenuEmpleado();
 
         Color colorAzul = new Color(74, 144, 226);
-        btnAddProducts = createStyledButton("Add Products", colorAzul);
-        btnModifyProducts = createStyledButton("Modify Products", colorAzul);
-        btnManageCategories = createStyledButton("Manage Categories", colorAzul);
-        btnManagePacks = createStyledButton("Manage Packs", colorAzul);
-        btnDiscounts = createStyledButton("Discounts", colorAzul);
+        btnAddManually = createStyledButton("Add Manually", colorAzul);
+        btnLoadFromFile = createStyledButton("Load From a File", colorAzul);
     }
 
     private void initLayout() {
@@ -55,7 +49,7 @@ public class ManageProductsPanel extends JPanel {
         JPanel bannerPanel = new JPanel(new BorderLayout());
         bannerPanel.setBackground(BANNER_MAIN_COLOR);
         bannerPanel.setBorder(new LineBorder(Color.DARK_GRAY, 1));
-        JLabel lblTitle = new JLabel("Manage Products", SwingConstants.CENTER);
+        JLabel lblTitle = new JLabel("Add products", SwingConstants.CENTER);
         lblTitle.setFont(new Font("SansSerif", Font.BOLD, 36));
         lblTitle.setForeground(Color.WHITE);
         lblTitle.setBorder(new EmptyBorder(5, 0, 5, 0));
@@ -64,17 +58,14 @@ public class ManageProductsPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weighty = 0.10;
-        gbc.insets = new Insets(0, 0, 30, 0);
+        gbc.insets = new Insets(0, 0, 50, 0);
         bodyContent.add(bannerPanel, gbc);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(5, 1, 0, 20));
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 0, 40));
         buttonPanel.setOpaque(false);
         
-        buttonPanel.add(btnAddProducts);
-        buttonPanel.add(btnModifyProducts);
-        buttonPanel.add(btnManageCategories);
-        buttonPanel.add(btnManagePacks);
-        buttonPanel.add(btnDiscounts);
+        buttonPanel.add(btnAddManually);
+        buttonPanel.add(btnLoadFromFile);
 
         gbc.gridy = 1;
         gbc.weighty = 0.90;
@@ -92,7 +83,7 @@ public class ManageProductsPanel extends JPanel {
         btn.setFocusPainted(false);
         btn.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(Color.DARK_GRAY, 2, true),
-                new EmptyBorder(10, 20, 10, 20)
+                new EmptyBorder(20, 20, 20, 20)
         ));
         
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -116,11 +107,11 @@ public class ManageProductsPanel extends JPanel {
         return headerPanel;
     }
     
-    public void addModifyProductsListener(java.awt.event.ActionListener l) {
-        btnModifyProducts.addActionListener(l);
+    public JButton getBtnAddManually() {
+        return btnAddManually;
     }
-
-    public void addAddProductsListener(java.awt.event.ActionListener l) {
-        btnAddProducts.addActionListener(l);
+    
+    public JButton getBtnLoadFromFile() {
+        return btnLoadFromFile;
     }
 }
