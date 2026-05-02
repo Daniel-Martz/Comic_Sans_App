@@ -60,6 +60,15 @@ public class ControladorManageProducts implements ActionListener {
             mainController.mostrarMenuPrincipal()
         );
 
+        // Desde Modify Products -> Volver a ManageProducts (nuevo botón BACK junto a HOME)
+        try {
+            if (panelModifyList.getBtnBackManage() != null) {
+                panelModifyList.getBtnBackManage().addActionListener(e ->
+                    mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS)
+                );
+            }
+        } catch (Exception ignored) {}
+
         // Escuchar el buscador del panel Modify Products
         panelModifyList.addSearchListener(e -> {
             cargarProductos(panelModifyList.getSearchText());

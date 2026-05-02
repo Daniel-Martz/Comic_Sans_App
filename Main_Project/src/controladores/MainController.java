@@ -89,7 +89,6 @@ public class MainController {
         
         conectarHeaderEmpleado(mainFrame.getManageProductsPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getAddProductsPanel().getHeaderPanel());
-        conectarHeaderEmpleado(mainFrame.getLoadFromFilePanel().getHeaderPanel());
         
         new ControladorManageProducts(mainFrame, this);
         new ControladorAddProducts(mainFrame, this);

@@ -19,6 +19,7 @@ public class ModifyProductsPanel extends JPanel {
     private JPanel gridBoardGames;
     private JPanel gridFigures;
     private JButton btnBack;
+    private JButton btnBackManage;
     private JTextField txtSearch;
     private java.util.List<JButton> modifyButtons = new java.util.ArrayList<>();
 
@@ -44,6 +45,13 @@ public class ModifyProductsPanel extends JPanel {
         JPanel leftHeader = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
         leftHeader.setOpaque(false);
         leftHeader.add(btnBack);
+        // Botón 'BACK' adicional junto a HOME para volver a ManageProducts
+        btnBackManage = new JButton("BACK");
+        btnBackManage.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        btnBackManage.setForeground(Color.WHITE);
+        btnBackManage.setContentAreaFilled(false);
+        btnBackManage.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        leftHeader.add(btnBackManage);
 
         JLabel lblTitle = new JLabel("PRODUCTS", SwingConstants.CENTER);
         lblTitle.setFont(new Font("SansSerif", Font.BOLD, 24));
@@ -211,6 +219,10 @@ public class ModifyProductsPanel extends JPanel {
 
     public JButton getBtnBack() {
         return btnBack;
+    }
+
+    public JButton getBtnBackManage() {
+        return btnBackManage;
     }
     
     public String getSearchText() {

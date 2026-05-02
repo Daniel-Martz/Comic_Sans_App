@@ -12,6 +12,7 @@ public class AddProductsPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private HeaderPanel headerPanel;
+    private JButton btnBackToManage;
     private JButton btnAddManually;
     private JButton btnLoadFromFile;
 
@@ -26,6 +27,9 @@ public class AddProductsPanel extends JPanel {
     private void initComponents() {
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuEmpleado();
+
+        // Añadimos un botón BACK junto al HOME en la cabecera para volver a ManageProducts
+        btnBackToManage = headerPanel.addSecondaryTopButton("BACK");
 
         Color colorAzul = new Color(74, 144, 226);
         btnAddManually = createStyledButton("Add Manually", colorAzul);
@@ -114,4 +118,6 @@ public class AddProductsPanel extends JPanel {
     public JButton getBtnLoadFromFile() {
         return btnLoadFromFile;
     }
+
+    public JButton getBtnBackToManage() { return btnBackToManage; }
 }

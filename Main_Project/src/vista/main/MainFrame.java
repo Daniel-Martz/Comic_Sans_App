@@ -28,7 +28,6 @@ public class MainFrame extends JFrame {
     private ModifyProductsPanel modifyProductsPanel;
     
     private AddProductsPanel addProductsPanel;
-    private LoadFromFilePanel loadFromFilePanel;
     // El formulario de añadir producto manualmente ahora es una ventana independiente (AddProductManuallyWindow)
     // por tanto no mantenemos aquí el panel como componente del CardLayout.
     
@@ -83,7 +82,6 @@ public class MainFrame extends JFrame {
         modifyProductsPanel = new ModifyProductsPanel();
         
         addProductsPanel = new AddProductsPanel();
-        loadFromFilePanel = new LoadFromFilePanel();
         // addProductManuallyPanel = new AddProductManuallyPanel();
         
         descuentosPanel = new PlaceholderPanel("Descuentos");
@@ -110,7 +108,6 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(manageProductsPanel, PANEL_MANAGE_PRODUCTS);
         contenedorPaneles.add(modifyProductsPanel, PANEL_MODIFY_PRODUCTS);
         contenedorPaneles.add(addProductsPanel, PANEL_ADD_PRODUCTS);
-        contenedorPaneles.add(loadFromFilePanel, PANEL_LOAD_FROM_FILE);
         // El panel para añadir producto manualmente ya no se añade al CardLayout porque se muestra
         // mediante una ventana independiente (AddProductManuallyWindow).
 
@@ -146,7 +143,6 @@ public class MainFrame extends JFrame {
     public ModifyProductsPanel getModifyProductsPanel() { return modifyProductsPanel; }
     
     public AddProductsPanel getAddProductsPanel() { return addProductsPanel; }
-    public LoadFromFilePanel getLoadFromFilePanel() { return loadFromFilePanel; }
     // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.
     
     public PlaceholderPanel getDescuentosPanel() { return descuentosPanel; }

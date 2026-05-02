@@ -4,7 +4,7 @@ import modelo.aplicacion.Catalogo;
 import modelo.producto.*;
 import vista.main.MainFrame;
 import vista.empleadoPanel.AddProductsPanel;
-import vista.empleadoPanel.LoadFromFilePanel;
+import vista.empleadoPanel.LoadFromFileWindow;
 import vista.empleadoPanel.AddProductManuallyWindow;
 
 import javax.swing.JOptionPane;
@@ -22,7 +22,6 @@ public class ControladorAddProducts implements ActionListener {
     private final MainController mainController;
 
     private AddProductsPanel addProductsPanel;
-    private LoadFromFilePanel loadFromFilePanel;
     private AddProductManuallyWindow windowAddSingle;
 
     public ControladorAddProducts(MainFrame mainFrame, MainController mainController) {
@@ -30,7 +29,6 @@ public class ControladorAddProducts implements ActionListener {
         this.mainController = mainController;
 
         this.addProductsPanel = mainFrame.getAddProductsPanel();
-        this.loadFromFilePanel = mainFrame.getLoadFromFilePanel();
 
         registrarListeners();
     }
@@ -45,39 +43,47 @@ public class ControladorAddProducts implements ActionListener {
             windowAddSingle.setVisible(true);
         });
 
-        addProductsPanel.getBtnLoadFromFile().addActionListener(e -> 
-            mainController.navegarA(MainFrame.PANEL_LOAD_FROM_FILE)
-        );
-
-        // Desde LoadFromFilePanel: abrir un JFileChooser desde el controlador (MVC)
-        loadFromFilePanel.getBtnSelectFile().addActionListener(e -> {
-            JFileChooser chooser = new JFileChooser();
-            chooser.setDialogTitle("Select products file to load");
-            chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            chooser.setAcceptAllFileFilterUsed(true);
-            // Sugerimos ficheros de texto planos
-            chooser.addChoosableFileFilter(new FileNameExtensionFilter("Text files (*.txt)", "txt"));
-
-            int res = chooser.showOpenDialog(mainFrame);
-            if (res != JFileChooser.APPROVE_OPTION) {
-                return; // usuario canceló
+        // BACK button in AddProducts header -> back to ManageProducts
+        try {
+            if (addProductsPanel.getBtnBackToManage() != null) {
+                addProductsPanel.getBtnBackToManage().addActionListener(e ->
+                    mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS)
+                );
             }
+        } catch (Exception ignored) {}
 
-            File selected = chooser.getSelectedFile();
-            if (selected == null) return;
+        addProductsPanel.getBtnLoadFromFile().addActionListener(e -> {
+            LoadFromFileWindow win = new LoadFromFileWindow(mainFrame);
+            win.getBtnSelectFile().addActionListener(ev -> {
+                JFileChooser chooser = new JFileChooser();
+                chooser.setDialogTitle("Select products file to load");
+                chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                chooser.setAcceptAllFileFilterUsed(true);
+                chooser.addChoosableFileFilter(new FileNameExtensionFilter("Text files (*.txt)", "txt"));
 
-            try {
-                List<LineaProductoVenta> añadidos = Catalogo.getInstancia().añadirProductosDesdeFichero(selected);
-                JOptionPane.showMessageDialog(mainFrame,
-                        "Se han añadido " + añadidos.size() + " producto(s) desde: " + selected.getName(),
-                        "Import successful", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(mainFrame, "Formato inválido o error en fichero: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(mainFrame, "No se pudo leer el fichero: " + ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(mainFrame, "Error inesperado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+                int res = chooser.showOpenDialog(mainFrame);
+                if (res != JFileChooser.APPROVE_OPTION) {
+                    return; // usuario canceló
+                }
+
+                File selected = chooser.getSelectedFile();
+                if (selected == null) return;
+
+                try {
+                    List<LineaProductoVenta> añadidos = Catalogo.getInstancia().añadirProductosDesdeFichero(selected);
+                    JOptionPane.showMessageDialog(mainFrame,
+                            "Se han añadido " + añadidos.size() + " producto(s) desde: " + selected.getName(),
+                            "Import successful", JOptionPane.INFORMATION_MESSAGE);
+                    win.dispose();
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(mainFrame, "Formato inválido o error en fichero: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(mainFrame, "No se pudo leer el fichero: " + ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(mainFrame, "Error inesperado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
+            win.setVisible(true);
         });
     }
 

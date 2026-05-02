@@ -26,6 +26,7 @@ public class HeaderPanel extends JPanel {
     private JPanel searchBox;
     private JPanel leftPanel;
     private JPanel rightPanel;
+    private JPanel centerNavPanel;
 
     ImageIcon iconoSinLogIn = getSclaedIcon("src/assets/fotoperfil.png");
     ImageIcon iconoConLogIn = getSclaedIcon("src/assets/fotoperfilLoggedIn.png");
@@ -129,7 +130,7 @@ public class HeaderPanel extends JPanel {
                 new LineBorder(Color.BLACK, 1, false), new EmptyBorder(10, 20, 10, 20)));
         leftPanel.add(speechBubble);
 
-        JPanel centerNavPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 20));
+        centerNavPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 20));
         centerNavPanel.setOpaque(false);
         centerNavPanel.add(btnHome);
         centerNavPanel.add(btnDescuentos);
@@ -181,6 +182,17 @@ public class HeaderPanel extends JPanel {
         add(leftPanel, BorderLayout.WEST);
         add(centerNavPanel, BorderLayout.CENTER);
         add(rightPanel, BorderLayout.EAST);
+    }
+
+    /**
+     * Añade un botón secundario al grupo de navegación central junto al HOME.
+     * Devuelve el botón creado para que el controlador pueda añadir listeners.
+     */
+    public JButton addSecondaryTopButton(String text) {
+        JButton btn = createTopNavButton(text);
+        // Insertamos justo después del HOME (posición 1)
+        centerNavPanel.add(btn, 1);
+        return btn;
     }
 
     /**
