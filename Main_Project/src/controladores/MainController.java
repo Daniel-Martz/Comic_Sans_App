@@ -135,6 +135,7 @@ public class MainController {
         });
 
         mainFrame.getHistorialPedidosPanel().addListenerForButtons(new ControladorHistorialPedidos(mainFrame.getHistorialPedidosPanel(), this));
+        mainFrame.getNotificacionesPanel().addListenerForElements(new ControladorNotificaciones(mainFrame.getNotificacionesPanel(), this));
     }
 
     /**
@@ -143,7 +144,16 @@ public class MainController {
     private void conectarHeaderEmpleado(HeaderPanel header) {
         header.addHomeListener(e -> mostrarMenuPrincipal());
         header.addPerfilListener(e -> navegarBotonPerfil());
-        header.addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
+        header.addNotificacionesListener(e ->
+        { navegarA(MainFrame.PANEL_NOTIFICACIONES); 
+          Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual();
+          if((usuarioActual instanceof Empleado emp)){
+            emp.getNotificaciones().forEach(n -> mainFrame.getNotificacionesPanel().agregarNotificacion(n)); 
+          }
+          if((usuarioActual instanceof ClienteRegistrado c)){
+            c.getNotificaciones().forEach(n -> mainFrame.getNotificacionesPanel().agregarNotificacion(n)); 
+          }
+      });
     }
 
     /**
@@ -167,7 +177,16 @@ public class MainController {
         header.addOutstandingListener(e -> mostrarProductosOutstanding());
         header.addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
         header.addPerfilListener(e -> navegarBotonPerfil());
-        header.addNotificacionesListener(e -> navegarA(MainFrame.PANEL_NOTIFICACIONES));
+        header.addNotificacionesListener(e -> 
+        { navegarA(MainFrame.PANEL_NOTIFICACIONES); 
+          Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual();
+          if((usuarioActual instanceof Empleado emp)){
+            emp.getNotificaciones().forEach(n -> mainFrame.getNotificacionesPanel().agregarNotificacion(n)); 
+          }
+          if((usuarioActual instanceof ClienteRegistrado c)){
+            c.getNotificaciones().forEach(n -> mainFrame.getNotificacionesPanel().agregarNotificacion(n)); 
+          }
+      });
     }
     
     // -------------------------------------------------------

@@ -23,6 +23,7 @@ public class MainFrame extends JFrame {
     private SearchInterchangesPanel searchInterchangesPanel;
     private MakeOfferPanel makeOfferPanel;
     private HistorialPedidosPanel historialPedidosPanel;
+    private NotificacionesPanel notificacionesPanel;
     
     private ManageProductsPanel manageProductsPanel;
     private ModifyProductsPanel modifyProductsPanel;
@@ -34,7 +35,6 @@ public class MainFrame extends JFrame {
     private PlaceholderPanel descuentosPanel;
     private PlaceholderPanel configuracionPanel;
     private PlaceholderPanel perfilPanel;
-    private PlaceholderPanel notificacionesPanel;
 
 
     // Nombres estáticos de los paneles para el CardLayout (antes estaban en el controlador)
@@ -87,7 +87,7 @@ public class MainFrame extends JFrame {
         descuentosPanel = new PlaceholderPanel("Descuentos");
         configuracionPanel = new PlaceholderPanel("Configuración");
         perfilPanel = new PlaceholderPanel("Perfil");
-        notificacionesPanel = new PlaceholderPanel("Notificaciones");
+        notificacionesPanel = new NotificacionesPanel();
 
         // 3. Añadir vistas al contenedor
         contenedorPaneles.add(menuPrincipalPanel, PANEL_MENU_PRINCIPAL);
@@ -148,6 +148,6 @@ public class MainFrame extends JFrame {
     public PlaceholderPanel getDescuentosPanel() { return descuentosPanel; }
     public PlaceholderPanel getConfiguracionPanel() { return configuracionPanel; }
     public PlaceholderPanel getPerfilPanel() { return perfilPanel; }
-    public PlaceholderPanel getNotificacionesPanel() { return notificacionesPanel; }
+    public NotificacionesPanel getNotificacionesPanel() { return notificacionesPanel; }
     
 }
