@@ -123,4 +123,8 @@ public class ManageProductsPanel extends JPanel {
     public void addAddProductsListener(java.awt.event.ActionListener l) {
         btnAddProducts.addActionListener(l);
     }
+
+    public void addManageCategoriesListener(java.awt.event.ActionListener l) {
+        btnManageCategories.addActionListener(l);
+    }
 }

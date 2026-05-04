@@ -290,6 +290,11 @@ public class ModifyAProductWindow extends JDialog {
     private void abrirSelectorCategorias() {
         Set<Categoria> todas = Aplicacion.getInstancia().getCatalogo().getCategoriasTienda();
         
+        if (todas == null || todas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "There are no categories available to select.", "No Categories", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
         JDialog dialog = new JDialog(this, "Select Categories", Dialog.ModalityType.APPLICATION_MODAL);
         dialog.setLayout(new BorderLayout());
         

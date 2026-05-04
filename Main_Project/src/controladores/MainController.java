@@ -198,6 +198,11 @@ public class MainController {
         }
     }
 
+    public void mostrarManageCategories() {
+        ManageCategoriesController mcc = new ManageCategoriesController(mainFrame);
+        mcc.mostrarVentana();
+    }
+
     // -------------------------------------------------------
     // Gestión de Ventanas y Flujos de Negocio
     // -------------------------------------------------------

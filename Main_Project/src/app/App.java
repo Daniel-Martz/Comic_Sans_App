@@ -31,17 +31,11 @@ import modelo.tiempo.*;
         // ─────────────────────────────────────────────────────────────────
         // 2. CATEGORÍAS
         // ─────────────────────────────────────────────────────────────────
-        Categoria catComics      = new Categoria("Comics");
-        Categoria catFiguras     = new Categoria("Figuras");
-        Categoria catJuegos      = new Categoria("Juegos de Mesa");
         Categoria catManga       = new Categoria("Manga");
         Categoria catSuperheroes = new Categoria("Superhéroes");
         Categoria catEstrategia  = new Categoria("Estrategia");
         Categoria catAnime       = new Categoria("Anime");
 
-        cat.añadirCategoria(catComics);
-        cat.añadirCategoria(catFiguras);
-        cat.añadirCategoria(catJuegos);
         cat.añadirCategoria(catManga);
         cat.añadirCategoria(catSuperheroes);
         cat.añadirCategoria(catEstrategia);
@@ -58,7 +52,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/SpidermanAdventures3.jpg"),
                 20, 19.99, 0,
                 120, "Stan Lee", "Marvel", 1995);
-        spidermanAdv.añadirCategoria(catComics);
         spidermanAdv.añadirCategoria(catSuperheroes);
         cat.añadirProducto(spidermanAdv);
 
@@ -68,7 +61,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/SpidermanChronicles5.jpg"),
                 20, 19.99, 0,
                 98, "Dan Slott", "Marvel", 2010);
-        spidermanChron.añadirCategoria(catComics);
         spidermanChron.añadirCategoria(catSuperheroes);
         cat.añadirProducto(spidermanChron);
 
@@ -78,7 +70,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/BatmanYearOne.jpg"),
                 15, 24.99, 0,
                 144, "Frank Miller", "DC Comics", 1987);
-        batmanYearOne.añadirCategoria(catComics);
         batmanYearOne.añadirCategoria(catSuperheroes);
         cat.añadirProducto(batmanYearOne);
 
@@ -88,7 +79,7 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Watchmen.jpg"),
                 10, 29.99, 0,
                 416, "Alan Moore", "DC Comics", 1986);
-        watchmen.añadirCategoria(catComics);
+        watchmen.añadirCategoria(catSuperheroes);
         cat.añadirProducto(watchmen);
 
         Comic xmenGold = new Comic(
@@ -97,7 +88,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/XmenGold.jpg"),
                 12, 17.99, 0,
                 136, "Marc Guggenheim", "Marvel", 2017);
-        xmenGold.añadirCategoria(catComics);
         xmenGold.añadirCategoria(catSuperheroes);
         cat.añadirProducto(xmenGold);
 
@@ -118,7 +108,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/IronManMark85.jpg"),
                 8, 89.99, 0,
                 "Hot Toys", "PVC+ABS", 30.0, 22.0, 18.0);
-        ironManFigure.añadirCategoria(catFiguras);
         ironManFigure.añadirCategoria(catSuperheroes);
         cat.añadirProducto(ironManFigure);
 
@@ -128,7 +117,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/GokuSSJ.jpg"),
                 15, 49.99, 0,
                 "Bandai", "PVC", 25.0, 15.0, 12.0);
-        gokuFigure.añadirCategoria(catFiguras);
         gokuFigure.añadirCategoria(catAnime);
         cat.añadirProducto(gokuFigure);
 
@@ -138,7 +126,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/NarutoFigure.jpg"),
                 20, 39.99, 0,
                 "Megahouse", "PVC", 20.0, 12.0, 10.0);
-        narutoFigure.añadirCategoria(catFiguras);
         narutoFigure.añadirCategoria(catAnime);
         cat.añadirProducto(narutoFigure);
 
@@ -148,7 +135,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/BatmanArkham.jpg"),
                 6, 119.99, 0,
                 "DC Collectibles", "Resina", 35.0, 18.0, 15.0);
-        batmanFigure.añadirCategoria(catFiguras);
         batmanFigure.añadirCategoria(catSuperheroes);
         cat.añadirProducto(batmanFigure);
 
@@ -158,7 +144,7 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/LucinaFigure.jpg"),
                 10, 64.99, 0,
                 "Good Smile", "PVC", 22.0, 10.0, 8.0);
-        lucinaFigure.añadirCategoria(catFiguras);
+        lucinaFigure.añadirCategoria(catAnime);
         cat.añadirProducto(lucinaFigure);
 
         Figura spidermanFigure = new Figura(
@@ -167,7 +153,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/MilesMorales.jpg"),
                 12, 74.99, 0,
                 "Sideshow", "PVC+ABS", 28.0, 20.0, 20.0);
-        spidermanFigure.añadirCategoria(catFiguras);
         spidermanFigure.añadirCategoria(catSuperheroes);
         cat.añadirProducto(spidermanFigure);
 
@@ -177,7 +162,7 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/LinkFigure.jpg"),
                 9, 84.99, 0,
                 "First 4 Figures", "Resina", 26.0, 14.0, 14.0);
-        zeldaFigure.añadirCategoria(catFiguras);
+        zeldaFigure.añadirCategoria(catAnime);
         cat.añadirProducto(zeldaFigure);
 
         // ── Juegos de Mesa (5) ───────────────────────────────────────────
@@ -187,7 +172,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Catan.jpg"),
                 18, 39.99,
                 4, 10, 99, TipoJuegoMesa.DADOS);
-        catan.añadirCategoria(catJuegos);
         catan.añadirCategoria(catEstrategia);
         cat.añadirProducto(catan);
 
@@ -197,7 +181,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Pandemic.jpg"),
                 14, 44.99,
                 4, 8, 99, TipoJuegoMesa.CARTAS);
-        pandemic.añadirCategoria(catJuegos);
         pandemic.añadirCategoria(catEstrategia);
         cat.añadirProducto(pandemic);
 
@@ -207,7 +190,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/TicketToRide.jpg"),
                 16, 49.99,
                 5, 8, 99, TipoJuegoMesa.CARTAS);
-        ticket.añadirCategoria(catJuegos);
         ticket.añadirCategoria(catEstrategia);
         cat.añadirProducto(ticket);
 
@@ -217,7 +199,7 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Codenames.jpg"),
                 22, 22.99,
                 8, 10, 99, TipoJuegoMesa.CARTAS);
-        codenames.añadirCategoria(catJuegos);
+        codenames.añadirCategoria(catEstrategia);
         cat.añadirProducto(codenames);
 
         JuegoDeMesa dominion = new JuegoDeMesa(
@@ -226,7 +208,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Dominion.jpg"),
                 10, 34.99,
                 4, 13, 99, TipoJuegoMesa.CARTAS);
-        dominion.añadirCategoria(catJuegos);
         dominion.añadirCategoria(catEstrategia);
         cat.añadirProducto(dominion);
 
@@ -236,7 +217,6 @@ import modelo.tiempo.*;
                 "Recopilación visual de los mejores artes conceptuales de Marvel a lo largo de 80 años.",
                 new File("src/assets/productos/nuevos/ArtbookMarvel.jpg"),
                 7, 59.99);
-        artbook.añadirCategoria(catComics);
         artbook.añadirCategoria(catSuperheroes);
         cat.añadirProducto(artbook);
 
@@ -245,7 +225,6 @@ import modelo.tiempo.*;
                 "Funko Pop exclusivo de Goku Black SSJ Rose, edición especial de coleccionista.",
                 new File("src/assets/productos/nuevos/FunkGokuBlack.jpg"),
                 30, 14.99);
-        funkoPop.añadirCategoria(catFiguras);
         funkoPop.añadirCategoria(catAnime);
         cat.añadirProducto(funkoPop);
 
@@ -254,7 +233,7 @@ import modelo.tiempo.*;
                 "Fundas de PVC transparente de alta calidad, compatibles con Magic, Pokémon y más.",
                 new File("src/assets/productos/nuevos/CardSleeves.jpg"),
                 50, 9.99);
-        sleeves.añadirCategoria(catJuegos);
+        sleeves.añadirCategoria(catEstrategia);
         cat.añadirProducto(sleeves);
 
         LineaProductoVenta dado20 = new LineaProductoVenta(
@@ -262,7 +241,6 @@ import modelo.tiempo.*;
                 "Dado D20 de zinc chapado en oro con grabados rúnicos, edición de coleccionista.",
                 new File("src/assets/productos/nuevos/D20Metal.jpg"),
                 40, 12.99);
-        dado20.añadirCategoria(catJuegos);
         dado20.añadirCategoria(catEstrategia);
         cat.añadirProducto(dado20);
 
