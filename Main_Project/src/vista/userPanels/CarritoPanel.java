@@ -21,7 +21,7 @@ public class CarritoPanel extends JPanel {
 
     private HeaderPanel headerPanel;
     private JPanel panelScrollCarrito;
-    private JPanel panelScrollRecomendaciones;
+    private JPanel panelScrollPedidos;
     private JLabel labelTotal;
     private JButton botonPagar;
 
@@ -66,17 +66,14 @@ public class CarritoPanel extends JPanel {
         scrollCarrito.setAlignmentX(Component.LEFT_ALIGNMENT);
         contenedorPrincipal.add(scrollCarrito);
 
-        // ── 3. Zona de Total y Botón PAY NOW ─────────────────────────────
+        // ── 3. Zona de Total y Botón PROCESS ORDER ─────────────────────────────
         JPanel panelPay = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
         panelPay.setBackground(COLOR_FONDO);
         panelPay.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         panelPay.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        labelTotal = new JLabel("Total to pay: 0.00 €");
-        labelTotal.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-        panelPay.add(labelTotal);
 
-        botonPagar = new JButton("PAY NOW");
+        botonPagar = new JButton("PROCESS ORDER");
         botonPagar.setBackground(new Color(50, 200, 80));
         botonPagar.setForeground(Color.WHITE);
         botonPagar.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -85,8 +82,8 @@ public class CarritoPanel extends JPanel {
         contenedorPrincipal.add(panelPay);
         contenedorPrincipal.add(Box.createVerticalStrut(20));
 
-        // ── 4. Banner Recomendaciones ─────────────────────────────────────
-        JLabel tituloRecomendaciones = new JLabel("  YOU SHOULD ADD THESE PRODUCTS!!");
+        // ── 4. Banner Pedidos Pendientes de Pago ─────────────────────────────────────
+        JLabel tituloRecomendaciones = new JLabel("  ORDERS PENDING PAYMENT");
         tituloRecomendaciones.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         tituloRecomendaciones.setOpaque(true);
         tituloRecomendaciones.setBackground(Color.DARK_GRAY);
@@ -97,11 +94,11 @@ public class CarritoPanel extends JPanel {
 
         contenedorPrincipal.add(Box.createVerticalStrut(10));
 
-        // ── 5. Scroll Horizontal de Recomendaciones ───────────────────────
-        panelScrollRecomendaciones = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
-        panelScrollRecomendaciones.setBackground(COLOR_FONDO);
+        // ── 5. Scroll Horizontal de Pedidos ───────────────────────
+        panelScrollPedidos = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
+        panelScrollPedidos.setBackground(COLOR_FONDO);
 
-        JScrollPane scrollRecomendaciones = new JScrollPane(panelScrollRecomendaciones);
+        JScrollPane scrollRecomendaciones = new JScrollPane(panelScrollPedidos);
         scrollRecomendaciones.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollRecomendaciones.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollRecomendaciones.setPreferredSize(new Dimension(800, 200));
@@ -121,7 +118,7 @@ public class CarritoPanel extends JPanel {
     public void setControladorPrincipal(ActionListener c) {
         for (ActionListener al : botonPagar.getActionListeners())  botonPagar.removeActionListener(al);
         botonPagar.addActionListener(c);
-        botonPagar.setActionCommand("PAY_NOW");
+        botonPagar.setActionCommand("PROCESS_ORDER");
     }
 
     /** Actualiza el contenido del carrito. */
@@ -217,6 +214,60 @@ public class CarritoPanel extends JPanel {
         panelInferior.add(lblPrecio, BorderLayout.WEST);
         panelInferior.add(btnBorrar, BorderLayout.EAST);
         tarjeta.add(panelInferior);
+
+        return tarjeta;
+    }
+
+    public void actualizarPedidos(java.util.List<modelo.solicitud.SolicitudPedido> pedidos, ActionListener controlador) {
+        panelScrollPedidos.removeAll();
+
+        if (pedidos == null || pedidos.isEmpty()) {
+            JLabel vacio = new JLabel("You have no pending orders.");
+            vacio.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+            panelScrollPedidos.add(vacio);
+        } else {
+            for (modelo.solicitud.SolicitudPedido pedido : pedidos) {
+                panelScrollPedidos.add(crearTarjetaPedido(pedido, controlador));
+            }
+        }
+        panelScrollPedidos.revalidate();
+        panelScrollPedidos.repaint();
+    }
+
+    private JPanel crearTarjetaPedido(modelo.solicitud.SolicitudPedido pedido, ActionListener controlador) {
+        JPanel tarjeta = new JPanel();
+        tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
+        tarjeta.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(Color.DARK_GRAY, 2),
+                new EmptyBorder(10, 10, 10, 10)));
+        tarjeta.setBackground(Color.WHITE);
+        tarjeta.setPreferredSize(new Dimension(220, 150));
+        tarjeta.setMinimumSize(new Dimension(220, 150));
+        tarjeta.setMaximumSize(new Dimension(220, 150));
+
+        JLabel lblInfo = new JLabel("Order with " + pedido.getProductosDiferentes().size() + " items");
+        lblInfo.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        lblInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tarjeta.add(lblInfo);
+
+        tarjeta.add(Box.createVerticalStrut(10));
+
+        JLabel lblPrecio = new JLabel(String.format("Total: %.2f €", pedido.getCostePedido()));
+        lblPrecio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        lblPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tarjeta.add(lblPrecio);
+
+        tarjeta.add(Box.createVerticalStrut(15));
+
+        JButton btnPayNow = new JButton("PAY NOW");
+        btnPayNow.setBackground(new Color(50, 200, 80));
+        btnPayNow.setForeground(Color.WHITE);
+        btnPayNow.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+        btnPayNow.setActionCommand("PAY_PEDIDO_" + System.identityHashCode(pedido));
+        btnPayNow.putClientProperty("pedido", pedido);
+        btnPayNow.addActionListener(controlador);
+        btnPayNow.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tarjeta.add(btnPayNow);
 
         return tarjeta;
     }

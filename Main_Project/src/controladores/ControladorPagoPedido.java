@@ -45,47 +45,21 @@ public class ControladorPagoPedido implements ActionListener {
             return;
         }
 
-        // 2. Llamar al modelo
-        SolicitudPedido pedidoReal = null;
-        ClienteRegistrado cliente = null;
+        // 2. Llamar al modelo para pagar el pedido que se mostró en la ventana
+        SolicitudPedido pedidoReal = vista.getPedido();
         try {
-            cliente = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
-            
-            // Creamos el pedido AHORA que se va a pagar
-            pedidoReal = cliente.realizarPedido();
+            if (pedidoReal == null) {
+                throw new IllegalStateException("No hay pedido asociado a la ventana de pago.");
+            }
 
-            // Pagamos el pedido
-            cliente.pagarPedido(pedidoReal, numTarjeta, cvv, fechaCaducidad);
+            Aplicacion.getInstancia().gestionarPagoPedido(pedidoReal, numTarjeta, cvv, fechaCaducidad);
 
             // 3. Mostrar resultado y cerrar ventana
             vista.mostrarVentanaExito();
             vista.dispose();
 
         } catch (Exception ex) {
-            if (pedidoReal != null && cliente != null && !pedidoReal.pagado()) {
-                // 1. Restaurar stock y carrito
-                for (java.util.Map.Entry<modelo.producto.LineaProductoVenta, Integer> entry : pedidoReal.getProductosDiferentes().entrySet()) {
-                    modelo.producto.LineaProductoVenta prod = entry.getKey();
-                    int cantidad = entry.getValue();
-                    prod.setStock(prod.getStock() + cantidad);
-                    cliente.getCarrito().añadirProducto(prod, cantidad);
-                }
-                
-                // 2. Cancelar el pedido
-                cliente.cancelarPedido(pedidoReal);
-                
-                // 3. Limpiar notificaciones generadas para este pedido
-                java.util.List<modelo.notificacion.NotificacionCliente> notifs = cliente.getNotificaciones();
-                java.util.Iterator<modelo.notificacion.NotificacionCliente> it = notifs.iterator();
-                while (it.hasNext()) {
-                    modelo.notificacion.NotificacionCliente n = it.next();
-                    if (n instanceof modelo.notificacion.NotificacionPedido) {
-                        if (((modelo.notificacion.NotificacionPedido) n).getPedido() == pedidoReal) {
-                            it.remove();
-                        }
-                    }
-                }
-            }
+            // En caso de error (pedido caducado, datos inválidos, etc.) mostramos la ventana de error
             vista.mostrarVentanaError(ex.getMessage());
         }
     }

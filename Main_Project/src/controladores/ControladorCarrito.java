@@ -30,8 +30,19 @@ public class ControladorCarrito implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();
 
-        if ("PAY_NOW".equals(comando)) {
-            gestionarPago();
+        if ("PROCESS_ORDER".equals(comando)) {
+            procesarPedido();
+            return;
+        }
+        
+        if (comando != null && comando.startsWith("PAY_PEDIDO_")) {
+            if (e.getSource() instanceof javax.swing.JButton) {
+                javax.swing.JButton btn = (javax.swing.JButton) e.getSource();
+                SolicitudPedido pedido = (SolicitudPedido) btn.getClientProperty("pedido");
+                if (pedido != null) {
+                    abrirVentanaPagoParaPedido(pedido);
+                }
+            }
             return;
         }
 
@@ -66,25 +77,32 @@ public class ControladorCarrito implements ActionListener {
         }
     }
 
-    private void gestionarPago() {
+    private void procesarPedido() {
         if (clienteActual == null || clienteActual.getCarrito().getProductos().isEmpty()) {
             vista.mostrarMensaje("Your cart is empty. Add some products first!", "Empty Cart");
             return;
         }
 
         try {
-            // Creamos un pedido simulado solo para mostrar en la ventana de pago
-            SolicitudPedido pedidoSimulado = new SolicitudPedido(clienteActual, clienteActual.getCarrito().getProductos());
+            clienteActual.realizarPedido();
+            vista.mostrarMensaje("Order processed successfully. Please pay it from the pending orders list.", "Order Processed");
+            refrescarVista();
+        } catch (Exception ex) {
+            vista.mostrarMensaje("Error generating order: " + ex.getMessage(), "Error");
+        }
+    }
 
+    private void abrirVentanaPagoParaPedido(SolicitudPedido pedido) {
+        try {
             VentanaPagoPedido ventanaPago = new VentanaPagoPedido(
-                    SwingUtilities.getWindowAncestor(vista), pedidoSimulado);
+                    SwingUtilities.getWindowAncestor(vista), pedido);
             ControladorPagoPedido controladorPago = new ControladorPagoPedido(ventanaPago);
             ventanaPago.setControlador(controladorPago);
             ventanaPago.setVisible(true);
 
             refrescarVista();
         } catch (Exception ex) {
-            vista.mostrarMensaje("Error generating order: " + ex.getMessage(), "Error");
+            vista.mostrarMensaje("Error opening payment: " + ex.getMessage(), "Error");
         }
     }
 
@@ -94,6 +112,7 @@ public class ControladorCarrito implements ActionListener {
         if (usuarioActual == null || !(usuarioActual instanceof ClienteRegistrado)) {
             this.clienteActual = null;
             vista.actualizarCarrito(new java.util.HashMap<>(), 0.0, this);
+            vista.actualizarPedidos(new java.util.ArrayList<>(), this);
             return;
         }
 
@@ -101,6 +120,14 @@ public class ControladorCarrito implements ActionListener {
         Map<LineaProductoVenta, Integer> productos = this.clienteActual.getCarrito().getProductos();
         double total = this.clienteActual.getCarrito().getPrecioProductos();
         vista.actualizarCarrito(productos, total, this);
+
+        java.util.List<SolicitudPedido> pendientes = new java.util.ArrayList<>();
+        for (SolicitudPedido p : this.clienteActual.getPedidos()) {
+            if (p.getEstado() == modelo.solicitud.EstadoPedido.PENDIENTE_DE_PAGO) {
+                pendientes.add(p);
+            }
+        }
+        vista.actualizarPedidos(pendientes, this);
     }
 
     private LineaProductoVenta buscarProductoPorNombre(String nombre) {

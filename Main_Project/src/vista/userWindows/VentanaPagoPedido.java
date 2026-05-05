@@ -31,10 +31,12 @@ public class VentanaPagoPedido extends JDialog {
     private JTextField campoCaducidad;
     private JPasswordField campoCVV;
     private JButton botonConfirmar;
+    private modelo.solicitud.SolicitudPedido pedido;
 
     // ── Constructor
     public VentanaPagoPedido(Window padre, SolicitudPedido pedido) {
         super(padre, "Payment Window", ModalityType.APPLICATION_MODAL);
+        this.pedido = pedido;
         inicializarComponentes(pedido);
         pack();
         setLocationRelativeTo(padre);
@@ -154,6 +156,11 @@ public class VentanaPagoPedido extends JDialog {
     public void setControlador(ActionListener c) {
         botonConfirmar.addActionListener(c);
         botonConfirmar.setActionCommand("CONFIRMAR_PAGO_PEDIDO");
+    }
+
+    /** Devuelve el pedido asociado a esta ventana (para que el controlador lo procese). */
+    public SolicitudPedido getPedido() {
+        return pedido;
     }
 
     public String getNumeroTarjeta() {
