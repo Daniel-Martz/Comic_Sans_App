@@ -330,7 +330,6 @@ import modelo.tiempo.*;
         ProductoSegundaMano pReady = yo.añadirProductoACarteraDeIntercambio("Teclado Mecánico Keychron K2", "Switches marrones, con su caja.", null);
         pReady.getSolicitudValidacion().validarProducto(3.5, 60.0, EstadoConservacion.MUY_BUENO);
         yo.pagarValidacion(pReady.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
-
         // -------------------------------------------------------------------------
         // C. AÑADIR PRODUCTOS DE SEGUNDA MANO DISPONIBLES DE OTROS USUARIOS 
         // (Para que aparezcan en la búsqueda de intercambios y puedas seleccionarlos)
@@ -358,29 +357,30 @@ import modelo.tiempo.*;
         // Oferta 1: Bob me ofrece su Comic a cambio de mi Juego (Tu oferta original)
         ProductoSegundaMano comicBob = new ProductoSegundaMano("Spider-Man Vol.1", "Primera edición",  null, bob);
         comicBob.getSolicitudValidacion().validarProducto(5.0, 150.0, EstadoConservacion.USO_LIGERO);
+        bob.pagarValidacion(comicBob.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
         ProductoSegundaMano juegoMio = yo.añadirProductoACarteraDeIntercambio("Catan", "Casi nuevo", null);
         juegoMio.getSolicitudValidacion().validarProducto(5.0, 45.0, EstadoConservacion.USO_LIGERO);
         yo.pagarValidacion(juegoMio.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        Oferta ofertaBob = new Oferta(
-                new DateTimeSimulado(), bob, yo,
+        Oferta ofertaBob = bob.realizarOferta(
                 new HashSet<>(Arrays.asList(comicBob)),
-                new HashSet<>(Arrays.asList(juegoMio)));
-        yo.getOfertasRecibidas().add(ofertaBob);
+                new HashSet<>(Arrays.asList(juegoMio)),
+                yo);
 
         for (int i = 1; i <= 6; i++) {
             ProductoSegundaMano pDaAlice = new ProductoSegundaMano(
                     "Figura de Anime #" + i, "Buen estado", null, alice);
             pDaAlice.getSolicitudValidacion().validarProducto(2.0, 15.0 + i * 2, EstadoConservacion.USO_LIGERO);
+            alice.pagarValidacion(pDaAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
             ProductoSegundaMano pPideAlice = yo.añadirProductoACarteraDeIntercambio("Mi carta Magic #" + i, "Con funda", null);
             pPideAlice.getSolicitudValidacion().validarProducto(1.0, 12.0 + (i * 2.5), EstadoConservacion.PERFECTO);
             yo.pagarValidacion(pPideAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-            yo.getOfertasRecibidas().add(new Oferta(
-                    new DateTimeSimulado(), alice, yo,
+            alice.realizarOferta(
                     new HashSet<>(Arrays.asList(pDaAlice)),
-                    new HashSet<>(Arrays.asList(pPideAlice))));
+                    new HashSet<>(Arrays.asList(pPideAlice)),
+                    yo);
         }
 
         // -------------------------------------------------------------------------
@@ -393,11 +393,12 @@ import modelo.tiempo.*;
         yo.pagarValidacion(comicMio.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
         ProductoSegundaMano figuraBob = bob.añadirProductoACarteraDeIntercambio("Figura Iron Man", "Sin caja", null);
         figuraBob.getSolicitudValidacion().validarProducto(5.0, 30.0, EstadoConservacion.USO_LIGERO);
+        bob.pagarValidacion(figuraBob.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        yo.getOfertasRealizadas().add(new Oferta(
-                new DateTimeSimulado(), yo, bob,
+        yo.realizarOferta(
                 new HashSet<>(Arrays.asList(comicMio)),
-                new HashSet<>(Arrays.asList(figuraBob))));
+                new HashSet<>(Arrays.asList(figuraBob)),
+                bob);
 
         for (int i = 1; i <= 4; i++) {
             ProductoSegundaMano pDoyYo = yo.añadirProductoACarteraDeIntercambio("Mi videojuego #" + i, "Completo", null);
@@ -407,12 +408,33 @@ import modelo.tiempo.*;
             ProductoSegundaMano pPidoCharlie = new ProductoSegundaMano(
                     "Juego de Rol de Charlie #" + i, "Nuevo", null, charlie);
             pPidoCharlie.getSolicitudValidacion().validarProducto(5.0, 35.0 + i, EstadoConservacion.PERFECTO);
+            charlie.pagarValidacion(pPidoCharlie.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-            yo.getOfertasRealizadas().add(new Oferta(
-                    new DateTimeSimulado(), yo, charlie,
+            yo.realizarOferta(
                     new HashSet<>(Arrays.asList(pDoyYo)),
-                    new HashSet<>(Arrays.asList(pPidoCharlie))));
+                    new HashSet<>(Arrays.asList(pPidoCharlie)),
+                    charlie);
         }
+        
+        // -------------------------------------------------------------------------
+        // 5. INTERCAMBIO ACEPTADO (PENDIENTE DE APROBACIÓN POR EMPLEADO)
+        // -------------------------------------------------------------------------
+        ProductoSegundaMano miProductoEnEspera = yo.añadirProductoACarteraDeIntercambio("Monopoly Clásico", "Edición original de 1998", null);
+        miProductoEnEspera.getSolicitudValidacion().validarProducto(5.0, 20.0, EstadoConservacion.MUY_BUENO);
+        yo.pagarValidacion(miProductoEnEspera.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano productoCharlieOfrecido = charlie.añadirProductoACarteraDeIntercambio("Zelda Ocarina of Time (N64)", "Cartucho suelto", null);
+        productoCharlieOfrecido.getSolicitudValidacion().validarProducto(4.5, 35.0, EstadoConservacion.USO_LIGERO);
+        charlie.pagarValidacion(productoCharlieOfrecido.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        Oferta ofertaAceptada = charlie.realizarOferta(
+                new HashSet<>(Arrays.asList(productoCharlieOfrecido)),
+                new HashSet<>(Arrays.asList(miProductoEnEspera)),
+                yo);
+        
+        yo.aceptarOferta(ofertaAceptada);
+
+        
         app.cerrarSesion();
 
         app.crearCuenta("demoUser", "14433331A", "Passw0rd!!", "Passw0rd!!");

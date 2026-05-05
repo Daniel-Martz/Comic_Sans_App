@@ -12,6 +12,8 @@ import vista.userWindows.VentanaPagoValidacion;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.File;
 import controladores.ControladorNuevoProductoSegundaMano;
 
@@ -40,6 +42,14 @@ public class ControladorMySecondHandProducts implements ActionListener {
 
         // Cargar inicialmente los productos desde el modelo y poblar la vista
         cargarProductosDesdeModelo();
+        
+        // Recargar los productos cada vez que el panel se muestre en pantalla (al navegar hacia él)
+        this.vista.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                cargarProductosDesdeModelo();
+            }
+        });
     }
 
     @Override
@@ -132,13 +142,15 @@ public class ControladorMySecondHandProducts implements ActionListener {
         }
 
         ClienteRegistrado cliente = (ClienteRegistrado) app.getUsuarioActual();
+        
+        // Forzar actualización para limpiar ofertas caducadas antes de pintar la vista
+        cliente.actualizarOfertas();
 
         for (ProductoSegundaMano p : cliente.getCartera().getProductos()) {
             boolean validado  = p.isValidado();
-            boolean pagado    = p.getSolicitudValidacion() != null && p.getSolicitudValidacion().getPagoValidacion() != null;
-            boolean bloqueado = p.estaBloqueado();
+            boolean pagado    = p.isPagado();
 
-            if (validado && !bloqueado) {
+            if (validado && pagado) {
                 vista.addReadyProduct(p);
             } else {
                 vista.addValidationProduct(p, pagado);

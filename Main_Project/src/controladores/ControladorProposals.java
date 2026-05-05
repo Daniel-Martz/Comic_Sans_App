@@ -91,8 +91,8 @@ public class ControladorProposals {
         if (modo == Modo.INCOME) {
             // La oferta la recibo yo: el ofertante da, yo doy lo solicitado
             headerLabel   = "FROM: " + oferta.getOfertante().getNombreUsuario();
-            givenData     = convertirProductos(oferta.productosOfertados());    // lo que él ofrece (yo recibo)
-            receivedData  = convertirProductos(oferta.productosSolicitados());  // lo que él pide (yo doy)
+            givenData     = convertirProductos(oferta.productosSolicitados());  // lo que él pide (yo doy)
+            receivedData  = convertirProductos(oferta.productosOfertados());    // lo que él ofrece (yo recibo)
         } else {
             // La oferta la envié yo: yo ofrezco, pido lo del destinatario
             headerLabel   = "TO: " + oferta.getDestinatario().getNombreUsuario();
