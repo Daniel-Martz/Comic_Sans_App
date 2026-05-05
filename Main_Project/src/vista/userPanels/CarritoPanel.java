@@ -72,6 +72,9 @@ public class CarritoPanel extends JPanel {
         panelPay.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         panelPay.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+        labelTotal = new JLabel("Total to pay: 0.00 €");
+        labelTotal.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+        //panelPay.add(labelTotal);
 
         botonPagar = new JButton("PROCESS ORDER");
         botonPagar.setBackground(new Color(50, 200, 80));
@@ -166,9 +169,24 @@ public class CarritoPanel extends JPanel {
 
         tarjeta.add(Box.createVerticalStrut(10));
 
-        JLabel imgLabel = new JLabel("IMAGE", SwingConstants.CENTER);
-        imgLabel.setOpaque(true);
-        imgLabel.setBackground(new Color(220, 220, 220));
+        // Imagen del producto (si existe)
+        JLabel imgLabel;
+        if (prod.getFoto() != null && prod.getFoto().exists()) {
+            try {
+                ImageIcon iconoOriginal = new ImageIcon(prod.getFoto().getPath());
+                Image imgEscalada = iconoOriginal.getImage().getScaledInstance(140, 90, Image.SCALE_SMOOTH);
+                ImageIcon iconoEscalado = new ImageIcon(imgEscalada);
+                imgLabel = new JLabel(iconoEscalado, SwingConstants.CENTER);
+            } catch (Exception ex) {
+                imgLabel = new JLabel("IMAGE", SwingConstants.CENTER);
+                imgLabel.setOpaque(true);
+                imgLabel.setBackground(new Color(220, 220, 220));
+            }
+        } else {
+            imgLabel = new JLabel("IMAGE", SwingConstants.CENTER);
+            imgLabel.setOpaque(true);
+            imgLabel.setBackground(new Color(220, 220, 220));
+        }
         imgLabel.setPreferredSize(new Dimension(140, 90));
         imgLabel.setMaximumSize(new Dimension(140, 90));
         imgLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -241,9 +259,9 @@ public class CarritoPanel extends JPanel {
                 new LineBorder(Color.DARK_GRAY, 2),
                 new EmptyBorder(10, 10, 10, 10)));
         tarjeta.setBackground(Color.WHITE);
-        tarjeta.setPreferredSize(new Dimension(220, 150));
-        tarjeta.setMinimumSize(new Dimension(220, 150));
-        tarjeta.setMaximumSize(new Dimension(220, 150));
+        tarjeta.setPreferredSize(new Dimension(220, 200));
+        tarjeta.setMinimumSize(new Dimension(220, 200));
+        tarjeta.setMaximumSize(new Dimension(220, 200));
 
         JLabel lblInfo = new JLabel("Order with " + pedido.getProductosDiferentes().size() + " items");
         lblInfo.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -259,6 +277,7 @@ public class CarritoPanel extends JPanel {
 
         tarjeta.add(Box.createVerticalStrut(15));
 
+        // Botón principal de pago
         JButton btnPayNow = new JButton("PAY NOW");
         btnPayNow.setBackground(new Color(50, 200, 80));
         btnPayNow.setForeground(Color.WHITE);
@@ -268,6 +287,38 @@ public class CarritoPanel extends JPanel {
         btnPayNow.addActionListener(controlador);
         btnPayNow.setAlignmentX(Component.CENTER_ALIGNMENT);
         tarjeta.add(btnPayNow);
+
+        // Botones secundarios alineados debajo del PAY NOW
+        tarjeta.add(Box.createVerticalStrut(8));
+
+        JPanel panelAcciones = new JPanel();
+        panelAcciones.setBackground(Color.WHITE);
+        panelAcciones.setLayout(new BoxLayout(panelAcciones, BoxLayout.Y_AXIS));
+        panelAcciones.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton btnMoreInfo = new JButton("MORE INFO");
+        btnMoreInfo.setBackground(new Color(100, 150, 220));
+        btnMoreInfo.setForeground(Color.WHITE);
+        btnMoreInfo.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
+        btnMoreInfo.setActionCommand("INFO_PEDIDO_" + System.identityHashCode(pedido));
+        btnMoreInfo.putClientProperty("pedido", pedido);
+        btnMoreInfo.addActionListener(controlador);
+        btnMoreInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JButton btnCancel = new JButton("CANCEL ORDER");
+        btnCancel.setBackground(new Color(200, 80, 80));
+        btnCancel.setForeground(Color.WHITE);
+        btnCancel.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
+        btnCancel.setActionCommand("CANCEL_PEDIDO_" + System.identityHashCode(pedido));
+        btnCancel.putClientProperty("pedido", pedido);
+        btnCancel.addActionListener(controlador);
+        btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        panelAcciones.add(btnMoreInfo);
+        panelAcciones.add(Box.createVerticalStrut(6));
+        panelAcciones.add(btnCancel);
+
+        tarjeta.add(panelAcciones);
 
         return tarjeta;
     }

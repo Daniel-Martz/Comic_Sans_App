@@ -46,6 +46,36 @@ public class ControladorCarrito implements ActionListener {
             return;
         }
 
+        if (comando != null && comando.startsWith("INFO_PEDIDO_")) {
+            if (e.getSource() instanceof javax.swing.JButton) {
+                javax.swing.JButton btn = (javax.swing.JButton) e.getSource();
+                SolicitudPedido pedido = (SolicitudPedido) btn.getClientProperty("pedido");
+                if (pedido != null) {
+                    // Reutilizamos la ventana de visualización de pedido implementada para empleados
+                    vista.empleadoPanel.ViewOrderWindow dialog = new vista.empleadoPanel.ViewOrderWindow(mainFrame, pedido);
+                    dialog.setVisible(true);
+                }
+            }
+            return;
+        }
+
+        if (comando != null && comando.startsWith("CANCEL_PEDIDO_")) {
+            if (e.getSource() instanceof javax.swing.JButton) {
+                javax.swing.JButton btn = (javax.swing.JButton) e.getSource();
+                SolicitudPedido pedido = (SolicitudPedido) btn.getClientProperty("pedido");
+                if (pedido != null) {
+                    try {
+                        Aplicacion.getInstancia().cancelarPedido(pedido);
+                        vista.mostrarMensaje("Pedido cancelado correctamente.", "Pedido cancelado");
+                        refrescarVista();
+                    } catch (Exception ex) {
+                        vista.mostrarMensaje("No se pudo cancelar el pedido: " + ex.getMessage(), "Error");
+                    }
+                }
+            }
+            return;
+        }
+
         // ── Acciones dinámicas de producto (INC_, DEC_, DEL_) ────────────
         if (comando != null && comando.length() > 4) {
             String accion = comando.substring(0, 4);
