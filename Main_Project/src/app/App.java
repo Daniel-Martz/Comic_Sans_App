@@ -425,6 +425,16 @@ import modelo.tiempo.*;
         SolicitudPedido pedido = yo.realizarPedido(); 
         yo.pagarPedido(pedido, "1234567812345678", "123", new DateTimeSimulado());
         
+        // Pedidos auxiliares adicionales para ManageOrdersPanel
+        yo.añadirProductoACarrito(spidermanAdv, 1);
+        yo.añadirProductoACarrito(batmanYearOne, 2);
+        SolicitudPedido pedido2 = yo.realizarPedido();
+        yo.pagarPedido(pedido2, "1234567812345678", "123", new DateTimeSimulado());
+        
+        yo.añadirProductoACarrito(watchmen, 1);
+        SolicitudPedido pedido3 = yo.realizarPedido();
+        yo.pagarPedido(pedido3, "1234567812345678", "123", new DateTimeSimulado());
+        
         System.out.println("Java está mirando en: " + new java.io.File(".").getAbsolutePath());
         
         app.cerrarSesion();

@@ -26,6 +26,7 @@ public class MainFrame extends JFrame {
     
     private ManageProductsPanel manageProductsPanel;
     private ModifyProductsPanel modifyProductsPanel;
+    private ManageOrdersPanel manageOrdersPanel;
     
     private AddProductsPanel addProductsPanel;
     // El formulario de añadir producto manualmente ahora es una ventana independiente (AddProductManuallyWindow)
@@ -54,6 +55,7 @@ public class MainFrame extends JFrame {
     public static final String PANEL_HISTORIAL_PEDIDOS = "HistorialPedidos";
     public static final String PANEL_MANAGE_PRODUCTS = "ManageProducts";
     public static final String PANEL_MODIFY_PRODUCTS = "ModifyProducts";
+    public static final String PANEL_MANAGE_ORDERS = "ManageOrders";
     public static final String PANEL_MODIFY_A_PRODUCT = "ModifyAProduct";
     public static final String PANEL_ADD_PRODUCTS = "AddProducts";
     public static final String PANEL_LOAD_FROM_FILE = "LoadFromFile";
@@ -80,6 +82,7 @@ public class MainFrame extends JFrame {
         
         manageProductsPanel = new ManageProductsPanel();
         modifyProductsPanel = new ModifyProductsPanel();
+        manageOrdersPanel = new ManageOrdersPanel();
         
         addProductsPanel = new AddProductsPanel();
         // addProductManuallyPanel = new AddProductManuallyPanel();
@@ -107,6 +110,7 @@ public class MainFrame extends JFrame {
         
         contenedorPaneles.add(manageProductsPanel, PANEL_MANAGE_PRODUCTS);
         contenedorPaneles.add(modifyProductsPanel, PANEL_MODIFY_PRODUCTS);
+        contenedorPaneles.add(manageOrdersPanel, PANEL_MANAGE_ORDERS);
         contenedorPaneles.add(addProductsPanel, PANEL_ADD_PRODUCTS);
         // El panel para añadir producto manualmente ya no se añade al CardLayout porque se muestra
         // mediante una ventana independiente (AddProductManuallyWindow).
@@ -141,6 +145,7 @@ public class MainFrame extends JFrame {
     
     public ManageProductsPanel getManageProductsPanel() { return manageProductsPanel; }
     public ModifyProductsPanel getModifyProductsPanel() { return modifyProductsPanel; }
+    public ManageOrdersPanel getManageOrdersPanel() { return manageOrdersPanel; }
     
     public AddProductsPanel getAddProductsPanel() { return addProductsPanel; }
     // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.

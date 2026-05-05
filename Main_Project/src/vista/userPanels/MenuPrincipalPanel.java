@@ -67,9 +67,9 @@ public class MenuPrincipalPanel extends JPanel {
         bodyContent.setBackground(BG_COLOR);
         bodyContent.setBorder(new EmptyBorder(0, 20, 20, 20));
 
-        bodyContent.add(createBanner("MAIN MENU", BANNER_MAIN_COLOR, 28));
+        bodyContent.add(createBanner("MAIN MENU", BANNER_MAIN_COLOR, 34));
         bodyContent.add(Box.createVerticalStrut(10));
-        bodyContent.add(createBanner("YOU MIGHT LIKE THIS", BANNER_SUB_COLOR, 18));
+        bodyContent.add(createBanner("¡¡¡YOU SHOULD BUY THESE PRODUCTS!!!", BANNER_SUB_COLOR, 25));
         bodyContent.add(Box.createVerticalStrut(15));
 
         recommendedPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
@@ -91,7 +91,7 @@ public class MenuPrincipalPanel extends JPanel {
         bodyContent.add(scrollProducts);
         bodyContent.add(Box.createVerticalStrut(20));
 
-        bodyContent.add(createBanner("CATEGORIES", BANNER_SUB_COLOR, 18));
+        bodyContent.add(createBanner("CATEGORIES", BANNER_SUB_COLOR, 25));
         bodyContent.add(Box.createVerticalStrut(15));
 
         categoriesPanel = new JPanel(new GridLayout(1, 3, 20, 0));

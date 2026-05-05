@@ -89,9 +89,20 @@ public class MainController {
         
         conectarHeaderEmpleado(mainFrame.getManageProductsPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getAddProductsPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getManageOrdersPanel().getHeaderPanel());
         
         new ControladorManageProducts(mainFrame, this);
         new ControladorAddProducts(mainFrame, this);
+        new ControladorManageOrders(mainFrame.getManageOrdersPanel(), mainFrame);
+        
+        mainFrame.getMenuEmpleadoPanel().addManageOrdersListener(e -> {
+            // Refresh orders when opening the panel
+            ControladorManageOrders ctrl = mainFrame.getManageOrdersPanel().getControlador();
+            if (ctrl != null) {
+                ctrl.actualizarPedidos();
+            }
+            navegarA(MainFrame.PANEL_MANAGE_ORDERS);
+        });
         
         mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> {
             String cmd = e.getActionCommand();

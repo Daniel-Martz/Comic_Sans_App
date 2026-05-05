@@ -115,4 +115,8 @@ public class mainMenuEmpleadoPanel extends JPanel {
     public void addManageProductsListener(java.awt.event.ActionListener l) {
         btnManageProducts.addActionListener(l);
     }
+    
+    public void addManageOrdersListener(java.awt.event.ActionListener l) {
+        btnManageOrders.addActionListener(l);
+    }
 }
