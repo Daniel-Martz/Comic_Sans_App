@@ -96,7 +96,6 @@ public class MainController {
         new ControladorManageOrders(mainFrame.getManageOrdersPanel(), mainFrame);
         
         mainFrame.getMenuEmpleadoPanel().addManageOrdersListener(e -> {
-            // Refresh orders when opening the panel
             ControladorManageOrders ctrl = mainFrame.getManageOrdersPanel().getControlador();
             if (ctrl != null) {
                 ctrl.actualizarPedidos();
@@ -451,6 +450,8 @@ public class MainController {
 
     public void cerrarVentanaLogIn() {
     	this.loginDialog.setVisible(false);
+    	refreshIconImage(true);
+    	mostrarMenuPrincipal();
     }
     
     public void navegarBotonPerfil() {
@@ -463,5 +464,24 @@ public class MainController {
     
     public void refreshIconImage(boolean isLoggedIn) {
     	mainFrame.getMenuPrincipalPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getMySecondHandProductsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getCarritoPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getOutstandingPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getProductosFiltradosPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getSearchInterchangesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getMakeOfferPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getHistorialPedidosPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	
+    	// Paneles de empleado
+    	mainFrame.getMenuEmpleadoPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getManageProductsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getAddProductsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getManageOrdersPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	
+    	// Placeholders
+    	mainFrame.getDescuentosPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getConfiguracionPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getPerfilPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getNotificacionesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     }
 }
