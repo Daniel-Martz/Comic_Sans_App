@@ -29,6 +29,9 @@ public class MainFrame extends JFrame {
     private ModifyProductsPanel modifyProductsPanel;
     private ManageOrdersPanel manageOrdersPanel;
     
+    private ValidationRequestsPanel validationRequestsPanel;
+    private ManageInterchangesPanel manageInterchangesPanel;
+    
     private AddProductsPanel addProductsPanel;
     // El formulario de añadir producto manualmente ahora es una ventana independiente (AddProductManuallyWindow)
     // por tanto no mantenemos aquí el panel como componente del CardLayout.
@@ -60,6 +63,8 @@ public class MainFrame extends JFrame {
     public static final String PANEL_ADD_PRODUCTS = "AddProducts";
     public static final String PANEL_LOAD_FROM_FILE = "LoadFromFile";
     public static final String PANEL_ADD_PRODUCT_MANUALLY = "AddProductManually";
+    public static final String PANEL_VALIDATION_REQUESTS = "ValidationRequestsPanel";
+    public static final String PANEL_MANAGE_INTERCHANGES = "ManageInterchanges";
 
     public MainFrame() {
         super("Comic Sans App");
@@ -83,6 +88,9 @@ public class MainFrame extends JFrame {
         manageProductsPanel = new ManageProductsPanel();
         modifyProductsPanel = new ModifyProductsPanel();
         manageOrdersPanel = new ManageOrdersPanel();
+        
+        validationRequestsPanel = new ValidationRequestsPanel();
+        manageInterchangesPanel = new ManageInterchangesPanel();
         
         addProductsPanel = new AddProductsPanel();
         // addProductManuallyPanel = new AddProductManuallyPanel();
@@ -112,6 +120,8 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(modifyProductsPanel, PANEL_MODIFY_PRODUCTS);
         contenedorPaneles.add(manageOrdersPanel, PANEL_MANAGE_ORDERS);
         contenedorPaneles.add(addProductsPanel, PANEL_ADD_PRODUCTS);
+        contenedorPaneles.add(validationRequestsPanel, PANEL_VALIDATION_REQUESTS);
+        contenedorPaneles.add(manageInterchangesPanel, PANEL_MANAGE_INTERCHANGES);
         // El panel para añadir producto manualmente ya no se añade al CardLayout porque se muestra
         // mediante una ventana independiente (AddProductManuallyWindow).
 
@@ -146,6 +156,9 @@ public class MainFrame extends JFrame {
     public ManageProductsPanel getManageProductsPanel() { return manageProductsPanel; }
     public ModifyProductsPanel getModifyProductsPanel() { return modifyProductsPanel; }
     public ManageOrdersPanel getManageOrdersPanel() { return manageOrdersPanel; }
+    
+    public ValidationRequestsPanel getValidationRequestsPanel() { return validationRequestsPanel; }
+    public ManageInterchangesPanel getManageInterchangesPanel() { return manageInterchangesPanel; }
     
     public AddProductsPanel getAddProductsPanel() { return addProductsPanel; }
     // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.

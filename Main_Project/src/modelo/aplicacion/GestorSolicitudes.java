@@ -180,6 +180,21 @@ public class GestorSolicitudes implements Serializable{
 	public List<SolicitudValidacion> getValidaciones() {
 		return validaciones;
 	}
+
+	/**
+	 * Obtiene una lista filtrada únicamente con las validaciones pendientes de aprobar.
+	 *
+	 * @return Lista de solicitudes de validación pendientes.
+	 */
+	public List<SolicitudValidacion> getValidacionesPendientes() {
+		List<SolicitudValidacion> validacionesPendientes = new ArrayList<>();
+		for(SolicitudValidacion s: validaciones) {
+			if(!s.getProductoAValidar().isValidado()) {
+				validacionesPendientes.add(s);
+			}
+		}
+		return validacionesPendientes;
+	}
 	
 	/**
 	 * Personaliza el proceso de serialización para guardar el estado del gestor.

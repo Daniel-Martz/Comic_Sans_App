@@ -59,8 +59,22 @@ public class SolicitudIntercambio extends Solicitud {
      * @param codigoDestinatario Código del destinatario para validar.
      */
 	public void aprobarIntercambio(String codigoOfertante, String codigoDestinatario) {
-		if(this.codigoOfertante.validarCodigo(codigoOfertante) && this.codigoDestinatario.validarCodigo(codigoDestinatario)) {
-			aprobado = true;
+		// 1. Validamos que los códigos sean correctos
+		if (!this.codigoOfertante.validarCodigo(codigoOfertante) || !this.codigoDestinatario.validarCodigo(codigoDestinatario)) {
+			throw new IllegalArgumentException("The security codes provided are incorrect.");
+		}		
+		// 2. Marcamos el intercambio como completado/aprobado
+		this.aprobado = true;
+		
+		// 3. Liberamos los productos de su estado "Pendiente" y limpiamos las referencias de la oferta
+		for (modelo.producto.ProductoSegundaMano p : this.oferta.productosOfertados()) {
+			p.setPendienteAprobacionIntercambio(false);
+			p.eliminarOfertaEnviada();
+		}
+		
+		for (modelo.producto.ProductoSegundaMano p : this.oferta.productosSolicitados()) {
+			p.setPendienteAprobacionIntercambio(false);
+			p.eliminarOfertaRecibida();
 		}
 	}
 
@@ -99,6 +113,27 @@ public class SolicitudIntercambio extends Solicitud {
 	public CodigoIntercambio getCodigoOfertante() {
 		return codigoOfertante;
 	}
+	
+    /**
+     * Devuelve el código del destinatario para validación.
+     * 
+     * @return Código del destinatario.
+     */
+	public CodigoIntercambio getCodigoDestinatario() {
+		return codigoDestinatario;
+	}
+	
+
+	
+	/**
+	 * 
+	 * Devuelve la oferta asociada a la solicitud de intercambio.
+	 * @return the oferta
+	 */
+	public Oferta getOferta() {
+		return oferta;
+	}
+
 
 	@Override
 	public String toString() {

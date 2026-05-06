@@ -93,10 +93,14 @@ public class MainController {
         conectarHeaderEmpleado(mainFrame.getManageProductsPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getAddProductsPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getManageOrdersPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getValidationRequestsPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getManageInterchangesPanel().getHeaderPanel());
         
         new ControladorManageProducts(mainFrame, this);
         new ControladorAddProducts(mainFrame, this);
         new ControladorManageOrders(mainFrame.getManageOrdersPanel(), mainFrame);
+        new ControladorValidationRequests(mainFrame.getValidationRequestsPanel(), mainFrame, this);
+        new ControladorManageInterchanges(mainFrame.getManageInterchangesPanel(), mainFrame, this);
         
         mainFrame.getMenuEmpleadoPanel().addManageOrdersListener(e -> {
             ControladorManageOrders ctrl = mainFrame.getManageOrdersPanel().getControlador();
@@ -104,6 +108,22 @@ public class MainController {
                 ctrl.actualizarPedidos();
             }
             navegarA(MainFrame.PANEL_MANAGE_ORDERS);
+        });
+        
+        mainFrame.getMenuEmpleadoPanel().addValidationRequestsListener(e -> {
+            ControladorValidationRequests ctrl = mainFrame.getValidationRequestsPanel().getControlador();
+            if (ctrl != null) {
+                ctrl.actualizarSolicitudes();
+            }
+            navegarA(MainFrame.PANEL_VALIDATION_REQUESTS);
+        });
+        
+        mainFrame.getMenuEmpleadoPanel().addManageInterchangesListener(e -> {
+            ControladorManageInterchanges ctrl = mainFrame.getManageInterchangesPanel().getControlador();
+            if (ctrl != null) {
+                ctrl.actualizarSolicitudes();
+            }
+            navegarA(MainFrame.PANEL_MANAGE_INTERCHANGES);
         });
         
         mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> {
@@ -499,6 +519,8 @@ public class MainController {
     	mainFrame.getManageProductsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getAddProductsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getManageOrdersPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getValidationRequestsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getManageInterchangesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	
     	// Placeholders
     	mainFrame.getDescuentosPanel().getHeaderPanel().refreshIconImage(isLoggedIn);

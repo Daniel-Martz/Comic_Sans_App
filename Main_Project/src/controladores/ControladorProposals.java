@@ -104,7 +104,7 @@ public class ControladorProposals {
                                           oferta.productosSolicitados(),
                                           modo);
 
-        return new InterchangeCardPanel(headerLabel, balance, givenData, receivedData, modo);
+        return new InterchangeCardPanel(headerLabel, balance, givenData, receivedData, modo, null, null);
     }
 
     /**

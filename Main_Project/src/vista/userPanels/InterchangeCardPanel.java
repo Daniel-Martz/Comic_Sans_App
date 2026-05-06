@@ -24,7 +24,7 @@ public class InterchangeCardPanel extends JPanel {
     /**
      * Modo de visualización de la card.
      */
-    public enum Modo { INCOME, SENT }
+    public enum Modo { INCOME, SENT, EMPLOYEE }
 
     // -------------------------------------------------------
     // Subpaneles internos
@@ -49,8 +49,10 @@ public class InterchangeCardPanel extends JPanel {
                                  double balance,
                                  ProductoSegundaMano[] givenData,
                                  ProductoSegundaMano[] receivedData,
-                                 Modo modo) {
-        initComponents(headerLabel, balance, givenData, receivedData, modo);
+                                 Modo modo,
+                                 String customGivenTitle,
+                                 String customReceivedTitle) {
+        initComponents(headerLabel, balance, givenData, receivedData, modo, customGivenTitle, customReceivedTitle);
         initLayout();
     }
 
@@ -59,7 +61,7 @@ public class InterchangeCardPanel extends JPanel {
      * Útil para crear la vista antes de tener el modelo listo.
      */
     public InterchangeCardPanel() {
-        initComponents("", 0.0, new ProductoSegundaMano[0], new ProductoSegundaMano[0], Modo.INCOME);
+        initComponents("", 0.0, new ProductoSegundaMano[0], new ProductoSegundaMano[0], Modo.INCOME, null, null);
         initLayout();
     }
 
@@ -70,10 +72,20 @@ public class InterchangeCardPanel extends JPanel {
                                   double balance,
                                   ProductoSegundaMano[] givenData,
                                   ProductoSegundaMano[] receivedData,
-                                  Modo modo) {
+                                  Modo modo,
+                                  String customGivenTitle,
+                                  String customReceivedTitle) {
         headerPanel       = new HeaderPanel(headerLabel, balance);
-        panelGiven        = new PanelDesplegable("PRODUCTS GIVEN ▼",    givenData);
-        panelReceived     = new PanelDesplegable("PRODUCTS RECEIVED ▼", receivedData);
+        
+        String givenTitle = customGivenTitle != null ? customGivenTitle : "PRODUCTS GIVEN ▼";
+        String receivedTitle = customReceivedTitle != null ? customReceivedTitle : "PRODUCTS RECEIVED ▼";
+        if (modo == Modo.EMPLOYEE) {
+            if (customGivenTitle == null) givenTitle = "USER 1 PRODUCTS ▼";
+            if (customReceivedTitle == null) receivedTitle = "USER 2 PRODUCTS ▼";
+        }
+        
+        panelGiven        = new PanelDesplegable(givenTitle,    givenData);
+        panelReceived     = new PanelDesplegable(receivedTitle, receivedData);
         actionButtonPanel = new ActionButtonPanel(modo);
     }
 
@@ -220,7 +232,7 @@ public class InterchangeCardPanel extends JPanel {
                     btnAccept.setBackground(new Color(178, 34, 34));
                 }
 
-            } else {
+            } else if (modo == Modo.SENT) {
                 btnCancel = new JButton("CANCEL");
                 btnCancel.setBackground(new Color(178, 34, 34));
                 btnCancel.setForeground(Color.WHITE);
@@ -235,6 +247,23 @@ public class InterchangeCardPanel extends JPanel {
                 Border normalBorderC = new LineBorder(new Color(120, 120, 120), 1);
                 Border hoverBorderC = new LineBorder(new Color(80, 80, 80), 1);
                 applyHoverEffectToButton(btnCancel, btnCancel.getBackground(), normalBorderC, hoverBorderC);
+            } else if (modo == Modo.EMPLOYEE) {
+                btnAccept = new JButton("APPROVE");
+                btnAccept.setBackground(new Color(50, 205, 50));
+                btnAccept.setForeground(Color.WHITE);
+                btnAccept.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
+                btnAccept.setOpaque(true);
+                btnAccept.setContentAreaFilled(true);
+                btnAccept.setFocusPainted(false);
+                btnAccept.setPreferredSize(new Dimension(90, 28));
+                btnAccept.setMargin(new Insets(4, 10, 4, 10));
+                btnAccept.setBorder(new LineBorder(new Color(120, 120, 120), 1));
+                add(btnAccept);
+
+                Border normalBorder = new LineBorder(new Color(120, 120, 120), 1);
+                Border hoverBorder = new LineBorder(new Color(80, 80, 80), 1);
+
+                applyHoverEffectToButton(btnAccept, btnAccept.getBackground(), normalBorder, hoverBorder);
             }
         }
 
@@ -424,13 +453,13 @@ public class InterchangeCardPanel extends JPanel {
                     "FROM: Alice", 12.50,
                     new ProductoSegundaMano[0],
                     new ProductoSegundaMano[0],
-                    Modo.INCOME);
+                    Modo.INCOME, null, null);
 
             InterchangeCardPanel p2 = new InterchangeCardPanel(
                     "TO: Bob", 0.0,
                     new ProductoSegundaMano[0],
                     new ProductoSegundaMano[0],
-                    Modo.SENT);
+                    Modo.SENT, null, null);
 
             JPanel container = new JPanel();
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));

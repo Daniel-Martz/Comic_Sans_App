@@ -321,6 +321,12 @@ import modelo.tiempo.*;
         
         // B1. Producto PENDIENTE DE VALIDACIÓN (recién añadido)
         yo.añadirProductoACarteraDeIntercambio("Libro 'Elantris' de B. Sanderson", "Tapa blanda, leído una vez.", null);
+        yo.añadirProductoACarteraDeIntercambio("Libro 'Mistborn' de B. Sanderson", "Tapa dura, perfecto estado.", null);
+        yo.añadirProductoACarteraDeIntercambio("Juego de mesa 'Risk'", "Falta una pieza, pero jugable.", null);
+        yo.añadirProductoACarteraDeIntercambio("Figura de Batman", "Sin caja original.", null);
+        yo.añadirProductoACarteraDeIntercambio("Cómic 'The Sandman'", "Edición de coleccionista.", null);
+        yo.añadirProductoACarteraDeIntercambio("Teclado Razer", "Teclas mecánicas, poco uso.", null);
+        yo.añadirProductoACarteraDeIntercambio("Ratón Corsair", "Cable un poco desgastado.", null);
 
         // B2. Producto VALIDADO, PENDIENTE DE PAGO
         ProductoSegundaMano pAwaitingPayment = yo.añadirProductoACarteraDeIntercambio("Ratón Logitech G502", "Usado pero funciona perfectamente.", null);
@@ -434,6 +440,45 @@ import modelo.tiempo.*;
         
         yo.aceptarOferta(ofertaAceptada);
 
+        // Intercambio 2: Alice me hace una oferta y yo la acepto
+        ProductoSegundaMano miLibro = yo.añadirProductoACarteraDeIntercambio("Libro Juego de Tronos", "Tapa dura", null);
+        miLibro.getSolicitudValidacion().validarProducto(5.0, 15.0, EstadoConservacion.PERFECTO);
+        yo.pagarValidacion(miLibro.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano figuraAlice = alice.añadirProductoACarteraDeIntercambio("Figura Pikachu", "Nueva en caja", null);
+        figuraAlice.getSolicitudValidacion().validarProducto(5.0, 20.0, EstadoConservacion.PERFECTO);
+        alice.pagarValidacion(figuraAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        Oferta ofertaAceptada2 = alice.realizarOferta(
+                new HashSet<>(Arrays.asList(figuraAlice)),
+                new HashSet<>(Arrays.asList(miLibro)),
+                yo);
+        yo.aceptarOferta(ofertaAceptada2);
+
+        // Intercambio 3: Bob le hace una oferta a Charlie y él la acepta
+        ProductoSegundaMano juegoBob = bob.añadirProductoACarteraDeIntercambio("Carcassonne", "Casi sin uso", null);
+        juegoBob.getSolicitudValidacion().validarProducto(5.0, 30.0, EstadoConservacion.MUY_BUENO);
+        bob.pagarValidacion(juegoBob.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano comicCharlie = charlie.añadirProductoACarteraDeIntercambio("Invencible", "Comic en tomo único", null);
+        comicCharlie.getSolicitudValidacion().validarProducto(5.0, 35.0, EstadoConservacion.PERFECTO);
+        charlie.pagarValidacion(comicCharlie.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        Oferta ofertaAceptada3 = bob.realizarOferta(
+                new HashSet<>(Arrays.asList(juegoBob)),
+                new HashSet<>(Arrays.asList(comicCharlie)),
+                charlie);
+        charlie.aceptarOferta(ofertaAceptada3);
+        
+        // Imprimimos TODOS los códigos por terminal para probarlos cómodamente con el Empleado
+        List<SolicitudIntercambio> listaIntercambiosApp = app.getGestorSolicitud().getIntercambios();
+        System.out.println("\n--- CÓDIGOS DE INTERCAMBIO (Para probar la validación del Empleado) ---");
+        for(SolicitudIntercambio solApp : listaIntercambiosApp) {
+            System.out.println("Intercambio entre " + solApp.getOferta().getOfertante().getNombreUsuario() + " y " + solApp.getOferta().getDestinatario().getNombreUsuario() + ":");
+            System.out.println("  -> Código de " + solApp.getOferta().getOfertante().getNombreUsuario() + ": " + solApp.getCodigoOfertante().getCodigo());
+            System.out.println("  -> Código de " + solApp.getOferta().getDestinatario().getNombreUsuario() + ": " + solApp.getCodigoDestinatario().getCodigo() + "\n");
+        }
+        System.out.println("-----------------------------------------------------------------------\n");
         
         app.cerrarSesion();
 
@@ -462,11 +507,16 @@ import modelo.tiempo.*;
         app.cerrarSesion();
         app.iniciarSesion("gestor", "123456");
         Gestor gestor = (Gestor) app.getUsuarioActual();
-        gestor.crearEmpleado("demo", "14433331A");
+        Empleado empDemo = gestor.crearEmpleado("demo", "14433331A");
+        gestor.añadirPermiso(empDemo, modelo.usuario.Permiso.VALIDACIONES);
+        gestor.añadirPermiso(empDemo, modelo.usuario.Permiso.PEDIDOS);
+        gestor.añadirPermiso(empDemo, modelo.usuario.Permiso.INTERCAMBIOS);
         app.cerrarSesion();
         app.iniciarSesion("demo", "123456");
         app.cerrarSesion();
         app.iniciarSesion("demoUser", "Passw0rd!!");
+        app.cerrarSesion();
+        app.iniciarSesion("demo", "123456");
         
 		
         
