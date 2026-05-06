@@ -196,8 +196,17 @@ public class ClienteRegistrado extends Usuario {
 
 	    Aplicacion app = Aplicacion.getInstancia();
 	    app.crearSolicitudIntercambio(o);
-	    //la oferta se elimina de la lista de ofertas recibidas
-	    this.ofertasRecibidas.remove(o);
+	    
+	    // Marcamos los productos como pendientes ANTES de eliminar las ofertas
+	    for (ProductoSegundaMano p : o.productosOfertados()) {
+	        p.setPendienteAprobacionIntercambio(true);
+	    }
+	    for (ProductoSegundaMano p : o.productosSolicitados()) {
+	        p.setPendienteAprobacionIntercambio(true);
+	    }
+	    
+	    // Se eliminan las ofertas de las listas de los usuarios correspondientes
+	    this.eliminarOfertaRecibida(o);
 	    o.getOfertante().eliminarOfertaRealizada(o);
 	    System.out.println("Oferta aceptada.");
 	}
@@ -279,31 +288,25 @@ public class ClienteRegistrado extends Usuario {
 	/**
 	 * Actualiza las ofertas del cliente, eliminando aquellas que hayan caducado
 	 */
-	private void actualizarOfertas() {
+	public void actualizarOfertas() {
 		// Actualizamos las ofertas recibidas, eliminando las caducadas
-		List<Oferta> temp = new ArrayList<>();
-		for (Oferta o : ofertasRecibidas) {
-			if (o.haCaducado() == false) {
-				temp.add(o);
-			} else {
+		List<Oferta> copiaRecibidas = new ArrayList<>(this.ofertasRecibidas);
+		for (Oferta o : copiaRecibidas) {
+			if (o.haCaducado()) {
 				// Se rechaza la oferta automáticamente si caduca
 				o.getOfertante().eliminarOfertaRealizada(o);
 				o.getDestinatario().eliminarOfertaRecibida(o);
 			}
 		}
-		this.ofertasRecibidas = temp;
 
 		// Actualizamos las ofertas realizadas, eliminando las caducadas
-		List<Oferta> temp2 = new ArrayList<>();
-		for (Oferta o : ofertasRealizadas) {
-			if (o.haCaducado() == false) {
-				temp2.add(o);
-			} else {
+		List<Oferta> copiaRealizadas = new ArrayList<>(this.ofertasRealizadas);
+		for (Oferta o : copiaRealizadas) {
+			if (o.haCaducado()) {
 				o.getOfertante().eliminarOfertaRealizada(o);
 				o.getDestinatario().eliminarOfertaRecibida(o);
 			}
 		}
-		this.ofertasRealizadas = temp2;
 
 	}
 
@@ -324,7 +327,7 @@ public class ClienteRegistrado extends Usuario {
 	 */
 	public void rechazarOferta(Oferta o) {
 		actualizarOfertas();
-		this.ofertasRecibidas.remove(o);
+		this.eliminarOfertaRecibida(o);
 		o.getOfertante().eliminarOfertaRealizada(o);
 		System.out.println("Oferta rechazada.");
 	}

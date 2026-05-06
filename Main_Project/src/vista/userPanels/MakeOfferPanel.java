@@ -200,12 +200,29 @@ public class MakeOfferPanel extends JPanel {
             lblPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
             tarjeta.add(lblPrecio);
 
+            if (prod.isPendienteAprobacionIntercambio()) {
+                JLabel lblStatus = new JLabel("⏳ PENDING");
+                lblStatus.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
+                lblStatus.setForeground(new Color(180, 100, 0));
+                lblStatus.setAlignmentX(Component.CENTER_ALIGNMENT);
+                tarjeta.add(lblStatus);
+            } else if (prod.estaEnOferta()) {
+                JLabel lblStatus = new JLabel("📌 INCLUDED IN OFFER");
+                lblStatus.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
+                lblStatus.setForeground(new Color(200, 80, 30));
+                lblStatus.setAlignmentX(Component.CENTER_ALIGNMENT);
+                tarjeta.add(lblStatus);
+            }
+
             JCheckBox chkSelect = new JCheckBox("Select");
             chkSelect.setSelected(isSelected);
             chkSelect.setBackground(Color.WHITE);
             chkSelect.setAlignmentX(Component.CENTER_ALIGNMENT);
             chkSelect.setActionCommand(commandPrefix + "_" + prod.getID());
             chkSelect.addItemListener(itemCtrl);
+            if (prod.estaBloqueado()) {
+                chkSelect.setEnabled(false);
+            }
             tarjeta.add(chkSelect);
 
             tarjeta.add(Box.createVerticalStrut(5));

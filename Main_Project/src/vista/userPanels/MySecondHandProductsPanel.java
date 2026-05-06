@@ -234,10 +234,13 @@ public class MySecondHandProductsPanel extends JPanel {
         // Imagen del producto (o placeholder si no tiene)
         card.add(createImagePanel(producto.getFoto()), BorderLayout.WEST);
 
-        // Info
+        // Info + Estado
+        JPanel rightSide = new JPanel(new BorderLayout(0, 6));
+        rightSide.setOpaque(false);
+        rightSide.setBorder(new EmptyBorder(6, 10, 6, 6));
+
         JPanel info = new JPanel(new GridLayout(0, 1, 2, 2));
         info.setOpaque(false);
-        info.setBorder(new EmptyBorder(6, 10, 6, 6));
 
         addInfoRow(info, "PRODUCT NAME:", producto.getNombre());
         addInfoRow(info, "CONDITION:",
@@ -250,7 +253,27 @@ public class MySecondHandProductsPanel extends JPanel {
                         ? String.format("%.2f €", producto.getDatosValidacion().getPrecioEstimadoProducto())
                         : "-");
 
-        card.add(info, BorderLayout.CENTER);
+        rightSide.add(info, BorderLayout.CENTER);
+
+        if (producto.isPendienteAprobacionIntercambio()) {
+            JPanel actionArea = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            actionArea.setOpaque(false);
+            JLabel pendingLabel = new JLabel("⏳ PENDING EXCHANGE APPROVAL");
+            pendingLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
+            pendingLabel.setForeground(new Color(180, 100, 0));
+            actionArea.add(pendingLabel);
+            rightSide.add(actionArea, BorderLayout.SOUTH);
+        } else if (producto.estaEnOferta()) {
+            JPanel actionArea = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            actionArea.setOpaque(false);
+            JLabel offerLabel = new JLabel("📌 INCLUDED IN AN OFFER");
+            offerLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
+            offerLabel.setForeground(new Color(200, 80, 30));
+            actionArea.add(offerLabel);
+            rightSide.add(actionArea, BorderLayout.SOUTH);
+        }
+
+        card.add(rightSide, BorderLayout.CENTER);
         return card;
     }
 

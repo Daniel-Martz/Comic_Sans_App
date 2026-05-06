@@ -52,14 +52,16 @@ public class ControladorSearchInterchanges implements ActionListener, ItemListen
     }
 
     private void cargarProductosDisponibles(String prompt) {
+        ClienteRegistrado cliente = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
+        cliente.actualizarOfertas(); // Limpiamos ofertas caducadas
+        
         // Obtiene todos los validados que cumplan los filtros actuales y el texto buscado
         List<ProductoSegundaMano> todos = Catalogo.getInstancia().obtenerProductosIntercambioFiltrados(prompt);
-        ClienteRegistrado cliente = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
         
         List<ProductoSegundaMano> ajenos = new ArrayList<>();
         for (ProductoSegundaMano p : todos) {
-            // Descartamos nuestros propios productos (no puedes intercambiar contigo mismo)
-            if (!p.getClienteProducto().equals(cliente)) {
+            // Descartamos nuestros propios productos y los que ya estén bloqueados en otros intercambios
+            if (!p.getClienteProducto().equals(cliente) && !p.estaBloqueado()) {
                 ajenos.add(p);
             }
         }

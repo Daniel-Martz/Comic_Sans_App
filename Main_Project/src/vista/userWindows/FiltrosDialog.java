@@ -39,7 +39,7 @@ public class FiltrosDialog extends JDialog {
     private JComboBox<String> cbCalifications;
 
     public FiltrosDialog(JFrame parent) {
-        super(parent, "Interchange No Category Filters", true); // true = Modal
+        super(parent, "Advanced Filters", true); // true = Modal
         setSize(800, 750);
         setLocationRelativeTo(parent);
         initComponents();
@@ -79,7 +79,7 @@ public class FiltrosDialog extends JDialog {
         
         // Categorías (agrupadas para que solo se seleccione una)
         JPanel catContent = createCategoryContent();
-        leftPanel.add(createSection("CATEGORY", catContent));
+        leftPanel.add(createSection("PRODUCT TYPE", catContent));
         leftPanel.add(Box.createVerticalStrut(10));
         
         leftPanel.add(createSection("DISCOUNTS", createDiscountsContent()));
@@ -93,7 +93,7 @@ public class FiltrosDialog extends JDialog {
         JPanel headerRightPanel = new JPanel();
         headerRightPanel.setLayout(new BoxLayout(headerRightPanel, BoxLayout.Y_AXIS));
         headerRightPanel.setBackground(BG_COLOR);
-        headerRightPanel.add(createMainHeader("CATEGORY FILTERS"));
+        headerRightPanel.add(createMainHeader("PRODUCT TYPE FILTERS"));
         headerRightPanel.add(Box.createVerticalStrut(12));
         // Encapsulamos rightPanel en un wrapper para que no pegue a los bordes
         JPanel rightWrapper = new JPanel(new BorderLayout());
@@ -139,7 +139,7 @@ public class FiltrosDialog extends JDialog {
         p.setBackground(new Color(200, 180, 210)); // Color lila del mockup
         p.setBorder(new LineBorder(Color.DARK_GRAY));
         p.setPreferredSize(new Dimension(300, 50));
-        JLabel lbl = new JLabel("NO CATEGORY SELECTED", SwingConstants.CENTER);
+        JLabel lbl = new JLabel("NO PRODUCT TYPE SELECTED", SwingConstants.CENTER);
         lbl.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lbl.setForeground(Color.WHITE);
         p.add(lbl, BorderLayout.CENTER);

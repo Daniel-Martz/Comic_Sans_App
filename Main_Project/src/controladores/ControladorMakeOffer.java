@@ -50,12 +50,14 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
 
     private void cargarRequested(String prompt) {
         ClienteRegistrado yo = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
+        yo.actualizarOfertas();
+        
         // Reutilizamos la lógica del catálogo para buscar productos validados y disponibles
         List<ProductoSegundaMano> todos = Catalogo.getInstancia().obtenerProductosIntercambioFiltrados(prompt);
         
         List<ProductoSegundaMano> ajenos = new ArrayList<>();
         for (ProductoSegundaMano p : todos) {
-            if (!p.getClienteProducto().equals(yo)) ajenos.add(p);
+            if (!p.getClienteProducto().equals(yo) && !p.estaBloqueado()) ajenos.add(p);
         }
         
         // Ordenamos para que los preseleccionados salgan los primeros
@@ -73,11 +75,15 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
 
     private void cargarOffered(String prompt) {
         ClienteRegistrado yo = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
-        List<ProductoSegundaMano> todos = Catalogo.getInstancia().obtenerProductosIntercambioFiltrados(prompt);
         
         List<ProductoSegundaMano> mios = new ArrayList<>();
-        for (ProductoSegundaMano p : todos) {
-            if (p.getClienteProducto().equals(yo)) mios.add(p);
+        // Consultamos nuestra propia cartera para poder verlos todos (incluso bloqueados)
+        for (ProductoSegundaMano p : yo.getCartera().getProductos()) {
+            if (p.isValidado() && p.isPagado()) {
+                if (prompt == null || prompt.isEmpty() || p.getNombre().toLowerCase().contains(prompt.toLowerCase())) {
+                    mios.add(p);
+                }
+            }
         }
         
         mios.sort((a, b) -> {

@@ -31,17 +31,11 @@ import modelo.tiempo.*;
         // ─────────────────────────────────────────────────────────────────
         // 2. CATEGORÍAS
         // ─────────────────────────────────────────────────────────────────
-        Categoria catComics      = new Categoria("Comics");
-        Categoria catFiguras     = new Categoria("Figuras");
-        Categoria catJuegos      = new Categoria("Juegos de Mesa");
         Categoria catManga       = new Categoria("Manga");
         Categoria catSuperheroes = new Categoria("Superhéroes");
         Categoria catEstrategia  = new Categoria("Estrategia");
         Categoria catAnime       = new Categoria("Anime");
 
-        cat.añadirCategoria(catComics);
-        cat.añadirCategoria(catFiguras);
-        cat.añadirCategoria(catJuegos);
         cat.añadirCategoria(catManga);
         cat.añadirCategoria(catSuperheroes);
         cat.añadirCategoria(catEstrategia);
@@ -58,7 +52,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/SpidermanAdventures3.jpg"),
                 20, 19.99, 0,
                 120, "Stan Lee", "Marvel", 1995);
-        spidermanAdv.añadirCategoria(catComics);
         spidermanAdv.añadirCategoria(catSuperheroes);
         cat.añadirProducto(spidermanAdv);
 
@@ -68,7 +61,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/SpidermanChronicles5.jpg"),
                 20, 19.99, 0,
                 98, "Dan Slott", "Marvel", 2010);
-        spidermanChron.añadirCategoria(catComics);
         spidermanChron.añadirCategoria(catSuperheroes);
         cat.añadirProducto(spidermanChron);
 
@@ -78,7 +70,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/BatmanYearOne.jpg"),
                 15, 24.99, 0,
                 144, "Frank Miller", "DC Comics", 1987);
-        batmanYearOne.añadirCategoria(catComics);
         batmanYearOne.añadirCategoria(catSuperheroes);
         cat.añadirProducto(batmanYearOne);
 
@@ -88,7 +79,7 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Watchmen.jpg"),
                 10, 29.99, 0,
                 416, "Alan Moore", "DC Comics", 1986);
-        watchmen.añadirCategoria(catComics);
+        watchmen.añadirCategoria(catSuperheroes);
         cat.añadirProducto(watchmen);
 
         Comic xmenGold = new Comic(
@@ -97,7 +88,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/XmenGold.jpg"),
                 12, 17.99, 0,
                 136, "Marc Guggenheim", "Marvel", 2017);
-        xmenGold.añadirCategoria(catComics);
         xmenGold.añadirCategoria(catSuperheroes);
         cat.añadirProducto(xmenGold);
 
@@ -118,7 +108,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/IronManMark85.jpg"),
                 8, 89.99, 0,
                 "Hot Toys", "PVC+ABS", 30.0, 22.0, 18.0);
-        ironManFigure.añadirCategoria(catFiguras);
         ironManFigure.añadirCategoria(catSuperheroes);
         cat.añadirProducto(ironManFigure);
 
@@ -128,7 +117,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/GokuSSJ.jpg"),
                 15, 49.99, 0,
                 "Bandai", "PVC", 25.0, 15.0, 12.0);
-        gokuFigure.añadirCategoria(catFiguras);
         gokuFigure.añadirCategoria(catAnime);
         cat.añadirProducto(gokuFigure);
 
@@ -138,7 +126,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/NarutoFigure.jpg"),
                 20, 39.99, 0,
                 "Megahouse", "PVC", 20.0, 12.0, 10.0);
-        narutoFigure.añadirCategoria(catFiguras);
         narutoFigure.añadirCategoria(catAnime);
         cat.añadirProducto(narutoFigure);
 
@@ -148,7 +135,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/BatmanArkham.jpg"),
                 6, 119.99, 0,
                 "DC Collectibles", "Resina", 35.0, 18.0, 15.0);
-        batmanFigure.añadirCategoria(catFiguras);
         batmanFigure.añadirCategoria(catSuperheroes);
         cat.añadirProducto(batmanFigure);
 
@@ -158,7 +144,7 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/LucinaFigure.jpg"),
                 10, 64.99, 0,
                 "Good Smile", "PVC", 22.0, 10.0, 8.0);
-        lucinaFigure.añadirCategoria(catFiguras);
+        lucinaFigure.añadirCategoria(catAnime);
         cat.añadirProducto(lucinaFigure);
 
         Figura spidermanFigure = new Figura(
@@ -167,7 +153,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/MilesMorales.jpg"),
                 12, 74.99, 0,
                 "Sideshow", "PVC+ABS", 28.0, 20.0, 20.0);
-        spidermanFigure.añadirCategoria(catFiguras);
         spidermanFigure.añadirCategoria(catSuperheroes);
         cat.añadirProducto(spidermanFigure);
 
@@ -177,7 +162,7 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/LinkFigure.jpg"),
                 9, 84.99, 0,
                 "First 4 Figures", "Resina", 26.0, 14.0, 14.0);
-        zeldaFigure.añadirCategoria(catFiguras);
+        zeldaFigure.añadirCategoria(catAnime);
         cat.añadirProducto(zeldaFigure);
 
         // ── Juegos de Mesa (5) ───────────────────────────────────────────
@@ -187,7 +172,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Catan.jpg"),
                 18, 39.99,
                 4, 10, 99, TipoJuegoMesa.DADOS);
-        catan.añadirCategoria(catJuegos);
         catan.añadirCategoria(catEstrategia);
         cat.añadirProducto(catan);
 
@@ -197,7 +181,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Pandemic.jpg"),
                 14, 44.99,
                 4, 8, 99, TipoJuegoMesa.CARTAS);
-        pandemic.añadirCategoria(catJuegos);
         pandemic.añadirCategoria(catEstrategia);
         cat.añadirProducto(pandemic);
 
@@ -207,7 +190,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/TicketToRide.jpg"),
                 16, 49.99,
                 5, 8, 99, TipoJuegoMesa.CARTAS);
-        ticket.añadirCategoria(catJuegos);
         ticket.añadirCategoria(catEstrategia);
         cat.añadirProducto(ticket);
 
@@ -217,7 +199,7 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Codenames.jpg"),
                 22, 22.99,
                 8, 10, 99, TipoJuegoMesa.CARTAS);
-        codenames.añadirCategoria(catJuegos);
+        codenames.añadirCategoria(catEstrategia);
         cat.añadirProducto(codenames);
 
         JuegoDeMesa dominion = new JuegoDeMesa(
@@ -226,7 +208,6 @@ import modelo.tiempo.*;
                 new File("src/assets/productos/nuevos/Dominion.jpg"),
                 10, 34.99,
                 4, 13, 99, TipoJuegoMesa.CARTAS);
-        dominion.añadirCategoria(catJuegos);
         dominion.añadirCategoria(catEstrategia);
         cat.añadirProducto(dominion);
 
@@ -236,7 +217,6 @@ import modelo.tiempo.*;
                 "Recopilación visual de los mejores artes conceptuales de Marvel a lo largo de 80 años.",
                 new File("src/assets/productos/nuevos/ArtbookMarvel.jpg"),
                 7, 59.99);
-        artbook.añadirCategoria(catComics);
         artbook.añadirCategoria(catSuperheroes);
         cat.añadirProducto(artbook);
 
@@ -245,7 +225,6 @@ import modelo.tiempo.*;
                 "Funko Pop exclusivo de Goku Black SSJ Rose, edición especial de coleccionista.",
                 new File("src/assets/productos/nuevos/FunkGokuBlack.jpg"),
                 30, 14.99);
-        funkoPop.añadirCategoria(catFiguras);
         funkoPop.añadirCategoria(catAnime);
         cat.añadirProducto(funkoPop);
 
@@ -254,7 +233,7 @@ import modelo.tiempo.*;
                 "Fundas de PVC transparente de alta calidad, compatibles con Magic, Pokémon y más.",
                 new File("src/assets/productos/nuevos/CardSleeves.jpg"),
                 50, 9.99);
-        sleeves.añadirCategoria(catJuegos);
+        sleeves.añadirCategoria(catEstrategia);
         cat.añadirProducto(sleeves);
 
         LineaProductoVenta dado20 = new LineaProductoVenta(
@@ -262,7 +241,6 @@ import modelo.tiempo.*;
                 "Dado D20 de zinc chapado en oro con grabados rúnicos, edición de coleccionista.",
                 new File("src/assets/productos/nuevos/D20Metal.jpg"),
                 40, 12.99);
-        dado20.añadirCategoria(catJuegos);
         dado20.añadirCategoria(catEstrategia);
         cat.añadirProducto(dado20);
 
@@ -352,7 +330,6 @@ import modelo.tiempo.*;
         ProductoSegundaMano pReady = yo.añadirProductoACarteraDeIntercambio("Teclado Mecánico Keychron K2", "Switches marrones, con su caja.", null);
         pReady.getSolicitudValidacion().validarProducto(3.5, 60.0, EstadoConservacion.MUY_BUENO);
         yo.pagarValidacion(pReady.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
-
         // -------------------------------------------------------------------------
         // C. AÑADIR PRODUCTOS DE SEGUNDA MANO DISPONIBLES DE OTROS USUARIOS 
         // (Para que aparezcan en la búsqueda de intercambios y puedas seleccionarlos)
@@ -380,29 +357,30 @@ import modelo.tiempo.*;
         // Oferta 1: Bob me ofrece su Comic a cambio de mi Juego (Tu oferta original)
         ProductoSegundaMano comicBob = new ProductoSegundaMano("Spider-Man Vol.1", "Primera edición",  null, bob);
         comicBob.getSolicitudValidacion().validarProducto(5.0, 150.0, EstadoConservacion.USO_LIGERO);
+        bob.pagarValidacion(comicBob.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
         ProductoSegundaMano juegoMio = yo.añadirProductoACarteraDeIntercambio("Catan", "Casi nuevo", null);
         juegoMio.getSolicitudValidacion().validarProducto(5.0, 45.0, EstadoConservacion.USO_LIGERO);
         yo.pagarValidacion(juegoMio.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        Oferta ofertaBob = new Oferta(
-                new DateTimeSimulado(), bob, yo,
+        Oferta ofertaBob = bob.realizarOferta(
                 new HashSet<>(Arrays.asList(comicBob)),
-                new HashSet<>(Arrays.asList(juegoMio)));
-        yo.getOfertasRecibidas().add(ofertaBob);
+                new HashSet<>(Arrays.asList(juegoMio)),
+                yo);
 
         for (int i = 1; i <= 6; i++) {
             ProductoSegundaMano pDaAlice = new ProductoSegundaMano(
                     "Figura de Anime #" + i, "Buen estado", null, alice);
             pDaAlice.getSolicitudValidacion().validarProducto(2.0, 15.0 + i * 2, EstadoConservacion.USO_LIGERO);
+            alice.pagarValidacion(pDaAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
             ProductoSegundaMano pPideAlice = yo.añadirProductoACarteraDeIntercambio("Mi carta Magic #" + i, "Con funda", null);
             pPideAlice.getSolicitudValidacion().validarProducto(1.0, 12.0 + (i * 2.5), EstadoConservacion.PERFECTO);
             yo.pagarValidacion(pPideAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-            yo.getOfertasRecibidas().add(new Oferta(
-                    new DateTimeSimulado(), alice, yo,
+            alice.realizarOferta(
                     new HashSet<>(Arrays.asList(pDaAlice)),
-                    new HashSet<>(Arrays.asList(pPideAlice))));
+                    new HashSet<>(Arrays.asList(pPideAlice)),
+                    yo);
         }
 
         // -------------------------------------------------------------------------
@@ -415,11 +393,12 @@ import modelo.tiempo.*;
         yo.pagarValidacion(comicMio.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
         ProductoSegundaMano figuraBob = bob.añadirProductoACarteraDeIntercambio("Figura Iron Man", "Sin caja", null);
         figuraBob.getSolicitudValidacion().validarProducto(5.0, 30.0, EstadoConservacion.USO_LIGERO);
+        bob.pagarValidacion(figuraBob.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        yo.getOfertasRealizadas().add(new Oferta(
-                new DateTimeSimulado(), yo, bob,
+        yo.realizarOferta(
                 new HashSet<>(Arrays.asList(comicMio)),
-                new HashSet<>(Arrays.asList(figuraBob))));
+                new HashSet<>(Arrays.asList(figuraBob)),
+                bob);
 
         for (int i = 1; i <= 4; i++) {
             ProductoSegundaMano pDoyYo = yo.añadirProductoACarteraDeIntercambio("Mi videojuego #" + i, "Completo", null);
@@ -429,12 +408,33 @@ import modelo.tiempo.*;
             ProductoSegundaMano pPidoCharlie = new ProductoSegundaMano(
                     "Juego de Rol de Charlie #" + i, "Nuevo", null, charlie);
             pPidoCharlie.getSolicitudValidacion().validarProducto(5.0, 35.0 + i, EstadoConservacion.PERFECTO);
+            charlie.pagarValidacion(pPidoCharlie.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-            yo.getOfertasRealizadas().add(new Oferta(
-                    new DateTimeSimulado(), yo, charlie,
+            yo.realizarOferta(
                     new HashSet<>(Arrays.asList(pDoyYo)),
-                    new HashSet<>(Arrays.asList(pPidoCharlie))));
+                    new HashSet<>(Arrays.asList(pPidoCharlie)),
+                    charlie);
         }
+        
+        // -------------------------------------------------------------------------
+        // 5. INTERCAMBIO ACEPTADO (PENDIENTE DE APROBACIÓN POR EMPLEADO)
+        // -------------------------------------------------------------------------
+        ProductoSegundaMano miProductoEnEspera = yo.añadirProductoACarteraDeIntercambio("Monopoly Clásico", "Edición original de 1998", null);
+        miProductoEnEspera.getSolicitudValidacion().validarProducto(5.0, 20.0, EstadoConservacion.MUY_BUENO);
+        yo.pagarValidacion(miProductoEnEspera.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        ProductoSegundaMano productoCharlieOfrecido = charlie.añadirProductoACarteraDeIntercambio("Zelda Ocarina of Time (N64)", "Cartucho suelto", null);
+        productoCharlieOfrecido.getSolicitudValidacion().validarProducto(4.5, 35.0, EstadoConservacion.USO_LIGERO);
+        charlie.pagarValidacion(productoCharlieOfrecido.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
+
+        Oferta ofertaAceptada = charlie.realizarOferta(
+                new HashSet<>(Arrays.asList(productoCharlieOfrecido)),
+                new HashSet<>(Arrays.asList(miProductoEnEspera)),
+                yo);
+        
+        yo.aceptarOferta(ofertaAceptada);
+
+        
         app.cerrarSesion();
 
         app.crearCuenta("demoUser", "14433331A", "Passw0rd!!", "Passw0rd!!");
@@ -447,6 +447,16 @@ import modelo.tiempo.*;
         SolicitudPedido pedido = yo.realizarPedido(); 
         yo.pagarPedido(pedido, "1234567812345678", "123", new DateTimeSimulado());
         
+        // Pedidos auxiliares adicionales para ManageOrdersPanel
+        yo.añadirProductoACarrito(spidermanAdv, 1);
+        yo.añadirProductoACarrito(batmanYearOne, 2);
+        SolicitudPedido pedido2 = yo.realizarPedido();
+        yo.pagarPedido(pedido2, "1234567812345678", "123", new DateTimeSimulado());
+        
+        yo.añadirProductoACarrito(watchmen, 1);
+        SolicitudPedido pedido3 = yo.realizarPedido();
+        yo.pagarPedido(pedido3, "1234567812345678", "123", new DateTimeSimulado());
+        
         System.out.println("Java está mirando en: " + new java.io.File(".").getAbsolutePath());
         
         app.cerrarSesion();
@@ -455,6 +465,8 @@ import modelo.tiempo.*;
         gestor.crearEmpleado("demo", "14433331A");
         app.cerrarSesion();
         app.iniciarSesion("demo", "123456");
+        app.cerrarSesion();
+        app.iniciarSesion("demoUser", "Passw0rd!!");
         
 		
         

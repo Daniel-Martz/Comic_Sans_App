@@ -55,6 +55,11 @@ public class ControladorManageProducts implements ActionListener {
             mainController.navegarA(MainFrame.PANEL_MODIFY_PRODUCTS);
         });
 
+        // Desde Manage Products -> Manage Categories
+        panelManage.addManageCategoriesListener(e -> {
+            mainController.mostrarManageCategories();
+        });
+
         // Desde Modify Products -> Volver a HOME
         panelModifyList.getBtnBack().addActionListener(e -> 
             mainController.mostrarMenuPrincipal()

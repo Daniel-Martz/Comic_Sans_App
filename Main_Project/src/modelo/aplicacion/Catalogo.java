@@ -447,6 +447,10 @@ public class Catalogo implements Serializable {
 		for (ClienteRegistrado u : Aplicacion.getInstancia().getClientesRegistrados()) {
 			u.getInteres().eliminarCategoriaInteres(c);
 		}
+		// Eliminar la categoría de todos los productos del catálogo
+		for (LineaProductoVenta p : productosNuevos) {
+			p.eliminarCategoria(c);
+		}
 	}
 
 	/**

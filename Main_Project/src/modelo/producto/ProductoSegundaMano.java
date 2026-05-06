@@ -31,6 +31,9 @@ public class ProductoSegundaMano extends Producto {
 	/** Solicitud de validación generada para este producto. */
 	private final SolicitudValidacion solicitudValidacion;
 	
+	/** Indica si el producto se encuentra en una solicitud de intercambio pendiente de aprobación. */
+	private boolean pendienteAprobacionIntercambio = false;
+	
 	/** Datos resultantes del proceso de validación (estado, precio estimado, etc.). */
 	private DatosValidacion datosValidacion = null;
 	
@@ -173,17 +176,64 @@ public class ProductoSegundaMano extends Producto {
 	}
 
 	/**
+	 * Verifica si el producto ha sido validado pero aún está pendiente de pago.
+	 *
+	 * @return true si está validado y la solicitud de validación no ha sido pagada.
+	 */
+	public boolean isPendienteDePago() {
+		return this.validado && (this.solicitudValidacion == null || this.solicitudValidacion.getPagoValidacion() == null);
+	}
+
+	/**
+	 * Verifica si la validación del producto ya ha sido pagada.
+	 *
+	 * @return true si ya se pagó la validación.
+	 */
+	public boolean isPagado() {
+		return this.solicitudValidacion != null && this.solicitudValidacion.getPagoValidacion() != null;
+	}
+
+	/**
+	 * Verifica si el producto forma parte actualmente de una oferta activa.
+	 *
+	 * @return true si tiene una oferta asociada (enviada o recibida).
+	 */
+	public boolean estaEnOferta() {
+		return this.ofertaRecibida != null || this.ofertaEnviada != null;
+	}
+
+	/**
+	 * Indica si el producto está en una solicitud de intercambio pendiente.
+	 *
+	 * @return true si está pendiente de aprobación
+	 */
+	public boolean isPendienteAprobacionIntercambio() {
+		return pendienteAprobacionIntercambio;
+	}
+
+	/**
+	 * Modifica el estado de pendiente de aprobación de intercambio.
+	 *
+	 * @param pendienteAprobacionIntercambio nuevo estado
+	 */
+	public void setPendienteAprobacionIntercambio(boolean pendienteAprobacionIntercambio) {
+		this.pendienteAprobacionIntercambio = pendienteAprobacionIntercambio;
+	}
+
+	/**
 	 * Indica si el producto está bloqueado.
 	 *
 	 * Está bloqueado si:
 	 * - tiene oferta recibida
 	 * - tiene oferta enviada
 	 * - no ha sido validado
+	 * - está pendiente de pago
+	 * - está pendiente de aprobación en un intercambio
 	 *
 	 * @return true si está bloqueado
 	 */
 	public boolean estaBloqueado() {
-		return (ofertaRecibida != null || ofertaEnviada != null || this.datosValidacion == null);
+		return (ofertaRecibida != null || ofertaEnviada != null || this.datosValidacion == null || this.isPendienteDePago() || this.pendienteAprobacionIntercambio);
 	}
 
 	@Override
