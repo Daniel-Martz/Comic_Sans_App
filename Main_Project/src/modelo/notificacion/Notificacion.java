@@ -25,6 +25,9 @@ public class Notificacion implements Serializable {
 	
 	/** Fecha y hora simulada en la que se envía la notificación. */
 	private DateTimeSimulado horaEnvio;
+
+  /** Describe si la notificacion ha sido leída o no*/
+  private boolean read = false;
 	
 	/**
 	 * Crea una nueva notificación asignándole un identificador único automático.
@@ -121,4 +124,14 @@ public class Notificacion implements Serializable {
 	           "Fecha: " + horaEnvio.toStringFecha() + "\n" +
 	           "--------------------";
 	}
+
+  /**
+   * Devuelve si una notificación ha sido leída o no
+   */
+  public boolean getRead(){ return read; }
+
+  /**
+   * Cambia el estado de la notificación a leída
+   */
+  public void read(){ read = true; }
 }

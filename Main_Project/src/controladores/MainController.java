@@ -2,6 +2,7 @@ package controladores;
 
 import modelo.aplicacion.Aplicacion;
 import modelo.aplicacion.Catalogo;
+import modelo.notificacion.Notificacion;
 import modelo.solicitud.Oferta;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Empleado;
@@ -12,6 +13,7 @@ import vista.userWindows.CrearUsuarioDialog;
 import vista.userWindows.EditProfileDialog;
 import vista.userWindows.FiltrosDialog;
 import vista.userWindows.LoginDialog;
+import vista.userWindows.NotificacionDialog;
 import vista.userWindows.ProposalsWindow;
 import vista.userWindows.VentanaInterchangeOptions;
 import vista.userWindows.VentanaRegistroRequerido;
@@ -49,6 +51,7 @@ public class MainController {
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
+    private NotificacionDialog notificacionDialog;
 
     // -------------------------------------------------------
     // Constructor
@@ -467,4 +470,10 @@ public class MainController {
     public void refreshIconImage(boolean isLoggedIn) {
     	mainFrame.getMenuPrincipalPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     }
+
+
+    public void abrirVentanaNotificacion(Notificacion n){
+    	this.notificacionDialog = new NotificacionDialog(mainFrame, n);
+      this.notificacionDialog.setVisible(true);
+    } 
 }

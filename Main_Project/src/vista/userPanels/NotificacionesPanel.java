@@ -4,7 +4,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controladores.ControladorNotificaciones;
 import modelo.notificacion.Notificacion;
-
+import vista.elements.*;
 import java.awt.*;
 
 public class NotificacionesPanel extends JPanel{
@@ -13,52 +13,75 @@ public class NotificacionesPanel extends JPanel{
     private DefaultTableModel modeloTabla;
     private HeaderPanel headerPanel = new HeaderPanel();
     private ControladorNotificaciones controlador;
+    private ButtonRendererNotification rendererRead;
+    private ButtonEditor editorRead;
+    private DeleteButtonRendererNotifications rendererDelete;
+    private DeleteButtonEditor editorDelete;
 
     public HeaderPanel getHeaderPanel()	{return headerPanel;}
 
     public NotificacionesPanel() {
-        // Configuramos el layout principal del panel
-        setLayout(new BorderLayout(10, 10));
-        setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        
-        //Ponemos el panel de cabecera de la aplicación
-        add(headerPanel, BorderLayout.NORTH);
+    // 1. Cambiamos el layout principal a BorderLayout
+    setLayout(new BorderLayout(0, 15)); // 15px de separación vertical entre zonas
+    setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+    setBackground(Color.WHITE); // O el color que prefieras
 
-        JLabel lblTitulo = new JLabel("Bandeja de Notificaciones");
-        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 20));
-        add(lblTitulo, BorderLayout.CENTER);
+    // 2. EL HEADER: Va en la parte superior (NORTH)
+    // Nota: BorderLayout respetará la altura preferida del HeaderPanel
+    headerPanel.setPreferredSize(new Dimension(headerPanel.getPreferredSize().width, headerPanel.getPreferredSize().height)); 
+    add(headerPanel, BorderLayout.NORTH);
 
-        String[] columnas = {"Content", "Date"};
+    // 3. EL CONTENIDO CENTRAL: Título + Tabla
+    // Creamos un panel intermedio para meter el título y la tabla juntos
+    JPanel centroPanel = new JPanel();
+    centroPanel.setLayout(new BorderLayout(0, 10)); // Espacio entre título y tabla
+    centroPanel.setOpaque(false);
 
-        // 3. Crear el modelo de la tabla
-        // Sobrescribimos isCellEditable para que el usuario no pueda modificar el texto directamente
-        modeloTabla = new DefaultTableModel(columnas, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; 
-            }
-        };
+    // Título
+    JLabel lblTitulo = new JLabel("Bandeja de Notificaciones");
+    lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+    centroPanel.add(lblTitulo, BorderLayout.NORTH); // El título arriba del panel central
 
-        // 4. Configurar el JTable
-        tablaNotificaciones = new JTable(modeloTabla);
-        
-        // Ajustes visuales para que parezca una lista tipo Gmail (limpia y sin cuadrículas marcadas)
-        tablaNotificaciones.setRowHeight(35); // Filas más altas y cómodas de leer
-        tablaNotificaciones.setShowGrid(false); // Ocultar líneas de la cuadrícula
-        tablaNotificaciones.setIntercellSpacing(new Dimension(0, 0));
-        tablaNotificaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Seleccionar solo una a la vez
-        tablaNotificaciones.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
-        
-        // Ajustar el ancho de las columnas
-        tablaNotificaciones.getColumnModel().getColumn(0).setPreferredWidth(400); // Título
-        tablaNotificaciones.getColumnModel().getColumn(1).setPreferredWidth(100); // Fecha
+    // --- Configuración de la Tabla (Tu código original) ---
+    String[] columnas = {"Content", "Date", "Delete"};
+    modeloTabla = new DefaultTableModel(columnas, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return column == 0 || column == 2; 
+        }
+    };
 
-        // 5. Añadir la tabla a un ScrollPane (imprescindible para listas largas)
-        JScrollPane scrollPane = new JScrollPane(tablaNotificaciones);
-        scrollPane.getViewport().setBackground(Color.WHITE); // Fondo blanco para la zona sin filas
-        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
+    tablaNotificaciones = new JTable(modeloTabla);
+    tablaNotificaciones.setRowHeight(35);
+    tablaNotificaciones.setShowGrid(false);
+    tablaNotificaciones.setIntercellSpacing(new Dimension(0, 0));
+    tablaNotificaciones.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    tablaNotificaciones.setFont(new Font("SansSerif", Font.PLAIN, 14)); // Cambiado de Comic Sans por estética profesional
+    
+    tablaNotificaciones.getColumnModel().getColumn(0).setPreferredWidth(400);
+    tablaNotificaciones.getColumnModel().getColumn(1).setPreferredWidth(100);
+    tablaNotificaciones.getColumnModel().getColumn(2).setPreferredWidth(100);
 
-        add(scrollPane, BorderLayout.CENTER);
+    JScrollPane scrollPane = new JScrollPane(tablaNotificaciones);
+    scrollPane.getViewport().setBackground(Color.WHITE);
+    scrollPane.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
+
+    // Añadimos el scrollPane al CENTRO del panel intermedio
+    centroPanel.add(scrollPane, BorderLayout.CENTER);
+
+    // 4. Añadimos el panel intermedio al CENTRO del panel principal
+    add(centroPanel, BorderLayout.CENTER);
+}
+
+    public void configurarColumnasInteractivas(ControladorNotificaciones c) { 
+      rendererRead = new ButtonRendererNotification();
+      editorRead = new ButtonEditor(new JCheckBox(), c);
+      rendererDelete = new DeleteButtonRendererNotifications();
+      editorDelete = new DeleteButtonEditor(new JCheckBox(), c);
+      tablaNotificaciones.getColumnModel().getColumn(0).setCellRenderer(this.rendererRead);
+      tablaNotificaciones.getColumnModel().getColumn(0).setCellEditor(this.editorRead);    
+      tablaNotificaciones.getColumnModel().getColumn(2).setCellRenderer(this.rendererDelete);
+      tablaNotificaciones.getColumnModel().getColumn(2).setCellEditor(this.editorDelete);    
 
     }
 
@@ -66,16 +89,18 @@ public class NotificacionesPanel extends JPanel{
      * Método público para añadir una nueva notificación desde otras partes de tu app
      */
     public void agregarNotificacion(Notificacion n) {
-        Object[] fila = {n.getMensaje(), n.getHoraEnvio()};
+        Object[] fila = {n, n.getHoraEnvio(), n};
         modeloTabla.addRow(fila);
     }
     
     public void clearNotificaciones() {
-    	tablaNotificaciones.removeAll();
+      modeloTabla.setRowCount(0);
     }
 
     public void addListenerForElements(ControladorNotificaciones c){
       this.controlador = c;
+      //Teniendo ya el listener, podemos construir las columnas interactivas
+      configurarColumnasInteractivas(c);
     }
 
 }
