@@ -171,7 +171,7 @@ class AplicacionTest {
 
     @Test @Order(20)
     void testCrearCuentaCorrectamente() {
-        clienteGlobal1 = app.crearCuenta("ClienteUno", "1111111110", "pass1111");
+        clienteGlobal1 = app.crearCuenta("ClienteUno", "95112992B", "Passw0rd!", "Passw0rd!");
         assertNotNull(clienteGlobal1);
         assertEquals("ClienteUno", clienteGlobal1.getNombreUsuario());
     }
@@ -191,49 +191,49 @@ class AplicacionTest {
     @Test @Order(23)
     void testCrearCuentaNombreNulo() {
         assertThrows(IllegalArgumentException.class,
-            () -> app.crearCuenta(null, "2222222220", "pass1234"));
+            () -> app.crearCuenta(null, "95112992B", "Passw0rd!", "Passw0rd!"));
     }
 
     @Test @Order(24)
     void testCrearCuentaNombreVacio() {
         assertThrows(IllegalArgumentException.class,
-            () -> app.crearCuenta("   ", "2222222221", "pass1234"));
+            () -> app.crearCuenta("   ", "95112992B", "Passw0rd!", "Passw0rd!"));
     }
 
     @Test @Order(25)
     void testCrearCuentaContraseñaCorta() {
         assertThrows(IllegalArgumentException.class,
-            () -> app.crearCuenta("UserCorto", "2222222222", "ab"));
+            () -> app.crearCuenta("UserCorto", "95112992B", "ab", "ab"));
     }
 
     @Test @Order(26)
     void testCrearCuentaContraseñaNula() {
         assertThrows(IllegalArgumentException.class,
-            () -> app.crearCuenta("UserNullPass", "2222222223", null));
+            () -> app.crearCuenta("UserNullPass", "95112992B", null, null));
     }
 
     @Test @Order(27)
     void testCrearCuentaDNIDemasiadoCorto() {
         assertThrows(IllegalArgumentException.class,
-            () -> app.crearCuenta("UserDNI", "123", "pass1234"));
+            () -> app.crearCuenta("UserDNI", "123", "Passw0rd!", "Passw0rd!"));
     }
 
     @Test @Order(28)
     void testCrearCuentaDNINulo() {
         assertThrows(IllegalArgumentException.class,
-            () -> app.crearCuenta("UserDNINull", null, "pass1234"));
+            () -> app.crearCuenta("UserDNINull", null, "Passw0rd!", "Passw0rd!"));
     }
 
     @Test @Order(29)
     void testCrearCuentaNombreDuplicado() {
-        app.crearCuenta("UserDup", "3333333330", "pass1234");
+        app.crearCuenta("UserDup", "95112992B", "Passw0rd!", "Passw0rd!");
         assertThrows(IllegalStateException.class,
-            () -> app.crearCuenta("UserDup", "3333333331", "pass5678"));
+            () -> app.crearCuenta("UserDup", "95112992B", "Passw0rd!", "Passw0rd!"));
     }
 
     @Test @Order(30)
     void testCrearCuentaPermiteLoginPostCreacion() {
-        app.crearCuenta("ClienteLogin", "4444444440", "loginpass");
+        app.crearCuenta("ClienteLogin", "95112992B", "Passw0rd!", "Passw0rd!");
         app.iniciarSesion("ClienteLogin", "loginpass");
         assertInstanceOf(ClienteRegistrado.class, app.getUsuarioActual());
         app.cerrarSesion();
@@ -251,7 +251,7 @@ class AplicacionTest {
 
     @Test @Order(41)
     void testAñadirEmpleadoConClienteLogueado() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalStateException.class,
             () -> app.añadirEmpleado("Emp2", "5555555551", "123456"));
         app.cerrarSesion();
@@ -304,7 +304,7 @@ class AplicacionTest {
 
     @Test @Order(48)
     void testEliminarEmpleadoConClienteLogueado() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalStateException.class,
             () -> app.eliminarEmpleado(empleadoGlobal));
         app.cerrarSesion();
@@ -344,10 +344,10 @@ class AplicacionTest {
 
     @Test @Order(60)
     void testCambiarContraseñaCorrectamente() {
-        app.crearCuenta("UserCambio", "9999999990", "viejapass");
-        app.cambiarContraseña("UserCambio", "viejapass", "nuevapass");
+        app.crearCuenta("UserCambio", "95112992B", "Passw0rd!", "Passw0rd!");
+        app.cambiarContraseña("UserCambio", "Passw0rd!", "Passw1rd!");
         // login con la nueva contraseña debe funcionar
-        app.iniciarSesion("UserCambio", "nuevapass");
+        app.iniciarSesion("UserCambio", "Passw1rd!");
         assertNotNull(app.getUsuarioActual());
         app.cerrarSesion();
     }
@@ -407,7 +407,7 @@ class AplicacionTest {
         app.cerrarSesion();
 
         // Buscar como cliente
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         List<LineaProductoVenta> resultados = app.buscarProductosNuevos(null);
         assertNotNull(resultados);
         assertFalse(resultados.isEmpty());
@@ -416,7 +416,7 @@ class AplicacionTest {
 
     @Test @Order(71)
     void testBuscarProductosNuevosConPromptCoincide() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         List<LineaProductoVenta> resultados = app.buscarProductosNuevos("ComicBusqueda");
         assertTrue(resultados.stream()
             .anyMatch(p -> p.getNombre().contains("ComicBusqueda")));
@@ -425,7 +425,7 @@ class AplicacionTest {
 
     @Test @Order(72)
     void testBuscarProductosNuevosConPromptSinCoincidir() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         List<LineaProductoVenta> resultados = app.buscarProductosNuevos("xyzProductoQueNoExiste99");
         assertTrue(resultados.isEmpty());
         app.cerrarSesion();
@@ -433,7 +433,7 @@ class AplicacionTest {
 
     @Test @Order(73)
     void testBuscarProductosNuevosPromptVacio() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         // Prompt vacío → devuelve todos
         List<LineaProductoVenta> todos   = app.buscarProductosNuevos(null);
         List<LineaProductoVenta> vacios  = app.buscarProductosNuevos("   ");
@@ -453,7 +453,7 @@ class AplicacionTest {
 
     @Test @Order(81)
     void testBuscarProductosGestionConClienteLogueado() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalStateException.class,
             () -> app.buscarProductosNuevosGestion("algo"));
         app.cerrarSesion();
@@ -487,7 +487,7 @@ class AplicacionTest {
 
     @Test @Order(91)
     void testBuscarProductoNuevoConClienteLogueado() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalStateException.class,
             () -> app.buscarProductoNuevo(1));
         app.cerrarSesion();
@@ -527,7 +527,7 @@ class AplicacionTest {
 
     @Test @Order(100)
     void testBuscarProductoIntercambioStringDevuelveLista() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         List<ProductoSegundaMano> res = app.buscarProductoIntercambio("peluche");
         assertNotNull(res);
         app.cerrarSesion();
@@ -541,7 +541,7 @@ class AplicacionTest {
 
     @Test @Order(102)
     void testBuscarProductoIntercambioIdConCliente() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalStateException.class,
             () -> app.buscarProductoIntercambio(1));
         app.cerrarSesion();
@@ -628,7 +628,7 @@ class AplicacionTest {
     @Test @Order(122)
     void testCrearPedidoCarritoVacio() {
         // ClienteUno no tiene nada en el carrito
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         // realizarPedido lanza IllegalStateException si el carrito está vacío
         assertThrows(IllegalStateException.class,
             () -> app.crearPedidoAPartirDeCarrito());
@@ -641,7 +641,7 @@ class AplicacionTest {
         LineaProductoVenta prod = app.getCatalogo()
             .getProductosNuevos().iterator().next();
 
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         clienteGlobal1.añadirProductoACarrito(prod, 1);
         assertDoesNotThrow(() -> app.crearPedidoAPartirDeCarrito());
         app.cerrarSesion();
@@ -667,7 +667,7 @@ class AplicacionTest {
 
     @Test @Order(132)
     void testCancelarPedidoNullConClienteLogueado() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalArgumentException.class,
             () -> app.cancelarPedido(null));
         app.cerrarSesion();
@@ -679,7 +679,7 @@ class AplicacionTest {
         LineaProductoVenta prod = app.getCatalogo()
             .getProductosNuevos().iterator().next();
 
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         clienteGlobal1.añadirProductoACarrito(prod, 1);
         SolicitudPedido pedido = clienteGlobal1.realizarPedido();
         assertEquals(EstadoPedido.PENDIENTE_DE_PAGO, pedido.getEstado());
@@ -696,7 +696,7 @@ class AplicacionTest {
             .getProductosNuevos().iterator().next();
         int stockAntes = prod.getStock();
 
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         clienteGlobal1.añadirProductoACarrito(prod, 1);
         SolicitudPedido pedido = clienteGlobal1.realizarPedido();
         // el stock baja al realizar el pedido
@@ -710,7 +710,7 @@ class AplicacionTest {
     @Test @Order(135)
     void testCancelarPedidoQueNoPerteneceAlCliente() {
         // Creamos un segundo cliente con su propio pedido
-        clienteGlobal2 = app.crearCuenta("ClienteDos", "0000000002", "pass2222");
+        clienteGlobal2 = app.crearCuenta("ClienteDos", "0000000002", "Passw0rd!", "Passw0rd!");
         LineaProductoVenta prod = app.getCatalogo()
             .getProductosNuevos().iterator().next();
 
@@ -720,7 +720,7 @@ class AplicacionTest {
         app.cerrarSesion();
 
         // ClienteUno intenta cancelar el pedido de ClienteDos
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalStateException.class,
             () -> app.cancelarPedido(pedidoAjeno));
         app.cerrarSesion();
@@ -753,7 +753,7 @@ class AplicacionTest {
 
     @Test @Order(142)
     void testGestionarPagoPedidoPedidoNulo() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalArgumentException.class,
             () -> app.gestionarPagoPedido(null, "1234567890123456", "123",
                 new DateTimeSimulado()));
@@ -765,7 +765,7 @@ class AplicacionTest {
         LineaProductoVenta prod = app.getCatalogo()
             .getProductosNuevos().iterator().next();
 
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         clienteGlobal1.añadirProductoACarrito(prod, 1);
         SolicitudPedido pedido = clienteGlobal1.realizarPedido();
 
@@ -783,7 +783,7 @@ class AplicacionTest {
         LineaProductoVenta prod = app.getCatalogo()
             .getProductosNuevos().iterator().next();
 
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         clienteGlobal1.añadirProductoACarrito(prod, 1);
         SolicitudPedido pedido = clienteGlobal1.realizarPedido();
 
@@ -806,7 +806,7 @@ class AplicacionTest {
         app.cerrarSesion();
 
         // ClienteUno intenta pagar el pedido de ClienteDos
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalStateException.class,
             () -> app.gestionarPagoPedido(pedidoDos, "1234567890123456", "123",
                 new DateTimeSimulado()));
@@ -840,7 +840,7 @@ class AplicacionTest {
 
     @Test @Order(152)
     void testGestionarPagoValidacionSolicitudNula() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertThrows(IllegalArgumentException.class,
             () -> app.gestionarPagoValidacion(null, "1234567890123456", "123",
                 new DateTimeSimulado()));
@@ -889,8 +889,8 @@ class AplicacionTest {
     @Test @Order(170)
     void testFlujoCompletoSolicitudIntercambio() {
         // Crear clientes de intercambio
-        ClienteRegistrado alfa = app.crearCuenta("AlfaInt", "1010101010", "alfapass");
-        ClienteRegistrado beta = app.crearCuenta("BetaInt",  "2020202020", "betapass");
+        ClienteRegistrado alfa = app.crearCuenta("AlfaInt", "1010101010", "alfapass", "alfapass");
+        ClienteRegistrado beta = app.crearCuenta("BetaInt",  "2020202020", "betapass", "betapass");
 
         // Alfa añade producto a su cartera
         app.iniciarSesion("AlfaInt", "alfapass");
@@ -953,7 +953,7 @@ class AplicacionTest {
 
     @Test @Order(180)
     void testRecomendacionDevuelveSetNoNull() {
-        app.iniciarSesion("ClienteUno", "pass1111");
+        app.iniciarSesion("ClienteUno", "Passw0rd!");
         assertNotNull(app.getConfiguracionRecomendacion().getRecomendacion());
         app.cerrarSesion();
     }
