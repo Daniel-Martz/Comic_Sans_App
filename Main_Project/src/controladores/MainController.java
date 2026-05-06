@@ -74,6 +74,7 @@ public class MainController {
     private void registrarListeners() {
         // --- Conectar Cabeceras de Navegación Global ---
         conectarHeaderEmpleado(mainFrame.getMenuEmpleadoPanel().getHeaderPanel());
+        conectarHeaderGestor(mainFrame.getMenuGestorPanel().getHeaderPanel());
 
         conectarHeaderNormal(mainFrame.getMenuPrincipalPanel().getHeaderPanel());
         conectarHeaderNormal(mainFrame.getMySecondHandProductsPanel().getHeaderPanel());
@@ -190,6 +191,14 @@ public class MainController {
     }
 
     /**
+     * Asigna la lógica global básica para un gestor.
+     */
+    private void conectarHeaderGestor(HeaderPanel header) {
+        header.addHomeListener(e -> mostrarMenuPrincipal());
+        header.addPerfilListener(e -> navegarBotonPerfil());
+    }
+
+    /**
      * Asigna la lógica global junto con el buscador y filtros del catálogo.
      */
     private void conectarHeaderNormal(HeaderPanel header) {
@@ -243,7 +252,9 @@ public class MainController {
      */
     public void mostrarMenuPrincipal() {
         Usuario u = modelo.getUsuarioActual();
-        if (u instanceof Empleado || u instanceof Gestor) {
+        if (u instanceof Gestor) {
+            navegarA(MainFrame.PANEL_MENU_GESTOR);
+        } else if (u instanceof Empleado) {
             navegarA(MainFrame.PANEL_MENU_EMPLEADO);
         } else {
             navegarA(MainFrame.PANEL_MENU_PRINCIPAL);
@@ -513,6 +524,8 @@ public class MainController {
     	mainFrame.getSearchInterchangesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getMakeOfferPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getHistorialPedidosPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	
+    	mainFrame.getMenuGestorPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	
     	// Paneles de empleado
     	mainFrame.getMenuEmpleadoPanel().getHeaderPanel().refreshIconImage(isLoggedIn);

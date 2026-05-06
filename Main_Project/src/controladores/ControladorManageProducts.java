@@ -44,6 +44,11 @@ public class ControladorManageProducts implements ActionListener {
             mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS)
         );
 
+        // Desde el Menú Principal del Gestor -> Manage Products
+        mainFrame.getMenuGestorPanel().addManageProductsListener(e -> 
+            mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS)
+        );
+
         // Desde Manage Products -> Add Products
         panelManage.addAddProductsListener(e -> 
             mainController.navegarA(MainFrame.PANEL_ADD_PRODUCTS)

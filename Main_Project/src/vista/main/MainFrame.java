@@ -15,6 +15,7 @@ public class MainFrame extends JFrame {
     // Paneles (Vistas)
     private InterchangeCardPanel interchangeCardPanel;
     private mainMenuEmpleadoPanel menuEmpleadoPanel;
+    private MainMenuGestorPanel menuGestorPanel;
     private MenuPrincipalPanel menuPrincipalPanel;
     private MySecondHandProductsPanel mySecondHandProductsPanel;
     private CarritoPanel carritoPanel;
@@ -43,6 +44,7 @@ public class MainFrame extends JFrame {
 
     // Nombres estáticos de los paneles para el CardLayout (antes estaban en el controlador)
     public static final String PANEL_MENU_EMPLEADO = "MenuEmpleado";
+    public static final String PANEL_MENU_GESTOR = "MenuGestor";
     public static final String PANEL_MENU_PRINCIPAL = "MenuPrincipal";
     public static final String PANEL_DETALLE_INTERCAMBIO = "DetalleIntercambio";
     public static final String PANEL_MY_SECOND_HAND_PRODUCTS = "MySecondHandProducts";
@@ -77,6 +79,7 @@ public class MainFrame extends JFrame {
         menuPrincipalPanel = new MenuPrincipalPanel();
         interchangeCardPanel = new InterchangeCardPanel();
         menuEmpleadoPanel = new mainMenuEmpleadoPanel();
+        menuGestorPanel = new MainMenuGestorPanel();
         mySecondHandProductsPanel = new MySecondHandProductsPanel();
         carritoPanel = new CarritoPanel();
         productosFiltradosPanel = new ProductosFiltradosPanel();
@@ -104,6 +107,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(menuPrincipalPanel, PANEL_MENU_PRINCIPAL);
         contenedorPaneles.add(interchangeCardPanel, PANEL_DETALLE_INTERCAMBIO);
         contenedorPaneles.add(menuEmpleadoPanel, PANEL_MENU_EMPLEADO);
+        contenedorPaneles.add(menuGestorPanel, PANEL_MENU_GESTOR);
         contenedorPaneles.add(mySecondHandProductsPanel, PANEL_MY_SECOND_HAND_PRODUCTS);
         contenedorPaneles.add(descuentosPanel, PANEL_DESCUENTOS);
         contenedorPaneles.add(productosFiltradosPanel, PANEL_PRODUCTOS_FILTRADOS);
@@ -145,6 +149,7 @@ public class MainFrame extends JFrame {
     // Getters para que los Controladores puedan suscribirse a los botones
     public MenuPrincipalPanel getMenuPrincipalPanel() { return menuPrincipalPanel; }
     public mainMenuEmpleadoPanel getMenuEmpleadoPanel() { return menuEmpleadoPanel; }
+    public MainMenuGestorPanel getMenuGestorPanel() { return menuGestorPanel; }
     public CarritoPanel getCarritoPanel() { return carritoPanel; }
     public MySecondHandProductsPanel getMySecondHandProductsPanel() { return mySecondHandProductsPanel; }
     public ProductosFiltradosPanel getProductosFiltradosPanel() { return productosFiltradosPanel; }
