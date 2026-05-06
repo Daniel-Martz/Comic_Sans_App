@@ -26,6 +26,7 @@ public class MainFrame extends JFrame {
     private MakeOfferPanel makeOfferPanel;
     private HistorialPedidosPanel historialPedidosPanel;
     private NotificacionesPanel notificacionesPanel;
+    private DiscountedPanel descuentosPanel;
     
     private ManageProductsPanel manageProductsPanel;
     private ModifyProductsPanel modifyProductsPanel;
@@ -63,6 +64,7 @@ public class MainFrame extends JFrame {
     public static final String PANEL_PERFIL = "Perfil";
     public static final String PANEL_NOTIFICACIONES = "Notificaciones";
     public static final String PANEL_OUTSTANDING = "Outstanding";
+    public static final String PANEL_DISCOUNTED = "Discounted";
     public static final String PANEL_SEARCH_INTERCHANGES = "SearchInterchanges";
     public static final String PANEL_MAKE_OFFER = "MakeOffer";
     public static final String PANEL_HISTORIAL_PEDIDOS = "HistorialPedidos";
@@ -99,6 +101,7 @@ public class MainFrame extends JFrame {
         carritoPanel = new CarritoPanel();
         productosFiltradosPanel = new ProductosFiltradosPanel();
         outstandingPanel = new OutstandingPanel();
+        descuentosPanel = new DiscountedPanel();
         searchInterchangesPanel = new SearchInterchangesPanel();
         makeOfferPanel = new MakeOfferPanel();
         historialPedidosPanel = new HistorialPedidosPanel();

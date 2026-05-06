@@ -4,7 +4,8 @@ import modelo.aplicacion.Catalogo;
 import modelo.producto.LineaProductoVenta;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Usuario;
-import vista.userPanels.ProductosFiltradosPanel;
+import vista.userPanels.DiscountedPanel;
+import vista.userPanels.OutstandingPanel;
 
 import javax.swing.SwingUtilities;
 import java.awt.Window;
@@ -13,21 +14,15 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Controlador para la vista de productos filtrados.
+ * Controlador para la vista de productos destacados.
  */
-public class ControladorProductosFiltrados implements ActionListener {
+public class ControladorDiscounted implements ActionListener {
 
-    private final ProductosFiltradosPanel vista;
-    private final vista.clienteWindows.FiltrosWindow filtrosDialog;
+    private final DiscountedPanel vista;
 
-    public ControladorProductosFiltrados(ProductosFiltradosPanel vista, vista.clienteWindows.FiltrosWindow filtrosDialog) {
+    public ControladorDiscounted(DiscountedPanel vista) {
         this.vista = vista;
-        this.filtrosDialog = filtrosDialog;
-    }
-
-    public ControladorProductosFiltrados(ProductosFiltradosPanel vista) {
-        this.vista = vista;
-        this.filtrosDialog = null;
+        buscarYActualizarDiscounted();
     }
 
     @Override
@@ -69,7 +64,7 @@ public class ControladorProductosFiltrados implements ActionListener {
                 }
                 
                 Window parentWindow = SwingUtilities.getWindowAncestor(vista);
-                vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(parentWindow, p);
+                vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(parentWindow, p);
                 dialog.setVisible(true);
             } catch (NumberFormatException ex) {
                 vista.mostrarMensaje("Invalid product id.", "Error");
@@ -77,13 +72,12 @@ public class ControladorProductosFiltrados implements ActionListener {
         }
     }
 
-    /** Helper que consulta el catálogo y actualiza la vista con el prompt dado. */
-    public void buscarYActualizar(String prompt) {
-        List<LineaProductoVenta> resultados = Catalogo.getInstancia().obtenerProductosNuevosFiltrados(prompt);
-        if (filtrosDialog != null) {
-            resultados = resultados.stream().filter(filtrosDialog::cumpleFiltrosAvanzados).toList();
-        }
+    /** Helper que consulta el catálogo y actualiza la vista con los productos descontados  */
+    public void buscarYActualizarDiscounted() {
+        List<LineaProductoVenta> resultados = new java.util.ArrayList<>(Catalogo.getInstancia().getProductosNuevos());
+        resultados = resultados.stream()
+                .filter(p -> p.getDescuento() != null)
+                .toList();
         vista.actualizarProductos(resultados, this);
     }
-
 }

@@ -272,6 +272,7 @@ public class MainController {
     private void conectarHeaderGlobal(HeaderPanel header) {
         header.addHomeListener(e -> mostrarMenuPrincipal());
         header.addOutstandingListener(e -> mostrarProductosOutstanding());
+        header.addDescuentosListener(e -> mostrarProductosDescontados());
         header.addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
         header.addPerfilListener(e -> navegarBotonPerfil());
         header.addNotificacionesListener(e -> 
@@ -461,6 +462,12 @@ public class MainController {
         vista.userPanels.OutstandingPanel panel = mainFrame.getOutstandingPanel();
         new ControladorOutstanding(panel);
         mainFrame.mostrarPanel(MainFrame.PANEL_OUTSTANDING);
+    }
+  
+    public void mostrarProductosDescontados() {
+        vista.userPanels.DiscountedPanel panel = mainFrame.getDescuentosPanel();
+        new ControladorDiscounted(panel);
+        mainFrame.mostrarPanel(MainFrame.PANEL_DISCOUNTED);
     }
     
     /**

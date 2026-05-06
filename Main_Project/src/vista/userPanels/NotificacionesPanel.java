@@ -6,7 +6,8 @@ import controladores.ControladorNotificaciones;
 import modelo.notificacion.Notificacion;
 import vista.elements.*;
 import java.awt.*;
-
+import java.util.*;
+import java.util.List;
 public class NotificacionesPanel extends JPanel{
 
     private JTable tablaNotificaciones;
@@ -17,6 +18,7 @@ public class NotificacionesPanel extends JPanel{
     private ButtonEditor editorRead;
     private DeleteButtonRendererNotifications rendererDelete;
     private DeleteButtonEditor editorDelete;
+    private Set<Notificacion> notifsEnLaTabla = new HashSet<>();
 
     public HeaderPanel getHeaderPanel()	{return headerPanel;}
 
@@ -91,12 +93,16 @@ public class NotificacionesPanel extends JPanel{
      * Método público para añadir una nueva notificación desde otras partes de tu app
      */
     public void agregarNotificacion(Notificacion n) {
-        Object[] fila = {n, n.getHoraEnvio(), n};
-        modeloTabla.addRow(fila);
+    	if(!notifsEnLaTabla.contains(n)) {
+			Object[] fila = {n, n.getHoraEnvio(), n};
+			modeloTabla.addRow(fila);
+			notifsEnLaTabla.add(n);
+    	}
     }
     
     public void clearNotificaciones() {
       modeloTabla.setRowCount(0);
+      notifsEnLaTabla.clear();
     }
 
     public void addListenerForElements(ControladorNotificaciones c){
