@@ -91,7 +91,7 @@ public class MenuPrincipalPanel extends JPanel {
         bodyContent.add(scrollProducts);
         bodyContent.add(Box.createVerticalStrut(20));
 
-        bodyContent.add(createBanner("CATEGORIES", BANNER_SUB_COLOR, 25));
+        bodyContent.add(createBanner("TYPE OF PRODUCTS", BANNER_SUB_COLOR, 25));
         bodyContent.add(Box.createVerticalStrut(15));
 
         categoriesPanel = new JPanel(new GridLayout(1, 3, 20, 0));

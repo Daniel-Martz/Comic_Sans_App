@@ -42,7 +42,11 @@ public class HistorialPedidosPanel extends JPanel {
     }
 
   public void agregarPedido(List<SolicitudPedido> pedido){
+    contenedorPedidos.removeAll();
+    botonesInformation.clear();
     pedido.forEach(p -> agregarPedido(p));
+    contenedorPedidos.revalidate();
+    contenedorPedidos.repaint();
   }
   /**
     * Método para construir y añadir dinámicamente un pedido a la interfaz.
@@ -78,7 +82,7 @@ public class HistorialPedidosPanel extends JPanel {
         
         // --- CAMBIO CRÍTICO 2: Forzar un tamaño preferido a la tarjeta ---
         // Si no fijamos el ancho, el BoxLayout lo colapsará al mínimo posible.
-        panelProductoConcreto.setPreferredSize(new Dimension(300, 200));
+        panelProductoConcreto.setPreferredSize(new Dimension(320, 240));
         
         panelProductoConcreto.setBackground(new Color(240, 248, 255));
         panelProductoConcreto.setBorder(BorderFactory.createCompoundBorder(
@@ -88,22 +92,33 @@ public class HistorialPedidosPanel extends JPanel {
 
         JLabel nameLabel = new JLabel(entrada.getKey().getNombre());
         JLabel unitsLabel = new JLabel("Units bought: " + entrada.getValue());
-        JLabel priceLabel = new JLabel("Total price: " + mapaProductos.get(entrada) + " €");
-        JButton infoButton = new JButton("Product Information");
-        infoButton.addActionListener(controladorHistorialPedidos);
-
+        JLabel priceLabel = new JLabel("Total price: " + String.format("%.2f", mapaProductos.get(entrada)) + " €");
+        
         ImageIcon iconoOriginal = new ImageIcon(entrada.getKey().getFoto().getPath()); 
         Image imgEscalada = iconoOriginal.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         ImageIcon iconoEscalado = new ImageIcon(imgEscalada);
         JLabel imagenLabel = new JLabel(iconoEscalado);
 
-        infoButton.setActionCommand("" + entrada.getKey().getID());
+        JButton infoButton = new JButton("Product Information");
+        // Si el controlador todavía no está asignado, lo añadimos de todas formas,
+        // o nos aseguramos de que cuando se llame, sea correcto.
+        if (controladorHistorialPedidos != null) {
+            infoButton.addActionListener(controladorHistorialPedidos);
+        }
+        infoButton.setActionCommand("INFO_" + entrada.getKey().getID());
         this.botonesInformation.add(infoButton);
+
+        JButton reviewButton = new JButton("Add Review");
+        reviewButton.setBackground(new Color(255, 140, 0)); // Naranja
+        reviewButton.setForeground(Color.WHITE);
+        if (controladorHistorialPedidos != null) {
+            reviewButton.addActionListener(controladorHistorialPedidos);
+        }
+        reviewButton.setActionCommand("REVIEW_" + entrada.getKey().getID());
 
         nameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         unitsLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         priceLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        infoButton.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         panelProductoConcreto.add(nameLabel);
         panelProductoConcreto.add(Box.createVerticalGlue()); 
@@ -112,7 +127,15 @@ public class HistorialPedidosPanel extends JPanel {
         panelProductoConcreto.add(unitsLabel);
         panelProductoConcreto.add(priceLabel);
         panelProductoConcreto.add(Box.createRigidArea(new Dimension(0, 10))); 
-        panelProductoConcreto.add(infoButton);
+        
+        JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        botonesPanel.setOpaque(false);
+        botonesPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        botonesPanel.add(infoButton);
+        botonesPanel.add(Box.createRigidArea(new Dimension(5, 0)));
+        botonesPanel.add(reviewButton);
+        
+        panelProductoConcreto.add(botonesPanel);
 
         panelProductos.add(panelProductoConcreto);
     }
@@ -128,7 +151,7 @@ public class HistorialPedidosPanel extends JPanel {
     scrollHorizontal.setBorder(BorderFactory.createEmptyBorder()); 
 
     // Ajustamos el tamaño preferido del scroll para que el BorderLayout sepa cuánto espacio ocupar
-    scrollHorizontal.setPreferredSize(new Dimension(400, 180));
+    scrollHorizontal.setPreferredSize(new Dimension(400, 260));
 
     panelPedido.add(scrollHorizontal, BorderLayout.CENTER);
 
