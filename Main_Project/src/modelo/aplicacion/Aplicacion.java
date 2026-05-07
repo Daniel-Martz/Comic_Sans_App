@@ -505,6 +505,25 @@ public class Aplicacion implements Serializable {
 	 * @throws IllegalArgumentException si no hay ningún usuario logueado
 	 * @throws IllegalStateException    si el usuario actual no es el gestor
 	 */
+	public void eliminarUsuario(Usuario usuario) {
+		if (this.usuarioActual == null) {
+			throw new IllegalArgumentException("No hay ningún usuario logueado.");
+		}
+
+		if (!(this.usuarioActual instanceof Gestor)) {
+			throw new IllegalStateException("Solo el gestor puede eliminar un usuario.");
+		}
+
+		if (usuario == null) {
+			return;
+		}
+
+		if (usuariosRegistrados.contains(usuario)) {
+			usuariosRegistrados.remove(usuario);
+			System.out.println("Usuario eliminado del sistema: " + usuario.getNombreUsuario());
+		}
+	}
+
 	public void eliminarEmpleado(Empleado empleado) {
 		// Comprobamos que el usuario actual sea el gestor
 		if (this.usuarioActual == null) {

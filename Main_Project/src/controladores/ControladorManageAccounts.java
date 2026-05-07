@@ -1,0 +1,174 @@
+package controladores;
+
+import modelo.aplicacion.Aplicacion;
+import modelo.usuario.Empleado;
+import modelo.usuario.Permiso;
+import modelo.usuario.Usuario;
+import vista.empleadoPanel.ManageAccountsPanel;
+import vista.empleadoPanel.ManageUserWindow;
+import vista.empleadoPanel.ModifyPermissionsWindow;
+import vista.main.MainFrame;
+
+import javax.swing.JOptionPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+public class ControladorManageAccounts {
+
+    private ManageAccountsPanel manageAccountsPanel;
+    private MainFrame mainFrame;
+
+    public ControladorManageAccounts(ManageAccountsPanel manageAccountsPanel, MainFrame mainFrame) {
+        this.manageAccountsPanel = manageAccountsPanel;
+        this.mainFrame = mainFrame;
+
+        initListeners();
+    }
+
+    private void initListeners() {
+        manageAccountsPanel.addHomeListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Volver al menú principal del gestor
+                mainFrame.mostrarPanel(MainFrame.PANEL_MENU_GESTOR);
+            }
+        });
+
+        manageAccountsPanel.addSearchListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String query = manageAccountsPanel.getSearchText();
+                cargarCuentas(query);
+            }
+        });
+
+        manageAccountsPanel.addManageUserListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String dni = e.getActionCommand();
+                abrirManageUserWindow(dni);
+            }
+        });
+
+        manageAccountsPanel.addCreateUserListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Usuario current = Aplicacion.getInstancia().getUsuarioActual();
+                if (!(current instanceof Gestor)) {
+                    JOptionPane.showMessageDialog(mainFrame, "Only the Gestor can create employees.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                Gestor gestor = (Gestor) current;
+                NewEmployeeWindow newEmpWindow = new NewEmployeeWindow(mainFrame);
+                newEmpWindow.addAcceptListener(ev -> {
+                    String name = newEmpWindow.getEmployeeName();
+                    String dni = newEmpWindow.getEmployeeDni();
+                    if (name.isEmpty() || dni.isEmpty()) {
+                        JOptionPane.showMessageDialog(newEmpWindow, "Name and DNI cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    try {
+                        Empleado newEmp = gestor.crearEmpleado(name, dni);
+                        if (newEmpWindow.hasValidaciones()) gestor.añadirPermiso(newEmp, Permiso.VALIDACIONES);
+                        if (newEmpWindow.hasIntercambios()) gestor.añadirPermiso(newEmp, Permiso.INTERCAMBIOS);
+                        if (newEmpWindow.hasPedidos()) gestor.añadirPermiso(newEmp, Permiso.PEDIDOS);
+                        
+                        JOptionPane.showMessageDialog(newEmpWindow, "Employee created successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        newEmpWindow.dispose();
+                        cargarCuentas(""); // recargar lista
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(newEmpWindow, "Error creating employee: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                });
+                newEmpWindow.setVisible(true);
+            }
+        });
+    }
+
+    private void abrirManageUserWindow(String dni) {
+        Usuario userToManage = null;
+        for (Usuario u : Aplicacion.getInstancia().getUsuariosRegistrados()) {
+            if (u.getDNI().equals(dni)) {
+                userToManage = u;
+                break;
+            }
+        }
+        
+        if (userToManage == null) {
+            JOptionPane.showMessageDialog(mainFrame, "User not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        ManageUserWindow manageWindow = new ManageUserWindow(mainFrame, dni);
+        
+        final Usuario finalUser = userToManage;
+
+        manageWindow.addDeleteUserListener(e -> {
+            try {
+                Aplicacion.getInstancia().eliminarUsuario(finalUser);
+                JOptionPane.showMessageDialog(mainFrame, "User deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                manageWindow.dispose();
+                cargarCuentas(""); // recargar lista
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(mainFrame, "Error deleting user: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        manageWindow.addModifyPermissionsListener(e -> {
+            if (!(finalUser instanceof Empleado)) {
+                JOptionPane.showMessageDialog(mainFrame, "Only Employees have modifiable permissions.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            Empleado emp = (Empleado) finalUser;
+            boolean hasVal = emp.tienePermiso(Permiso.VALIDACIONES);
+            boolean hasInt = emp.tienePermiso(Permiso.INTERCAMBIOS);
+            boolean hasPed = emp.tienePermiso(Permiso.PEDIDOS);
+            
+            ModifyPermissionsWindow permWindow = new ModifyPermissionsWindow(mainFrame, dni, hasVal, hasInt, hasPed);
+            
+            permWindow.addAcceptListener(ev -> {
+                if (permWindow.hasValidaciones()) emp.añadirPermiso(Permiso.VALIDACIONES);
+                else emp.eliminarPermiso(Permiso.VALIDACIONES);
+                
+                if (permWindow.hasIntercambios()) emp.añadirPermiso(Permiso.INTERCAMBIOS);
+                else emp.eliminarPermiso(Permiso.INTERCAMBIOS);
+                
+                if (permWindow.hasPedidos()) emp.añadirPermiso(Permiso.PEDIDOS);
+                else emp.eliminarPermiso(Permiso.PEDIDOS);
+                
+                JOptionPane.showMessageDialog(mainFrame, "Permissions updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                permWindow.dispose();
+                manageWindow.dispose();
+            });
+            
+            permWindow.setVisible(true);
+        });
+
+        manageWindow.setVisible(true);
+    }
+
+    public void cargarCuentas() {
+        cargarCuentas("");
+    }
+
+    public void cargarCuentas(String query) {
+        manageAccountsPanel.clearAccounts();
+        
+        List<Usuario> usuarios = Aplicacion.getInstancia().getUsuariosRegistrados();
+        String lowerQuery = query == null ? "" : query.toLowerCase();
+        
+        for (Usuario u : usuarios) {
+            String name = u.getNombreUsuario();
+            String dni = u.getDNI();
+            
+            if (lowerQuery.isEmpty() || 
+                (name != null && name.toLowerCase().contains(lowerQuery)) || 
+                (dni != null && dni.toLowerCase().contains(lowerQuery))) {
+                
+                manageAccountsPanel.addAccountRow(name, dni);
+            }
+        }
+    }
+}

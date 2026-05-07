@@ -54,6 +54,16 @@ public class Empleado extends UsuarioGestion {
 	} 
 
 	/**
+	 * Comprueba si el empleado tiene un permiso.
+	 *
+	 * @param permiso el permiso a comprobar
+	 * @return true si lo tiene, false en caso contrario
+	 */
+	public boolean tienePermiso(Permiso permiso) {
+		return this.permisos.contains(permiso);
+	}
+
+	/**
 	 * Añade una notificación a la bandeja del empleado.
 	 *
 	 * @param n la notificación
