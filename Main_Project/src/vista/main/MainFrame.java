@@ -38,6 +38,7 @@ public class MainFrame extends JFrame {
     // por tanto no mantenemos aquí el panel como componente del CardLayout.
     
     private ManageAccountsPanel manageAccountsPanel;
+    private ManageStatisticsPanel manageStatisticsPanel;
     private PlaceholderPanel descuentosPanel;
     private PlaceholderPanel configuracionPanel;
     private PlaceholderPanel perfilPanel;
@@ -69,6 +70,7 @@ public class MainFrame extends JFrame {
     public static final String PANEL_VALIDATION_REQUESTS = "ValidationRequestsPanel";
     public static final String PANEL_MANAGE_INTERCHANGES = "ManageInterchanges";
     public static final String PANEL_MANAGE_ACCOUNTS = "ManageAccounts";
+    public static final String PANEL_MANAGE_STATISTICS = "ManageStatistics";
 
     public MainFrame() {
         super("Comic Sans App");
@@ -99,6 +101,7 @@ public class MainFrame extends JFrame {
         
         addProductsPanel = new AddProductsPanel();
         manageAccountsPanel = new ManageAccountsPanel();
+        manageStatisticsPanel = new ManageStatisticsPanel();
         // addProductManuallyPanel = new AddProductManuallyPanel();
         
         descuentosPanel = new PlaceholderPanel("Descuentos");
@@ -128,6 +131,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(manageOrdersPanel, PANEL_MANAGE_ORDERS);
         contenedorPaneles.add(addProductsPanel, PANEL_ADD_PRODUCTS);
         contenedorPaneles.add(manageAccountsPanel, PANEL_MANAGE_ACCOUNTS);
+        contenedorPaneles.add(manageStatisticsPanel, PANEL_MANAGE_STATISTICS);
         contenedorPaneles.add(validationRequestsPanel, PANEL_VALIDATION_REQUESTS);
         contenedorPaneles.add(manageInterchangesPanel, PANEL_MANAGE_INTERCHANGES);
         // El panel para añadir producto manualmente ya no se añade al CardLayout porque se muestra
@@ -169,6 +173,7 @@ public class MainFrame extends JFrame {
     public ValidationRequestsPanel getValidationRequestsPanel() { return validationRequestsPanel; }
     public ManageInterchangesPanel getManageInterchangesPanel() { return manageInterchangesPanel; }
     public ManageAccountsPanel getManageAccountsPanel() { return manageAccountsPanel; }
+    public ManageStatisticsPanel getManageStatisticsPanel() { return manageStatisticsPanel; }
     
     public AddProductsPanel getAddProductsPanel() { return addProductsPanel; }
     // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.

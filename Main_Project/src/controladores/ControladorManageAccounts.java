@@ -2,11 +2,13 @@ package controladores;
 
 import modelo.aplicacion.Aplicacion;
 import modelo.usuario.Empleado;
+import modelo.usuario.Gestor;
 import modelo.usuario.Permiso;
 import modelo.usuario.Usuario;
 import vista.empleadoPanel.ManageAccountsPanel;
 import vista.empleadoPanel.ManageUserWindow;
 import vista.empleadoPanel.ModifyPermissionsWindow;
+import vista.empleadoPanel.NewEmployeeWindow;
 import vista.main.MainFrame;
 
 import javax.swing.JOptionPane;

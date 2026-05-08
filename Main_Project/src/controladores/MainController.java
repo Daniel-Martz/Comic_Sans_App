@@ -97,6 +97,7 @@ public class MainController {
         conectarHeaderEmpleado(mainFrame.getValidationRequestsPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getManageInterchangesPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageAccountsPanel().getHeaderPanel());
+        conectarHeaderGestor(mainFrame.getManageStatisticsPanel().getHeaderPanel());
         
         new ControladorManageProducts(mainFrame, this);
         new ControladorAddProducts(mainFrame, this);
@@ -107,8 +108,14 @@ public class MainController {
         ControladorManageAccounts ctrlManageAccounts = new ControladorManageAccounts(mainFrame.getManageAccountsPanel(), mainFrame);
         ctrlManageAccounts.cargarCuentas();
         
+        new ControladorManageStatistics(mainFrame.getManageStatisticsPanel(), mainFrame, this);
+        
         mainFrame.getMenuGestorPanel().addManageAccountsListener(e -> {
             navegarA(MainFrame.PANEL_MANAGE_ACCOUNTS);
+        });
+        
+        mainFrame.getMenuGestorPanel().addManageStatisticsListener(e -> {
+            navegarA(MainFrame.PANEL_MANAGE_STATISTICS);
         });
         
         mainFrame.getMenuEmpleadoPanel().addManageOrdersListener(e -> {
@@ -535,6 +542,7 @@ public class MainController {
     	
     	mainFrame.getMenuGestorPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getManageAccountsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getManageStatisticsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	
     	// Paneles de empleado
     	mainFrame.getMenuEmpleadoPanel().getHeaderPanel().refreshIconImage(isLoggedIn);

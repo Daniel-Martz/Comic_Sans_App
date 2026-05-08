@@ -6,6 +6,9 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import modelo.tiempo.DateTimeSimulado;
 
 public class HeaderPanel extends JPanel {
 
@@ -23,6 +26,7 @@ public class HeaderPanel extends JPanel {
     private JButton btnNotificaciones;
     private JButton btnSearchIcon;
     private JLabel speechBubble;
+    private JLabel lblDate;
     private JPanel searchBox;
     private JPanel leftPanel;
     private JPanel rightPanel;
@@ -34,6 +38,13 @@ public class HeaderPanel extends JPanel {
     public HeaderPanel() {
         initComponents();
         initLayout();
+        
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                updateDate();
+            }
+        });
     }
     
     public ImageIcon getSclaedIcon(String path) {
@@ -56,6 +67,13 @@ public class HeaderPanel extends JPanel {
     	}else {
     		btnPerfil.setIcon(this.iconoSinLogIn);
     	}
+    }
+
+    public void updateDate() {
+        if (lblDate != null) {
+            DateTimeSimulado ahora = new DateTimeSimulado();
+            lblDate.setText("Current Date: " + ahora.toStringFecha());
+        }
     }
 
     private void initComponents() {
@@ -112,6 +130,12 @@ public class HeaderPanel extends JPanel {
         btnIntercambios = createImageIconButton("src/assets/intercambio.png", 35, 35, "INT");
         btnPerfil = createImageIconButton("src/assets/fotoperfil.png", 35, 35, "PERF");
         btnNotificaciones = createImageIconButton("src/assets/notificaciones.png", 35, 35, "NOTI"); 
+        
+        lblDate = new JLabel();
+        lblDate.setFont(new Font("Comic Sans MS", Font.ITALIC, 11));
+        lblDate.setForeground(Color.DARK_GRAY);
+        lblDate.setHorizontalAlignment(SwingConstants.CENTER);
+        updateDate();
     }
 
     private void initLayout() {
@@ -179,6 +203,7 @@ public class HeaderPanel extends JPanel {
         rightPanel.add(searchPanel, BorderLayout.CENTER);
         rightPanel.add(iconsContainer, BorderLayout.EAST);
 
+        add(lblDate, BorderLayout.NORTH);
         add(leftPanel, BorderLayout.WEST);
         add(centerNavPanel, BorderLayout.CENTER);
         add(rightPanel, BorderLayout.EAST);
