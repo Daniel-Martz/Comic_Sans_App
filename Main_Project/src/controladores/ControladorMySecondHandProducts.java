@@ -16,6 +16,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
 import controladores.ControladorNuevoProductoSegundaMano;
+import utils.DialogUtils;
 
 /**
  * Controlador para `MySecondHandProductsPanel`.
@@ -78,7 +79,7 @@ public class ControladorMySecondHandProducts implements ActionListener {
      */
     private void onAddNewProduct() {
         if (!(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado)) {
-            JOptionPane.showMessageDialog(parent, "Only registered clients can add products.", "Access denied", JOptionPane.WARNING_MESSAGE);
+            DialogUtils.showWideMessage(parent, "Only registered clients can add products.", "Access denied", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -98,7 +99,7 @@ public class ControladorMySecondHandProducts implements ActionListener {
     /** Abre la ventana de pago para la solicitud asociada al producto indicado por id. */
     private void onPayValidation(int productoId) {
         if (!(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado)) {
-            JOptionPane.showMessageDialog(parent, "Only registered clients can pay validations.", "Access denied", JOptionPane.WARNING_MESSAGE);
+            DialogUtils.showWideMessage(parent, "Only registered clients can pay validations.", "Access denied", JOptionPane.WARNING_MESSAGE);
             return;
         }
 

@@ -52,6 +52,7 @@ public class MainController {
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
+    private ControladorManageAccounts ctrlManageAccounts;
     private NotificacionDialog notificacionDialog;
 
     // -------------------------------------------------------
@@ -106,12 +107,15 @@ public class MainController {
         new ControladorValidationRequests(mainFrame.getValidationRequestsPanel(), mainFrame, this);
         new ControladorManageInterchanges(mainFrame.getManageInterchangesPanel(), mainFrame, this);
         
-        ControladorManageAccounts ctrlManageAccounts = new ControladorManageAccounts(mainFrame.getManageAccountsPanel(), mainFrame);
-        ctrlManageAccounts.cargarCuentas();
+        this.ctrlManageAccounts = new ControladorManageAccounts(mainFrame.getManageAccountsPanel(), mainFrame);
+        // Cargar inicialmente la lista de empleados
+        this.ctrlManageAccounts.cargarCuentas();
         
         new ControladorManageStatistics(mainFrame.getManageStatisticsPanel(), mainFrame, this);
         
         mainFrame.getMenuGestorPanel().addManageAccountsListener(e -> {
+            // Asegurarnos de recargar la lista de cuentas (solo empleados) cada vez que se abre el panel
+            if (this.ctrlManageAccounts != null) this.ctrlManageAccounts.cargarCuentas();
             navegarA(MainFrame.PANEL_MANAGE_ACCOUNTS);
         });
         
@@ -120,7 +124,7 @@ public class MainController {
         });
 
         mainFrame.getMenuEmpleadoPanel().addManageOrdersListener(e -> {
-            if (verificarPermisoEmpleado(Permiso.PEDIDOS, "Sales management")) {
+            if (verificarPermisoEmpleado(Permiso.PEDIDOS, "Orders management")) {
                 ControladorManageOrders ctrl = mainFrame.getManageOrdersPanel().getControlador();
                 if (ctrl != null) {
                     ctrl.actualizarPedidos();
@@ -130,7 +134,7 @@ public class MainController {
         });
         
         mainFrame.getMenuEmpleadoPanel().addValidationRequestsListener(e -> {
-            if (verificarPermisoEmpleado(Permiso.VALIDACIONES, "Sales management")) {
+            if (verificarPermisoEmpleado(Permiso.VALIDACIONES, "Validation management")) {
                 ControladorValidationRequests ctrl = mainFrame.getValidationRequestsPanel().getControlador();
                 if (ctrl != null) {
                     ctrl.actualizarSolicitudes();

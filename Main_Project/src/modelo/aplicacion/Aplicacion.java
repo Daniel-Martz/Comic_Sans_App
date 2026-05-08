@@ -915,7 +915,7 @@ public class Aplicacion implements Serializable {
 	 *
 	 * @return el empleados
 	 */
-	private List<Empleado> getEmpleados() {
+	public List<Empleado> getEmpleados() {
 		List<Empleado> retorno = new ArrayList<>();
 		for (Usuario u : this.usuariosRegistrados) {
 			if (u instanceof Empleado == true) {

@@ -15,7 +15,8 @@ public class PermissionRequiredDialog extends JDialog {
     public PermissionRequiredDialog(Frame parent, String permisoNombre) {
         super(parent, "Access Denied", true);
         initComponents(permisoNombre);
-        setSize(420, 160);
+        // Aumentamos ligeramente el ancho para que el mensaje no se corte
+        setSize(520, 160);
         setLocationRelativeTo(parent);
     }
 

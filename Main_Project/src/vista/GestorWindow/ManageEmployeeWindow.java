@@ -5,7 +5,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class ManageUserWindow extends JDialog {
+public class ManageEmployeeWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,8 +17,8 @@ public class ManageUserWindow extends JDialog {
     private final Color BTN_BLUE = new Color(74, 144, 226);
     private final Color BTN_RED = new Color(231, 76, 60);
 
-    public ManageUserWindow(Frame parent, String userDni) {
-        super(parent, "Manage User", true);
+    public ManageEmployeeWindow(Frame parent, String userDni) {
+        super(parent, "Manage employee", true);
         this.userDni = userDni;
         initComponents();
         initLayout();
@@ -30,7 +30,7 @@ public class ManageUserWindow extends JDialog {
         btnModifyPermissions = new JButton("Modify permissions");
         styleButton(btnModifyPermissions, BTN_BLUE);
 
-        btnDeleteUser = new JButton("Delete user");
+        btnDeleteUser = new JButton("Delete employee");
         styleButton(btnDeleteUser, BTN_RED);
     }
 

@@ -7,7 +7,7 @@ import modelo.usuario.Gestor;
 import modelo.usuario.Permiso;
 import modelo.usuario.Usuario;
 import vista.GestorPanel.*;
-import vista.GestorWindow.ManageUserWindow;
+import vista.GestorWindow.ManageEmployeeWindow;
 import vista.GestorWindow.ModifyPermissionsWindow;
 import vista.GestorWindow.NewEmployeeWindow;
 import vista.main.MainFrame;
@@ -99,39 +99,34 @@ public class ControladorManageAccounts {
     }
 
     private void abrirManageUserWindow(String dni) {
-        Usuario userToManage = null;
-        for (Usuario u : Aplicacion.getInstancia().getUsuariosRegistrados()) {
-            if (u.getDNI().equals(dni)) {
-                userToManage = u;
+        // Buscamos explícitamente entre los empleados registrados para evitar
+        // conflictos si hay usuarios de otros tipos con el mismo DNI.
+        Empleado userToManage = null;
+        for (Empleado e : Aplicacion.getInstancia().getEmpleados()) {
+            if (e.getDNI().equals(dni)) {
+                userToManage = e;
                 break;
             }
         }
         
         if (userToManage == null) {
-            JOptionPane.showMessageDialog(mainFrame, "User not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(mainFrame, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Sólo los empleados deben poder ser gestionados aquí
+        // Sólo los empleados están aquí por diseño
         Usuario current = Aplicacion.getInstancia().getUsuarioActual();
-        if (!(userToManage instanceof Empleado)) {
-            JOptionPane.showMessageDialog(mainFrame, "Only employees can be managed here.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
         if (current != null && current.getDNI().equals(userToManage.getDNI())) {
             JOptionPane.showMessageDialog(mainFrame, "You cannot manage your own account.", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
-        ManageUserWindow manageWindow = new ManageUserWindow(mainFrame, dni);
-        final Usuario finalUser = userToManage;
+        ManageEmployeeWindow manageWindow = new ManageEmployeeWindow(mainFrame, dni);
+        final Empleado finalUser = userToManage;
 
         manageWindow.addDeleteUserListener(e -> {
             // Protección adicional: sólo empleados (no el propio gestor) pueden eliminarse desde aquí
-            if (!(finalUser instanceof Empleado)) {
-                JOptionPane.showMessageDialog(mainFrame, "Only employees can be deleted from this panel.", "Information", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
+            // finalUser es un Empleado por construcción
             if (current != null && current.getDNI().equals(finalUser.getDNI())) {
                 JOptionPane.showMessageDialog(mainFrame, "You cannot delete your own account.", "Information", JOptionPane.INFORMATION_MESSAGE);
                 return;
@@ -147,12 +142,8 @@ public class ControladorManageAccounts {
         });
 
         manageWindow.addModifyPermissionsListener(e -> {
-            if (!(finalUser instanceof Empleado)) {
-                JOptionPane.showMessageDialog(mainFrame, "Only Employees have modifiable permissions.", "Information", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            
-            Empleado emp = (Empleado) finalUser;
+            // finalUser ya es Empleado
+            Empleado emp = finalUser;
             boolean hasVal = emp.tienePermiso(Permiso.VALIDACIONES);
             boolean hasInt = emp.tienePermiso(Permiso.INTERCAMBIOS);
             boolean hasPed = emp.tienePermiso(Permiso.PEDIDOS);
@@ -189,7 +180,7 @@ public class ControladorManageAccounts {
         Usuario current = Aplicacion.getInstancia().getUsuarioActual();
         // Aseguramos visibilidad del botón según el usuario actual
         manageAccountsPanel.setCreateButtonVisible(current instanceof Gestor);
-        List<Usuario> usuarios = Aplicacion.getInstancia().getUsuariosRegistrados();
+        List<Empleado> usuarios = Aplicacion.getInstancia().getEmpleados();
         String lowerQuery = query == null ? "" : query.toLowerCase();
         
         for (Usuario u : usuarios) {
