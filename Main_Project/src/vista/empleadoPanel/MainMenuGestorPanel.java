@@ -15,6 +15,7 @@ public class MainMenuGestorPanel extends JPanel {
     private JButton btnManageStatistics;
     private JButton btnManageRecommendations;
     private JButton btnManageProducts;
+    private JButton btnManageTime;
 
     private final Color BG_COLOR = new Color(162, 187, 210);      
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
@@ -33,6 +34,7 @@ public class MainMenuGestorPanel extends JPanel {
         btnManageStatistics = createStyledButton("MANAGE STATISTICS", colorAzul);
         btnManageRecommendations = createStyledButton("MANAGE RECOMMENDATIONS", colorAzul);
         btnManageProducts = createStyledButton("MANAGE PRODUCTS", colorAzul);
+        btnManageTime = createStyledButton("MANAGE TIME", colorAzul);
     }
 
     private void initLayout() {
@@ -64,13 +66,14 @@ public class MainMenuGestorPanel extends JPanel {
         gbc.insets = new Insets(0, 0, 30, 0); 
         bodyContent.add(bannerPanel, gbc);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 0, 20));
+        JPanel buttonPanel = new JPanel(new GridLayout(5, 1, 0, 20));
         buttonPanel.setOpaque(false);
         
         buttonPanel.add(btnManageAccounts);
         buttonPanel.add(btnManageStatistics);
         buttonPanel.add(btnManageRecommendations);
         buttonPanel.add(btnManageProducts);
+        buttonPanel.add(btnManageTime);
 
         gbc.gridy = 1;
         gbc.weighty = 0.90; 
@@ -113,4 +116,5 @@ public class MainMenuGestorPanel extends JPanel {
     public void addManageStatisticsListener(java.awt.event.ActionListener l) { btnManageStatistics.addActionListener(l); }
     public void addManageRecommendationsListener(java.awt.event.ActionListener l) { btnManageRecommendations.addActionListener(l); }
     public void addManageProductsListener(java.awt.event.ActionListener l) { btnManageProducts.addActionListener(l); }
+    public void addManageTimeListener(java.awt.event.ActionListener l) { btnManageTime.addActionListener(l); }
 }

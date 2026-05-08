@@ -83,6 +83,20 @@ public class ModifyProductsPanel extends JPanel {
         txtSearch.setBorder(null);
         txtSearch.setText("SEARCH");
         txtSearch.setForeground(Color.GRAY);
+        txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtSearch.getText().equals("SEARCH")) {
+                    txtSearch.setText("");
+                    txtSearch.setForeground(Color.BLACK);
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (txtSearch.getText().isEmpty()) {
+                    txtSearch.setText("SEARCH");
+                    txtSearch.setForeground(Color.GRAY);
+                }
+            }
+        });
 
         searchBox.add(btnSearchIcon, BorderLayout.WEST);
         searchBox.add(txtSearch, BorderLayout.CENTER);

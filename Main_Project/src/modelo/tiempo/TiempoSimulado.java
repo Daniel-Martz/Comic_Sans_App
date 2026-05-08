@@ -102,6 +102,15 @@ public class TiempoSimulado implements Serializable {
     }
 
     /**
+     * Obtiene el factor de velocidad actual de la simulación.
+     *
+     * @return velocidad (1.0 equivale a tiempo real)
+     */
+    public double getVelocidad() {
+        return this.velocidad;
+    }
+
+    /**
      * Cambia la velocidad de transcurso del tiempo simulado.
      *
      * @param nuevaVelocidad nuevo factor de velocidad

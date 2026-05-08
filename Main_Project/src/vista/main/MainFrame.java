@@ -42,6 +42,8 @@ public class MainFrame extends JFrame {
     private ManageStatisticsPanel manageStatisticsPanel;
     private ManageRecommendationsPanel manageRecommendationsPanel;
     private PlaceholderPanel descuentosPanel;
+    private ManageTimePanel manageTimePanel;
+    private DescuentosPanel descuentosPanel;
     private PlaceholderPanel configuracionPanel;
     private PlaceholderPanel perfilPanel;
 
@@ -74,6 +76,7 @@ public class MainFrame extends JFrame {
     public static final String PANEL_MANAGE_ACCOUNTS = "ManageAccounts";
     public static final String PANEL_MANAGE_STATISTICS = "ManageStatistics";
     public static final String PANEL_MANAGE_RECOMMENDATIONS = "ManageRecommendations";
+    public static final String PANEL_MANAGE_TIME = "ManageTime";
 
     public MainFrame() {
         super("Comic Sans App");
@@ -106,9 +109,10 @@ public class MainFrame extends JFrame {
         manageAccountsPanel = new ManageAccountsPanel();
         manageStatisticsPanel = new ManageStatisticsPanel();
         manageRecommendationsPanel = new ManageRecommendationsPanel();
+        manageTimePanel = new ManageTimePanel();
         // addProductManuallyPanel = new AddProductManuallyPanel();
         
-        descuentosPanel = new PlaceholderPanel("Descuentos");
+        descuentosPanel = new DescuentosPanel();
         configuracionPanel = new PlaceholderPanel("Configuración");
         perfilPanel = new PlaceholderPanel("Perfil");
         notificacionesPanel = new NotificacionesPanel();
@@ -138,6 +142,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(manageStatisticsPanel, PANEL_MANAGE_STATISTICS);
         contenedorPaneles.add(manageRecommendationsPanel, PANEL_MANAGE_RECOMMENDATIONS);
         contenedorPaneles.add(validationRequestsPanel, PANEL_VALIDATION_REQUESTS);
+        contenedorPaneles.add(manageTimePanel, PANEL_MANAGE_TIME);
         contenedorPaneles.add(manageInterchangesPanel, PANEL_MANAGE_INTERCHANGES);
         // El panel para añadir producto manualmente ya no se añade al CardLayout porque se muestra
         // mediante una ventana independiente (AddProductManuallyWindow).
@@ -180,11 +185,12 @@ public class MainFrame extends JFrame {
     public ManageAccountsPanel getManageAccountsPanel() { return manageAccountsPanel; }
     public ManageStatisticsPanel getManageStatisticsPanel() { return manageStatisticsPanel; }
     public ManageRecommendationsPanel getManageRecommendationsPanel() { return manageRecommendationsPanel; }
+    public ManageTimePanel getManageTimePanel() { return manageTimePanel; }
     
     public AddProductsPanel getAddProductsPanel() { return addProductsPanel; }
     // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.
     
-    public PlaceholderPanel getDescuentosPanel() { return descuentosPanel; }
+    public DescuentosPanel getDescuentosPanel() { return descuentosPanel; }
     public PlaceholderPanel getConfiguracionPanel() { return configuracionPanel; }
     public PlaceholderPanel getPerfilPanel() { return perfilPanel; }
     public NotificacionesPanel getNotificacionesPanel() { return notificacionesPanel; }

@@ -72,7 +72,8 @@ public class HeaderPanel extends JPanel {
     public void updateDate() {
         if (lblDate != null) {
             DateTimeSimulado ahora = new DateTimeSimulado();
-            lblDate.setText("Current Date: " + ahora.toStringFecha());
+            String timeStr = String.format("%02d:%02d", ahora.getHora(), ahora.getMinuto());
+            lblDate.setText("Simulated Time: " + ahora.toStringFecha() + "   " + timeStr);
         }
     }
 
@@ -100,6 +101,23 @@ public class HeaderPanel extends JPanel {
         txtSearch.setOpaque(false);
         txtSearch.setFont(new Font("Comic Sans MS", Font.PLAIN, 14)); 
         txtSearch.setBorder(null); // Sin borde, el borde lo dibujará el contenedor
+        txtSearch.setText("Search...");
+        txtSearch.setForeground(Color.GRAY);
+        
+        txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtSearch.getText().equals("Search...")) {
+                    txtSearch.setText("");
+                    txtSearch.setForeground(Color.BLACK);
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (txtSearch.getText().isEmpty()) {
+                    txtSearch.setText("Search...");
+                    txtSearch.setForeground(Color.GRAY);
+                }
+            }
+        });
         
         btnSearchIcon = new JButton();
         btnSearchIcon.setContentAreaFilled(false);
@@ -264,12 +282,11 @@ public class HeaderPanel extends JPanel {
 
     // --- Delegación de Listeners ---
     public void addHomeListener(ActionListener l) { btnHome.addActionListener(l); }
-    public void addDescuentosListener(ActionListener l) { btnDescuentos.addActionListener(l); }
     public void addOutstandingListener(ActionListener l) { btnOutstanding.addActionListener(l); }
     public void addSearchListener(ActionListener l) { 
         txtSearch.addActionListener(l); 
         btnSearchIcon.addActionListener(e -> {
-            l.actionPerformed(new java.awt.event.ActionEvent(txtSearch, java.awt.event.ActionEvent.ACTION_PERFORMED, txtSearch.getText().trim()));
+            l.actionPerformed(new java.awt.event.ActionEvent(txtSearch, java.awt.event.ActionEvent.ACTION_PERFORMED, getSearchText()));
         });
     }
     public void addFiltrosListener(ActionListener l) { btnFilters.addActionListener(l); }
@@ -277,5 +294,8 @@ public class HeaderPanel extends JPanel {
     public void addIntercambiosListener(ActionListener l) { btnIntercambios.addActionListener(l); }
     public void addPerfilListener(ActionListener l) { btnPerfil.addActionListener(l); }
     public void addNotificacionesListener(ActionListener l) { btnNotificaciones.addActionListener(l); }
-    public String getSearchText() { return txtSearch.getText().trim(); }
+    public String getSearchText() { 
+        String text = txtSearch.getText().trim(); 
+        return text.equals("Search...") ? "" : text;
+    }
 }

@@ -21,6 +21,8 @@ import vista.userWindows.VentanaRegistroRequerido;
 import vista.userWindows.UsuarioOptionsDialog;
 import javax.swing.JOptionPane;
 import vista.userPanels.HeaderPanel;
+import javax.swing.Timer;
+
 import java.util.List;
 import java.util.Set;
 import vista.userPanels.*;
@@ -67,6 +69,10 @@ public class MainController {
         // Mostrar panel inicial
         mostrarMenuPrincipal();
         
+        // Iniciar un timer para actualizar el tiempo simulado en todas las cabeceras cada segundo
+        Timer timer = new Timer(1000, e -> refreshDateGlobal());
+        timer.start();
+        
         // Hacer visible la ventana
         mainFrame.setVisible(true);
     }
@@ -99,6 +105,7 @@ public class MainController {
         conectarHeaderGestor(mainFrame.getManageAccountsPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageStatisticsPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageRecommendationsPanel().getHeaderPanel());
+        conectarHeaderGestor(mainFrame.getManageTimePanel().getHeaderPanel());
         
         new ControladorManageProducts(mainFrame, this);
         new ControladorAddProducts(mainFrame, this);
@@ -112,6 +119,13 @@ public class MainController {
         
         new ControladorManageStatistics(mainFrame.getManageStatisticsPanel(), mainFrame, this);
         new ControladorManageRecommendations(mainFrame.getManageRecommendationsPanel(), mainFrame, this);
+        new ControladorDescuentos(mainFrame.getDescuentosPanel(), mainFrame, this);
+        
+        ControladorManageAccounts ctrlManageAccounts = new ControladorManageAccounts(mainFrame.getManageAccountsPanel(), mainFrame);
+        ctrlManageAccounts.cargarCuentas();
+        
+        new ControladorManageStatistics(mainFrame.getManageStatisticsPanel(), mainFrame, this);
+        new ControladorManageTime(mainFrame.getManageTimePanel(), mainFrame, this);
         
         mainFrame.getMenuGestorPanel().addManageAccountsListener(e -> {
             // Asegurarnos de recargar la lista de cuentas (solo empleados) cada vez que se abre el panel
@@ -131,6 +145,10 @@ public class MainController {
                 navegarA(MainFrame.PANEL_MANAGE_PRODUCTS);
         });
 
+        mainFrame.getMenuGestorPanel().addManageTimeListener(e -> {
+            navegarA(MainFrame.PANEL_MANAGE_TIME);
+        });
+        
         mainFrame.getMenuEmpleadoPanel().addManageOrdersListener(e -> {
             if (verificarPermisoEmpleado(Permiso.PEDIDOS, "Orders management")) {
                 ControladorManageOrders ctrl = mainFrame.getManageOrdersPanel().getControlador();
@@ -249,7 +267,6 @@ public class MainController {
      */
     private void conectarHeaderGlobal(HeaderPanel header) {
         header.addHomeListener(e -> mostrarMenuPrincipal());
-        header.addDescuentosListener(e -> navegarA(MainFrame.PANEL_DESCUENTOS));
         header.addOutstandingListener(e -> mostrarProductosOutstanding());
         header.addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
         header.addPerfilListener(e -> navegarBotonPerfil());
@@ -562,6 +579,7 @@ public class MainController {
     	mainFrame.getMenuGestorPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getManageAccountsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getManageStatisticsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getManageTimePanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	
     	// Paneles de empleado
     	mainFrame.getMenuEmpleadoPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
@@ -576,6 +594,36 @@ public class MainController {
     	mainFrame.getConfiguracionPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getPerfilPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getNotificacionesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    }
+
+    public void refreshDateGlobal() {
+        mainFrame.getMenuPrincipalPanel().getHeaderPanel().updateDate();
+        mainFrame.getMySecondHandProductsPanel().getHeaderPanel().updateDate();
+        mainFrame.getCarritoPanel().getHeaderPanel().updateDate();
+        mainFrame.getOutstandingPanel().getHeaderPanel().updateDate();
+        mainFrame.getProductosFiltradosPanel().getHeaderPanel().updateDate();
+        mainFrame.getSearchInterchangesPanel().getHeaderPanel().updateDate();
+        mainFrame.getMakeOfferPanel().getHeaderPanel().updateDate();
+        mainFrame.getHistorialPedidosPanel().getHeaderPanel().updateDate();
+        
+        mainFrame.getMenuGestorPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageAccountsPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageStatisticsPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageTimePanel().getHeaderPanel().updateDate();
+        
+        // Paneles de empleado
+        mainFrame.getMenuEmpleadoPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageProductsPanel().getHeaderPanel().updateDate();
+        mainFrame.getAddProductsPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageOrdersPanel().getHeaderPanel().updateDate();
+        mainFrame.getValidationRequestsPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageInterchangesPanel().getHeaderPanel().updateDate();
+        
+        // Placeholders
+        mainFrame.getDescuentosPanel().getHeaderPanel().updateDate();
+        mainFrame.getConfiguracionPanel().getHeaderPanel().updateDate();
+        mainFrame.getPerfilPanel().getHeaderPanel().updateDate();
+        mainFrame.getNotificacionesPanel().getHeaderPanel().updateDate();
     }
 
 
