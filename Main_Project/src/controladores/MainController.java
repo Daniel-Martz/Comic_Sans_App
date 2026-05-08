@@ -8,6 +8,7 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Empleado;
 import modelo.usuario.Gestor;
 import modelo.usuario.Usuario;
+import modelo.usuario.Permiso;
 import vista.main.MainFrame;
 import vista.userWindows.CrearUsuarioDialog;
 import vista.userWindows.EditProfileDialog;
@@ -111,28 +112,40 @@ public class MainController {
             navegarA(MainFrame.PANEL_MANAGE_ACCOUNTS);
         });
         
-        mainFrame.getMenuEmpleadoPanel().addManageOrdersListener(e -> {
-            ControladorManageOrders ctrl = mainFrame.getManageOrdersPanel().getControlador();
-            if (ctrl != null) {
-                ctrl.actualizarPedidos();
+        mainFrame.getMenuEmpleadoPanel().addManageProductsListener(e -> {
+            if (verificarPermisoEmpleado(Permiso.PRODUCTOS, "Modifications on the products")) {
+                navegarA(MainFrame.PANEL_MANAGE_PRODUCTS);
             }
-            navegarA(MainFrame.PANEL_MANAGE_ORDERS);
+        });
+
+        mainFrame.getMenuEmpleadoPanel().addManageOrdersListener(e -> {
+            if (verificarPermisoEmpleado(Permiso.PEDIDOS, "Sales management")) {
+                ControladorManageOrders ctrl = mainFrame.getManageOrdersPanel().getControlador();
+                if (ctrl != null) {
+                    ctrl.actualizarPedidos();
+                }
+                navegarA(MainFrame.PANEL_MANAGE_ORDERS);
+            }
         });
         
         mainFrame.getMenuEmpleadoPanel().addValidationRequestsListener(e -> {
-            ControladorValidationRequests ctrl = mainFrame.getValidationRequestsPanel().getControlador();
-            if (ctrl != null) {
-                ctrl.actualizarSolicitudes();
+            if (verificarPermisoEmpleado(Permiso.VALIDACIONES, "Sales management")) {
+                ControladorValidationRequests ctrl = mainFrame.getValidationRequestsPanel().getControlador();
+                if (ctrl != null) {
+                    ctrl.actualizarSolicitudes();
+                }
+                navegarA(MainFrame.PANEL_VALIDATION_REQUESTS);
             }
-            navegarA(MainFrame.PANEL_VALIDATION_REQUESTS);
         });
         
         mainFrame.getMenuEmpleadoPanel().addManageInterchangesListener(e -> {
-            ControladorManageInterchanges ctrl = mainFrame.getManageInterchangesPanel().getControlador();
-            if (ctrl != null) {
-                ctrl.actualizarSolicitudes();
+            if (verificarPermisoEmpleado(Permiso.INTERCAMBIOS, "Interchange management")) {
+                ControladorManageInterchanges ctrl = mainFrame.getManageInterchangesPanel().getControlador();
+                if (ctrl != null) {
+                    ctrl.actualizarSolicitudes();
+                }
+                navegarA(MainFrame.PANEL_MANAGE_INTERCHANGES);
             }
-            navegarA(MainFrame.PANEL_MANAGE_INTERCHANGES);
         });
         
         mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> {
@@ -556,4 +569,16 @@ public class MainController {
     	this.notificacionDialog = new NotificacionDialog(mainFrame, n);
       this.notificacionDialog.setVisible(true);
     } 
+
+    private boolean verificarPermisoEmpleado(Permiso p, String nombrePermiso) {
+        Usuario u = modelo.getUsuarioActual();
+        if (u instanceof Gestor) return true;
+        
+        if (u instanceof Empleado emp && emp.tienePermiso(p)) return true;
+
+        // Reusable dialog for permission denial (keeps UI consistent)
+        vista.userWindows.PermissionRequiredDialog dlg = new vista.userWindows.PermissionRequiredDialog(mainFrame, nombrePermiso);
+        dlg.mostrar();
+        return false;
+    }
 }

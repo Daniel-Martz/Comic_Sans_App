@@ -1,12 +1,15 @@
 package controladores;
 
 import modelo.aplicacion.Aplicacion;
+
 import modelo.usuario.Empleado;
+import modelo.usuario.Gestor;
 import modelo.usuario.Permiso;
 import modelo.usuario.Usuario;
-import vista.empleadoPanel.ManageAccountsPanel;
-import vista.empleadoPanel.ManageUserWindow;
-import vista.empleadoPanel.ModifyPermissionsWindow;
+import vista.GestorPanel.*;
+import vista.GestorWindow.ManageUserWindow;
+import vista.GestorWindow.ModifyPermissionsWindow;
+import vista.GestorWindow.NewEmployeeWindow;
 import vista.main.MainFrame;
 
 import javax.swing.JOptionPane;
@@ -24,6 +27,14 @@ public class ControladorManageAccounts {
         this.mainFrame = mainFrame;
 
         initListeners();
+        // Ajustar visibilidad inicial del botón '+' siguiendo MVC (solo visible para Gestor)
+        updateCreateButtonVisibility();
+    }
+
+    private void updateCreateButtonVisibility() {
+        Usuario current = Aplicacion.getInstancia().getUsuarioActual();
+        boolean isGestor = current instanceof Gestor;
+        manageAccountsPanel.setCreateButtonVisible(isGestor);
     }
 
     private void initListeners() {
@@ -60,6 +71,7 @@ public class ControladorManageAccounts {
                     return;
                 }
                 Gestor gestor = (Gestor) current;
+                // ventana para crear nuevo empleado (abierta desde el Controlador siguiendo MVC)
                 NewEmployeeWindow newEmpWindow = new NewEmployeeWindow(mainFrame);
                 newEmpWindow.addAcceptListener(ev -> {
                     String name = newEmpWindow.getEmployeeName();
@@ -100,11 +112,30 @@ public class ControladorManageAccounts {
             return;
         }
 
+        // Sólo los empleados deben poder ser gestionados aquí
+        Usuario current = Aplicacion.getInstancia().getUsuarioActual();
+        if (!(userToManage instanceof Empleado)) {
+            JOptionPane.showMessageDialog(mainFrame, "Only employees can be managed here.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (current != null && current.getDNI().equals(userToManage.getDNI())) {
+            JOptionPane.showMessageDialog(mainFrame, "You cannot manage your own account.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
         ManageUserWindow manageWindow = new ManageUserWindow(mainFrame, dni);
-        
         final Usuario finalUser = userToManage;
 
         manageWindow.addDeleteUserListener(e -> {
+            // Protección adicional: sólo empleados (no el propio gestor) pueden eliminarse desde aquí
+            if (!(finalUser instanceof Empleado)) {
+                JOptionPane.showMessageDialog(mainFrame, "Only employees can be deleted from this panel.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            if (current != null && current.getDNI().equals(finalUser.getDNI())) {
+                JOptionPane.showMessageDialog(mainFrame, "You cannot delete your own account.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             try {
                 Aplicacion.getInstancia().eliminarUsuario(finalUser);
                 JOptionPane.showMessageDialog(mainFrame, "User deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -125,8 +156,9 @@ public class ControladorManageAccounts {
             boolean hasVal = emp.tienePermiso(Permiso.VALIDACIONES);
             boolean hasInt = emp.tienePermiso(Permiso.INTERCAMBIOS);
             boolean hasPed = emp.tienePermiso(Permiso.PEDIDOS);
+            boolean hasProd = emp.tienePermiso(Permiso.PRODUCTOS);
             
-            ModifyPermissionsWindow permWindow = new ModifyPermissionsWindow(mainFrame, dni, hasVal, hasInt, hasPed);
+            ModifyPermissionsWindow permWindow = new ModifyPermissionsWindow(mainFrame, dni, hasVal, hasInt, hasPed, hasProd);
             
             permWindow.addAcceptListener(ev -> {
                 if (permWindow.hasValidaciones()) emp.añadirPermiso(Permiso.VALIDACIONES);
@@ -137,6 +169,9 @@ public class ControladorManageAccounts {
                 
                 if (permWindow.hasPedidos()) emp.añadirPermiso(Permiso.PEDIDOS);
                 else emp.eliminarPermiso(Permiso.PEDIDOS);
+                
+                if (permWindow.hasProductos()) emp.añadirPermiso(Permiso.PRODUCTOS);
+                else emp.eliminarPermiso(Permiso.PRODUCTOS);
                 
                 JOptionPane.showMessageDialog(mainFrame, "Permissions updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
                 permWindow.dispose();
@@ -155,18 +190,24 @@ public class ControladorManageAccounts {
 
     public void cargarCuentas(String query) {
         manageAccountsPanel.clearAccounts();
-        
+        Usuario current = Aplicacion.getInstancia().getUsuarioActual();
+        // Aseguramos visibilidad del botón según el usuario actual
+        manageAccountsPanel.setCreateButtonVisible(current instanceof Gestor);
         List<Usuario> usuarios = Aplicacion.getInstancia().getUsuariosRegistrados();
         String lowerQuery = query == null ? "" : query.toLowerCase();
         
         for (Usuario u : usuarios) {
+            // Sólo mostramos empleados
+            if (!(u instanceof Empleado)) continue;
+            // No mostramos al propio usuario actual (gestor no puede gestionarse a si mismo)
+            if (current != null && current.getDNI().equals(u.getDNI())) continue;
+
             String name = u.getNombreUsuario();
             String dni = u.getDNI();
-            
+
             if (lowerQuery.isEmpty() || 
                 (name != null && name.toLowerCase().contains(lowerQuery)) || 
                 (dni != null && dni.toLowerCase().contains(lowerQuery))) {
-                
                 manageAccountsPanel.addAccountRow(name, dni);
             }
         }

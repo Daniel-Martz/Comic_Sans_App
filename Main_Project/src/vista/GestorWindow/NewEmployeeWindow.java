@@ -1,4 +1,4 @@
-package vista.empleadoPanel;
+package vista.GestorWindow;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -31,13 +31,13 @@ public class NewEmployeeWindow extends JDialog {
         txtName = new JTextField(15);
         txtDni = new JTextField(15);
 
-        chkValidaciones = new JCheckBox("Modifications and changes on the available products and its stock");
+        chkValidaciones = new JCheckBox("Validations management");
         chkValidaciones.setBackground(BG_COLOR);
         
         chkIntercambios = new JCheckBox("Interchange management");
         chkIntercambios.setBackground(BG_COLOR);
         
-        chkPedidos = new JCheckBox("Sales management");
+        chkPedidos = new JCheckBox("Orders management");
         chkPedidos.setBackground(BG_COLOR);
 
         btnAccept = new JButton("Accept");
@@ -60,12 +60,12 @@ public class NewEmployeeWindow extends JDialog {
 
         JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         namePanel.setBackground(BG_COLOR);
-        namePanel.add(new JLabel("Name: "));
+        namePanel.add(new JLabel("Name:"));
         namePanel.add(txtName);
 
         JPanel dniPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         dniPanel.setBackground(BG_COLOR);
-        dniPanel.add(new JLabel("DNI: "));
+        dniPanel.add(new JLabel("DNI:  "));
         dniPanel.add(txtDni);
 
         chkValidaciones.setAlignmentX(Component.LEFT_ALIGNMENT);

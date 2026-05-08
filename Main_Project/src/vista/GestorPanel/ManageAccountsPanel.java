@@ -198,7 +198,7 @@ public class ManageAccountsPanel extends JPanel {
         row.add(lblIcon, BorderLayout.WEST);
 
         // Centro: Nombre y DNI
-        JLabel lblInfo = new JLabel(name + " " + dni);
+        JLabel lblInfo = new JLabel("Name: " + name + "      DNI: " + dni);
         lblInfo.setFont(new Font("SansSerif", Font.BOLD, 16));
         row.add(lblInfo, BorderLayout.CENTER);
 
@@ -237,9 +237,17 @@ public class ManageAccountsPanel extends JPanel {
     public void addCreateUserListener(ActionListener l) {
         btnAddUser.addActionListener(l);
     }
+
+    /** Permite al Controlador mostrar/ocultar el botón de crear usuario.
+     *  Útil para ocultarlo cuando el usuario actual no tiene permisos (por ejemplo: no es Gestor).
+     */
+    public void setCreateButtonVisible(boolean visible) {
+        btnAddUser.setVisible(visible);
+    }
     
     public String getSearchText() {
-        return searchField.getText().trim();
+        String text = searchField.getText().trim();
+        return text.equals("Search") ? "" : text;
     }
     
     public HeaderPanel getHeaderPanel() {

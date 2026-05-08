@@ -1,6 +1,7 @@
 package vista.main;
 
 import vista.userPanels.*;
+import vista.GestorPanel.*;
 import vista.empleadoPanel.*;
 import javax.swing.*;
 import java.awt.*;

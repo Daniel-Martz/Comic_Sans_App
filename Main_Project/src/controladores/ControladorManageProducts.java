@@ -39,11 +39,6 @@ public class ControladorManageProducts implements ActionListener {
     }
 
     private void registrarListeners() {
-        // Desde el Menú Principal del Empleado -> Manage Products
-        mainFrame.getMenuEmpleadoPanel().addManageProductsListener(e -> 
-            mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS)
-        );
-
         // Desde el Menú Principal del Gestor -> Manage Products
         mainFrame.getMenuGestorPanel().addManageProductsListener(e -> 
             mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS)

@@ -1,4 +1,4 @@
-package vista.empleadoPanel;
+package vista.GestorWindow;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
