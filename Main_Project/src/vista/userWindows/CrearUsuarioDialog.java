@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import controlador.CreateAccountController;
+import controladores.CreateAccountController;
 import controladores.MainController;
 import vista.userPanels.CrearUsuarioPanel;
 

@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import controlador.NewPasswordController;
+import controladores.NewPasswordController;
 
 public class CrearUsuarioPanel extends JPanel {
 

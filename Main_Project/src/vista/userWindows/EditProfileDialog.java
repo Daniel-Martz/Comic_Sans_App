@@ -2,10 +2,9 @@ package vista.userWindows;
 
 import javax.swing.*;
 
-
-import controlador.LoginController;
-import controlador.LoginToCreateAccountController;
 import controladores.EditProfileController;
+import controladores.LoginController;
+import controladores.LoginToCreateAccountController;
 import vista.userPanels.EditProfilePanel;
 import vista.userPanels.LogInPanel;
 

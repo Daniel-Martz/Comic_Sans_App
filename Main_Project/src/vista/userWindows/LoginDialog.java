@@ -4,8 +4,8 @@ import javax.swing.*;
 
 import com.sun.tools.javac.Main;
 
-import controlador.LoginController;
-import controlador.LoginToCreateAccountController;
+import controladores.LoginController;
+import controladores.LoginToCreateAccountController;
 import controladores.MainController;
 import vista.userPanels.LogInPanel;
 

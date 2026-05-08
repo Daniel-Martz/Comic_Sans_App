@@ -6,6 +6,9 @@ import javax.swing.border.EmptyBorder;
 
 import controladores.MainController;
 import controladores.UsuarioOptionsController;
+import modelo.aplicacion.Aplicacion;
+import modelo.usuario.ClienteRegistrado;
+import modelo.usuario.Usuario;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -120,11 +123,14 @@ public class UsuarioOptionsDialog extends JDialog {
         // Añadir botones
         gbc.insets = new Insets(12, 0, 12, 0); 
         
-        gbc.gridy = 1;
-        mainPanel.add(btnEditProfile, gbc);
-        
-        gbc.gridy = 2;
-        mainPanel.add(btnPurchaseHistory, gbc);
+        Usuario u = Aplicacion.getInstancia().getUsuarioActual();
+        if (u instanceof ClienteRegistrado) {
+            gbc.gridy = 1;
+            mainPanel.add(btnEditProfile, gbc);
+            
+            gbc.gridy = 2;
+            mainPanel.add(btnPurchaseHistory, gbc);
+        }
         
         gbc.gridy = 3;
         mainPanel.add(btnCerrarSesion, gbc);

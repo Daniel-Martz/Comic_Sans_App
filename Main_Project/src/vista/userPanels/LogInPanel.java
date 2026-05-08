@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 
-import controlador.CreateAccountController;
-import controlador.LoginController;
-import controlador.NewPasswordController;
+import controladores.CreateAccountController;
+import controladores.LoginController;
+import controladores.NewPasswordController;
 
 public class LogInPanel extends JPanel {
 

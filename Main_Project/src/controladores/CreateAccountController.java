@@ -1,4 +1,4 @@
-package controlador;
+package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +8,6 @@ import javax.swing.JTextField;
 
 import com.sun.tools.javac.Main;
 
-import controladores.MainController;
 import modelo.aplicacion.Aplicacion;
 import vista.userPanels.CrearUsuarioPanel;
 

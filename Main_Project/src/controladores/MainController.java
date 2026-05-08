@@ -20,14 +20,12 @@ import vista.userWindows.VentanaInterchangeOptions;
 import vista.userWindows.VentanaRegistroRequerido;
 import vista.userWindows.UsuarioOptionsDialog;
 import javax.swing.JOptionPane;
-
+import vista.userPanels.HeaderPanel;
 import java.util.List;
 import java.util.Set;
 import vista.userPanels.*;
 import vista.empleadoPanel.*;
-import controlador.*;
-import controlador.LoginController;
-import controlador.LoginToCreateAccountController;
+
 
 
 /**
@@ -100,6 +98,7 @@ public class MainController {
         conectarHeaderEmpleado(mainFrame.getManageInterchangesPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageAccountsPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageStatisticsPanel().getHeaderPanel());
+        conectarHeaderGestor(mainFrame.getManageRecommendationsPanel().getHeaderPanel());
         
         new ControladorManageProducts(mainFrame, this);
         new ControladorAddProducts(mainFrame, this);
@@ -112,11 +111,20 @@ public class MainController {
         this.ctrlManageAccounts.cargarCuentas();
         
         new ControladorManageStatistics(mainFrame.getManageStatisticsPanel(), mainFrame, this);
+        new ControladorManageRecommendations(mainFrame.getManageRecommendationsPanel(), mainFrame, this);
         
         mainFrame.getMenuGestorPanel().addManageAccountsListener(e -> {
             // Asegurarnos de recargar la lista de cuentas (solo empleados) cada vez que se abre el panel
             if (this.ctrlManageAccounts != null) this.ctrlManageAccounts.cargarCuentas();
             navegarA(MainFrame.PANEL_MANAGE_ACCOUNTS);
+        });
+        
+        mainFrame.getMenuGestorPanel().addManageStatisticsListener(e -> {
+            navegarA(MainFrame.PANEL_MANAGE_STATISTICS);
+        });
+        
+        mainFrame.getMenuGestorPanel().addManageRecommendationsListener(e -> {
+            navegarA(MainFrame.PANEL_MANAGE_RECOMMENDATIONS);
         });
         
         mainFrame.getMenuEmpleadoPanel().addManageProductsListener(e -> {

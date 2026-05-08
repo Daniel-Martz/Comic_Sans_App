@@ -35,45 +35,7 @@ src/vista/userPanels/CarritoPanel.java
 src/vista/userPanels/ProductosFiltradosPanel.java
 src/vista/userPanels/HeaderPanel.java
 src/vista/userPanels/PlaceholderPanel.java
-src/vista/userPanels/MenuPrincipalPanel.jaxception in thread "AWT-EventQueue-0" java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because "this.rowLabels" is null
-	at vista.GestorPanel.ManageRecommendationsPanel.updateRowTexts(ManageRecommendationsPanel.java:234)
-	at controladores.ControladorManageRecommendations.actualizarVistaYModelo(ControladorManageRecommendations.java:89)
-	at controladores.ControladorManageRecommendations.lambda$2(ControladorManageRecommendations.java:76)
-	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
-	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2314)
-	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:407)
-	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
-	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
-	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6621)
-	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
-	at java.desktop/java.awt.Component.processEvent(Component.java:6386)
-	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
-	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4996)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4828)
-	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
-	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
-	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
-	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4828)
-	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:87)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:98)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
-	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:87)
-	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
-	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
-	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)va
+src/vista/userPanels/MenuPrincipalPanel.java
 src/vista/userPanels/InterchangeCardPanel.java
 src/vista/userPanels/HistorialPedidosPanel.java
 src/vista/userPanels/LogInPanel.java
@@ -105,13 +67,11 @@ src/vista/GestorPanel/ManageRecommendationsPanel.java
 src/app/App.java
 src/utils/DialogUtils.java
 src/gui/NotificationsPanel.java
-src/controlador/CreateAccountController.java
-src/controlador/NewPasswordController.java
-src/controlador/LoginToCreateAccountController.java
-src/controlador/LoginController.java
+src/controladores/CreateAccountController.java
 src/controladores/ControladorPagoValidacion.java
 src/controladores/ControladorNotificaciones.java
 src/controladores/UsuarioOptionsController.java
+src/controladores/ControladorManageRecommendations.java
 src/controladores/ControladorFiltros.java
 src/controladores/ControladorHistorialPedidos.java
 src/controladores/ControladorMakeOffer.java
@@ -121,7 +81,10 @@ src/controladores/ControladorProductosFiltrados.java
 src/controladores/ControladorManageAccounts.java
 src/controladores/ControladorCarrito.java
 src/controladores/ControladorNuevoProductoSegundaMano.java
+src/controladores/NewPasswordController.java
+src/controladores/LoginToCreateAccountController.java
 src/controladores/ControladorManageStatistics.java
+src/controladores/LoginController.java
 src/controladores/ControladorOutstanding.java
 src/controladores/ManageCategoriesController.java
 src/controladores/ControladorSearchInterchanges.java
@@ -136,14 +99,12 @@ src/controladores/EditProfileController.java
 src/modelo/notificacion/NotificacionOferta.java
 src/modelo/notificacion/NotificacionPedido.java
 src/modelo/notificacion/NotificacionIntercambio.java
-src/modelo/notificacion/test/NotificacionTest.java
 src/modelo/notificacion/Notificacion.java
 src/modelo/notificacion/NotificacionEmpleado.java
 src/modelo/notificacion/NotificacionProducto.java
 src/modelo/notificacion/NotificacionCliente.java
 src/modelo/notificacion/NotificacionValidacion.java
 src/modelo/filtro/FiltroVenta.java
-src/modelo/filtro/test/FiltroTest.java
 src/modelo/filtro/TipoProducto.java
 src/modelo/filtro/Filtro.java
 src/modelo/filtro/FiltroIntercambio.java
@@ -152,12 +113,6 @@ src/modelo/filtro/FiltroVentaCliente.java
 src/modelo/main/AllTests.java
 src/modelo/main/Main.java
 src/modelo/aplicacion/GestorSolicitudes.java
-src/modelo/aplicacion/test/ConfiguracionRecomendacionTest.java
-src/modelo/aplicacion/test/CatalogoTest.java
-src/modelo/aplicacion/test/AplicacionTest.java
-src/modelo/aplicacion/test/GestorSolicitudesTest.java
-src/modelo/aplicacion/test/SistemaEstadisticasTest.java
-src/modelo/aplicacion/test/SistemaPagoTest.java
 src/modelo/aplicacion/Aplicacion.java
 src/modelo/aplicacion/Seguridad.java
 src/modelo/aplicacion/Catalogo.java
@@ -165,10 +120,6 @@ src/modelo/aplicacion/SistemaEstadisticas.java
 src/modelo/aplicacion/SistemaPago.java
 src/modelo/aplicacion/ConfiguracionRecomendacion.java
 src/modelo/categoria/Categoria.java
-src/modelo/solicitud/test/SolicitudIntercambioTest.java
-src/modelo/solicitud/test/OfertaTest.java
-src/modelo/solicitud/test/SolicitudValidacionTest.java
-src/modelo/solicitud/test/SolicitudPedidoTest.java
 src/modelo/solicitud/Caducable.java
 src/modelo/solicitud/EstadoPedido.java
 src/modelo/solicitud/Pago.java
@@ -182,12 +133,6 @@ src/modelo/solicitud/SolicitudValidacion.java
 src/modelo/usuario/Interes.java
 src/modelo/usuario/Empleado.java
 src/modelo/usuario/Permiso.java
-src/modelo/usuario/test/GestorTest.java
-src/modelo/usuario/test/UsuarioGestionTest.java
-src/modelo/usuario/test/InteresTest.java
-src/modelo/usuario/test/CarritoTest.java
-src/modelo/usuario/test/ClienteRegistradoTest.java
-src/modelo/usuario/test/EmpleadoTest.java
 src/modelo/usuario/UsuarioGestion.java
 src/modelo/usuario/Gestor.java
 src/modelo/usuario/Carrito.java
@@ -197,9 +142,6 @@ src/modelo/usuario/NotificacionDeseada.java
 src/modelo/usuario/ClienteRegistrado.java
 src/modelo/producto/Reseña.java
 src/modelo/producto/ProductoSegundaMano.java
-src/modelo/producto/test/PackTest.java
-src/modelo/producto/test/LineaProductoVentaTest.java
-src/modelo/producto/test/ProductoSegundaManoTest.java
 src/modelo/producto/Figura.java
 src/modelo/producto/Comic.java
 src/modelo/producto/TipoJuegoMesa.java
@@ -211,8 +153,6 @@ src/modelo/producto/Pack.java
 src/modelo/producto/DatosValidacion.java
 src/modelo/tiempo/TiempoSimulado.java
 src/modelo/tiempo/DateTimeSimulado.java
-src/modelo/descuento/test/DescuentoTest.java
-src/modelo/descuento/test/RegaloTest.java
 src/modelo/descuento/Regalo.java
 src/modelo/descuento/Cantidad.java
 src/modelo/descuento/DePorcentaje.java
