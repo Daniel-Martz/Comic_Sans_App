@@ -1,4 +1,4 @@
-package vista.userWindows;
+package vista.clienteWindows;
 
 import modelo.solicitud.SolicitudPedido;
 import modelo.producto.LineaProductoVenta;

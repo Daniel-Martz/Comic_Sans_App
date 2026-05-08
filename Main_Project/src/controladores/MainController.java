@@ -10,18 +10,12 @@ import modelo.usuario.Gestor;
 import modelo.usuario.Usuario;
 import modelo.usuario.Permiso;
 import vista.main.MainFrame;
-import vista.userWindows.CrearUsuarioDialog;
-import vista.userWindows.EditProfileDialog;
-import vista.userWindows.FiltrosDialog;
-import vista.userWindows.LoginDialog;
-import vista.userWindows.NotificacionDialog;
-import vista.userWindows.ProposalsWindow;
-import vista.userWindows.VentanaInterchangeOptions;
-import vista.userWindows.VentanaRegistroRequerido;
-import vista.userWindows.UsuarioOptionsDialog;
+
 import javax.swing.JOptionPane;
 import vista.userPanels.HeaderPanel;
 import javax.swing.Timer;
+import vista.GestorPanel.*;
+import vista.clienteWindows.*;
 
 import java.util.List;
 import java.util.Set;
@@ -44,11 +38,11 @@ public class MainController {
     // -------------------------------------------------------
     private final MainFrame mainFrame;
     private final Aplicacion modelo;
-    private vista.userWindows.CrearUsuarioDialog crearUsuarioDialog;
-    private vista.userWindows.LoginDialog loginDialog;
-    private vista.userWindows.EditProfileDialog editProfileDialog;
-    private vista.userWindows.FiltrosDialog dialogFiltros;
-    private vista.userWindows.UsuarioOptionsDialog dialogOpcionesUsuario;
+    private vista.clienteWindows.CrearUsuarioDialog crearUsuarioDialog;
+    private vista.clienteWindows.LoginDialog loginDialog;
+    private vista.clienteWindows.EditProfileDialog editProfileDialog;
+    private vista.clienteWindows.FiltrosDialog dialogFiltros;
+    private vista.clienteWindows.UsuarioOptionsDialog dialogOpcionesUsuario;
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
@@ -204,7 +198,7 @@ public class MainController {
                     int id = Integer.parseInt(cmd.substring(5));
                     modelo.producto.LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
                     if (p != null) {
-                        vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(mainFrame, p);
+                        vista.clienteWindows.VentanaDetallesProducto dialog = new vista.clienteWindows.VentanaDetallesProducto(mainFrame, p);
                         dialog.setVisible(true);
                     }
                 } catch (NumberFormatException ex) {
@@ -355,7 +349,7 @@ public class MainController {
     public void abrirVentanaFiltros() {
         if (this.dialogFiltros == null) {
             // 1. Creamos la vista (JDialog), pasándole el MainFrame como padre
-            this.dialogFiltros = new vista.userWindows.FiltrosDialog(mainFrame);
+            this.dialogFiltros = new vista.clienteWindows.FiltrosDialog(mainFrame);
             // 2. Creamos su controlador específico solo una vez
             this.controladorFiltros = new ControladorFiltros(this.dialogFiltros);
         }
@@ -369,7 +363,7 @@ public class MainController {
      */
     public void mostrarProductosPorCategoria(String categoria) {
         if (this.dialogFiltros == null) {
-            this.dialogFiltros = new vista.userWindows.FiltrosDialog(mainFrame);
+            this.dialogFiltros = new vista.clienteWindows.FiltrosDialog(mainFrame);
             this.controladorFiltros = new ControladorFiltros(this.dialogFiltros);
         }
         
@@ -639,7 +633,7 @@ public class MainController {
         if (u instanceof Empleado emp && emp.tienePermiso(p)) return true;
 
         // Reusable dialog for permission denial (keeps UI consistent)
-        vista.userWindows.PermissionRequiredDialog dlg = new vista.userWindows.PermissionRequiredDialog(mainFrame, nombrePermiso);
+        vista.clienteWindows.PermissionRequiredDialog dlg = new vista.clienteWindows.PermissionRequiredDialog(mainFrame, nombrePermiso);
         dlg.mostrar();
         return false;
     }

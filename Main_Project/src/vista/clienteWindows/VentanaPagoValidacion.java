@@ -1,4 +1,4 @@
-package vista.userWindows;
+package vista.clienteWindows;
 
 import controladores.ControladorPagoValidacion;
 import modelo.aplicacion.Aplicacion;

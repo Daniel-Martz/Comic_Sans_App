@@ -51,7 +51,7 @@ public class ViewOrderWindow extends JDialog {
             JButton infoButton = new JButton("Product Information");
             
             infoButton.addActionListener(e -> {
-                vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(
+                vista.clienteWindows.VentanaDetallesProducto dialog = new vista.clienteWindows.VentanaDetallesProducto(
                         SwingUtilities.getWindowAncestor(this), 
                         Catalogo.getInstancia().buscarProductoNuevo(entrada.getKey().getID())
                 );

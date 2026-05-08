@@ -4,10 +4,10 @@ import modelo.aplicacion.Aplicacion;
 import modelo.producto.ProductoSegundaMano;
 import modelo.solicitud.SolicitudValidacion;
 import modelo.usuario.ClienteRegistrado;
+import vista.clienteWindows.VentanaNuevoProductoSegundaMano;
+import vista.clienteWindows.VentanaPagoValidacion;
 import vista.main.MainFrame;
 import vista.userPanels.MySecondHandProductsPanel;
-import vista.userWindows.VentanaNuevoProductoSegundaMano;
-import vista.userWindows.VentanaPagoValidacion;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

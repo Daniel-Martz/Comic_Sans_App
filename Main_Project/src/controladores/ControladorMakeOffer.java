@@ -114,7 +114,7 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
             ProductoSegundaMano p = Catalogo.getInstancia().buscarProductoIntercambio(id);
             if (p != null) {
                 java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(vista);
-                vista.userWindows.VentanaDetallesProductoSegundaMano dialog = new vista.userWindows.VentanaDetallesProductoSegundaMano(parentWindow, p);
+                vista.clienteWindows.VentanaDetallesProductoSegundaMano dialog = new vista.clienteWindows.VentanaDetallesProductoSegundaMano(parentWindow, p);
                 dialog.setVisible(true);
             }
         }

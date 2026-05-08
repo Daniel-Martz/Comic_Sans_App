@@ -77,7 +77,7 @@ public class ControladorDescuentos implements ActionListener {
             LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
             if (p != null) {
                 Window parentWindow = SwingUtilities.getWindowAncestor(panel);
-                vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(parentWindow, p);
+                vista.clienteWindows.VentanaDetallesProducto dialog = new vista.clienteWindows.VentanaDetallesProducto(parentWindow, p);
                 dialog.setVisible(true);
             }
         } else if (cmd.startsWith("ADD_")) {

@@ -5,7 +5,7 @@ import modelo.producto.LineaProductoVenta;
 import modelo.usuario.ClienteRegistrado;
 import modelo.solicitud.SolicitudPedido;
 import vista.userPanels.CarritoPanel;
-import vista.userWindows.VentanaPagoPedido;
+import vista.clienteWindows.VentanaPagoPedido;
 import vista.main.MainFrame;
 
 import java.awt.event.ActionEvent;

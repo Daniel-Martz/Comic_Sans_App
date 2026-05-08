@@ -1,4 +1,4 @@
-package vista.userWindows;
+package vista.clienteWindows;
 
 import controladores.ControladorHistorialPedidos;
 import modelo.producto.LineaProductoVenta;

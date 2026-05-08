@@ -2,7 +2,9 @@ package vista.main;
 
 import vista.userPanels.*;
 import vista.GestorPanel.*;
+import vista.GestorPanel.ManageAccountsPanel;
 import vista.empleadoPanel.*;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -41,7 +43,6 @@ public class MainFrame extends JFrame {
     private ManageAccountsPanel manageAccountsPanel;
     private ManageStatisticsPanel manageStatisticsPanel;
     private ManageRecommendationsPanel manageRecommendationsPanel;
-    private PlaceholderPanel descuentosPanel;
     private ManageTimePanel manageTimePanel;
     private DescuentosPanel descuentosPanel;
     private PlaceholderPanel configuracionPanel;

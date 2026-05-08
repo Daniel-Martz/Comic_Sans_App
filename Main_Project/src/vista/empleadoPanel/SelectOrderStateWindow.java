@@ -3,7 +3,7 @@ package vista.empleadoPanel;
 import controladores.ControladorManageOrders;
 import modelo.solicitud.EstadoPedido;
 import modelo.solicitud.SolicitudPedido;
-import vista.userWindows.VentanaExito;
+import vista.clienteWindows.VentanaExito;
 
 import javax.swing.*;
 import java.awt.*;

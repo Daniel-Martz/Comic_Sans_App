@@ -51,7 +51,7 @@ public class ControladorManageInterchanges implements ActionListener {
                 int id = Integer.parseInt(cmd.substring(5));
                 modelo.producto.ProductoSegundaMano p = modelo.aplicacion.Catalogo.getInstancia().buscarProductoIntercambio(id);
                 if (p != null) {
-                    vista.userWindows.VentanaDetallesProductoSegundaMano dialog = new vista.userWindows.VentanaDetallesProductoSegundaMano(mainFrame, p);
+                    vista.clienteWindows.VentanaDetallesProductoSegundaMano dialog = new vista.clienteWindows.VentanaDetallesProductoSegundaMano(mainFrame, p);
                     dialog.setVisible(true);
                 }
             } catch (NumberFormatException ex) {

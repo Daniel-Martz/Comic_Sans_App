@@ -3,8 +3,8 @@ package controladores;
 import modelo.aplicacion.Aplicacion;
 import modelo.aplicacion.Catalogo;
 import modelo.categoria.Categoria;
-import vista.userWindows.AddCategoryWindow;
-import vista.userWindows.ManageCategoriesWindow;
+import vista.clienteWindows.AddCategoryWindow;
+import vista.clienteWindows.ManageCategoriesWindow;
 
 import javax.swing.*;
 import java.util.ArrayList;

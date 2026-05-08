@@ -1,10 +1,10 @@
 package controladores;
 
-import vista.userWindows.VentanaPagoPedido;
 import modelo.aplicacion.Aplicacion;
 import modelo.solicitud.SolicitudPedido;
 import modelo.tiempo.DateTimeSimulado;
 import modelo.usuario.ClienteRegistrado;
+import vista.clienteWindows.VentanaPagoPedido;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

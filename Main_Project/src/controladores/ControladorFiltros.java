@@ -1,7 +1,8 @@
 package controladores;
 
-import vista.userWindows.*;
 import java.awt.event.ItemEvent;
+
+import vista.clienteWindows.*;
 
 /**
  * Controlador específico para la ventana de Filtros.

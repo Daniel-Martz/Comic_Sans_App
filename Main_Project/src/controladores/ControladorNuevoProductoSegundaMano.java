@@ -2,7 +2,7 @@ package controladores;
 
 import modelo.aplicacion.Aplicacion;
 import modelo.usuario.ClienteRegistrado;
-import vista.userWindows.VentanaNuevoProductoSegundaMano;
+import vista.clienteWindows.VentanaNuevoProductoSegundaMano;
 import vista.userPanels.NuevoProductoSegundaManoPanel;
 
 import javax.swing.*;

@@ -1,15 +1,8 @@
-package vista.userWindows;
+package vista.clienteWindows;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-
-import controladores.MainController;
-import controladores.UsuarioOptionsController;
-import modelo.aplicacion.Aplicacion;
-import modelo.usuario.ClienteRegistrado;
-import modelo.usuario.Usuario;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,11 +12,11 @@ import java.awt.event.MouseEvent;
  * Ventana de opciones de intercambio con bordes estilizados, 
  * diseño plano y soporte para imagen de fondo.
  */
-public class UsuarioOptionsDialog extends JDialog {
+public class VentanaInterchangeOptions extends JDialog {
 
-    private JButton btnEditProfile;
-    private JButton btnCerrarSesion;
-    private JButton btnPurchaseHistory;
+    private JButton btnMyProducts;
+    private JButton btnSearch;
+    private JButton btnProposals;
     private JPanel mainPanel;
 
     // --- PALETA DE COLORES ---
@@ -32,22 +25,31 @@ public class UsuarioOptionsDialog extends JDialog {
     private final Color COLOR_HOVER = new Color(53, 122, 189);      // Azul oscuro al pasar el ratón
     private final Color COLOR_TEXTO = new Color(44, 62, 80);        // Gris oscuro para bordes y textos
 
-    public UsuarioOptionsDialog(JFrame parent) {
-        super(parent, "Profile Menu", true);
+    public VentanaInterchangeOptions(JFrame parent) {
+        super(parent, "Interchange Menu", true);
         
+        // Configuración básica
         setSize(500, 450); 
         setLocationRelativeTo(parent);
         setResizable(false);
+        // Opcional: Descomenta la siguiente línea si quieres quitar la barra nativa de Windows/Mac
+        // setUndecorated(true); 
 
+        // Inicializar componentes y layout
         initComponents();
         setupLayout();
     }
 
     private void initComponents() {
+        // 1. Crear un panel principal que soporte una IMAGEN DE FONDO
         mainPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                // --- FONDO DE VENTANA ---
+                // Si tienes una imagen de fondo en tus assets, pon su ruta aquí:
+                // ImageIcon fondo = new ImageIcon("src/assets/tu_fondo.png");
+                // g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), this);
             }
         };
         mainPanel.setBackground(COLOR_FONDO); // Color base por si no hay imagen
@@ -59,17 +61,12 @@ public class UsuarioOptionsDialog extends JDialog {
 
         Font buttonFont = new Font("Comic Sans MS", Font.BOLD, 15);
 
-        btnEditProfile = new JButton("EDIT MY PROFILE");
-        btnPurchaseHistory = new JButton("PURCHASE HISTORY");
-        btnCerrarSesion = new JButton("CERRAR SESION");
-        
-
-        btnEditProfile.setActionCommand("Edit Profile");
-        btnCerrarSesion.setActionCommand("Cerrar Sesión");
-        btnPurchaseHistory.setActionCommand("Purchase History");
+        btnMyProducts = new JButton("MY SECOND-HAND PRODUCTS");
+        btnSearch = new JButton("SEARCH FOR INTERCHANGES");
+        btnProposals = new JButton("INTERCHANGES PROPOSALS");
 
         // 3. Aplicar estilos y BORDES a los botones
-        JButton[] buttons = {btnEditProfile, btnPurchaseHistory, btnCerrarSesion};
+        JButton[] buttons = {btnMyProducts, btnSearch, btnProposals};
         
         // Crear un borde redondeado para los botones
         Border bordeBoton = BorderFactory.createLineBorder(COLOR_TEXTO, 2, true); // Borde oscuro de 2px
@@ -111,10 +108,14 @@ public class UsuarioOptionsDialog extends JDialog {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // Título visual dentro del panel
-        JLabel lblTitle = new JLabel("PROFILE OPTIONS");
+        JLabel lblTitle = new JLabel("INTERCHANGE OPTIONS");
         lblTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblTitle.setForeground(COLOR_TEXTO); 
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        // Si usas un fondo oscuro, quizás quieras ponerle fondo al título para que se lea bien
+        // lblTitle.setOpaque(true);
+        // lblTitle.setBackground(new Color(255, 255, 255, 200)); // Fondo semitransparente
         
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 0, 35, 0); 
@@ -123,28 +124,29 @@ public class UsuarioOptionsDialog extends JDialog {
         // Añadir botones
         gbc.insets = new Insets(12, 0, 12, 0); 
         
-        Usuario u = Aplicacion.getInstancia().getUsuarioActual();
-        if (u instanceof ClienteRegistrado) {
-            gbc.gridy = 1;
-            mainPanel.add(btnEditProfile, gbc);
-            
-            gbc.gridy = 2;
-            mainPanel.add(btnPurchaseHistory, gbc);
-        }
+        gbc.gridy = 1;
+        mainPanel.add(btnMyProducts, gbc);
+        
+        gbc.gridy = 2;
+        mainPanel.add(btnSearch, gbc);
         
         gbc.gridy = 3;
-        mainPanel.add(btnCerrarSesion, gbc);
+        mainPanel.add(btnProposals, gbc);
 
         setContentPane(mainPanel);
     }
 
-    public void cerrar() {
-        this.dispose();
+    public void setControlador(ActionListener c) {
+        btnMyProducts.addActionListener(c);
+        btnSearch.addActionListener(c);
+        btnProposals.addActionListener(c);
+        
+        btnMyProducts.setActionCommand("MY SECOND-HAND PRODUCTS");
+        btnSearch.setActionCommand("SEARCH_INTERCHANGES");
+        btnProposals.setActionCommand("PROPOSALS");
     }
 
-    public void addListener(UsuarioOptionsController a){
-        btnEditProfile.addActionListener(a);
-        btnPurchaseHistory.addActionListener(a);
-        btnCerrarSesion.addActionListener(a);
+    public void cerrar() {
+        this.dispose();
     }
 }
