@@ -156,9 +156,8 @@ public class ControladorManageAccounts {
             boolean hasVal = emp.tienePermiso(Permiso.VALIDACIONES);
             boolean hasInt = emp.tienePermiso(Permiso.INTERCAMBIOS);
             boolean hasPed = emp.tienePermiso(Permiso.PEDIDOS);
-            boolean hasProd = emp.tienePermiso(Permiso.PRODUCTOS);
             
-            ModifyPermissionsWindow permWindow = new ModifyPermissionsWindow(mainFrame, dni, hasVal, hasInt, hasPed, hasProd);
+            ModifyPermissionsWindow permWindow = new ModifyPermissionsWindow(mainFrame, dni, hasVal, hasInt, hasPed);
             
             permWindow.addAcceptListener(ev -> {
                 if (permWindow.hasValidaciones()) emp.añadirPermiso(Permiso.VALIDACIONES);
@@ -169,10 +168,7 @@ public class ControladorManageAccounts {
                 
                 if (permWindow.hasPedidos()) emp.añadirPermiso(Permiso.PEDIDOS);
                 else emp.eliminarPermiso(Permiso.PEDIDOS);
-                
-                if (permWindow.hasProductos()) emp.añadirPermiso(Permiso.PRODUCTOS);
-                else emp.eliminarPermiso(Permiso.PRODUCTOS);
-                
+                                
                 JOptionPane.showMessageDialog(mainFrame, "Permissions updated successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
                 permWindow.dispose();
                 manageWindow.dispose();

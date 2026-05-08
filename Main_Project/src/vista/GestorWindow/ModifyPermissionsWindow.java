@@ -12,23 +12,22 @@ public class ModifyPermissionsWindow extends JDialog {
     private JCheckBox chkValidaciones;
     private JCheckBox chkIntercambios;
     private JCheckBox chkPedidos;
-    private JCheckBox chkProductos;
     private JButton btnAccept;
     private String userDni;
 
     private final Color BG_COLOR = new Color(245, 247, 250);
     private final Color BTN_BLUE = new Color(74, 144, 226);
 
-    public ModifyPermissionsWindow(Frame parent, String userDni, boolean hasValidaciones, boolean hasIntercambios, boolean hasPedidos, boolean hasProductos) {
+    public ModifyPermissionsWindow(Frame parent, String userDni, boolean hasValidaciones, boolean hasIntercambios, boolean hasPedidos) {
         super(parent, "Modify permissions", true);
         this.userDni = userDni;
-        initComponents(hasValidaciones, hasIntercambios, hasPedidos , hasProductos);
+        initComponents(hasValidaciones, hasIntercambios, hasPedidos);
         initLayout();
         setSize(400, 250);
         setLocationRelativeTo(parent);
     }
 
-    private void initComponents(boolean hasValidaciones, boolean hasIntercambios, boolean hasPedidos, boolean hasProductos) {
+    private void initComponents(boolean hasValidaciones, boolean hasIntercambios, boolean hasPedidos) {
         chkValidaciones = new JCheckBox("Validations management");
         chkValidaciones.setSelected(hasValidaciones);
         chkValidaciones.setBackground(BG_COLOR);
@@ -41,11 +40,6 @@ public class ModifyPermissionsWindow extends JDialog {
         chkPedidos.setSelected(hasPedidos);
         chkPedidos.setBackground(BG_COLOR);
         
-        chkProductos = new JCheckBox("Products management");
-        chkProductos.setSelected(hasPedidos);
-        chkProductos.setBackground(BG_COLOR);
-
-    
         btnAccept = new JButton("Accept");
         btnAccept.setFont(new Font("SansSerif", Font.BOLD, 14));
         btnAccept.setBackground(BTN_BLUE);
@@ -101,10 +95,6 @@ public class ModifyPermissionsWindow extends JDialog {
     }
 
     public boolean hasPedidos() {
-        return chkPedidos.isSelected();
-    }
-    
-    public boolean hasProductos() {
         return chkPedidos.isSelected();
     }
 }
