@@ -7,8 +7,8 @@ import modelo.producto.JuegoDeMesa;
 import modelo.producto.LineaProductoVenta;
 import vista.main.MainFrame;
 import vista.empleadoPanel.ManageProductsPanel;
+import vista.empleadoPanel.ModifyAProductWindow;
 import vista.empleadoPanel.ModifyProductsPanel;
-import vista.empleadoWindow.ModifyAProductWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,7 +62,16 @@ public class ControladorManageProducts implements ActionListener {
         
         // Desde Manage Products -> Discounts
         panelManage.addDiscountsListener(e -> {
-            mainController.navegarA(MainFrame.PANEL_DESCUENTOS);
+            vista.empleadoPanel.SelectDiscountTypeWindow win = new vista.empleadoPanel.SelectDiscountTypeWindow(mainFrame);
+            win.getBtnProducts().addActionListener(ev -> {
+                win.dispose();
+                mainController.navegarA(MainFrame.PANEL_DESCUENTOS);
+            });
+            win.getBtnCategories().addActionListener(ev -> {
+                win.dispose();
+                mainController.navegarA(MainFrame.PANEL_DESCUENTOS_CATEGORIA);
+            });
+            win.setVisible(true);
         });
 
         // Desde Modify Products -> Volver a HOME

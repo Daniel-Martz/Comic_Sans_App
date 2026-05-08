@@ -3,7 +3,6 @@ package vista.main;
 import vista.userPanels.*;
 import vista.GestorPanel.*;
 import vista.empleadoPanel.*;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -44,6 +43,7 @@ public class MainFrame extends JFrame {
     private ManageRecommendationsPanel manageRecommendationsPanel;
     private ManageTimePanel manageTimePanel;
     private DescuentosPanel descuentosPanel;
+    private DescuentosCategoriaPanel descuentosCategoriaPanel;
     private PlaceholderPanel configuracionPanel;
     private PlaceholderPanel perfilPanel;
 
@@ -77,6 +77,7 @@ public class MainFrame extends JFrame {
     public static final String PANEL_MANAGE_STATISTICS = "ManageStatistics";
     public static final String PANEL_MANAGE_RECOMMENDATIONS = "ManageRecommendations";
     public static final String PANEL_MANAGE_TIME = "ManageTime";
+    public static final String PANEL_DESCUENTOS_CATEGORIA = "DescuentosCategoria";
 
     public MainFrame() {
         super("Comic Sans App");
@@ -113,6 +114,7 @@ public class MainFrame extends JFrame {
         // addProductManuallyPanel = new AddProductManuallyPanel();
         
         descuentosPanel = new DescuentosPanel();
+        descuentosCategoriaPanel = new DescuentosCategoriaPanel();
         configuracionPanel = new PlaceholderPanel("Configuración");
         perfilPanel = new PlaceholderPanel("Perfil");
         notificacionesPanel = new NotificacionesPanel();
@@ -124,6 +126,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(menuGestorPanel, PANEL_MENU_GESTOR);
         contenedorPaneles.add(mySecondHandProductsPanel, PANEL_MY_SECOND_HAND_PRODUCTS);
         contenedorPaneles.add(descuentosPanel, PANEL_DESCUENTOS);
+        contenedorPaneles.add(descuentosCategoriaPanel, PANEL_DESCUENTOS_CATEGORIA);
         contenedorPaneles.add(productosFiltradosPanel, PANEL_PRODUCTOS_FILTRADOS);
         contenedorPaneles.add(carritoPanel, PANEL_CARRITO);
         contenedorPaneles.add(configuracionPanel, PANEL_CONFIGURACION);
@@ -191,6 +194,7 @@ public class MainFrame extends JFrame {
     // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.
     
     public DescuentosPanel getDescuentosPanel() { return descuentosPanel; }
+    public DescuentosCategoriaPanel getDescuentosCategoriaPanel() { return descuentosCategoriaPanel; }
     public PlaceholderPanel getConfiguracionPanel() { return configuracionPanel; }
     public PlaceholderPanel getPerfilPanel() { return perfilPanel; }
     public NotificacionesPanel getNotificacionesPanel() { return notificacionesPanel; }

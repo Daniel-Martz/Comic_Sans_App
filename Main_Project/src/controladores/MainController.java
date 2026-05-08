@@ -10,18 +10,21 @@ import modelo.usuario.Gestor;
 import modelo.usuario.Usuario;
 import modelo.usuario.Permiso;
 import vista.main.MainFrame;
-
+import vista.empleadoWindow.*;
 import javax.swing.JOptionPane;
 import vista.userPanels.HeaderPanel;
 import javax.swing.Timer;
-import vista.GestorPanel.*;
-import vista.clienteWindows.*;
 
 import java.util.List;
 import java.util.Set;
 import vista.userPanels.*;
 import vista.empleadoPanel.*;
-
+import vista.*;
+import vista.clienteWindows.CrearUsuarioWindow;
+import vista.clienteWindows.EditProfileWindow;
+import vista.clienteWindows.FiltrosWindow;
+import vista.clienteWindows.LoginWindow;
+import vista.clienteWindows.*;
 
 
 /**
@@ -38,11 +41,11 @@ public class MainController {
     // -------------------------------------------------------
     private final MainFrame mainFrame;
     private final Aplicacion modelo;
-    private vista.clienteWindows.CrearUsuarioWindow crearUsuarioDialog;
-    private vista.clienteWindows.LoginWindow loginDialog;
-    private vista.clienteWindows.EditProfileWindow editProfileDialog;
-    private vista.clienteWindows.FiltrosWindow dialogFiltros;
-    private vista.clienteWindows.UsuarioOptionsWIndow dialogOpcionesUsuario;
+    private CrearUsuarioWindow crearUsuarioDialog;
+    private LoginWindow loginDialog;
+    private EditProfileWindow editProfileDialog;
+    private FiltrosWindow dialogFiltros;
+    private UsuarioOptionsWIndow dialogOpcionesUsuario;
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
@@ -96,6 +99,7 @@ public class MainController {
         conectarHeaderEmpleado(mainFrame.getManageOrdersPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getValidationRequestsPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getManageInterchangesPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getDescuentosCategoriaPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageAccountsPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageStatisticsPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageRecommendationsPanel().getHeaderPanel());
@@ -114,6 +118,7 @@ public class MainController {
         new ControladorManageStatistics(mainFrame.getManageStatisticsPanel(), mainFrame, this);
         new ControladorManageRecommendations(mainFrame.getManageRecommendationsPanel(), mainFrame, this);
         new ControladorDescuentos(mainFrame.getDescuentosPanel(), mainFrame, this);
+        new ControladorDescuentosCategoria(mainFrame.getDescuentosCategoriaPanel(), mainFrame, this);
         
         ControladorManageAccounts ctrlManageAccounts = new ControladorManageAccounts(mainFrame.getManageAccountsPanel(), mainFrame);
         ctrlManageAccounts.cargarCuentas();
@@ -410,12 +415,12 @@ public class MainController {
      */
     private boolean verificarAccesoClienteRegistrado() {
         if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
-            VentanaRegistroRequeridoWindow dialogoRequerido = new VentanaRegistroRequeridoWindow(mainFrame);
+            VentanaRegistroRequerido dialogoRequerido = new VentanaRegistroRequerido(mainFrame);
             int eleccion = dialogoRequerido.mostrarVentana();
 
-            if (eleccion == VentanaRegistroRequeridoWindow.INICIAR_SESION) {
+            if (eleccion == VentanaRegistroRequerido.INICIAR_SESION) {
                 abrirVentanaLogIn();
-            } else if (eleccion == VentanaRegistroRequeridoWindow.REGISTRARSE) {
+            } else if (eleccion == VentanaRegistroRequerido.REGISTRARSE) {
                 abrirVentanaCrearUsuario();
             }
             return false;
@@ -428,7 +433,7 @@ public class MainController {
             return;
         }
 
-        VentanaInterchangeOptionsWindow v = new VentanaInterchangeOptionsWindow(this.mainFrame);
+        VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
 	    v.setControlador(e -> {
 	        String command = e.getActionCommand();
 	        if (command.equals("PROPOSALS")) {
@@ -522,7 +527,7 @@ public class MainController {
     }
     
     public void abrirVentanaOpcionesUsuario(){
-    	this.dialogOpcionesUsuario = new UsuarioOptionsWIndow(mainFrame);
+    	this.dialogOpcionesUsuario = new UsuarioOptionsWindow(mainFrame);
       //Aquí pasamos como argumento el mainFrame para que el dialog de cerrar sesión tenga un padre
       this.dialogOpcionesUsuario.addListener(new UsuarioOptionsController(mainFrame, this));
     	dialogOpcionesUsuario.setVisible(true);
@@ -582,6 +587,7 @@ public class MainController {
     	mainFrame.getManageOrdersPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getValidationRequestsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getManageInterchangesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	
     	// Placeholders
     	mainFrame.getDescuentosPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
@@ -612,6 +618,7 @@ public class MainController {
         mainFrame.getManageOrdersPanel().getHeaderPanel().updateDate();
         mainFrame.getValidationRequestsPanel().getHeaderPanel().updateDate();
         mainFrame.getManageInterchangesPanel().getHeaderPanel().updateDate();
+        mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().updateDate();
         
         // Placeholders
         mainFrame.getDescuentosPanel().getHeaderPanel().updateDate();
@@ -622,7 +629,7 @@ public class MainController {
 
 
     public void abrirVentanaNotificacion(Notificacion n){
-    	this.notificacionDialog = new NotificacionWindow(mainFrame, n);
+    	this.notificacionDialog = new NotificacionDialog(mainFrame, n);
       this.notificacionDialog.setVisible(true);
     } 
 
