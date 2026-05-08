@@ -141,7 +141,7 @@ public class InterchangeCardPanel extends JPanel {
                        ProductoSegundaMano[] receivedData,
                        Modo modo) {
         removeAll();
-        initComponents(headerLabel, balance, givenData, receivedData, modo);
+        initComponents(headerLabel, balance, givenData, receivedData, modo, null, null);
         initLayout();
         revalidate();
         repaint();
