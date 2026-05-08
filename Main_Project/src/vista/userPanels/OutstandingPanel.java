@@ -104,6 +104,18 @@ public class OutstandingPanel extends JPanel {
         img.setPreferredSize(new Dimension(160, 90));
         img.setMaximumSize(new Dimension(160,90));
         img.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // If the product has a photo file, load and scale it
+        try {
+            if (prod.getFoto() != null && prod.getFoto().exists()) {
+                ImageIcon iconoOriginal = new ImageIcon(prod.getFoto().getPath());
+                Image imgEscalada = iconoOriginal.getImage().getScaledInstance(160, 90, Image.SCALE_SMOOTH);
+                img.setIcon(new ImageIcon(imgEscalada));
+                img.setText("");
+            }
+        } catch (Exception ex) {
+            // keep placeholder text if image loading fails
+            img.setText("IMAGE");
+        }
         tarjeta.add(img);
 
         tarjeta.add(Box.createVerticalStrut(10));

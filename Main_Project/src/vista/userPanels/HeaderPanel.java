@@ -263,6 +263,35 @@ public class HeaderPanel extends JPanel {
         btnNotificaciones.setVisible(false);
     }
 
+    /**
+     * Configura la cabecera para la vista de Notificaciones: sólo muestra el botón HOME.
+     */
+    public void configurarMenuNotificaciones() {
+        // Ocultamos botones de navegación secundaria
+        btnDescuentos.setVisible(false);
+        btnOutstanding.setVisible(false);
+
+        // Ocultamos la caja de búsqueda y filtros
+        txtSearch.setVisible(false);
+        btnSearchIcon.setVisible(false);
+        if (searchBox != null) searchBox.setVisible(false);
+        btnFilters.setVisible(false);
+
+        // Ocultamos iconos de la derecha (carrito, intercambios, perfil, notificaciones)
+        btnCarrito.setVisible(false);
+        btnIntercambios.setVisible(false);
+        btnPerfil.setVisible(false);
+        btnNotificaciones.setVisible(false);
+
+        // Ocultamos elementos del left panel (logo y bocadillo) para dejar sólo el HOME centrado
+        logoLabel.setVisible(false);
+        speechBubble.setVisible(false);
+
+        // Forzar simetría para centrar el HOME perfectamente
+        leftPanel.setPreferredSize(new Dimension(380, leftPanel.getPreferredSize().height));
+        rightPanel.setPreferredSize(new Dimension(380, rightPanel.getPreferredSize().height));
+    }
+
     private JButton createTopNavButton(String text) {
         JButton btn = new JButton(text) {
             @Override protected void paintComponent(Graphics g) { Graphics2D g2 = (Graphics2D) g.create(); g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); g2.setColor(getBackground()); g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20); super.paintComponent(g); g2.dispose(); }

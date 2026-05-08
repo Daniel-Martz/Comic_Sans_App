@@ -527,11 +527,6 @@ import modelo.tiempo.*;
         app.cerrarSesion();
         app.iniciarSesion("demo", "123456");
         app.cerrarSesion();
-        app.iniciarSesion("demoUser", "Passw0rd!!");
-        app.cerrarSesion();
-        app.iniciarSesion("demo", "123456");
-        app.cerrarSesion();
-        app.iniciarSesion("gestor", "123456");
         
 		
         

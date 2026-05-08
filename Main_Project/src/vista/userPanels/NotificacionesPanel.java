@@ -28,8 +28,10 @@ public class NotificacionesPanel extends JPanel{
 
     // 2. EL HEADER: Va en la parte superior (NORTH)
     // Nota: BorderLayout respetará la altura preferida del HeaderPanel
-    headerPanel.setPreferredSize(new Dimension(headerPanel.getPreferredSize().width, headerPanel.getPreferredSize().height)); 
-    add(headerPanel, BorderLayout.NORTH);
+        headerPanel.setPreferredSize(new Dimension(headerPanel.getPreferredSize().width, headerPanel.getPreferredSize().height)); 
+        // Configure header to show only HOME for notifications view
+        headerPanel.configurarMenuNotificaciones();
+        add(headerPanel, BorderLayout.NORTH);
 
     // 3. EL CONTENIDO CENTRAL: Título + Tabla
     // Creamos un panel intermedio para meter el título y la tabla juntos

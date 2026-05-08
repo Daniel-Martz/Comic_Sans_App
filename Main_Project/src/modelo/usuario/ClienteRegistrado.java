@@ -531,6 +531,14 @@ public class ClienteRegistrado extends Usuario {
 		NotificacionPedido noti = new NotificacionPedido("¡Pedido realizado con éxito!", new DateTimeSimulado(),
 				pedido);
 		anadirNotificacion(noti);
+
+		// Notificamos a los empleados de la tienda de que hay un nuevo pedido
+		NotificacionEmpleado notifEmpleado = new NotificacionEmpleado("Hay un nuevo pedido en la tienda", new DateTimeSimulado());
+		notifEmpleado.addSolicitud(pedido);
+		List<Empleado> listaEmpleados = Aplicacion.getInstancia().getEmpleados();
+		for (Empleado e : listaEmpleados) {
+			e.añadirNotificacion(notifEmpleado);
+		}
 		System.out.println("Pedido generado correctamente.");
 		return pedido;
 	}
