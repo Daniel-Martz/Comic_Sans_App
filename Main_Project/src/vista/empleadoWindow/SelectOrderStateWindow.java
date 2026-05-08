@@ -1,9 +1,9 @@
-package vista.empleadoPanel;
+package vista.empleadoWindow;
 
 import controladores.ControladorManageOrders;
 import modelo.solicitud.EstadoPedido;
 import modelo.solicitud.SolicitudPedido;
-import vista.clienteWindows.VentanaExito;
+import vista.clienteWindows.VentanaExitoWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,7 +69,7 @@ public class SelectOrderStateWindow extends JDialog {
             pedido.actualizarEstadoPedidoEmpleado(nuevoEstado);
             controlador.actualizarPedidos(); // Refrescar la vista
             dispose();
-            VentanaExito exito = new VentanaExito(null, "Success", "State Updated", "Order state updated successfully");
+            VentanaExitoWindow exito = new VentanaExitoWindow(null, "Success", "State Updated", "Order state updated successfully");
             exito.setVisible(true);
         }
     }

@@ -8,12 +8,12 @@ import java.awt.*;
  * Ventana modal que contiene el formulario para añadir un nuevo
  * producto de segunda mano a la cartera del cliente.
  */
-public class VentanaNuevoProductoSegundaMano extends JDialog {
+public class VentanaNuevoProductoSegundaManoWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private NuevoProductoSegundaManoPanel panelNuevoProducto;
 
-    public VentanaNuevoProductoSegundaMano(Window parent) {
+    public VentanaNuevoProductoSegundaManoWindow(Window parent) {
         super(parent, "Add New Product", ModalityType.APPLICATION_MODAL);
         initComponents();
         initLayout();
@@ -46,12 +46,12 @@ public class VentanaNuevoProductoSegundaMano extends JDialog {
 
     // Usamos las ventanas genéricas creadas previamente
     public void mostrarVentanaExito(String mensaje) {
-        VentanaExito exito = new VentanaExito(this, "Success", "PRODUCT ADDED!", mensaje);
+        VentanaExitoWindow exito = new VentanaExitoWindow(this, "Success", "PRODUCT ADDED!", mensaje);
         exito.mostrar();
     }
 
     public void mostrarVentanaError(String motivo) {
-        VentanaError error = new VentanaError(this, "Error", "COULD NOT ADD PRODUCT", motivo);
+        VentanaErrorWindow error = new VentanaErrorWindow(this, "Error", "COULD NOT ADD PRODUCT", motivo);
         error.mostrar();
     }
 }

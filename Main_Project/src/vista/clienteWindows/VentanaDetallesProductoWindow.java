@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 /**
  * Ventana emergente (JDialog) que muestra la información detallada de un producto de venta.
  */
-public class VentanaDetallesProducto extends JDialog {
+public class VentanaDetallesProductoWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private final Color COLOR_FONDO = new Color(245, 245, 250);
     private final Color COLOR_TITULO = new Color(50, 60, 100);
 
-    public VentanaDetallesProducto(Window parent, LineaProductoVenta producto) {
+    public VentanaDetallesProductoWindow(Window parent, LineaProductoVenta producto) {
         super(parent, "Detalles del Producto", Dialog.ModalityType.APPLICATION_MODAL);
         setSize(550, 720); // Ampliamos la ventana para hacer hueco a las reseñas
         setLocationRelativeTo(parent);

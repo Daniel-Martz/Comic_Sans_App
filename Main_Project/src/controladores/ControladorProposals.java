@@ -243,8 +243,8 @@ public class ControladorProposals {
 
         if (target != null) {
             // Ahora sí, es el CONTROLADOR quien abre la ventana con los datos del Modelo
-            vista.clienteWindows.VentanaDetallesProductoSegundaMano dialog = 
-                new vista.clienteWindows.VentanaDetallesProductoSegundaMano(ventana, target);
+            vista.clienteWindows.VentanaDetallesProductoSegundaManoWindow dialog = 
+                new vista.clienteWindows.VentanaDetallesProductoSegundaManoWindow(ventana, target);
             dialog.setVisible(true);
         } else {
             ventana.mostrarVentanaError("Producto no encontrado.");

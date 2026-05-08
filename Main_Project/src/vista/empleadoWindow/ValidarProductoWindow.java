@@ -1,4 +1,4 @@
-package vista.empleadoPanel;
+package vista.empleadoWindow;
 
 import controladores.ControladorValidationRequests;
 import modelo.producto.EstadoConservacion;

@@ -7,7 +7,7 @@ import java.awt.*;
  * Ventana genérica modal para mostrar mensajes de éxito.
  * Mantiene el estilo visual verde pastel de la aplicación.
  */
-public class VentanaExito extends JDialog {
+public class VentanaExitoWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,7 +17,7 @@ public class VentanaExito extends JDialog {
      * @param tituloMensaje El texto en negrita del interior (ej: "SUCCESSFUL PAYMENT!!")
      * @param descripcion   La descripción detallada del éxito
      */
-    public VentanaExito(Window owner, String tituloVentana, String tituloMensaje, String descripcion) {
+    public VentanaExitoWindow(Window owner, String tituloVentana, String tituloMensaje, String descripcion) {
         super(owner, tituloVentana, ModalityType.APPLICATION_MODAL);
         
         // El 0 en filas permite que el panel crezca si metes más componentes

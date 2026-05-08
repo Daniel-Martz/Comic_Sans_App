@@ -1,4 +1,4 @@
-package vista.empleadoPanel;
+package vista.GestorPanel;
 
 import vista.userPanels.HeaderPanel;
 import javax.swing.*;

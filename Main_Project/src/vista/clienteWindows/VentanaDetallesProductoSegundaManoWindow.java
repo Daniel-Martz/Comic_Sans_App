@@ -10,13 +10,13 @@ import java.awt.*;
 /**
  * Ventana emergente (JDialog) que muestra la información detallada de un producto de segunda mano.
  */
-public class VentanaDetallesProductoSegundaMano extends JDialog {
+public class VentanaDetallesProductoSegundaManoWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private final Color COLOR_FONDO = new Color(245, 245, 250);
     private final Color COLOR_TITULO = new Color(50, 60, 100);
 
-    public VentanaDetallesProductoSegundaMano(Window parent, ProductoSegundaMano p) {
+    public VentanaDetallesProductoSegundaManoWindow(Window parent, ProductoSegundaMano p) {
         super(parent, "Product Details", Dialog.ModalityType.APPLICATION_MODAL);
         setSize(550, 500);
         setLocationRelativeTo(parent);

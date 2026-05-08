@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
  * Ventana de opciones de intercambio con bordes estilizados, 
  * diseño plano y soporte para imagen de fondo.
  */
-public class VentanaInterchangeOptions extends JDialog {
+public class VentanaInterchangeOptionsWindow extends JDialog {
 
     private JButton btnMyProducts;
     private JButton btnSearch;
@@ -25,7 +25,7 @@ public class VentanaInterchangeOptions extends JDialog {
     private final Color COLOR_HOVER = new Color(53, 122, 189);      // Azul oscuro al pasar el ratón
     private final Color COLOR_TEXTO = new Color(44, 62, 80);        // Gris oscuro para bordes y textos
 
-    public VentanaInterchangeOptions(JFrame parent) {
+    public VentanaInterchangeOptionsWindow(JFrame parent) {
         super(parent, "Interchange Menu", true);
         
         // Configuración básica

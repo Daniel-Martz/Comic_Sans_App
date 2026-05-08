@@ -7,8 +7,8 @@ import modelo.producto.JuegoDeMesa;
 import modelo.producto.LineaProductoVenta;
 import vista.main.MainFrame;
 import vista.empleadoPanel.ManageProductsPanel;
-import vista.empleadoPanel.ModifyAProductWindow;
 import vista.empleadoPanel.ModifyProductsPanel;
+import vista.empleadoWindow.ModifyAProductWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

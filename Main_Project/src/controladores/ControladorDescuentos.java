@@ -5,9 +5,9 @@ import modelo.categoria.Categoria;
 import modelo.descuento.Descuento;
 import modelo.producto.LineaProductoVenta;
 import modelo.producto.Pack;
+import vista.empleadoWindow.AddDiscountWindow;
 import vista.main.MainFrame;
 import vista.userPanels.DescuentosPanel;
-import vista.empleadoPanel.AddDiscountWindow;
 
 import javax.swing.SwingUtilities;
 import java.awt.Window;
@@ -77,7 +77,7 @@ public class ControladorDescuentos implements ActionListener {
             LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
             if (p != null) {
                 Window parentWindow = SwingUtilities.getWindowAncestor(panel);
-                vista.clienteWindows.VentanaDetallesProducto dialog = new vista.clienteWindows.VentanaDetallesProducto(parentWindow, p);
+                vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(parentWindow, p);
                 dialog.setVisible(true);
             }
         } else if (cmd.startsWith("ADD_")) {

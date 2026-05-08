@@ -5,7 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JOptionPane;
-import vista.empleadoPanel.ManageTimePanel;
+
+import vista.GestorPanel.ManageTimePanel;
 import vista.main.MainFrame;
 import modelo.tiempo.TiempoSimulado;
 

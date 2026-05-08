@@ -76,7 +76,7 @@ public class ProposalsWindow extends JDialog {
      * @param mensaje Descripción del éxito.
      */
     public void mostrarVentanaExito(String mensaje) {
-        VentanaExito exito = new VentanaExito(
+        VentanaExitoWindow exito = new VentanaExitoWindow(
             this, 
             "Operación Exitosa", 
             "¡ACCIÓN COMPLETADA!", 
@@ -90,7 +90,7 @@ public class ProposalsWindow extends JDialog {
      * @param motivo Descripción del error.
      */
     public void mostrarVentanaError(String motivo) {
-        VentanaError error = new VentanaError(
+        VentanaErrorWindow error = new VentanaErrorWindow(
             this, 
             "Error en la operación", 
             "HA OCURRIDO UN PROBLEMA", 

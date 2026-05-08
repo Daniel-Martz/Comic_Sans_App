@@ -1,4 +1,4 @@
-package vista.empleadoPanel;
+package vista.empleadoWindow;
 
 import javax.swing.*;
 import java.awt.*;

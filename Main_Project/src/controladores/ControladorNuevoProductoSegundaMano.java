@@ -2,7 +2,7 @@ package controladores;
 
 import modelo.aplicacion.Aplicacion;
 import modelo.usuario.ClienteRegistrado;
-import vista.clienteWindows.VentanaNuevoProductoSegundaMano;
+import vista.clienteWindows.VentanaNuevoProductoSegundaManoWindow;
 import vista.userPanels.NuevoProductoSegundaManoPanel;
 
 import javax.swing.*;
@@ -16,11 +16,11 @@ import java.nio.file.StandardCopyOption;
 
 public class ControladorNuevoProductoSegundaMano implements ActionListener {
 
-    private final VentanaNuevoProductoSegundaMano ventana;
+    private final VentanaNuevoProductoSegundaManoWindow ventana;
     private final NuevoProductoSegundaManoPanel panel;
     private File imagenSeleccionada; // Guarda el archivo seleccionado temporalmente
 
-    public ControladorNuevoProductoSegundaMano(VentanaNuevoProductoSegundaMano ventana) {
+    public ControladorNuevoProductoSegundaMano(VentanaNuevoProductoSegundaManoWindow ventana) {
         this.ventana = ventana;
         this.panel = ventana.getPanel();
         

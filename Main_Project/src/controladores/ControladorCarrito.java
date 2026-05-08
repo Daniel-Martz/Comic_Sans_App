@@ -5,7 +5,7 @@ import modelo.producto.LineaProductoVenta;
 import modelo.usuario.ClienteRegistrado;
 import modelo.solicitud.SolicitudPedido;
 import vista.userPanels.CarritoPanel;
-import vista.clienteWindows.VentanaPagoPedido;
+import vista.clienteWindows.VentanaPagoPedidoWindow;
 import vista.main.MainFrame;
 
 import java.awt.event.ActionEvent;
@@ -52,7 +52,7 @@ public class ControladorCarrito implements ActionListener {
                 SolicitudPedido pedido = (SolicitudPedido) btn.getClientProperty("pedido");
                 if (pedido != null) {
                     // Reutilizamos la ventana de visualización de pedido implementada para empleados
-                    vista.empleadoPanel.ViewOrderWindow dialog = new vista.empleadoPanel.ViewOrderWindow(mainFrame, pedido);
+                    vista.empleadoWindow.ViewOrderWindow dialog = new vista.empleadoWindow.ViewOrderWindow(mainFrame, pedido);
                     dialog.setVisible(true);
                 }
             }
@@ -124,7 +124,7 @@ public class ControladorCarrito implements ActionListener {
 
     private void abrirVentanaPagoParaPedido(SolicitudPedido pedido) {
         try {
-            VentanaPagoPedido ventanaPago = new VentanaPagoPedido(
+            VentanaPagoPedidoWindow ventanaPago = new VentanaPagoPedidoWindow(
                     SwingUtilities.getWindowAncestor(vista), pedido);
             ControladorPagoPedido controladorPago = new ControladorPagoPedido(ventanaPago);
             ventanaPago.setControlador(controladorPago);

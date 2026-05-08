@@ -15,10 +15,10 @@ import vista.userPanels.LogInPanel;
  * Implementa un diseño de dos columnas donde la columna derecha (Filtros de Categoría)
  * cambia dinámicamente según lo seleccionado en la columna izquierda (Filtros Generales).
  */
-public class LoginDialog extends JDialog {
+public class LoginWindow extends JDialog {
   LogInPanel logInPanel;
 
-  public LoginDialog(JFrame parent) {
+  public LoginWindow(JFrame parent) {
       super(parent, "Log in", true); // true = Modal
       setSize(800, 750);
       setLocationRelativeTo(parent);

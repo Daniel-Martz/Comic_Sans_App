@@ -8,11 +8,11 @@ import java.awt.event.ActionListener;
 /**
  * Reusable modal dialog to inform the user they lack a required permission.
  */
-public class PermissionRequiredDialog extends JDialog {
+public class PermissionRequiredWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
-    public PermissionRequiredDialog(Frame parent, String permisoNombre) {
+    public PermissionRequiredWindow(Frame parent, String permisoNombre) {
         super(parent, "Access Denied", true);
         initComponents(permisoNombre);
         // Aumentamos ligeramente el ancho para que el mensaje no se corte
@@ -33,7 +33,7 @@ public class PermissionRequiredDialog extends JDialog {
         ok.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PermissionRequiredDialog.this.dispose();
+                PermissionRequiredWindow.this.dispose();
             }
         });
         btnPanel.add(ok);

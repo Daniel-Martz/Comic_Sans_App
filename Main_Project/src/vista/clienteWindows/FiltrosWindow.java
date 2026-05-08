@@ -16,7 +16,7 @@ import modelo.producto.LineaProductoVenta;
  * Implementa un diseño de dos columnas donde la columna derecha (Filtros de Categoría)
  * cambia dinámicamente según lo seleccionado en la columna izquierda (Filtros Generales).
  */
-public class FiltrosDialog extends JDialog {
+public class FiltrosWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,7 @@ public class FiltrosDialog extends JDialog {
     private JTextField txtPrecioMax;
     private JComboBox<String> cbCalifications;
 
-    public FiltrosDialog(JFrame parent) {
+    public FiltrosWindow(JFrame parent) {
         super(parent, "Advanced Filters", true); // true = Modal
         setSize(800, 750);
         setLocationRelativeTo(parent);

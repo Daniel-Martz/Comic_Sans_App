@@ -10,9 +10,9 @@ import vista.clienteWindows.*;
  */
 public class ControladorFiltros {
 
-    private FiltrosDialog vista;
+    private FiltrosWindow vista;
 
-    public ControladorFiltros(FiltrosDialog vista) {
+    public ControladorFiltros(FiltrosWindow vista) {
         this.vista = vista;
         inicializarListeners();
     }

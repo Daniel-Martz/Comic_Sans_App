@@ -63,7 +63,7 @@ public class ControladorOutstanding implements ActionListener {
                 }
                 
                 Window parentWindow = SwingUtilities.getWindowAncestor(vista);
-                vista.clienteWindows.VentanaDetallesProducto dialog = new vista.clienteWindows.VentanaDetallesProducto(parentWindow, p);
+                vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(parentWindow, p);
                 dialog.setVisible(true);
             } catch (NumberFormatException ex) {
                 vista.mostrarMensaje("Invalid product id.", "Error");

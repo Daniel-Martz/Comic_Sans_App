@@ -1,4 +1,4 @@
-package vista.empleadoPanel;
+package vista.empleadoWindow;
 
 import modelo.producto.LineaProductoVenta;
 import modelo.solicitud.SolicitudPedido;
@@ -51,7 +51,7 @@ public class ViewOrderWindow extends JDialog {
             JButton infoButton = new JButton("Product Information");
             
             infoButton.addActionListener(e -> {
-                vista.clienteWindows.VentanaDetallesProducto dialog = new vista.clienteWindows.VentanaDetallesProducto(
+                vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(
                         SwingUtilities.getWindowAncestor(this), 
                         Catalogo.getInstancia().buscarProductoNuevo(entrada.getKey().getID())
                 );

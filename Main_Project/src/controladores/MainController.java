@@ -38,16 +38,16 @@ public class MainController {
     // -------------------------------------------------------
     private final MainFrame mainFrame;
     private final Aplicacion modelo;
-    private vista.clienteWindows.CrearUsuarioDialog crearUsuarioDialog;
-    private vista.clienteWindows.LoginDialog loginDialog;
-    private vista.clienteWindows.EditProfileDialog editProfileDialog;
-    private vista.clienteWindows.FiltrosDialog dialogFiltros;
-    private vista.clienteWindows.UsuarioOptionsDialog dialogOpcionesUsuario;
+    private vista.clienteWindows.CrearUsuarioWindow crearUsuarioDialog;
+    private vista.clienteWindows.LoginWindow loginDialog;
+    private vista.clienteWindows.EditProfileWindow editProfileDialog;
+    private vista.clienteWindows.FiltrosWindow dialogFiltros;
+    private vista.clienteWindows.UsuarioOptionsWIndow dialogOpcionesUsuario;
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
     private ControladorManageAccounts ctrlManageAccounts;
-    private NotificacionDialog notificacionDialog;
+    private NotificacionWindow notificacionDialog;
 
     // -------------------------------------------------------
     // Constructor
@@ -198,7 +198,7 @@ public class MainController {
                     int id = Integer.parseInt(cmd.substring(5));
                     modelo.producto.LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
                     if (p != null) {
-                        vista.clienteWindows.VentanaDetallesProducto dialog = new vista.clienteWindows.VentanaDetallesProducto(mainFrame, p);
+                        vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(mainFrame, p);
                         dialog.setVisible(true);
                     }
                 } catch (NumberFormatException ex) {
@@ -349,7 +349,7 @@ public class MainController {
     public void abrirVentanaFiltros() {
         if (this.dialogFiltros == null) {
             // 1. Creamos la vista (JDialog), pasándole el MainFrame como padre
-            this.dialogFiltros = new vista.clienteWindows.FiltrosDialog(mainFrame);
+            this.dialogFiltros = new vista.clienteWindows.FiltrosWindow(mainFrame);
             // 2. Creamos su controlador específico solo una vez
             this.controladorFiltros = new ControladorFiltros(this.dialogFiltros);
         }
@@ -363,7 +363,7 @@ public class MainController {
      */
     public void mostrarProductosPorCategoria(String categoria) {
         if (this.dialogFiltros == null) {
-            this.dialogFiltros = new vista.clienteWindows.FiltrosDialog(mainFrame);
+            this.dialogFiltros = new vista.clienteWindows.FiltrosWindow(mainFrame);
             this.controladorFiltros = new ControladorFiltros(this.dialogFiltros);
         }
         
@@ -410,12 +410,12 @@ public class MainController {
      */
     private boolean verificarAccesoClienteRegistrado() {
         if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
-            VentanaRegistroRequerido dialogoRequerido = new VentanaRegistroRequerido(mainFrame);
+            VentanaRegistroRequeridoWindow dialogoRequerido = new VentanaRegistroRequeridoWindow(mainFrame);
             int eleccion = dialogoRequerido.mostrarVentana();
 
-            if (eleccion == VentanaRegistroRequerido.INICIAR_SESION) {
+            if (eleccion == VentanaRegistroRequeridoWindow.INICIAR_SESION) {
                 abrirVentanaLogIn();
-            } else if (eleccion == VentanaRegistroRequerido.REGISTRARSE) {
+            } else if (eleccion == VentanaRegistroRequeridoWindow.REGISTRARSE) {
                 abrirVentanaCrearUsuario();
             }
             return false;
@@ -428,7 +428,7 @@ public class MainController {
             return;
         }
 
-        VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
+        VentanaInterchangeOptionsWindow v = new VentanaInterchangeOptionsWindow(this.mainFrame);
 	    v.setControlador(e -> {
 	        String command = e.getActionCommand();
 	        if (command.equals("PROPOSALS")) {
@@ -509,20 +509,20 @@ public class MainController {
     }
     
     public void abrirVentanaCrearUsuario(){
-    	this.crearUsuarioDialog = new CrearUsuarioDialog(mainFrame);
+    	this.crearUsuarioDialog = new CrearUsuarioWindow(mainFrame);
       this.crearUsuarioDialog.addListener(new CreateAccountController( this));
     	crearUsuarioDialog.setVisible(true);
     }
     
     public void abrirVentanaLogIn(){
-    	this.loginDialog = new LoginDialog(mainFrame );
+    	this.loginDialog = new LoginWindow(mainFrame );
       this.loginDialog.addListenerLogin(new LoginController(this));
       this.loginDialog.addListenerCreateAccount(new LoginToCreateAccountController(this));
     	loginDialog.setVisible(true);
     }
     
     public void abrirVentanaOpcionesUsuario(){
-    	this.dialogOpcionesUsuario = new UsuarioOptionsDialog(mainFrame);
+    	this.dialogOpcionesUsuario = new UsuarioOptionsWIndow(mainFrame);
       //Aquí pasamos como argumento el mainFrame para que el dialog de cerrar sesión tenga un padre
       this.dialogOpcionesUsuario.addListener(new UsuarioOptionsController(mainFrame, this));
     	dialogOpcionesUsuario.setVisible(true);
@@ -537,7 +537,7 @@ public class MainController {
     }
 
     public void abrirVentanaEditarUsuario(){
-    	this.editProfileDialog = new EditProfileDialog(mainFrame);
+    	this.editProfileDialog = new EditProfileWindow(mainFrame);
     	this.editProfileDialog.addListenerChangeData(new EditProfileController( this));
     	editProfileDialog.setVisible(true);
     } 
@@ -622,7 +622,7 @@ public class MainController {
 
 
     public void abrirVentanaNotificacion(Notificacion n){
-    	this.notificacionDialog = new NotificacionDialog(mainFrame, n);
+    	this.notificacionDialog = new NotificacionWindow(mainFrame, n);
       this.notificacionDialog.setVisible(true);
     } 
 
@@ -633,7 +633,7 @@ public class MainController {
         if (u instanceof Empleado emp && emp.tienePermiso(p)) return true;
 
         // Reusable dialog for permission denial (keeps UI consistent)
-        vista.clienteWindows.PermissionRequiredDialog dlg = new vista.clienteWindows.PermissionRequiredDialog(mainFrame, nombrePermiso);
+        vista.clienteWindows.PermissionRequiredWindow dlg = new vista.clienteWindows.PermissionRequiredWindow(mainFrame, nombrePermiso);
         dlg.mostrar();
         return false;
     }

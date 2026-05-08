@@ -137,7 +137,7 @@ public class VentanaPagoValidacion extends JDialog {
     // ── Ventanas de resultado (Llamadas por el controlador) ──────────────────
 
     public void mostrarVentanaExito() {
-        VentanaExito exito = new VentanaExito(
+        VentanaExitoWindow exito = new VentanaExitoWindow(
             getOwner(), 
             "Successful Payment", 
             "SUCCESSFUL PAYMENT!!", 
@@ -148,7 +148,7 @@ public class VentanaPagoValidacion extends JDialog {
 
     public void mostrarVentanaError(String motivo) {
         // Al usar \n en la descripción, la clase lo convertirá en dos líneas automáticamente
-        VentanaError error = new VentanaError(
+        VentanaErrorWindow error = new VentanaErrorWindow(
             getOwner(), 
             "Error", 
             "THERE WAS AN ERROR DURING THE PAYMENT", 

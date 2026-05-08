@@ -6,7 +6,7 @@ import modelo.producto.EstadoConservacion;
 import modelo.usuario.Empleado;
 import vista.main.MainFrame;
 import vista.empleadoPanel.ValidationRequestsPanel;
-import vista.empleadoPanel.ValidarProductoWindow;
+import vista.empleadoWindow.ValidarProductoWindow;
 
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;

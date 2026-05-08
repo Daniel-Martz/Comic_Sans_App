@@ -7,7 +7,7 @@ import java.awt.*;
  * Ventana genérica modal para mostrar mensajes de error.
  * Mantiene el estilo visual rojo pastel de la aplicación.
  */
-public class VentanaError extends JDialog {
+public class VentanaErrorWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,7 +17,7 @@ public class VentanaError extends JDialog {
      * @param tituloMensaje El texto en negrita del interior (ej: "THERE WAS AN ERROR...")
      * @param descripcion   La descripción detallada del error (soporta saltos de línea con \n)
      */
-    public VentanaError(Window owner, String tituloVentana, String tituloMensaje, String descripcion) {
+    public VentanaErrorWindow(Window owner, String tituloVentana, String tituloMensaje, String descripcion) {
         super(owner, tituloVentana, ModalityType.APPLICATION_MODAL);
         
         JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));

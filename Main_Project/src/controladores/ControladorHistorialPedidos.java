@@ -30,7 +30,7 @@ public class ControladorHistorialPedidos implements ActionListener{
         if (cmd.startsWith("INFO_")) {
             int productId = Integer.parseInt(cmd.substring(5));
             Window parentWindow = SwingUtilities.getWindowAncestor(historialPedidosPanel);
-            vista.clienteWindows.VentanaDetallesProducto dialog = new vista.clienteWindows.VentanaDetallesProducto(parentWindow, Catalogo.getInstancia().buscarProductoNuevo(productId));
+            vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(parentWindow, Catalogo.getInstancia().buscarProductoNuevo(productId));
             dialog.setVisible(true);
         } else if (cmd.startsWith("REVIEW_")) {
             int productId = Integer.parseInt(cmd.substring(7));
@@ -40,7 +40,7 @@ public class ControladorHistorialPedidos implements ActionListener{
             try {
                 int productId = Integer.parseInt(cmd);
                 Window parentWindow = SwingUtilities.getWindowAncestor(historialPedidosPanel);
-                vista.clienteWindows.VentanaDetallesProducto dialog = new vista.clienteWindows.VentanaDetallesProducto(parentWindow, Catalogo.getInstancia().buscarProductoNuevo(productId));
+                vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(parentWindow, Catalogo.getInstancia().buscarProductoNuevo(productId));
                 dialog.setVisible(true);
             } catch (NumberFormatException ex) {
                 // Ignore

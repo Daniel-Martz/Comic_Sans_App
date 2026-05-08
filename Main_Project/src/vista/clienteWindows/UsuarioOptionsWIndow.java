@@ -19,7 +19,7 @@ import java.awt.event.MouseEvent;
  * Ventana de opciones de intercambio con bordes estilizados, 
  * diseño plano y soporte para imagen de fondo.
  */
-public class UsuarioOptionsDialog extends JDialog {
+public class UsuarioOptionsWIndow extends JDialog {
 
     private JButton btnEditProfile;
     private JButton btnCerrarSesion;
@@ -32,7 +32,7 @@ public class UsuarioOptionsDialog extends JDialog {
     private final Color COLOR_HOVER = new Color(53, 122, 189);      // Azul oscuro al pasar el ratón
     private final Color COLOR_TEXTO = new Color(44, 62, 80);        // Gris oscuro para bordes y textos
 
-    public UsuarioOptionsDialog(JFrame parent) {
+    public UsuarioOptionsWIndow(JFrame parent) {
         super(parent, "Profile Menu", true);
         
         setSize(500, 450); 

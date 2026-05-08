@@ -14,10 +14,10 @@ import vista.userPanels.LogInPanel;
  * Implementa un diseño de dos columnas donde la columna derecha (Filtros de Categoría)
  * cambia dinámicamente según lo seleccionado en la columna izquierda (Filtros Generales).
  */
-public class EditProfileDialog extends JDialog {
+public class EditProfileWindow extends JDialog {
   EditProfilePanel editProfilePanel;
 
-  public EditProfileDialog(JFrame parent) {
+  public EditProfileWindow(JFrame parent) {
       super(parent, "Log in", true); // true = Modal
       setSize(800, 750);
       setLocationRelativeTo(parent);

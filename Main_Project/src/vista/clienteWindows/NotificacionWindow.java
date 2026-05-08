@@ -18,10 +18,10 @@ import modelo.notificacion.Notificacion;
 /**
  * Diálogo modal que muestra el contenido de una notificación.
  */
-public class NotificacionDialog extends JDialog {
+public class NotificacionWindow extends JDialog {
     private static final long serialVersionUID = 1L;
 
-    public NotificacionDialog(Window owner, Notificacion n) {
+    public NotificacionWindow(Window owner, Notificacion n) {
         super(owner, "Notificación", ModalityType.APPLICATION_MODAL);
         init(n);
     }

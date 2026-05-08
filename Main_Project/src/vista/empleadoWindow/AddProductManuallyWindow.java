@@ -1,11 +1,10 @@
-package vista.empleadoPanel;
+package vista.empleadoWindow;
 
 import modelo.aplicacion.Aplicacion;
 import modelo.categoria.Categoria;
 import modelo.producto.Comic;
 import modelo.producto.Figura;
 import modelo.producto.JuegoDeMesa;
-import modelo.producto.LineaProductoVenta;
 import modelo.producto.TipoJuegoMesa;
 
 import javax.swing.*;
@@ -17,7 +16,7 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ModifyAProductWindow extends JDialog {
+public class AddProductManuallyWindow extends JDialog {
     private static final long serialVersionUID = 1L;
 
     private final Color BG_COLOR = new Color(162, 187, 210);      
@@ -29,6 +28,9 @@ public class ModifyAProductWindow extends JDialog {
 
     private JLabel lblPhoto;
     
+    // Selector de tipo
+    private JComboBox<String> comboProductType;
+
     // Campos comunes
     private JTextField txtId;
     private JTextField txtName;
@@ -62,14 +64,14 @@ public class ModifyAProductWindow extends JDialog {
     private JTextField txtEdadMax;
     private JComboBox<TipoJuegoMesa> comboTipoJuego;
     
-    private LineaProductoVenta currentProduct;
     private File selectedPhotoFile = null;
 
-    public ModifyAProductWindow(JFrame parent) {
-        super(parent, "Modify Product", true); // Ventana modal
+    public AddProductManuallyWindow(JFrame parent) {
+        super(parent, "Add Product Manually", true); // Ventana modal
         setSize(1050, 750);
         setLocationRelativeTo(parent);
         initLayout();
+        actualizarCamposEspecificos();
     }
 
     private void initLayout() {
@@ -87,7 +89,7 @@ public class ModifyAProductWindow extends JDialog {
         btnBack.setContentAreaFilled(false);
         btnBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        JLabel lblTitle = new JLabel("Modify Product", SwingConstants.CENTER);
+        JLabel lblTitle = new JLabel("Add Product", SwingConstants.CENTER);
         lblTitle.setFont(new Font("SansSerif", Font.BOLD, 24));
         lblTitle.setForeground(Color.WHITE);
 
@@ -113,7 +115,7 @@ public class ModifyAProductWindow extends JDialog {
         photoPlaceholder.setBackground(Color.WHITE);
         photoPlaceholder.setBorder(new LineBorder(Color.DARK_GRAY, 2));
         
-        lblPhoto = new JLabel("<html><center>X<br>NO PHOTO</center></html>", SwingConstants.CENTER);
+        lblPhoto = new JLabel("<html><center>X<br>ADD PHOTO</center></html>", SwingConstants.CENTER);
         lblPhoto.setFont(new Font("SansSerif", Font.BOLD, 36));
         lblPhoto.setForeground(Color.LIGHT_GRAY);
         photoPlaceholder.add(lblPhoto, BorderLayout.CENTER);
@@ -139,6 +141,9 @@ public class ModifyAProductWindow extends JDialog {
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setOpaque(false);
 
+        comboProductType = new JComboBox<>(new String[]{"Comic", "Figure", "Board Game"});
+        comboProductType.addActionListener(e -> actualizarCamposEspecificos());
+
         txtId = new JTextField();
         txtName = new JTextField();
         txtPrice = new JTextField();
@@ -147,6 +152,14 @@ public class ModifyAProductWindow extends JDialog {
         
         btnCategories = new JButton("Select Categories");
         btnCategories.addActionListener(e -> abrirSelectorCategorias());
+
+        formPanel.add(createFormRow("PRODUCT TYPE:", comboProductType, true));
+        formPanel.add(createFormRow("ID:", txtId, true));
+        formPanel.add(createFormRow("NAME:", txtName, true));
+        formPanel.add(createFormRow("PRICE:", txtPrice, true));
+        formPanel.add(createFormRow("DESCRIPTION:", txtDescription, true));
+        formPanel.add(createFormRow("NUMBER STOCK:", txtStock, true));
+        formPanel.add(createFormRow("CATEGORIES:", btnCategories, true));
 
         // Panel de campos específicos
         specificFieldsPanel = new JPanel();
@@ -206,49 +219,27 @@ public class ModifyAProductWindow extends JDialog {
         return row;
     }
 
-    public void cargarProducto(LineaProductoVenta p) {
-        this.currentProduct = p;
-        this.selectedPhotoFile = null;
-        this.categoriasSeleccionadas = new HashSet<>(p.getCategorias());
-        
-        formPanel.removeAll();
+    private void actualizarCamposEspecificos() {
         specificFieldsPanel.removeAll();
+        String type = (String) comboProductType.getSelectedItem();
 
-        // Campos comunes
-        formPanel.add(createFormRow("ID:", txtId, true));
-        formPanel.add(createFormRow("NAME:", txtName, true));
-        formPanel.add(createFormRow("PRICE:", txtPrice, true));
-        formPanel.add(createFormRow("DESCRIPTION:", txtDescription, true));
-        formPanel.add(createFormRow("NUMBER STOCK:", txtStock, true));
-        formPanel.add(createFormRow("CATEGORIES:", btnCategories, true));
-        
-        txtId.setText(String.valueOf(p.getID()));
-        txtName.setText(p.getNombre());
-        txtPrice.setText(String.valueOf(p.getPrecio()));
-        txtDescription.setText(p.getDescripcion() != null ? p.getDescripcion() : "");
-        txtStock.setText(String.valueOf(p.getStock()));
-        actualizarTextoBotonCategorias();
-
-        // Campos específicos
-        if (p instanceof Comic) {
-            Comic c = (Comic) p;
-            txtNumPaginas = new JTextField(String.valueOf(c.getNumeroPaginas()));
-            txtAutor = new JTextField(c.getAutor());
-            txtEditorial = new JTextField(c.getEditorial());
-            txtAño = new JTextField(String.valueOf(c.getAñoPublicacion()));
+        if ("Comic".equals(type)) {
+            txtNumPaginas = new JTextField();
+            txtAutor = new JTextField();
+            txtEditorial = new JTextField();
+            txtAño = new JTextField();
             
             specificFieldsPanel.add(createFormRow("PAGES:", txtNumPaginas, true));
             specificFieldsPanel.add(createFormRow("AUTHOR:", txtAutor, true));
             specificFieldsPanel.add(createFormRow("EDITORIAL:", txtEditorial, true));
             specificFieldsPanel.add(createFormRow("YEAR:", txtAño, true));
             
-        } else if (p instanceof Figura) {
-            Figura f = (Figura) p;
-            txtMarca = new JTextField(f.getMarca());
-            txtMaterial = new JTextField(f.getMaterial());
-            txtDimX = new JTextField(String.valueOf(f.getDimensionX()));
-            txtDimY = new JTextField(String.valueOf(f.getDimensionY()));
-            txtDimZ = new JTextField(String.valueOf(f.getDimensionZ()));
+        } else if ("Figure".equals(type)) {
+            txtMarca = new JTextField();
+            txtMaterial = new JTextField();
+            txtDimX = new JTextField();
+            txtDimY = new JTextField();
+            txtDimZ = new JTextField();
             
             specificFieldsPanel.add(createFormRow("BRAND:", txtMarca, true));
             specificFieldsPanel.add(createFormRow("MATERIAL:", txtMaterial, true));
@@ -256,25 +247,19 @@ public class ModifyAProductWindow extends JDialog {
             specificFieldsPanel.add(createFormRow("DIM Y (cm):", txtDimY, true));
             specificFieldsPanel.add(createFormRow("DIM Z (cm):", txtDimZ, true));
             
-        } else if (p instanceof JuegoDeMesa) {
-            JuegoDeMesa j = (JuegoDeMesa) p;
-            txtNumJugadores = new JTextField(String.valueOf(j.getNumeroJugadores()));
-            txtEdadMin = new JTextField(String.valueOf(j.getEdadMinima()));
-            txtEdadMax = new JTextField(String.valueOf(j.getEdadMaxima()));
+        } else if ("Board Game".equals(type)) {
+            txtNumJugadores = new JTextField();
+            txtEdadMin = new JTextField();
+            txtEdadMax = new JTextField();
             
             comboTipoJuego = new JComboBox<>(TipoJuegoMesa.values());
-            comboTipoJuego.setSelectedItem(j.getTipoJuegoDeMesa());
             
             specificFieldsPanel.add(createFormRow("PLAYERS:", txtNumJugadores, true));
             specificFieldsPanel.add(createFormRow("MIN AGE:", txtEdadMin, true));
             specificFieldsPanel.add(createFormRow("MAX AGE:", txtEdadMax, true));
             specificFieldsPanel.add(createFormRow("GAME TYPE:", comboTipoJuego, true));
         }
-        
-        cargarImagen(p.getFoto() != null ? p.getFoto().getPath() : null);
-        
-        formPanel.revalidate();
-        formPanel.repaint();
+
         specificFieldsPanel.revalidate();
         specificFieldsPanel.repaint();
     }
@@ -290,11 +275,6 @@ public class ModifyAProductWindow extends JDialog {
     private void abrirSelectorCategorias() {
         Set<Categoria> todas = Aplicacion.getInstancia().getCatalogo().getCategoriasTienda();
         
-        if (todas == null || todas.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "There are no categories available to select.", "No Categories", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
         JDialog dialog = new JDialog(this, "Select Categories", Dialog.ModalityType.APPLICATION_MODAL);
         dialog.setLayout(new BorderLayout());
         
@@ -378,7 +358,7 @@ public class ModifyAProductWindow extends JDialog {
     public JButton getBtnBack() { return btnBack; }
     public JButton getBtnConfirmChanges() { return btnConfirmChanges; }
     
-    public LineaProductoVenta getCurrentProduct() { return currentProduct; }
+    public String getProductType() { return (String) comboProductType.getSelectedItem(); }
     
     // Getters comunes
     public String getNewId() { return txtId.getText(); }

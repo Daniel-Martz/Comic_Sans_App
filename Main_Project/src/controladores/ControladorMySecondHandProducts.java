@@ -4,7 +4,7 @@ import modelo.aplicacion.Aplicacion;
 import modelo.producto.ProductoSegundaMano;
 import modelo.solicitud.SolicitudValidacion;
 import modelo.usuario.ClienteRegistrado;
-import vista.clienteWindows.VentanaNuevoProductoSegundaMano;
+import vista.clienteWindows.VentanaNuevoProductoSegundaManoWindow;
 import vista.clienteWindows.VentanaPagoValidacion;
 import vista.main.MainFrame;
 import vista.userPanels.MySecondHandProductsPanel;
@@ -84,7 +84,7 @@ public class ControladorMySecondHandProducts implements ActionListener {
         }
 
         // 1. Crear la ventana
-        VentanaNuevoProductoSegundaMano ventanaNuevo = new VentanaNuevoProductoSegundaMano(parent);
+        VentanaNuevoProductoSegundaManoWindow ventanaNuevo = new VentanaNuevoProductoSegundaManoWindow(parent);
         
         // 2. Crear su controlador, que se encargará de la lógica interna de la ventana
         new ControladorNuevoProductoSegundaMano(ventanaNuevo);

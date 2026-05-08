@@ -3,8 +3,8 @@ package controladores;
 import modelo.aplicacion.Aplicacion;
 import modelo.solicitud.SolicitudPedido;
 import vista.empleadoPanel.ManageOrdersPanel;
-import vista.empleadoPanel.SelectOrderStateWindow;
-import vista.empleadoPanel.ViewOrderWindow;
+import vista.empleadoWindow.SelectOrderStateWindow;
+import vista.empleadoWindow.ViewOrderWindow;
 import vista.main.MainFrame;
 
 import java.awt.event.ActionEvent;

@@ -3,7 +3,7 @@ package vista.clienteWindows;
 import javax.swing.*;
 import java.awt.*;
 
-public class VentanaRegistroRequerido extends JDialog {
+public class VentanaRegistroRequeridoWindow extends JDialog {
     
     // Constantes para saber qué botón pulsó el usuario
     public static final int INICIAR_SESION = 0;
@@ -12,7 +12,7 @@ public class VentanaRegistroRequerido extends JDialog {
 
     private int resultado = CANCELAR; // Por defecto es cancelar si cierra la ventana
 
-    public VentanaRegistroRequerido(JFrame parent) {
+    public VentanaRegistroRequeridoWindow(JFrame parent) {
         // Llamamos al constructor de JDialog (ventana padre, título, modal)
         super(parent, "Registro Requerido", true);
         initUI();

@@ -14,9 +14,9 @@ import vista.userPanels.CrearUsuarioPanel;
  * Implementa un diseño de dos columnas donde la columna derecha (Filtros de Categoría)
  * cambia dinámicamente según lo seleccionado en la columna izquierda (Filtros Generales).
  */
-public class CrearUsuarioDialog extends JDialog {
+public class CrearUsuarioWindow extends JDialog {
   CrearUsuarioPanel crearUsuarioPanel;
-  public CrearUsuarioDialog(JFrame parent) {
+  public CrearUsuarioWindow(JFrame parent) {
       super(parent, "Crar usuario", true); // true = Modal
       setSize(800, 750);
       setLocationRelativeTo(parent);

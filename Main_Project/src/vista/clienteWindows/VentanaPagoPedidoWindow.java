@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * Ventana de pago para la compra de productos del carrito.
  * Actúa puramente como VISTA en el patrón MVC.
  */
-public class VentanaPagoPedido extends JDialog {
+public class VentanaPagoPedidoWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public class VentanaPagoPedido extends JDialog {
     private modelo.solicitud.SolicitudPedido pedido;
 
     // ── Constructor
-    public VentanaPagoPedido(Window padre, SolicitudPedido pedido) {
+    public VentanaPagoPedidoWindow(Window padre, SolicitudPedido pedido) {
         super(padre, "Payment Window", ModalityType.APPLICATION_MODAL);
         this.pedido = pedido;
         inicializarComponentes(pedido);
