@@ -298,12 +298,12 @@ import modelo.tiempo.*;
         // ─────────────────────────────────────────────────────────────────
         // 4. USUARIOS DE PRUEBA
         // ─────────────────────────────────────────────────────────────────
-        ClienteRegistrado yo      = new ClienteRegistrado("demoUser",              "123456789A", "Passw0rd!!");
-        ClienteRegistrado bob     = new ClienteRegistrado("BobElIntercambiador",   "987654321B", "Passw0rd!!");
-        ClienteRegistrado alice   = new ClienteRegistrado("Alice_Geek",            "111222333C", "Passw0rd!!");
-        ClienteRegistrado charlie = new ClienteRegistrado("Charlie_Coleccionista", "444555666D", "Passw0rd!!");
+        ClienteRegistrado yo      = app.crearCuenta("demoUser",              "00000000T", "Passw0rd!!", "Passw0rd!!");
+        ClienteRegistrado bob     = app.crearCuenta("BobElIntercambiador",   "00000001R", "Passw0rd!!", "Passw0rd!!");
+        ClienteRegistrado alice   = app.crearCuenta("Alice_Geek",            "00000002W", "Passw0rd!!", "Passw0rd!!");
+        ClienteRegistrado charlie = app.crearCuenta("Charlie_Coleccionista", "00000003A", "Passw0rd!!", "Passw0rd!!");
 
-        app.setUsuarioActual(yo);
+        app.iniciarSesion("demoUser", "Passw0rd!!");
 
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         // CARGA DE DATOS ADICIONAL PARA PRUEBAS
@@ -482,7 +482,6 @@ import modelo.tiempo.*;
         
         app.cerrarSesion();
 
-        app.crearCuenta("demoUser", "14433331A", "Passw0rd!!", "Passw0rd!!");
         app.iniciarSesion("demoUser", "Passw0rd!!");
         
         for(LineaProductoVenta p : app.buscarProductosNuevos("")){
