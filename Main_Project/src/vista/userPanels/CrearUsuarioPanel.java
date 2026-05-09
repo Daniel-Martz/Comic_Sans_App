@@ -1,30 +1,11 @@
 package vista.userPanels;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.RenderingHints;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import controladores.NewPasswordController;
+import javax.swing.*;
+import controlador.NewPasswordController;
 
 public class CrearUsuarioPanel extends JPanel {
 
@@ -160,8 +141,11 @@ public class CrearUsuarioPanel extends JPanel {
 
       JTextField usernameField;
       JTextField dniField;
-      JTextField passwordField;
-      JTextField confirmPasswordField;
+      JPasswordField passwordField;
+      JPasswordField confirmPasswordField;
+
+      JButton showPasswordButton;
+      boolean isPasswordVisible = false;
 
       CrearUsuarioPanel c;
 
@@ -174,15 +158,34 @@ public class CrearUsuarioPanel extends JPanel {
       void initComponents() {
         usernameField        = styledField();
         dniField             = styledField();
-        passwordField        = styledField();
-        confirmPasswordField = styledField();
+        passwordField        = styledPasswordField();
+        confirmPasswordField = styledPasswordField();
 
         usernameLabel        = iconLabel("\uD83D\uDC64", "Username");          // 👤
         dniLabel             = iconLabel("\uD83C\uDD94", "DNI");               // 🆔
         passwordLabel        = iconLabel("\uD83D\uDD12", "New Password");      // 🔒
         confirmPasswordLabel = iconLabel("\uD83D\uDD12", "Repeat New Password"); // 🔒
+        showPasswordButton = new JButton("Mostrar");
 
         passwordField.getDocument().addDocumentListener(new NewPasswordController(c));
+        showPasswordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!isPasswordVisible) {
+                    // Mostrar la contraseña pasando el char 0 (desactiva la máscara)
+                    passwordField.setEchoChar((char) 0);
+                    confirmPasswordField.setEchoChar((char) 0);
+                    showPasswordButton.setText("Ocultar");
+                    isPasswordVisible = true;
+                } else {
+                    // Ocultar la contraseña devolviendo el punto negro
+                    passwordField.setEchoChar('\u25CF');
+                    confirmPasswordField.setEchoChar('\u25CF');
+                    showPasswordButton.setText("Mostrar");
+                    isPasswordVisible = false;
+                }
+            }
+        });
       }
 
       /** Crea un JTextField con estilo subrayado (sin borde exterior). */
@@ -219,6 +222,8 @@ public class CrearUsuarioPanel extends JPanel {
         addRow(passwordLabel,        passwordField);
         add(Box.createVerticalStrut(18));
         addRow(confirmPasswordLabel, confirmPasswordField);
+        add(Box.createVerticalStrut(18));
+        add(showPasswordButton);
       }
 
       private void addRow(JLabel label, JTextField field) {
@@ -236,6 +241,19 @@ public class CrearUsuarioPanel extends JPanel {
         confirmPasswordField.setText("");
       }
     }
+
+      private JPasswordField styledPasswordField(){
+        JPasswordField f = new JPasswordField(25);
+        f.setBackground(new Color(74, 144, 210, 0));   // mismo color que fondo
+        f.setOpaque(false);
+        f.setForeground(WHITE);
+        f.setCaretColor(WHITE);
+        f.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+        f.setPreferredSize(new Dimension(320, 36));
+        f.setMaximumSize(new Dimension(320, 36));
+        f.setEchoChar('\u25CF'); 
+        return f;
+      }
 
     // ── RequirementsPanel ────────────────────────────────────────
     public class RequirementsPanel extends JPanel {

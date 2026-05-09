@@ -12,10 +12,21 @@ import modelo.usuario.Usuario;
 import modelo.usuario.Permiso;
 import vista.main.MainFrame;
 import vista.empleadoWindow.*;
+import vista.userWindows.CrearUsuarioDialog;
+import vista.userWindows.EditProfileDialog;
+import vista.userWindows.EmpleadoOptionsDialog;
+import vista.userWindows.FiltrosDialog;
+import vista.userWindows.LoginDialog;
+import vista.userWindows.NotificacionDialog;
+import vista.userWindows.ProposalsWindow;
+import vista.userWindows.VentanaInterchangeOptions;
+import vista.userWindows.VentanaRegistroRequerido;
+import vista.userWindows.UsuarioOptionsDialog;
 import javax.swing.JOptionPane;
 import vista.userPanels.HeaderPanel;
 import javax.swing.Timer;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import vista.userPanels.*;
@@ -47,6 +58,12 @@ public class MainController {
     private EditProfileWindow editProfileDialog;
     private FiltrosWindow dialogFiltros;
     private UsuarioOptionsWIndow dialogOpcionesUsuario;
+    private vista.userWindows.CrearUsuarioDialog crearUsuarioDialog;
+    private vista.userWindows.LoginDialog loginDialog;
+    private vista.userWindows.EditProfileDialog editProfileDialog;
+    private vista.userWindows.FiltrosDialog dialogFiltros;
+    private vista.userWindows.UsuarioOptionsDialog dialogOpcionesUsuario;
+    private vista.userWindows.EmpleadoOptionsDialog dialogOpcionesEmpleado;
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
@@ -589,14 +606,27 @@ public class MainController {
     }
     
     public void abrirVentanaOpcionesUsuario(){
-    	this.dialogOpcionesUsuario = new UsuarioOptionsWIndow(mainFrame);
-      //Aquí pasamos como argumento el mainFrame para que el dialog de cerrar sesión tenga un padre
-      this.dialogOpcionesUsuario.addListener(new UsuarioOptionsController(mainFrame, this));
-    	dialogOpcionesUsuario.setVisible(true);
+      if(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado){
+        this.dialogOpcionesUsuario = new UsuarioOptionsDialog(mainFrame);
+        //Aquí pasamos como argumento el mainFrame para que el dialog de cerrar sesión tenga un padre
+        this.dialogOpcionesUsuario.addListener(new UsuarioOptionsController(mainFrame, this));
+        dialogOpcionesUsuario.setVisible(true);
+      }
+      else{
+        this.dialogOpcionesEmpleado = new EmpleadoOptionsDialog(mainFrame);
+        //Aquí pasamos como argumento el mainFrame para que el dialog de cerrar sesión tenga un padre
+        this.dialogOpcionesEmpleado.addListener(new UsuarioOptionsController(mainFrame, this));
+        dialogOpcionesEmpleado.setVisible(true);
+      }
     }
 
 	public void cerrarVentanaOpcionesUsuario(){
-    	dialogOpcionesUsuario.setVisible(false);
+      if(Aplicacion.getInstancia().getUsuarioActual() instanceof Empleado){
+        dialogOpcionesEmpleado.setVisible(false);
+      }
+      else{
+        dialogOpcionesUsuario.setVisible(false);
+      }
     }
     
     public void cerrarVentanaCrearUsuario() {
@@ -710,4 +740,6 @@ public class MainController {
         dlg.mostrar();
         return false;
     }
+    
+    
 }

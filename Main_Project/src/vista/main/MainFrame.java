@@ -4,7 +4,13 @@ import vista.userPanels.*;
 import vista.GestorPanel.*;
 import vista.empleadoPanel.*;
 import javax.swing.*;
+
+import modelo.aplicacion.Aplicacion;
+
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class MainFrame extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -50,6 +56,7 @@ public class MainFrame extends JFrame {
     private PlaceholderPanel configuracionPanel;
     private PlaceholderPanel perfilPanel;
 
+    private final String ficheroGuardado = "AppGuardada.txt";
 
     // Nombres estáticos de los paneles para el CardLayout (antes estaban en el controlador)
     public static final String PANEL_MENU_EMPLEADO = "MenuEmpleado";
@@ -85,9 +92,35 @@ public class MainFrame extends JFrame {
     public static final String PANEL_MANAGE_TIME = "ManageTime";
     public static final String PANEL_DESCUENTOS_CATEGORIA = "DescuentosCategoria";
 
-    public MainFrame() {
-        super("Comic Sans App");
+    public void guardarEstadoAplicacion() {
+    	try {
+        Aplicacion.getInstancia().guardarEstadoAplicacion(ficheroGuardado);
+      } catch (IOException e) {
+        System.out.println("No hay un estado previo que cargar");
+      }
+    }
+    
+    public void cargarEstadoAplicacion() {
+      Aplicacion.getInstancia().cargarEstadoAplicacion(ficheroGuardado);
+    }
 
+    public MainFrame() {
+      super("Comic Sans App");
+      cargarEstadoAplicacion();
+      
+      // 0. Hacemos que se guarde el estado de la aplicación al cerrarla
+      this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+      this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+        //Cuando se cierre la ventana, queremos que se guarde el estado de la aplicación
+        guardarEstadoAplicacion();
+				
+				// Cerrar la ventana y terminar la ejecución
+				e.getWindow().dispose();
+				System.exit(0);
+			}
+		});
         // 1. Crear el layout
         cardLayout = new CardLayout();
         contenedorPaneles = new JPanel(cardLayout);
