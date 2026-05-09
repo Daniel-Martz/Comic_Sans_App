@@ -6,7 +6,7 @@ import modelo.descuento.Descuento;
 import vista.main.MainFrame;
 import vista.userPanels.DescuentosCategoriaPanel;
 import vista.empleadoPanel.AddCategoryDiscountWindow;
-
+ 
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +29,10 @@ public class ControladorDescuentosCategoria implements ActionListener {
 
         this.panel.getHeaderPanel().addHomeListener(e -> mainController.mostrarMenuPrincipal());
         this.panel.getColCategorias().addSearchListener(this);
+
+        if (this.panel.getBtnBack() != null) {
+            this.panel.getBtnBack().addActionListener(e -> mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS));
+        }
 
         // Auto-recargar al abrir la pestaña
         this.panel.addComponentListener(new ComponentAdapter() {

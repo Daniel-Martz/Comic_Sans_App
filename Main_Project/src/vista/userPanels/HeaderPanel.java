@@ -250,6 +250,7 @@ public class HeaderPanel extends JPanel {
         btnFilters.setVisible(false);
         btnCarrito.setVisible(false);
         btnIntercambios.setVisible(false);
+        btnNotificaciones.setVisible(true);
         speechBubble.setText("<html><center>EMPLOYEE DASHBOARD<br>MANAGE THE STORE</center></html>");
         
         // Forzar simetría para que el botón Home quede perfectamente centrado

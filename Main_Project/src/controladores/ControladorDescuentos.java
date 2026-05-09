@@ -1,4 +1,4 @@
-package controladores;
+ package controladores;
 
 import modelo.aplicacion.Catalogo;
 import modelo.categoria.Categoria;
@@ -32,6 +32,10 @@ public class ControladorDescuentos implements ActionListener {
         this.panel.getHeaderPanel().addHomeListener(e -> mainController.mostrarMenuPrincipal());
         this.panel.getColIndividuales().addSearchListener(this);
         this.panel.getColPacks().addSearchListener(this);
+
+        if (this.panel.getBtnBack() != null) {
+            this.panel.getBtnBack().addActionListener(e -> mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS));
+        }
 
         // Auto-recargar al abrir la pestaña
         this.panel.addComponentListener(new ComponentAdapter() {

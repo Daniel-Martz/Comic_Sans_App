@@ -17,10 +17,14 @@ import java.util.Map;
 public class AddCategoryDiscountWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
-
+ 
     private JComboBox<String> comboType;
     private JTextField txtStartDate;
     private JTextField txtEndDate;
+    private JComboBox<Integer> cbStartHour;
+    private JComboBox<Integer> cbStartMinute;
+    private JComboBox<Integer> cbEndHour;
+    private JComboBox<Integer> cbEndMinute;
     
     private JPanel dynamicPanel;
     
@@ -35,7 +39,7 @@ public class AddCategoryDiscountWindow extends JDialog {
 
     public AddCategoryDiscountWindow(JFrame parent, Categoria cat, ControladorDescuentosCategoria ctrl) {
         super(parent, "Add Category Discount", true);
-        setSize(500, 480);
+        setSize(680, 480);
         setLocationRelativeTo(parent);
         setResizable(false);
         setLayout(new BorderLayout());
@@ -73,13 +77,66 @@ public class AddCategoryDiscountWindow extends JDialog {
         DateTimeSimulado ahora = new DateTimeSimulado();
         txtStartDate = new JTextField();
         txtStartDate.setText(ahora.getDia() + "/" + ahora.getMes() + "/" + ahora.getAño());
-        commonPanel.add(createFormRow("Start Date (DD/MM/YYYY):", txtStartDate));
+        txtStartDate.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        txtStartDate.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(200, 200, 200), 1),
+                new EmptyBorder(5, 5, 5, 5)));
+        txtStartDate.setPreferredSize(new Dimension(110, 30));
+
+        Integer[] hours = new Integer[24];
+        for (int i = 0; i < 24; i++) hours[i] = i;
+        Integer[] minutes = new Integer[60];
+        for (int i = 0; i < 60; i++) minutes[i] = i;
+
+        cbStartHour = new JComboBox<>(hours);
+        cbStartMinute = new JComboBox<>(minutes);
+        cbStartHour.setSelectedItem(ahora.getHora());
+        cbStartMinute.setSelectedItem(ahora.getMinuto());
+        
+        JPanel pnlStartDateTime = new JPanel();
+        pnlStartDateTime.setLayout(new BoxLayout(pnlStartDateTime, BoxLayout.X_AXIS));
+        pnlStartDateTime.setOpaque(false);
+        pnlStartDateTime.add(txtStartDate);
+        pnlStartDateTime.add(Box.createHorizontalStrut(10));
+        pnlStartDateTime.add(new JLabel("H:"));
+        pnlStartDateTime.add(Box.createHorizontalStrut(5));
+        pnlStartDateTime.add(cbStartHour);
+        pnlStartDateTime.add(Box.createHorizontalStrut(10));
+        pnlStartDateTime.add(new JLabel("M:"));
+        pnlStartDateTime.add(Box.createHorizontalStrut(5));
+        pnlStartDateTime.add(cbStartMinute);
+
+        commonPanel.add(createFormRow("Start Date:", pnlStartDateTime));
 
         DateTimeSimulado futuro = new DateTimeSimulado();
         futuro.avanzarDias(7);
         txtEndDate = new JTextField();
         txtEndDate.setText(futuro.getDia() + "/" + futuro.getMes() + "/" + futuro.getAño());
-        commonPanel.add(createFormRow("End Date (DD/MM/YYYY):", txtEndDate));
+        txtEndDate.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        txtEndDate.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(new Color(200, 200, 200), 1),
+                new EmptyBorder(5, 5, 5, 5)));
+        txtEndDate.setPreferredSize(new Dimension(110, 30));
+
+        cbEndHour = new JComboBox<>(hours);
+        cbEndMinute = new JComboBox<>(minutes);
+        cbEndHour.setSelectedItem(23);
+        cbEndMinute.setSelectedItem(59);
+        
+        JPanel pnlEndDateTime = new JPanel();
+        pnlEndDateTime.setLayout(new BoxLayout(pnlEndDateTime, BoxLayout.X_AXIS));
+        pnlEndDateTime.setOpaque(false);
+        pnlEndDateTime.add(txtEndDate);
+        pnlEndDateTime.add(Box.createHorizontalStrut(10));
+        pnlEndDateTime.add(new JLabel("H:"));
+        pnlEndDateTime.add(Box.createHorizontalStrut(5));
+        pnlEndDateTime.add(cbEndHour);
+        pnlEndDateTime.add(Box.createHorizontalStrut(10));
+        pnlEndDateTime.add(new JLabel("M:"));
+        pnlEndDateTime.add(Box.createHorizontalStrut(5));
+        pnlEndDateTime.add(cbEndMinute);
+
+        commonPanel.add(createFormRow("End Date:", pnlEndDateTime));
 
         formPanel.add(commonPanel);
         formPanel.add(Box.createVerticalStrut(10));
@@ -140,19 +197,23 @@ public class AddCategoryDiscountWindow extends JDialog {
             try {
                 String[] startParts = txtStartDate.getText().trim().split("/");
                 if (startParts.length != 3) throw new IllegalArgumentException("Invalid Start Date format");
+                int startHour = (Integer) cbStartHour.getSelectedItem();
+                int startMinute = (Integer) cbStartMinute.getSelectedItem();
                 DateTimeSimulado inicio = new DateTimeSimulado(
                         Integer.parseInt(startParts[2].trim()), 
                         Integer.parseInt(startParts[1].trim()), 
                         Integer.parseInt(startParts[0].trim()), 
-                        0, 0, 0);
+                        startHour, startMinute, 0);
                 
                 String[] endParts = txtEndDate.getText().trim().split("/");
                 if (endParts.length != 3) throw new IllegalArgumentException("Invalid End Date format");
+                int endHour = (Integer) cbEndHour.getSelectedItem();
+                int endMinute = (Integer) cbEndMinute.getSelectedItem();
                 DateTimeSimulado fin = new DateTimeSimulado(
                         Integer.parseInt(endParts[2].trim()), 
                         Integer.parseInt(endParts[1].trim()), 
                         Integer.parseInt(endParts[0].trim()), 
-                        23, 59, 59);
+                        endHour, endMinute, 59);
                         
                 if (inicio.dateTimeEnSegundos() > fin.dateTimeEnSegundos()) {
                     throw new IllegalArgumentException("Start Date cannot be after End Date.");
@@ -207,7 +268,7 @@ public class AddCategoryDiscountWindow extends JDialog {
         
         JLabel lbl = new JLabel(labelText);
         lbl.setFont(new Font("SansSerif", Font.BOLD, 14));
-        lbl.setPreferredSize(new Dimension(190, 30));
+        lbl.setPreferredSize(new Dimension(160, 30));
         lbl.setForeground(new Color(50, 50, 50));
         row.add(lbl, BorderLayout.WEST);
 
@@ -234,7 +295,12 @@ public class AddCategoryDiscountWindow extends JDialog {
         
         // Rellenar las fechas del descuento existente
         txtStartDate.setText(d.getFechaInicio().getDia() + "/" + d.getFechaInicio().getMes() + "/" + d.getFechaInicio().getAño());
+        cbStartHour.setSelectedItem(d.getFechaInicio().getHora());
+        cbStartMinute.setSelectedItem(d.getFechaInicio().getMinuto());
+
         txtEndDate.setText(d.getFechaFin().getDia() + "/" + d.getFechaFin().getMes() + "/" + d.getFechaFin().getAño());
+        cbEndHour.setSelectedItem(d.getFechaFin().getHora());
+        cbEndMinute.setSelectedItem(d.getFechaFin().getMinuto());
 
         if (d instanceof Precio) {
             comboType.setSelectedItem("Percentage (%)");

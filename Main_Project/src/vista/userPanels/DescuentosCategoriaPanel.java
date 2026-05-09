@@ -19,13 +19,15 @@ public class DescuentosCategoriaPanel extends JPanel {
 
     private HeaderPanel headerPanel;
     private ColumnaDescuentos colCategorias;
-
+    private JButton btnBack;
+ 
     public DescuentosCategoriaPanel() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
 
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuEmpleado();
+        btnBack = headerPanel.addSecondaryTopButton("BACK");
         add(headerPanel, BorderLayout.NORTH);
 
         JPanel contentWrapper = new JPanel(new BorderLayout(0, 20));
@@ -50,6 +52,7 @@ public class DescuentosCategoriaPanel extends JPanel {
 
     public HeaderPanel getHeaderPanel() { return headerPanel; }
     public ColumnaDescuentos getColCategorias() { return colCategorias; }
+    public JButton getBtnBack() { return btnBack; }
 
     public class ColumnaDescuentos extends JPanel {
         private static final long serialVersionUID = 1L;

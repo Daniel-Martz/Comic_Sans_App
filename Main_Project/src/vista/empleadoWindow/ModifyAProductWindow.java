@@ -67,7 +67,7 @@ public class ModifyAProductWindow extends JDialog {
 
     public ModifyAProductWindow(JFrame parent) {
         super(parent, "Modify Product", true); // Ventana modal
-        setSize(1050, 750);
+        setSize(1050, 850);
         setLocationRelativeTo(parent);
         initLayout();
     }

@@ -35,6 +35,8 @@ public class MainFrame extends JFrame {
     private ManageInterchangesPanel manageInterchangesPanel;
     
     private AddProductsPanel addProductsPanel;
+    private CreatePackPanel createPackPanel;
+    private ModifyPacksPanel modifyPacksPanel;
     // El formulario de añadir producto manualmente ahora es una ventana independiente (AddProductManuallyWindow)
     // por tanto no mantenemos aquí el panel como componente del CardLayout.
     
@@ -69,6 +71,8 @@ public class MainFrame extends JFrame {
     public static final String PANEL_MANAGE_ORDERS = "ManageOrders";
     public static final String PANEL_MODIFY_A_PRODUCT = "ModifyAProduct";
     public static final String PANEL_ADD_PRODUCTS = "AddProducts";
+    public static final String PANEL_CREATE_PACK = "CreatePack";
+    public static final String PANEL_MODIFY_PACKS = "ModifyPacks";
     public static final String PANEL_LOAD_FROM_FILE = "LoadFromFile";
     public static final String PANEL_ADD_PRODUCT_MANUALLY = "AddProductManually";
     public static final String PANEL_VALIDATION_REQUESTS = "ValidationRequestsPanel";
@@ -107,6 +111,8 @@ public class MainFrame extends JFrame {
         manageInterchangesPanel = new ManageInterchangesPanel();
         
         addProductsPanel = new AddProductsPanel();
+        createPackPanel = new CreatePackPanel();
+        modifyPacksPanel = new ModifyPacksPanel();
         manageAccountsPanel = new ManageAccountsPanel();
         manageStatisticsPanel = new ManageStatisticsPanel();
         manageRecommendationsPanel = new ManageRecommendationsPanel();
@@ -141,6 +147,8 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(modifyProductsPanel, PANEL_MODIFY_PRODUCTS);
         contenedorPaneles.add(manageOrdersPanel, PANEL_MANAGE_ORDERS);
         contenedorPaneles.add(addProductsPanel, PANEL_ADD_PRODUCTS);
+        contenedorPaneles.add(createPackPanel, PANEL_CREATE_PACK);
+        contenedorPaneles.add(modifyPacksPanel, PANEL_MODIFY_PACKS);
         contenedorPaneles.add(manageAccountsPanel, PANEL_MANAGE_ACCOUNTS);
         contenedorPaneles.add(manageStatisticsPanel, PANEL_MANAGE_STATISTICS);
         contenedorPaneles.add(manageRecommendationsPanel, PANEL_MANAGE_RECOMMENDATIONS);
@@ -191,6 +199,8 @@ public class MainFrame extends JFrame {
     public ManageTimePanel getManageTimePanel() { return manageTimePanel; }
     
     public AddProductsPanel getAddProductsPanel() { return addProductsPanel; }
+    public CreatePackPanel getCreatePackPanel() { return createPackPanel; }
+    public ModifyPacksPanel getModifyPacksPanel() { return modifyPacksPanel; }
     // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.
     
     public DescuentosPanel getDescuentosPanel() { return descuentosPanel; }

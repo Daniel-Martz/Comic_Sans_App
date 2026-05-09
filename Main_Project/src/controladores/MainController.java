@@ -4,7 +4,8 @@ import modelo.aplicacion.Aplicacion;
 import modelo.aplicacion.Catalogo;
 import modelo.notificacion.Notificacion;
 import modelo.solicitud.Oferta;
-import modelo.usuario.ClienteRegistrado;
+import modelo.*;
+import modelo.usuario.*;
 import modelo.usuario.Empleado;
 import modelo.usuario.Gestor;
 import modelo.usuario.Usuario;
@@ -100,6 +101,8 @@ public class MainController {
         conectarHeaderEmpleado(mainFrame.getValidationRequestsPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getManageInterchangesPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getDescuentosCategoriaPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getCreatePackPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getModifyPacksPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageAccountsPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageStatisticsPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageRecommendationsPanel().getHeaderPanel());
@@ -110,6 +113,8 @@ public class MainController {
         new ControladorManageOrders(mainFrame.getManageOrdersPanel(), mainFrame);
         new ControladorValidationRequests(mainFrame.getValidationRequestsPanel(), mainFrame, this);
         new ControladorManageInterchanges(mainFrame.getManageInterchangesPanel(), mainFrame, this);
+        new ControladorCreatePack(mainFrame.getCreatePackPanel(), mainFrame, this);
+        new ControladorModifyPacks(mainFrame.getModifyPacksPanel(), mainFrame, this);
         
         this.ctrlManageAccounts = new ControladorManageAccounts(mainFrame.getManageAccountsPanel(), mainFrame);
         // Cargar inicialmente la lista de empleados
@@ -294,6 +299,56 @@ public class MainController {
             java.util.Set<modelo.producto.LineaProductoVenta> rec = modelo.getConfiguracionRecomendacion().getRecomendacion();
             mainFrame.getMenuPrincipalPanel().actualizarRecomendados(rec);
         }
+        
+        // Configurar el header de Manage Products dinámicamente según el rol
+        if (nombrePanel.equals(MainFrame.PANEL_MANAGE_PRODUCTS)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getManageProductsPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getManageProductsPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+        
+        if (nombrePanel.equals(MainFrame.PANEL_DESCUENTOS)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getDescuentosPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getDescuentosPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+        
+        if (nombrePanel.equals(MainFrame.PANEL_DESCUENTOS_CATEGORIA)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+
+        if (nombrePanel.equals(MainFrame.PANEL_ADD_PRODUCTS)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getAddProductsPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getAddProductsPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+
+        if (nombrePanel.equals(MainFrame.PANEL_CREATE_PACK)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getCreatePackPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getCreatePackPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+        
+        if (nombrePanel.equals(MainFrame.PANEL_MODIFY_PACKS)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getModifyPacksPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getModifyPacksPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+
         mainFrame.mostrarPanel(nombrePanel);
     }
 
@@ -415,12 +470,12 @@ public class MainController {
      */
     private boolean verificarAccesoClienteRegistrado() {
         if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
-            VentanaRegistroRequerido dialogoRequerido = new VentanaRegistroRequerido(mainFrame);
+            VentanaRegistroRequeridoWindow dialogoRequerido = new VentanaRegistroRequeridoWindow(mainFrame);
             int eleccion = dialogoRequerido.mostrarVentana();
 
-            if (eleccion == VentanaRegistroRequerido.INICIAR_SESION) {
+            if (eleccion == VentanaRegistroRequeridoWindow.INICIAR_SESION) {
                 abrirVentanaLogIn();
-            } else if (eleccion == VentanaRegistroRequerido.REGISTRARSE) {
+            } else if (eleccion == VentanaRegistroRequeridoWindow.REGISTRARSE) {
                 abrirVentanaCrearUsuario();
             }
             return false;
@@ -433,7 +488,7 @@ public class MainController {
             return;
         }
 
-        VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
+        VentanaInterchangeOptionsWindow v = new VentanaInterchangeOptionsWindow(this.mainFrame);
 	    v.setControlador(e -> {
 	        String command = e.getActionCommand();
 	        if (command.equals("PROPOSALS")) {
@@ -527,7 +582,7 @@ public class MainController {
     }
     
     public void abrirVentanaOpcionesUsuario(){
-    	this.dialogOpcionesUsuario = new UsuarioOptionsWindow(mainFrame);
+    	this.dialogOpcionesUsuario = new UsuarioOptionsWIndow(mainFrame);
       //Aquí pasamos como argumento el mainFrame para que el dialog de cerrar sesión tenga un padre
       this.dialogOpcionesUsuario.addListener(new UsuarioOptionsController(mainFrame, this));
     	dialogOpcionesUsuario.setVisible(true);
@@ -588,6 +643,8 @@ public class MainController {
     	mainFrame.getValidationRequestsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getManageInterchangesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+        mainFrame.getCreatePackPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+        mainFrame.getModifyPacksPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	
     	// Placeholders
     	mainFrame.getDescuentosPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
@@ -619,6 +676,8 @@ public class MainController {
         mainFrame.getValidationRequestsPanel().getHeaderPanel().updateDate();
         mainFrame.getManageInterchangesPanel().getHeaderPanel().updateDate();
         mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().updateDate();
+        mainFrame.getCreatePackPanel().getHeaderPanel().updateDate();
+        mainFrame.getModifyPacksPanel().getHeaderPanel().updateDate();
         
         // Placeholders
         mainFrame.getDescuentosPanel().getHeaderPanel().updateDate();
@@ -629,7 +688,7 @@ public class MainController {
 
 
     public void abrirVentanaNotificacion(Notificacion n){
-    	this.notificacionDialog = new NotificacionDialog(mainFrame, n);
+    	this.notificacionDialog = new NotificacionWindow(mainFrame, n);
       this.notificacionDialog.setVisible(true);
     } 
 
