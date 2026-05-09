@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import controlador.NewPasswordController;
+import controladores.NewPasswordController;
 
 public class CrearUsuarioPanel extends JPanel {
 

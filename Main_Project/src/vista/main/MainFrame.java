@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
     private MakeOfferPanel makeOfferPanel;
     private HistorialPedidosPanel historialPedidosPanel;
     private NotificacionesPanel notificacionesPanel;
-    private DiscountedPanel descuentosPanel;
+    private DiscountedPanel discountedPanel;
     
     private ManageProductsPanel manageProductsPanel;
     private ModifyProductsPanel modifyProductsPanel;
@@ -134,7 +134,7 @@ public class MainFrame extends JFrame {
         carritoPanel = new CarritoPanel();
         productosFiltradosPanel = new ProductosFiltradosPanel();
         outstandingPanel = new OutstandingPanel();
-        descuentosPanel = new DiscountedPanel();
+        discountedPanel = new DiscountedPanel();
         searchInterchangesPanel = new SearchInterchangesPanel();
         makeOfferPanel = new MakeOfferPanel();
         historialPedidosPanel = new HistorialPedidosPanel();
@@ -168,6 +168,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(menuGestorPanel, PANEL_MENU_GESTOR);
         contenedorPaneles.add(mySecondHandProductsPanel, PANEL_MY_SECOND_HAND_PRODUCTS);
         contenedorPaneles.add(descuentosPanel, PANEL_DESCUENTOS);
+        contenedorPaneles.add(discountedPanel, PANEL_DISCOUNTED);
         contenedorPaneles.add(descuentosCategoriaPanel, PANEL_DESCUENTOS_CATEGORIA);
         contenedorPaneles.add(productosFiltradosPanel, PANEL_PRODUCTOS_FILTRADOS);
         contenedorPaneles.add(carritoPanel, PANEL_CARRITO);
@@ -240,6 +241,7 @@ public class MainFrame extends JFrame {
     // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.
     
     public DescuentosPanel getDescuentosPanel() { return descuentosPanel; }
+    public DiscountedPanel getDiscountedPanel() { return discountedPanel; }
     public DescuentosCategoriaPanel getDescuentosCategoriaPanel() { return descuentosCategoriaPanel; }
     public PlaceholderPanel getConfiguracionPanel() { return configuracionPanel; }
     public PlaceholderPanel getPerfilPanel() { return perfilPanel; }

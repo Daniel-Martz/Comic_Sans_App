@@ -324,6 +324,7 @@ public class HeaderPanel extends JPanel {
     public void addIntercambiosListener(ActionListener l) { btnIntercambios.addActionListener(l); }
     public void addPerfilListener(ActionListener l) { btnPerfil.addActionListener(l); }
     public void addNotificacionesListener(ActionListener l) { btnNotificaciones.addActionListener(l); }
+    public void addDiscountedListener(ActionListener l) { btnDescuentos.addActionListener(l); }
     public String getSearchText() { 
         String text = txtSearch.getText().trim(); 
         return text.equals("Search...") ? "" : text;

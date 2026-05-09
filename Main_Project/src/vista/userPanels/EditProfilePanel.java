@@ -2,7 +2,6 @@ package vista.userPanels;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 public class EditProfilePanel extends JPanel {
@@ -21,9 +20,13 @@ public class EditProfilePanel extends JPanel {
   private JLabel dniLabel;
   private JTextField dniField;
   private JLabel oldPasswordLabel;
-  private JTextField oldPasswordField;
+  private JPasswordField oldPasswordField;
+  private JButton showOldPasswordButton;
+  private boolean isOldPasswordVisible = false;
   private JLabel passwordLabel;
-  private JTextField passwordField;
+  private JPasswordField passwordField;
+  private JButton showPasswordButton;
+  private boolean isPasswordVisible = false;
   private JLabel statusLabel;
   private JButton buttonChangeData;
 
@@ -35,8 +38,8 @@ public class EditProfilePanel extends JPanel {
     
   public String getUsername()          { return usernameField.getText().trim(); }
   public String getDni()          { return dniField.getText().trim(); }
-  public String getOldPassword()          { return oldPasswordField.getText().trim(); }
-  public String getPassword()          { return passwordField.getText().trim(); }
+  public String getOldPassword()          { return String.valueOf(oldPasswordField.getPassword()).trim(); }
+  public String getPassword()          { return String.valueOf(passwordField.getPassword()).trim(); }
   public void setStatusLabelText(String text)   {statusLabel.setText(text);}
 
 
@@ -76,10 +79,13 @@ public class EditProfilePanel extends JPanel {
 		usernameField.setAlignmentX(CENTER_ALIGNMENT); // Importante para BoxLayout
 		dniField  = styledField();
 		dniField.setAlignmentX(CENTER_ALIGNMENT); // Importante para BoxLayout
-		passwordField  = styledField();
+		passwordField  = styledPasswordField();
 		passwordField.setAlignmentX(CENTER_ALIGNMENT); // Importante para BoxLayout
-		oldPasswordField  = styledField();
+		oldPasswordField  = styledPasswordField();
 		oldPasswordField.setAlignmentX(CENTER_ALIGNMENT); // Importante para BoxLayout
+		
+		showOldPasswordButton = new JButton("Mostrar");
+		showPasswordButton = new JButton("Mostrar");
 
 		usernameLabel  = iconLabel("\uD83D\uDC64", "Username");
 		usernameLabel.setAlignmentX(CENTER_ALIGNMENT); // Importante para BoxLayout
@@ -98,6 +104,30 @@ public class EditProfilePanel extends JPanel {
 		buttonChangeData = new JButton();
 		buttonChangeData.setText("Modify account");
 		buttonChangeData.setAlignmentX(CENTER_ALIGNMENT); // Importante para BoxLayout
+		
+		showOldPasswordButton.addActionListener(e -> {
+            if (!isOldPasswordVisible) {
+                oldPasswordField.setEchoChar((char) 0);
+                showOldPasswordButton.setText("Ocultar");
+                isOldPasswordVisible = true;
+            } else {
+                oldPasswordField.setEchoChar('\u25CF');
+                showOldPasswordButton.setText("Mostrar");
+                isOldPasswordVisible = false;
+            }
+        });
+		
+		showPasswordButton.addActionListener(e -> {
+            if (!isPasswordVisible) {
+                passwordField.setEchoChar((char) 0);
+                showPasswordButton.setText("Ocultar");
+                isPasswordVisible = true;
+            } else {
+                passwordField.setEchoChar('\u25CF');
+                showPasswordButton.setText("Mostrar");
+                isPasswordVisible = false;
+            }
+        });
  
 	}
 
@@ -115,9 +145,45 @@ public class EditProfilePanel extends JPanel {
 		add(Box.createVerticalStrut(18));
 		addRow(dniLabel, dniField);
 		add(Box.createVerticalStrut(18));
-		addRow(oldPasswordLabel, oldPasswordField);
+		
+		// Fila con contraseña antigua y botón mostrar/ocultar
+		add(oldPasswordLabel);
+		add(Box.createVerticalStrut(4));
+		JPanel oldPasswordRowPanel = new JPanel();
+		oldPasswordRowPanel.setOpaque(false);
+		oldPasswordRowPanel.setLayout(new BoxLayout(oldPasswordRowPanel, BoxLayout.X_AXIS));
+		oldPasswordRowPanel.setAlignmentX(CENTER_ALIGNMENT);
+		oldPasswordRowPanel.setMaximumSize(new Dimension(440, 36));
+		oldPasswordRowPanel.add(Box.createHorizontalGlue());
+		oldPasswordRowPanel.add(oldPasswordField);
+		oldPasswordRowPanel.add(Box.createHorizontalStrut(8));
+		showOldPasswordButton.setPreferredSize(new Dimension(100, 28));
+		showOldPasswordButton.setMaximumSize(new Dimension(100, 28));
+		showOldPasswordButton.setAlignmentX(CENTER_ALIGNMENT);
+		oldPasswordRowPanel.add(showOldPasswordButton);
+		oldPasswordRowPanel.add(Box.createHorizontalGlue());
+		add(oldPasswordRowPanel);
+		
 		add(Box.createVerticalStrut(18));
-		addRow(passwordLabel, passwordField);
+		
+		// Fila con contraseña nueva y botón mostrar/ocultar
+		add(passwordLabel);
+		add(Box.createVerticalStrut(4));
+		JPanel passwordRowPanel = new JPanel();
+		passwordRowPanel.setOpaque(false);
+		passwordRowPanel.setLayout(new BoxLayout(passwordRowPanel, BoxLayout.X_AXIS));
+		passwordRowPanel.setAlignmentX(CENTER_ALIGNMENT);
+		passwordRowPanel.setMaximumSize(new Dimension(440, 36));
+		passwordRowPanel.add(Box.createHorizontalGlue());
+		passwordRowPanel.add(passwordField);
+		passwordRowPanel.add(Box.createHorizontalStrut(8));
+		showPasswordButton.setPreferredSize(new Dimension(100, 28));
+		showPasswordButton.setMaximumSize(new Dimension(100, 28));
+		showPasswordButton.setAlignmentX(CENTER_ALIGNMENT);
+		passwordRowPanel.add(showPasswordButton);
+		passwordRowPanel.add(Box.createHorizontalGlue());
+		add(passwordRowPanel);
+		
 		add(Box.createVerticalStrut(18));
 		add(buttonChangeData);
 		add(Box.createVerticalStrut(18));
@@ -136,6 +202,19 @@ public class EditProfilePanel extends JPanel {
 		// ESTO es lo que crea el efecto de subrayado:
 		f.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, FIELD_LINE));
 		
+		return f;
+	}
+
+	private JPasswordField styledPasswordField() {
+		JPasswordField f = new JPasswordField(25);
+		f.setOpaque(false);
+		f.setForeground(WHITE);
+		f.setCaretColor(WHITE);
+		f.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
+		f.setPreferredSize(new Dimension(320, 36));
+		f.setMaximumSize(new Dimension(320, 36));
+		f.setEchoChar('\u25CF');
+		f.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, FIELD_LINE));
 		return f;
 	}
 }

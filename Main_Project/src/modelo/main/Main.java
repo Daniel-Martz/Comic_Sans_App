@@ -564,7 +564,7 @@ public class Main {
 		Aplicacion appCargada = null;
 		System.out.println("\nCargando el estado de la aplicación desde el fichero...");
 		try {
-			Aplicacion.cargarEstadoAplicacion(archivo);
+			Aplicacion.getInstancia().cargarEstadoAplicacion(archivo);
 			appCargada = Aplicacion.getInstancia();
 			System.out.println("Aplicación cargada con éxito.");
 		} catch (Exception e) {

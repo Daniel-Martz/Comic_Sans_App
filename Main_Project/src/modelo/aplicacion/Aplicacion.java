@@ -1011,7 +1011,7 @@ public class Aplicacion implements Serializable {
    *
    * @param file el archivo del que se leerá la aplicación.
    */
-  public static void cargarEstadoAplicacion(String file) {
+  public void cargarEstadoAplicacion(String file) {
     try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
         instancia = (Aplicacion) in.readObject();
     } catch (FileNotFoundException e) {

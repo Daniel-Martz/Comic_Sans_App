@@ -12,16 +12,6 @@ import modelo.usuario.Usuario;
 import modelo.usuario.Permiso;
 import vista.main.MainFrame;
 import vista.empleadoWindow.*;
-import vista.userWindows.CrearUsuarioDialog;
-import vista.userWindows.EditProfileDialog;
-import vista.userWindows.EmpleadoOptionsDialog;
-import vista.userWindows.FiltrosDialog;
-import vista.userWindows.LoginDialog;
-import vista.userWindows.NotificacionDialog;
-import vista.userWindows.ProposalsWindow;
-import vista.userWindows.VentanaInterchangeOptions;
-import vista.userWindows.VentanaRegistroRequerido;
-import vista.userWindows.UsuarioOptionsDialog;
 import javax.swing.JOptionPane;
 import vista.userPanels.HeaderPanel;
 import javax.swing.Timer;
@@ -32,10 +22,6 @@ import java.util.Set;
 import vista.userPanels.*;
 import vista.empleadoPanel.*;
 import vista.*;
-import vista.clienteWindows.CrearUsuarioWindow;
-import vista.clienteWindows.EditProfileWindow;
-import vista.clienteWindows.FiltrosWindow;
-import vista.clienteWindows.LoginWindow;
 import vista.clienteWindows.*;
 
 
@@ -58,12 +44,7 @@ public class MainController {
     private EditProfileWindow editProfileDialog;
     private FiltrosWindow dialogFiltros;
     private UsuarioOptionsWIndow dialogOpcionesUsuario;
-    private vista.userWindows.CrearUsuarioDialog crearUsuarioDialog;
-    private vista.userWindows.LoginDialog loginDialog;
-    private vista.userWindows.EditProfileDialog editProfileDialog;
-    private vista.userWindows.FiltrosDialog dialogFiltros;
-    private vista.userWindows.UsuarioOptionsDialog dialogOpcionesUsuario;
-    private vista.userWindows.EmpleadoOptionsDialog dialogOpcionesEmpleado;
+    private EmpleadoOptionsDialog dialogOpcionesEmpleado;
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
@@ -289,7 +270,7 @@ public class MainController {
     private void conectarHeaderGlobal(HeaderPanel header) {
         header.addHomeListener(e -> mostrarMenuPrincipal());
         header.addOutstandingListener(e -> mostrarProductosOutstanding());
-        header.addDescuentosListener(e -> mostrarProductosDescontados());
+        header.addDiscountedListener(e -> mostrarProductosDescontados());
         header.addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
         header.addPerfilListener(e -> navegarBotonPerfil());
         header.addNotificacionesListener(e -> 
@@ -482,7 +463,7 @@ public class MainController {
     }
   
     public void mostrarProductosDescontados() {
-        vista.userPanels.DiscountedPanel panel = mainFrame.getDescuentosPanel();
+        vista.userPanels.DiscountedPanel panel = mainFrame.getDiscountedPanel();
         new ControladorDiscounted(panel);
         mainFrame.mostrarPanel(MainFrame.PANEL_DISCOUNTED);
     }
@@ -607,7 +588,7 @@ public class MainController {
     
     public void abrirVentanaOpcionesUsuario(){
       if(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado){
-        this.dialogOpcionesUsuario = new UsuarioOptionsDialog(mainFrame);
+        this.dialogOpcionesUsuario = new UsuarioOptionsWIndow(mainFrame);
         //Aquí pasamos como argumento el mainFrame para que el dialog de cerrar sesión tenga un padre
         this.dialogOpcionesUsuario.addListener(new UsuarioOptionsController(mainFrame, this));
         dialogOpcionesUsuario.setVisible(true);

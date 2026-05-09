@@ -4,6 +4,7 @@ import modelo.aplicacion.Catalogo;
 import modelo.producto.LineaProductoVenta;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Usuario;
+import vista.clienteWindows.VentanaDetallesProductoWindow;
 import vista.userPanels.DiscountedPanel;
 import vista.userPanels.OutstandingPanel;
 
@@ -64,7 +65,7 @@ public class ControladorDiscounted implements ActionListener {
                 }
                 
                 Window parentWindow = SwingUtilities.getWindowAncestor(vista);
-                vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(parentWindow, p);
+                VentanaDetallesProductoWindow dialog = new VentanaDetallesProductoWindow(parentWindow, p);
                 dialog.setVisible(true);
             } catch (NumberFormatException ex) {
                 vista.mostrarMensaje("Invalid product id.", "Error");
