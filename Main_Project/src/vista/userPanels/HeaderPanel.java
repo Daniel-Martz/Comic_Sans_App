@@ -72,7 +72,8 @@ public class HeaderPanel extends JPanel {
     public void updateDate() {
         if (lblDate != null) {
             DateTimeSimulado ahora = new DateTimeSimulado();
-            lblDate.setText("Current Date: " + ahora.toStringFecha());
+            String timeStr = String.format("%02d:%02d", ahora.getHora(), ahora.getMinuto());
+            lblDate.setText("Simulated Time: " + ahora.toStringFecha() + "   " + timeStr);
         }
     }
 
@@ -100,6 +101,23 @@ public class HeaderPanel extends JPanel {
         txtSearch.setOpaque(false);
         txtSearch.setFont(new Font("Comic Sans MS", Font.PLAIN, 14)); 
         txtSearch.setBorder(null); // Sin borde, el borde lo dibujará el contenedor
+        txtSearch.setText("Search...");
+        txtSearch.setForeground(Color.GRAY);
+        
+        txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (txtSearch.getText().equals("Search...")) {
+                    txtSearch.setText("");
+                    txtSearch.setForeground(Color.BLACK);
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (txtSearch.getText().isEmpty()) {
+                    txtSearch.setText("Search...");
+                    txtSearch.setForeground(Color.GRAY);
+                }
+            }
+        });
         
         btnSearchIcon = new JButton();
         btnSearchIcon.setContentAreaFilled(false);
@@ -232,6 +250,7 @@ public class HeaderPanel extends JPanel {
         btnFilters.setVisible(false);
         btnCarrito.setVisible(false);
         btnIntercambios.setVisible(false);
+        btnNotificaciones.setVisible(true);
         speechBubble.setText("<html><center>EMPLOYEE DASHBOARD<br>MANAGE THE STORE</center></html>");
         
         // Forzar simetría para que el botón Home quede perfectamente centrado
@@ -243,6 +262,35 @@ public class HeaderPanel extends JPanel {
         configurarMenuEmpleado();
         speechBubble.setText("<html><center>MANAGER DASHBOARD<br>ADMINISTRATE THE STORE</center></html>");
         btnNotificaciones.setVisible(false);
+    }
+
+    /**
+     * Configura la cabecera para la vista de Notificaciones: sólo muestra el botón HOME.
+     */
+    public void configurarMenuNotificaciones() {
+        // Ocultamos botones de navegación secundaria
+        btnDescuentos.setVisible(false);
+        btnOutstanding.setVisible(false);
+
+        // Ocultamos la caja de búsqueda y filtros
+        txtSearch.setVisible(false);
+        btnSearchIcon.setVisible(false);
+        if (searchBox != null) searchBox.setVisible(false);
+        btnFilters.setVisible(false);
+
+        // Ocultamos iconos de la derecha (carrito, intercambios, perfil, notificaciones)
+        btnCarrito.setVisible(false);
+        btnIntercambios.setVisible(false);
+        btnPerfil.setVisible(false);
+        btnNotificaciones.setVisible(false);
+
+        // Ocultamos elementos del left panel (logo y bocadillo) para dejar sólo el HOME centrado
+        logoLabel.setVisible(false);
+        speechBubble.setVisible(false);
+
+        // Forzar simetría para centrar el HOME perfectamente
+        leftPanel.setPreferredSize(new Dimension(380, leftPanel.getPreferredSize().height));
+        rightPanel.setPreferredSize(new Dimension(380, rightPanel.getPreferredSize().height));
     }
 
     private JButton createTopNavButton(String text) {
@@ -264,12 +312,11 @@ public class HeaderPanel extends JPanel {
 
     // --- Delegación de Listeners ---
     public void addHomeListener(ActionListener l) { btnHome.addActionListener(l); }
-    public void addDescuentosListener(ActionListener l) { btnDescuentos.addActionListener(l); }
     public void addOutstandingListener(ActionListener l) { btnOutstanding.addActionListener(l); }
     public void addSearchListener(ActionListener l) { 
         txtSearch.addActionListener(l); 
         btnSearchIcon.addActionListener(e -> {
-            l.actionPerformed(new java.awt.event.ActionEvent(txtSearch, java.awt.event.ActionEvent.ACTION_PERFORMED, txtSearch.getText().trim()));
+            l.actionPerformed(new java.awt.event.ActionEvent(txtSearch, java.awt.event.ActionEvent.ACTION_PERFORMED, getSearchText()));
         });
     }
     public void addFiltrosListener(ActionListener l) { btnFilters.addActionListener(l); }
@@ -277,5 +324,8 @@ public class HeaderPanel extends JPanel {
     public void addIntercambiosListener(ActionListener l) { btnIntercambios.addActionListener(l); }
     public void addPerfilListener(ActionListener l) { btnPerfil.addActionListener(l); }
     public void addNotificacionesListener(ActionListener l) { btnNotificaciones.addActionListener(l); }
-    public String getSearchText() { return txtSearch.getText().trim(); }
+    public String getSearchText() { 
+        String text = txtSearch.getText().trim(); 
+        return text.equals("Search...") ? "" : text;
+    }
 }

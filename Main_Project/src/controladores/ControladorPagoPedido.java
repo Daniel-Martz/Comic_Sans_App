@@ -1,10 +1,10 @@
 package controladores;
 
-import vista.userWindows.VentanaPagoPedido;
 import modelo.aplicacion.Aplicacion;
 import modelo.solicitud.SolicitudPedido;
 import modelo.tiempo.DateTimeSimulado;
 import modelo.usuario.ClienteRegistrado;
+import vista.clienteWindows.VentanaPagoPedidoWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,9 +15,9 @@ import java.awt.event.ActionListener;
  */
 public class ControladorPagoPedido implements ActionListener {
 
-    private VentanaPagoPedido vista;
+    private VentanaPagoPedidoWindow vista;
 
-    public ControladorPagoPedido(VentanaPagoPedido vista) {
+    public ControladorPagoPedido(VentanaPagoPedidoWindow vista) {
         this.vista = vista;
     }
 

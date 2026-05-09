@@ -127,4 +127,12 @@ public class ManageProductsPanel extends JPanel {
     public void addManageCategoriesListener(java.awt.event.ActionListener l) {
         btnManageCategories.addActionListener(l);
     }
+
+    public void addDiscountsListener(java.awt.event.ActionListener l) {
+        btnDiscounts.addActionListener(l);
+    }
+
+    public void addManagePacksListener(java.awt.event.ActionListener l) {
+        btnManagePacks.addActionListener(l);
+    }
 }

@@ -1,14 +1,13 @@
 package controladores;
 
-import modelo.aplicacion.Catalogo;
 import modelo.producto.Comic;
 import modelo.producto.Figura;
 import modelo.producto.JuegoDeMesa;
 import modelo.producto.LineaProductoVenta;
 import vista.main.MainFrame;
 import vista.empleadoPanel.ManageProductsPanel;
-import vista.empleadoPanel.ModifyAProductWindow;
 import vista.empleadoPanel.ModifyProductsPanel;
+import vista.empleadoWindow.ModifyAProductWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,11 +38,6 @@ public class ControladorManageProducts implements ActionListener {
     }
 
     private void registrarListeners() {
-        // Desde el Menú Principal del Empleado -> Manage Products
-        mainFrame.getMenuEmpleadoPanel().addManageProductsListener(e -> 
-            mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS)
-        );
-
         // Desde el Menú Principal del Gestor -> Manage Products
         mainFrame.getMenuGestorPanel().addManageProductsListener(e -> 
             mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS)
@@ -63,6 +57,34 @@ public class ControladorManageProducts implements ActionListener {
         // Desde Manage Products -> Manage Categories
         panelManage.addManageCategoriesListener(e -> {
             mainController.mostrarManageCategories();
+        });
+        
+        // Desde Manage Products -> Discounts
+        panelManage.addDiscountsListener(e -> {
+            vista.empleadoPanel.SelectDiscountTypeWindow win = new vista.empleadoPanel.SelectDiscountTypeWindow(mainFrame);
+            win.getBtnProducts().addActionListener(ev -> {
+                win.dispose();
+                mainController.navegarA(MainFrame.PANEL_DESCUENTOS);
+            });
+            win.getBtnCategories().addActionListener(ev -> {
+                win.dispose();
+                mainController.navegarA(MainFrame.PANEL_DESCUENTOS_CATEGORIA);
+            });
+            win.setVisible(true);
+        });
+
+        // Desde Manage Products -> Manage Packs
+        panelManage.addManagePacksListener(e -> {
+            vista.empleadoWindow.SelectManagePackOptionWindow win = new vista.empleadoWindow.SelectManagePackOptionWindow(mainFrame);
+            win.getBtnAddPack().addActionListener(ev -> {
+                win.dispose();
+                mainController.navegarA(MainFrame.PANEL_CREATE_PACK);
+            });
+            win.getBtnModifyPack().addActionListener(ev -> {
+                win.dispose();
+                mainController.navegarA(MainFrame.PANEL_MODIFY_PACKS);
+            });
+            win.setVisible(true);
         });
 
         // Desde Modify Products -> Volver a HOME

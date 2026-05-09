@@ -84,7 +84,7 @@ public class ControladorSearchInterchanges implements ActionListener, ItemListen
             ProductoSegundaMano p = Catalogo.getInstancia().buscarProductoIntercambio(id);
             if (p != null) {
                 Window parentWindow = SwingUtilities.getWindowAncestor(vista);
-                vista.userWindows.VentanaDetallesProductoSegundaMano dialog = new vista.userWindows.VentanaDetallesProductoSegundaMano(parentWindow, p);
+                vista.clienteWindows.VentanaDetallesProductoSegundaManoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoSegundaManoWindow(parentWindow, p);
                 dialog.setVisible(true);
             }
         }

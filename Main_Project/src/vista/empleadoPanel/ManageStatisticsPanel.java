@@ -68,8 +68,8 @@ public class ManageStatisticsPanel extends JPanel {
         cbStartMonth.setSelectedItem(1);
         cbStartYear.setSelectedItem(1);
 
-        Color darkBlueBtn = new Color(15, 45, 85); // Azul aún más oscuro para contraste extremo
-        Color midBlueBtn = new Color(30, 75, 130);
+        Color darkBlueBtn = new Color(64, 153, 230); // Azul aún más oscuro para contraste extremo
+        Color midBlueBtn = new Color(65, 136, 198);
 
         btnTotalEarnings = createStyledButton("TOTAL EARNINGS ▼", darkBlueBtn);
         btnMonthlyEarnings = createStyledButton("Monthly Earnings", midBlueBtn);

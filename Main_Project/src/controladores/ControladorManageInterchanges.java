@@ -5,7 +5,7 @@ import modelo.solicitud.SolicitudIntercambio;
 import modelo.usuario.Empleado;
 import vista.main.MainFrame;
 import vista.empleadoPanel.ManageInterchangesPanel;
-import vista.empleadoPanel.ApproveInterchangeWindow;
+import vista.empleadoWindow.ApproveInterchangeWindow;
 
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
@@ -51,7 +51,7 @@ public class ControladorManageInterchanges implements ActionListener {
                 int id = Integer.parseInt(cmd.substring(5));
                 modelo.producto.ProductoSegundaMano p = modelo.aplicacion.Catalogo.getInstancia().buscarProductoIntercambio(id);
                 if (p != null) {
-                    vista.userWindows.VentanaDetallesProductoSegundaMano dialog = new vista.userWindows.VentanaDetallesProductoSegundaMano(mainFrame, p);
+                    vista.clienteWindows.VentanaDetallesProductoSegundaManoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoSegundaManoWindow(mainFrame, p);
                     dialog.setVisible(true);
                 }
             } catch (NumberFormatException ex) {

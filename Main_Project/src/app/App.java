@@ -511,14 +511,22 @@ import modelo.tiempo.*;
         gestor.añadirPermiso(empDemo, modelo.usuario.Permiso.VALIDACIONES);
         gestor.añadirPermiso(empDemo, modelo.usuario.Permiso.PEDIDOS);
         gestor.añadirPermiso(empDemo, modelo.usuario.Permiso.INTERCAMBIOS);
+
+        // Empleados adicionales para pruebas
+        Empleado empAlice = gestor.crearEmpleado("aliceEmp", "55511122A");
+        gestor.añadirPermiso(empAlice, modelo.usuario.Permiso.VALIDACIONES);
+
+        Empleado empBob = gestor.crearEmpleado("bobEmp", "66622233B");
+        gestor.añadirPermiso(empBob, modelo.usuario.Permiso.INTERCAMBIOS);
+
+        Empleado empCarol = gestor.crearEmpleado("carolEmp", "77733344C");
+        gestor.añadirPermiso(empCarol, modelo.usuario.Permiso.PEDIDOS);
+
+        Empleado empNoPerm = gestor.crearEmpleado("nopermEmp", "88844455D");
+        // sin permisos para probar casos límite
         app.cerrarSesion();
         app.iniciarSesion("demo", "123456");
         app.cerrarSesion();
-        app.iniciarSesion("demoUser", "Passw0rd!!");
-        app.cerrarSesion();
-        app.iniciarSesion("demo", "123456");
-        app.cerrarSesion();
-        app.iniciarSesion("gestor", "123456");
         
 		
         

@@ -4,9 +4,9 @@ import modelo.aplicacion.Aplicacion;
 import modelo.solicitud.Oferta;
 import modelo.producto.ProductoSegundaMano;
 import modelo.usuario.ClienteRegistrado;
+import vista.clienteWindows.ProposalsWindow;
 import vista.userPanels.InterchangeCardPanel;
 import vista.userPanels.InterchangeCardPanel.Modo;
-import vista.userWindows.ProposalsWindow;
 import vista.userPanels.ProposalsPanel;
 
 import java.util.Set;
@@ -243,8 +243,8 @@ public class ControladorProposals {
 
         if (target != null) {
             // Ahora sí, es el CONTROLADOR quien abre la ventana con los datos del Modelo
-            vista.userWindows.VentanaDetallesProductoSegundaMano dialog = 
-                new vista.userWindows.VentanaDetallesProductoSegundaMano(ventana, target);
+            vista.clienteWindows.VentanaDetallesProductoSegundaManoWindow dialog = 
+                new vista.clienteWindows.VentanaDetallesProductoSegundaManoWindow(ventana, target);
             dialog.setVisible(true);
         } else {
             ventana.mostrarVentanaError("Producto no encontrado.");

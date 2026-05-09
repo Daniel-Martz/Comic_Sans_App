@@ -4,10 +4,10 @@ import modelo.aplicacion.Aplicacion;
 import modelo.producto.ProductoSegundaMano;
 import modelo.solicitud.SolicitudValidacion;
 import modelo.usuario.ClienteRegistrado;
+import vista.clienteWindows.VentanaNuevoProductoSegundaManoWindow;
+import vista.clienteWindows.VentanaPagoValidacion;
 import vista.main.MainFrame;
 import vista.userPanels.MySecondHandProductsPanel;
-import vista.userWindows.VentanaNuevoProductoSegundaMano;
-import vista.userWindows.VentanaPagoValidacion;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,6 +16,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
 import controladores.ControladorNuevoProductoSegundaMano;
+import utils.DialogUtils;
 
 /**
  * Controlador para `MySecondHandProductsPanel`.
@@ -78,12 +79,12 @@ public class ControladorMySecondHandProducts implements ActionListener {
      */
     private void onAddNewProduct() {
         if (!(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado)) {
-            JOptionPane.showMessageDialog(parent, "Only registered clients can add products.", "Access denied", JOptionPane.WARNING_MESSAGE);
+            DialogUtils.showWideMessage(parent, "Only registered clients can add products.", "Access denied", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         // 1. Crear la ventana
-        VentanaNuevoProductoSegundaMano ventanaNuevo = new VentanaNuevoProductoSegundaMano(parent);
+        VentanaNuevoProductoSegundaManoWindow ventanaNuevo = new VentanaNuevoProductoSegundaManoWindow(parent);
         
         // 2. Crear su controlador, que se encargará de la lógica interna de la ventana
         new ControladorNuevoProductoSegundaMano(ventanaNuevo);
@@ -98,7 +99,7 @@ public class ControladorMySecondHandProducts implements ActionListener {
     /** Abre la ventana de pago para la solicitud asociada al producto indicado por id. */
     private void onPayValidation(int productoId) {
         if (!(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado)) {
-            JOptionPane.showMessageDialog(parent, "Only registered clients can pay validations.", "Access denied", JOptionPane.WARNING_MESSAGE);
+            DialogUtils.showWideMessage(parent, "Only registered clients can pay validations.", "Access denied", JOptionPane.WARNING_MESSAGE);
             return;
         }
 

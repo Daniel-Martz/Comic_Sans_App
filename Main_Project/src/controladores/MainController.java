@@ -4,29 +4,28 @@ import modelo.aplicacion.Aplicacion;
 import modelo.aplicacion.Catalogo;
 import modelo.notificacion.Notificacion;
 import modelo.solicitud.Oferta;
-import modelo.usuario.ClienteRegistrado;
+import modelo.*;
+import modelo.usuario.*;
 import modelo.usuario.Empleado;
 import modelo.usuario.Gestor;
 import modelo.usuario.Usuario;
+import modelo.usuario.Permiso;
 import vista.main.MainFrame;
-import vista.userWindows.CrearUsuarioDialog;
-import vista.userWindows.EditProfileDialog;
-import vista.userWindows.FiltrosDialog;
-import vista.userWindows.LoginDialog;
-import vista.userWindows.NotificacionDialog;
-import vista.userWindows.ProposalsWindow;
-import vista.userWindows.VentanaInterchangeOptions;
-import vista.userWindows.VentanaRegistroRequerido;
-import vista.userWindows.UsuarioOptionsDialog;
+import vista.empleadoWindow.*;
 import javax.swing.JOptionPane;
+import vista.userPanels.HeaderPanel;
+import javax.swing.Timer;
 
 import java.util.List;
 import java.util.Set;
 import vista.userPanels.*;
 import vista.empleadoPanel.*;
-import controlador.*;
-import controlador.LoginController;
-import controlador.LoginToCreateAccountController;
+import vista.*;
+import vista.clienteWindows.CrearUsuarioWindow;
+import vista.clienteWindows.EditProfileWindow;
+import vista.clienteWindows.FiltrosWindow;
+import vista.clienteWindows.LoginWindow;
+import vista.clienteWindows.*;
 
 
 /**
@@ -43,15 +42,16 @@ public class MainController {
     // -------------------------------------------------------
     private final MainFrame mainFrame;
     private final Aplicacion modelo;
-    private vista.userWindows.CrearUsuarioDialog crearUsuarioDialog;
-    private vista.userWindows.LoginDialog loginDialog;
-    private vista.userWindows.EditProfileDialog editProfileDialog;
-    private vista.userWindows.FiltrosDialog dialogFiltros;
-    private vista.userWindows.UsuarioOptionsDialog dialogOpcionesUsuario;
+    private CrearUsuarioWindow crearUsuarioDialog;
+    private LoginWindow loginDialog;
+    private EditProfileWindow editProfileDialog;
+    private FiltrosWindow dialogFiltros;
+    private UsuarioOptionsWIndow dialogOpcionesUsuario;
     private ControladorFiltros controladorFiltros;
     private ControladorSearchInterchanges controladorSearchInterchanges;
     private ControladorMakeOffer controladorMakeOffer;
-    private NotificacionDialog notificacionDialog;
+    private ControladorManageAccounts ctrlManageAccounts;
+    private NotificacionWindow notificacionDialog;
 
     // -------------------------------------------------------
     // Constructor
@@ -66,6 +66,10 @@ public class MainController {
         
         // Mostrar panel inicial
         mostrarMenuPrincipal();
+        
+        // Iniciar un timer para actualizar el tiempo simulado en todas las cabeceras cada segundo
+        Timer timer = new Timer(1000, e -> refreshDateGlobal());
+        timer.start();
         
         // Hacer visible la ventana
         mainFrame.setVisible(true);
@@ -96,21 +100,40 @@ public class MainController {
         conectarHeaderEmpleado(mainFrame.getManageOrdersPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getValidationRequestsPanel().getHeaderPanel());
         conectarHeaderEmpleado(mainFrame.getManageInterchangesPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getDescuentosCategoriaPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getCreatePackPanel().getHeaderPanel());
+        conectarHeaderEmpleado(mainFrame.getModifyPacksPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageAccountsPanel().getHeaderPanel());
         conectarHeaderGestor(mainFrame.getManageStatisticsPanel().getHeaderPanel());
+        conectarHeaderGestor(mainFrame.getManageRecommendationsPanel().getHeaderPanel());
+        conectarHeaderGestor(mainFrame.getManageTimePanel().getHeaderPanel());
         
         new ControladorManageProducts(mainFrame, this);
         new ControladorAddProducts(mainFrame, this);
         new ControladorManageOrders(mainFrame.getManageOrdersPanel(), mainFrame);
         new ControladorValidationRequests(mainFrame.getValidationRequestsPanel(), mainFrame, this);
         new ControladorManageInterchanges(mainFrame.getManageInterchangesPanel(), mainFrame, this);
+        new ControladorCreatePack(mainFrame.getCreatePackPanel(), mainFrame, this);
+        new ControladorModifyPacks(mainFrame.getModifyPacksPanel(), mainFrame, this);
+        
+        this.ctrlManageAccounts = new ControladorManageAccounts(mainFrame.getManageAccountsPanel(), mainFrame);
+        // Cargar inicialmente la lista de empleados
+        this.ctrlManageAccounts.cargarCuentas();
+        
+        new ControladorManageStatistics(mainFrame.getManageStatisticsPanel(), mainFrame, this);
+        new ControladorManageRecommendations(mainFrame.getManageRecommendationsPanel(), mainFrame, this);
+        new ControladorDescuentos(mainFrame.getDescuentosPanel(), mainFrame, this);
+        new ControladorDescuentosCategoria(mainFrame.getDescuentosCategoriaPanel(), mainFrame, this);
         
         ControladorManageAccounts ctrlManageAccounts = new ControladorManageAccounts(mainFrame.getManageAccountsPanel(), mainFrame);
         ctrlManageAccounts.cargarCuentas();
         
         new ControladorManageStatistics(mainFrame.getManageStatisticsPanel(), mainFrame, this);
+        new ControladorManageTime(mainFrame.getManageTimePanel(), mainFrame, this);
         
         mainFrame.getMenuGestorPanel().addManageAccountsListener(e -> {
+            // Asegurarnos de recargar la lista de cuentas (solo empleados) cada vez que se abre el panel
+            if (this.ctrlManageAccounts != null) this.ctrlManageAccounts.cargarCuentas();
             navegarA(MainFrame.PANEL_MANAGE_ACCOUNTS);
         });
         
@@ -118,28 +141,46 @@ public class MainController {
             navegarA(MainFrame.PANEL_MANAGE_STATISTICS);
         });
         
+        mainFrame.getMenuGestorPanel().addManageRecommendationsListener(e -> {
+            navegarA(MainFrame.PANEL_MANAGE_RECOMMENDATIONS);
+        });
+        
+        mainFrame.getMenuEmpleadoPanel().addManageProductsListener(e -> {
+                navegarA(MainFrame.PANEL_MANAGE_PRODUCTS);
+        });
+
+        mainFrame.getMenuGestorPanel().addManageTimeListener(e -> {
+            navegarA(MainFrame.PANEL_MANAGE_TIME);
+        });
+        
         mainFrame.getMenuEmpleadoPanel().addManageOrdersListener(e -> {
-            ControladorManageOrders ctrl = mainFrame.getManageOrdersPanel().getControlador();
-            if (ctrl != null) {
-                ctrl.actualizarPedidos();
+            if (verificarPermisoEmpleado(Permiso.PEDIDOS, "Orders management")) {
+                ControladorManageOrders ctrl = mainFrame.getManageOrdersPanel().getControlador();
+                if (ctrl != null) {
+                    ctrl.actualizarPedidos();
+                }
+                navegarA(MainFrame.PANEL_MANAGE_ORDERS);
             }
-            navegarA(MainFrame.PANEL_MANAGE_ORDERS);
         });
         
         mainFrame.getMenuEmpleadoPanel().addValidationRequestsListener(e -> {
-            ControladorValidationRequests ctrl = mainFrame.getValidationRequestsPanel().getControlador();
-            if (ctrl != null) {
-                ctrl.actualizarSolicitudes();
+            if (verificarPermisoEmpleado(Permiso.VALIDACIONES, "Validation management")) {
+                ControladorValidationRequests ctrl = mainFrame.getValidationRequestsPanel().getControlador();
+                if (ctrl != null) {
+                    ctrl.actualizarSolicitudes();
+                }
+                navegarA(MainFrame.PANEL_VALIDATION_REQUESTS);
             }
-            navegarA(MainFrame.PANEL_VALIDATION_REQUESTS);
         });
         
         mainFrame.getMenuEmpleadoPanel().addManageInterchangesListener(e -> {
-            ControladorManageInterchanges ctrl = mainFrame.getManageInterchangesPanel().getControlador();
-            if (ctrl != null) {
-                ctrl.actualizarSolicitudes();
+            if (verificarPermisoEmpleado(Permiso.INTERCAMBIOS, "Interchange management")) {
+                ControladorManageInterchanges ctrl = mainFrame.getManageInterchangesPanel().getControlador();
+                if (ctrl != null) {
+                    ctrl.actualizarSolicitudes();
+                }
+                navegarA(MainFrame.PANEL_MANAGE_INTERCHANGES);
             }
-            navegarA(MainFrame.PANEL_MANAGE_INTERCHANGES);
         });
         
         mainFrame.getMenuPrincipalPanel().addBuyNowListener(e -> {
@@ -167,7 +208,7 @@ public class MainController {
                     int id = Integer.parseInt(cmd.substring(5));
                     modelo.producto.LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
                     if (p != null) {
-                        vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(mainFrame, p);
+                        vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(mainFrame, p);
                         dialog.setVisible(true);
                     }
                 } catch (NumberFormatException ex) {
@@ -230,7 +271,6 @@ public class MainController {
      */
     private void conectarHeaderGlobal(HeaderPanel header) {
         header.addHomeListener(e -> mostrarMenuPrincipal());
-        header.addDescuentosListener(e -> navegarA(MainFrame.PANEL_DESCUENTOS));
         header.addOutstandingListener(e -> mostrarProductosOutstanding());
         header.addDescuentosListener(e -> mostrarProductosDescontados());
         header.addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
@@ -260,6 +300,56 @@ public class MainController {
             java.util.Set<modelo.producto.LineaProductoVenta> rec = modelo.getConfiguracionRecomendacion().getRecomendacion();
             mainFrame.getMenuPrincipalPanel().actualizarRecomendados(rec);
         }
+        
+        // Configurar el header de Manage Products dinámicamente según el rol
+        if (nombrePanel.equals(MainFrame.PANEL_MANAGE_PRODUCTS)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getManageProductsPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getManageProductsPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+        
+        if (nombrePanel.equals(MainFrame.PANEL_DESCUENTOS)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getDescuentosPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getDescuentosPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+        
+        if (nombrePanel.equals(MainFrame.PANEL_DESCUENTOS_CATEGORIA)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+
+        if (nombrePanel.equals(MainFrame.PANEL_ADD_PRODUCTS)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getAddProductsPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getAddProductsPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+
+        if (nombrePanel.equals(MainFrame.PANEL_CREATE_PACK)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getCreatePackPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getCreatePackPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+        
+        if (nombrePanel.equals(MainFrame.PANEL_MODIFY_PACKS)) {
+            if (modelo.getUsuarioActual() instanceof Gestor) {
+                mainFrame.getModifyPacksPanel().getHeaderPanel().configurarMenuGestor();
+            } else {
+                mainFrame.getModifyPacksPanel().getHeaderPanel().configurarMenuEmpleado();
+            }
+        }
+
         mainFrame.mostrarPanel(nombrePanel);
     }
 
@@ -320,7 +410,7 @@ public class MainController {
     public void abrirVentanaFiltros() {
         if (this.dialogFiltros == null) {
             // 1. Creamos la vista (JDialog), pasándole el MainFrame como padre
-            this.dialogFiltros = new vista.userWindows.FiltrosDialog(mainFrame);
+            this.dialogFiltros = new vista.clienteWindows.FiltrosWindow(mainFrame);
             // 2. Creamos su controlador específico solo una vez
             this.controladorFiltros = new ControladorFiltros(this.dialogFiltros);
         }
@@ -334,7 +424,7 @@ public class MainController {
      */
     public void mostrarProductosPorCategoria(String categoria) {
         if (this.dialogFiltros == null) {
-            this.dialogFiltros = new vista.userWindows.FiltrosDialog(mainFrame);
+            this.dialogFiltros = new vista.clienteWindows.FiltrosWindow(mainFrame);
             this.controladorFiltros = new ControladorFiltros(this.dialogFiltros);
         }
         
@@ -387,12 +477,12 @@ public class MainController {
      */
     private boolean verificarAccesoClienteRegistrado() {
         if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
-            VentanaRegistroRequerido dialogoRequerido = new VentanaRegistroRequerido(mainFrame);
+            VentanaRegistroRequeridoWindow dialogoRequerido = new VentanaRegistroRequeridoWindow(mainFrame);
             int eleccion = dialogoRequerido.mostrarVentana();
 
-            if (eleccion == VentanaRegistroRequerido.INICIAR_SESION) {
+            if (eleccion == VentanaRegistroRequeridoWindow.INICIAR_SESION) {
                 abrirVentanaLogIn();
-            } else if (eleccion == VentanaRegistroRequerido.REGISTRARSE) {
+            } else if (eleccion == VentanaRegistroRequeridoWindow.REGISTRARSE) {
                 abrirVentanaCrearUsuario();
             }
             return false;
@@ -405,7 +495,7 @@ public class MainController {
             return;
         }
 
-        VentanaInterchangeOptions v = new VentanaInterchangeOptions(this.mainFrame);
+        VentanaInterchangeOptionsWindow v = new VentanaInterchangeOptionsWindow(this.mainFrame);
 	    v.setControlador(e -> {
 	        String command = e.getActionCommand();
 	        if (command.equals("PROPOSALS")) {
@@ -486,20 +576,20 @@ public class MainController {
     }
     
     public void abrirVentanaCrearUsuario(){
-    	this.crearUsuarioDialog = new CrearUsuarioDialog(mainFrame);
+    	this.crearUsuarioDialog = new CrearUsuarioWindow(mainFrame);
       this.crearUsuarioDialog.addListener(new CreateAccountController( this));
     	crearUsuarioDialog.setVisible(true);
     }
     
     public void abrirVentanaLogIn(){
-    	this.loginDialog = new LoginDialog(mainFrame );
+    	this.loginDialog = new LoginWindow(mainFrame );
       this.loginDialog.addListenerLogin(new LoginController(this));
       this.loginDialog.addListenerCreateAccount(new LoginToCreateAccountController(this));
     	loginDialog.setVisible(true);
     }
     
     public void abrirVentanaOpcionesUsuario(){
-    	this.dialogOpcionesUsuario = new UsuarioOptionsDialog(mainFrame);
+    	this.dialogOpcionesUsuario = new UsuarioOptionsWIndow(mainFrame);
       //Aquí pasamos como argumento el mainFrame para que el dialog de cerrar sesión tenga un padre
       this.dialogOpcionesUsuario.addListener(new UsuarioOptionsController(mainFrame, this));
     	dialogOpcionesUsuario.setVisible(true);
@@ -514,7 +604,7 @@ public class MainController {
     }
 
     public void abrirVentanaEditarUsuario(){
-    	this.editProfileDialog = new EditProfileDialog(mainFrame);
+    	this.editProfileDialog = new EditProfileWindow(mainFrame);
     	this.editProfileDialog.addListenerChangeData(new EditProfileController( this));
     	editProfileDialog.setVisible(true);
     } 
@@ -550,6 +640,7 @@ public class MainController {
     	mainFrame.getMenuGestorPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getManageAccountsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getManageStatisticsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getManageTimePanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	
     	// Paneles de empleado
     	mainFrame.getMenuEmpleadoPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
@@ -558,6 +649,9 @@ public class MainController {
     	mainFrame.getManageOrdersPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getValidationRequestsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getManageInterchangesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+    	mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+        mainFrame.getCreatePackPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
+        mainFrame.getModifyPacksPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	
     	// Placeholders
     	mainFrame.getDescuentosPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
@@ -566,9 +660,54 @@ public class MainController {
     	mainFrame.getNotificacionesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     }
 
+    public void refreshDateGlobal() {
+        mainFrame.getMenuPrincipalPanel().getHeaderPanel().updateDate();
+        mainFrame.getMySecondHandProductsPanel().getHeaderPanel().updateDate();
+        mainFrame.getCarritoPanel().getHeaderPanel().updateDate();
+        mainFrame.getOutstandingPanel().getHeaderPanel().updateDate();
+        mainFrame.getProductosFiltradosPanel().getHeaderPanel().updateDate();
+        mainFrame.getSearchInterchangesPanel().getHeaderPanel().updateDate();
+        mainFrame.getMakeOfferPanel().getHeaderPanel().updateDate();
+        mainFrame.getHistorialPedidosPanel().getHeaderPanel().updateDate();
+        
+        mainFrame.getMenuGestorPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageAccountsPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageStatisticsPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageTimePanel().getHeaderPanel().updateDate();
+        
+        // Paneles de empleado
+        mainFrame.getMenuEmpleadoPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageProductsPanel().getHeaderPanel().updateDate();
+        mainFrame.getAddProductsPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageOrdersPanel().getHeaderPanel().updateDate();
+        mainFrame.getValidationRequestsPanel().getHeaderPanel().updateDate();
+        mainFrame.getManageInterchangesPanel().getHeaderPanel().updateDate();
+        mainFrame.getDescuentosCategoriaPanel().getHeaderPanel().updateDate();
+        mainFrame.getCreatePackPanel().getHeaderPanel().updateDate();
+        mainFrame.getModifyPacksPanel().getHeaderPanel().updateDate();
+        
+        // Placeholders
+        mainFrame.getDescuentosPanel().getHeaderPanel().updateDate();
+        mainFrame.getConfiguracionPanel().getHeaderPanel().updateDate();
+        mainFrame.getPerfilPanel().getHeaderPanel().updateDate();
+        mainFrame.getNotificacionesPanel().getHeaderPanel().updateDate();
+    }
+
 
     public void abrirVentanaNotificacion(Notificacion n){
-    	this.notificacionDialog = new NotificacionDialog(mainFrame, n);
+    	this.notificacionDialog = new NotificacionWindow(mainFrame, n);
       this.notificacionDialog.setVisible(true);
     } 
+
+    private boolean verificarPermisoEmpleado(Permiso p, String nombrePermiso) {
+        Usuario u = modelo.getUsuarioActual();
+        if (u instanceof Gestor) return true;
+        
+        if (u instanceof Empleado emp && emp.tienePermiso(p)) return true;
+
+        // Reusable dialog for permission denial (keeps UI consistent)
+        vista.clienteWindows.PermissionRequiredWindow dlg = new vista.clienteWindows.PermissionRequiredWindow(mainFrame, nombrePermiso);
+        dlg.mostrar();
+        return false;
+    }
 }

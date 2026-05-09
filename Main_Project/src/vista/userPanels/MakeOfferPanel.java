@@ -106,6 +106,22 @@ public class MakeOfferPanel extends JPanel {
             searchPanel.setOpaque(false);
             searchPanel.setBorder(new EmptyBorder(10, 0, 0, 0));
             txtSearch = new JTextField();
+            txtSearch.setText("Search...");
+            txtSearch.setForeground(Color.GRAY);
+            txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+                public void focusGained(java.awt.event.FocusEvent evt) {
+                    if (txtSearch.getText().equals("Search...")) {
+                        txtSearch.setText("");
+                        txtSearch.setForeground(Color.BLACK);
+                    }
+                }
+                public void focusLost(java.awt.event.FocusEvent evt) {
+                    if (txtSearch.getText().isEmpty()) {
+                        txtSearch.setText("Search...");
+                        txtSearch.setForeground(Color.GRAY);
+                    }
+                }
+            });
             btnSearch = new JButton("Search");
             btnSearch.setActionCommand("SEARCH_" + commandPrefix);
             searchPanel.add(txtSearch, BorderLayout.CENTER);
@@ -157,7 +173,10 @@ public class MakeOfferPanel extends JPanel {
             txtSearch.addActionListener(e -> btnSearch.doClick());
         }
         
-        public String getSearchText() { return txtSearch.getText().trim(); }
+        public String getSearchText() { 
+            String text = txtSearch.getText().trim(); 
+            return text.equals("Search...") ? "" : text;
+        }
 
         private JPanel crearTarjetaMini(ProductoSegundaMano prod, boolean isSelected, ActionListener actionCtrl, ItemListener itemCtrl) {
             JPanel tarjeta = new JPanel();

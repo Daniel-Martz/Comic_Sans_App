@@ -30,7 +30,7 @@ public class ControladorHistorialPedidos implements ActionListener{
         if (cmd.startsWith("INFO_")) {
             int productId = Integer.parseInt(cmd.substring(5));
             Window parentWindow = SwingUtilities.getWindowAncestor(historialPedidosPanel);
-            vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(parentWindow, Catalogo.getInstancia().buscarProductoNuevo(productId));
+            vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(parentWindow, Catalogo.getInstancia().buscarProductoNuevo(productId));
             dialog.setVisible(true);
         } else if (cmd.startsWith("REVIEW_")) {
             int productId = Integer.parseInt(cmd.substring(7));
@@ -40,7 +40,7 @@ public class ControladorHistorialPedidos implements ActionListener{
             try {
                 int productId = Integer.parseInt(cmd);
                 Window parentWindow = SwingUtilities.getWindowAncestor(historialPedidosPanel);
-                vista.userWindows.VentanaDetallesProducto dialog = new vista.userWindows.VentanaDetallesProducto(parentWindow, Catalogo.getInstancia().buscarProductoNuevo(productId));
+                vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(parentWindow, Catalogo.getInstancia().buscarProductoNuevo(productId));
                 dialog.setVisible(true);
             } catch (NumberFormatException ex) {
                 // Ignore
@@ -66,12 +66,12 @@ public class ControladorHistorialPedidos implements ActionListener{
         if (producto == null) return;
         Window parentWindow = SwingUtilities.getWindowAncestor(historialPedidosPanel);
         if (parentWindow instanceof JFrame) {
-            vista.userWindows.AddReviewWindow dialog = new vista.userWindows.AddReviewWindow((JFrame)parentWindow, producto, this);
+            vista.clienteWindows.AddReviewWindow dialog = new vista.clienteWindows.AddReviewWindow((JFrame)parentWindow, producto, this);
             dialog.setVisible(true);
         }
     }
     
-    public void confirmarReseña(modelo.producto.LineaProductoVenta producto, String descripcion, double puntuacion, vista.userWindows.AddReviewWindow window) {
+    public void confirmarReseña(modelo.producto.LineaProductoVenta producto, String descripcion, double puntuacion, vista.clienteWindows.AddReviewWindow window) {
         modelo.usuario.Usuario u = Aplicacion.getInstancia().getUsuarioActual();
         if (u instanceof modelo.usuario.ClienteRegistrado) {
             modelo.usuario.ClienteRegistrado cliente = (modelo.usuario.ClienteRegistrado) u;

@@ -4,8 +4,8 @@ import modelo.aplicacion.Catalogo;
 import modelo.producto.*;
 import vista.main.MainFrame;
 import vista.empleadoPanel.AddProductsPanel;
-import vista.empleadoPanel.LoadFromFileWindow;
-import vista.empleadoPanel.AddProductManuallyWindow;
+import vista.empleadoWindow.AddProductManuallyWindow;
+import vista.empleadoWindow.LoadFromFileWindow;
 
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;

@@ -1,6 +1,7 @@
 package vista.main;
 
 import vista.userPanels.*;
+import vista.GestorPanel.*;
 import vista.empleadoPanel.*;
 import javax.swing.*;
 import java.awt.*;
@@ -35,12 +36,17 @@ public class MainFrame extends JFrame {
     private ManageInterchangesPanel manageInterchangesPanel;
     
     private AddProductsPanel addProductsPanel;
+    private CreatePackPanel createPackPanel;
+    private ModifyPacksPanel modifyPacksPanel;
     // El formulario de añadir producto manualmente ahora es una ventana independiente (AddProductManuallyWindow)
     // por tanto no mantenemos aquí el panel como componente del CardLayout.
     
     private ManageAccountsPanel manageAccountsPanel;
     private ManageStatisticsPanel manageStatisticsPanel;
-    private PlaceholderPanel descuentosPanel;
+    private ManageRecommendationsPanel manageRecommendationsPanel;
+    private ManageTimePanel manageTimePanel;
+    private DescuentosPanel descuentosPanel;
+    private DescuentosCategoriaPanel descuentosCategoriaPanel;
     private PlaceholderPanel configuracionPanel;
     private PlaceholderPanel perfilPanel;
 
@@ -67,12 +73,17 @@ public class MainFrame extends JFrame {
     public static final String PANEL_MANAGE_ORDERS = "ManageOrders";
     public static final String PANEL_MODIFY_A_PRODUCT = "ModifyAProduct";
     public static final String PANEL_ADD_PRODUCTS = "AddProducts";
+    public static final String PANEL_CREATE_PACK = "CreatePack";
+    public static final String PANEL_MODIFY_PACKS = "ModifyPacks";
     public static final String PANEL_LOAD_FROM_FILE = "LoadFromFile";
     public static final String PANEL_ADD_PRODUCT_MANUALLY = "AddProductManually";
     public static final String PANEL_VALIDATION_REQUESTS = "ValidationRequestsPanel";
     public static final String PANEL_MANAGE_INTERCHANGES = "ManageInterchanges";
     public static final String PANEL_MANAGE_ACCOUNTS = "ManageAccounts";
     public static final String PANEL_MANAGE_STATISTICS = "ManageStatistics";
+    public static final String PANEL_MANAGE_RECOMMENDATIONS = "ManageRecommendations";
+    public static final String PANEL_MANAGE_TIME = "ManageTime";
+    public static final String PANEL_DESCUENTOS_CATEGORIA = "DescuentosCategoria";
 
     public MainFrame() {
         super("Comic Sans App");
@@ -103,10 +114,16 @@ public class MainFrame extends JFrame {
         manageInterchangesPanel = new ManageInterchangesPanel();
         
         addProductsPanel = new AddProductsPanel();
+        createPackPanel = new CreatePackPanel();
+        modifyPacksPanel = new ModifyPacksPanel();
         manageAccountsPanel = new ManageAccountsPanel();
         manageStatisticsPanel = new ManageStatisticsPanel();
+        manageRecommendationsPanel = new ManageRecommendationsPanel();
+        manageTimePanel = new ManageTimePanel();
         // addProductManuallyPanel = new AddProductManuallyPanel();
         
+        descuentosPanel = new DescuentosPanel();
+        descuentosCategoriaPanel = new DescuentosCategoriaPanel();
         configuracionPanel = new PlaceholderPanel("Configuración");
         perfilPanel = new PlaceholderPanel("Perfil");
         notificacionesPanel = new NotificacionesPanel();
@@ -118,6 +135,7 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(menuGestorPanel, PANEL_MENU_GESTOR);
         contenedorPaneles.add(mySecondHandProductsPanel, PANEL_MY_SECOND_HAND_PRODUCTS);
         contenedorPaneles.add(descuentosPanel, PANEL_DESCUENTOS);
+        contenedorPaneles.add(descuentosCategoriaPanel, PANEL_DESCUENTOS_CATEGORIA);
         contenedorPaneles.add(productosFiltradosPanel, PANEL_PRODUCTOS_FILTRADOS);
         contenedorPaneles.add(carritoPanel, PANEL_CARRITO);
         contenedorPaneles.add(configuracionPanel, PANEL_CONFIGURACION);
@@ -132,9 +150,13 @@ public class MainFrame extends JFrame {
         contenedorPaneles.add(modifyProductsPanel, PANEL_MODIFY_PRODUCTS);
         contenedorPaneles.add(manageOrdersPanel, PANEL_MANAGE_ORDERS);
         contenedorPaneles.add(addProductsPanel, PANEL_ADD_PRODUCTS);
+        contenedorPaneles.add(createPackPanel, PANEL_CREATE_PACK);
+        contenedorPaneles.add(modifyPacksPanel, PANEL_MODIFY_PACKS);
         contenedorPaneles.add(manageAccountsPanel, PANEL_MANAGE_ACCOUNTS);
         contenedorPaneles.add(manageStatisticsPanel, PANEL_MANAGE_STATISTICS);
+        contenedorPaneles.add(manageRecommendationsPanel, PANEL_MANAGE_RECOMMENDATIONS);
         contenedorPaneles.add(validationRequestsPanel, PANEL_VALIDATION_REQUESTS);
+        contenedorPaneles.add(manageTimePanel, PANEL_MANAGE_TIME);
         contenedorPaneles.add(manageInterchangesPanel, PANEL_MANAGE_INTERCHANGES);
         // El panel para añadir producto manualmente ya no se añade al CardLayout porque se muestra
         // mediante una ventana independiente (AddProductManuallyWindow).
@@ -176,11 +198,16 @@ public class MainFrame extends JFrame {
     public ManageInterchangesPanel getManageInterchangesPanel() { return manageInterchangesPanel; }
     public ManageAccountsPanel getManageAccountsPanel() { return manageAccountsPanel; }
     public ManageStatisticsPanel getManageStatisticsPanel() { return manageStatisticsPanel; }
+    public ManageRecommendationsPanel getManageRecommendationsPanel() { return manageRecommendationsPanel; }
+    public ManageTimePanel getManageTimePanel() { return manageTimePanel; }
     
     public AddProductsPanel getAddProductsPanel() { return addProductsPanel; }
+    public CreatePackPanel getCreatePackPanel() { return createPackPanel; }
+    public ModifyPacksPanel getModifyPacksPanel() { return modifyPacksPanel; }
     // Ya no hay getter para AddProductManuallyPanel porque es una ventana independiente.
     
-    public DiscountedPanel getDescuentosPanel() { return descuentosPanel; }
+    public DescuentosPanel getDescuentosPanel() { return descuentosPanel; }
+    public DescuentosCategoriaPanel getDescuentosCategoriaPanel() { return descuentosCategoriaPanel; }
     public PlaceholderPanel getConfiguracionPanel() { return configuracionPanel; }
     public PlaceholderPanel getPerfilPanel() { return perfilPanel; }
     public NotificacionesPanel getNotificacionesPanel() { return notificacionesPanel; }

@@ -1,3 +1,6 @@
+src/vista/GestorWindow/ModifyPermissionsWindow.java
+src/vista/GestorWindow/NewEmployeeWindow.java
+src/vista/GestorWindow/ManageEmployeeWindow.java
 src/vista/main/MainParaPruebas.java
 src/vista/main/MainFrame.java
 src/vista/empleadoPanel/MainMenuGestorPanel.java
@@ -15,6 +18,7 @@ src/vista/empleadoPanel/ValidationRequestsPanel.java
 src/vista/empleadoPanel/ManageOrdersPanel.java
 src/vista/empleadoPanel/SelectOrderStateWindow.java
 src/vista/empleadoPanel/mainMenuEmpleadoPanel.java
+src/vista/empleadoPanel/ManageStatisticsPanel.java
 src/vista/empleadoPanel/ManageProductsPanel.java
 src/vista/elements/ButtonRendererNotification.java
 src/vista/elements/DeleteButtonEditor.java
@@ -31,7 +35,45 @@ src/vista/userPanels/CarritoPanel.java
 src/vista/userPanels/ProductosFiltradosPanel.java
 src/vista/userPanels/HeaderPanel.java
 src/vista/userPanels/PlaceholderPanel.java
-src/vista/userPanels/MenuPrincipalPanel.java
+src/vista/userPanels/MenuPrincipalPanel.jaxception in thread "AWT-EventQueue-0" java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because "this.rowLabels" is null
+	at vista.GestorPanel.ManageRecommendationsPanel.updateRowTexts(ManageRecommendationsPanel.java:234)
+	at controladores.ControladorManageRecommendations.actualizarVistaYModelo(ControladorManageRecommendations.java:89)
+	at controladores.ControladorManageRecommendations.lambda$2(ControladorManageRecommendations.java:76)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2314)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:407)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6621)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3398)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6386)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4996)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4828)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4948)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4575)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4516)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4828)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:87)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:98)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:87)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)va
 src/vista/userPanels/InterchangeCardPanel.java
 src/vista/userPanels/HistorialPedidosPanel.java
 src/vista/userPanels/LogInPanel.java
@@ -43,6 +85,7 @@ src/vista/userWindows/AddReviewWindow.java
 src/vista/userWindows/NotificacionDialog.java
 src/vista/userWindows/EditProfileDialog.java
 src/vista/userWindows/VentanaInterchangeOptions.java
+src/vista/userWindows/PermissionRequiredDialog.java
 src/vista/userWindows/ProposalsWindow.java
 src/vista/userWindows/VentanaPagoPedido.java
 src/vista/userWindows/ManageCategoriesWindow.java
@@ -58,7 +101,9 @@ src/vista/userWindows/CrearUsuarioDialog.java
 src/vista/userWindows/VentanaNuevoProductoSegundaMano.java
 src/vista/userWindows/VentanaDetallesProducto.java
 src/vista/GestorPanel/ManageAccountsPanel.java
+src/vista/GestorPanel/ManageRecommendationsPanel.java
 src/app/App.java
+src/utils/DialogUtils.java
 src/gui/NotificationsPanel.java
 src/controlador/CreateAccountController.java
 src/controlador/NewPasswordController.java
@@ -76,6 +121,7 @@ src/controladores/ControladorProductosFiltrados.java
 src/controladores/ControladorManageAccounts.java
 src/controladores/ControladorCarrito.java
 src/controladores/ControladorNuevoProductoSegundaMano.java
+src/controladores/ControladorManageStatistics.java
 src/controladores/ControladorOutstanding.java
 src/controladores/ManageCategoriesController.java
 src/controladores/ControladorSearchInterchanges.java

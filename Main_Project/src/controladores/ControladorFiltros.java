@@ -1,7 +1,8 @@
 package controladores;
 
-import vista.userWindows.*;
 import java.awt.event.ItemEvent;
+
+import vista.clienteWindows.*;
 
 /**
  * Controlador específico para la ventana de Filtros.
@@ -9,9 +10,9 @@ import java.awt.event.ItemEvent;
  */
 public class ControladorFiltros {
 
-    private FiltrosDialog vista;
+    private FiltrosWindow vista;
 
-    public ControladorFiltros(FiltrosDialog vista) {
+    public ControladorFiltros(FiltrosWindow vista) {
         this.vista = vista;
         inicializarListeners();
     }
