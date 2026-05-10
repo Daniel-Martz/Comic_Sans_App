@@ -68,6 +68,19 @@ public class ControladorOutstanding implements ActionListener {
             } catch (NumberFormatException ex) {
                 vista.mostrarMensaje("Invalid product id.", "Error");
             }
+        } else if (cmd.startsWith("DESCINFO_")) {
+            String idStr = cmd.substring(9);
+            try {
+                int id = Integer.parseInt(idStr);
+                LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
+                if (p != null) {
+                    Window parentWindow = SwingUtilities.getWindowAncestor(vista);
+                    vista.clienteWindows.DiscountInfoWindow dialog = new vista.clienteWindows.DiscountInfoWindow(parentWindow, p);
+                    dialog.setVisible(true);
+                }
+            } catch (NumberFormatException ex) {
+                vista.mostrarMensaje("Invalid product id.", "Error");
+            }
         }
     }
 

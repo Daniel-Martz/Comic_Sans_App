@@ -137,10 +137,15 @@ public class MenuPrincipalPanel extends JPanel {
         card.setPreferredSize(new Dimension(180, 230));
         card.setBorder(new EmptyBorder(10, 10, 10, 10));
 
+        JPanel headerProd = new JPanel(new BorderLayout(5, 0));
+        headerProd.setOpaque(false);
+        
         JLabel lblName = new JLabel(name, SwingConstants.CENTER);
         lblName.setFont(new Font("SansSerif", Font.BOLD, 12));
         lblName.setForeground(Color.DARK_GRAY);
         lblName.setBorder(new EmptyBorder(0, 0, 5, 0));
+        headerProd.add(lblName, BorderLayout.CENTER);
+        
 
         JLabel imagePlaceholder = new JLabel();
         imagePlaceholder.setHorizontalAlignment(SwingConstants.CENTER);
@@ -166,6 +171,40 @@ public class MenuPrincipalPanel extends JPanel {
         lblPrice.setOpaque(true);
         lblPrice.setBackground(new Color(0, 204, 204));
         lblPrice.setBorder(new LineBorder(Color.BLACK, 1));
+        lblPrice.setForeground(Color.BLACK);
+        
+        JPanel pricePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        pricePanel.setOpaque(false);
+        pricePanel.add(lblPrice);
+
+        modelo.descuento.Descuento d = prod.getDescuento();
+        if (d == null) {
+            for (modelo.categoria.Categoria c : prod.getCategorias()) {
+                if (c.getDescuento() != null && !c.getDescuento().haCaducado()) {
+                    d = c.getDescuento();
+                    break;
+                }
+            }
+        }
+        if (d != null && !d.haCaducado()) {
+            lblPrice.setForeground(Color.RED);
+            String descText = "%";
+            if (d instanceof modelo.descuento.Precio) descText = "-" + ((modelo.descuento.Precio)d).getPorcentajeRebaja() + "%";
+            else if (d instanceof modelo.descuento.RebajaUmbral) descText = "-" + ((modelo.descuento.RebajaUmbral)d).getPorcentajeRebaja() + "%";
+            else if (d instanceof modelo.descuento.Cantidad) descText = ((modelo.descuento.Cantidad)d).getNumeroComprados() + "x" + ((modelo.descuento.Cantidad)d).getNumeroRecibidos();
+            else if (d instanceof modelo.descuento.Regalo) descText = "GIFT";
+            
+            JButton btnDesc = new JButton(descText);
+            btnDesc.setBackground(Color.RED);
+            btnDesc.setForeground(Color.YELLOW);
+            btnDesc.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
+            btnDesc.setMargin(new Insets(2, 4, 2, 4));
+            btnDesc.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            btnDesc.setFocusPainted(false);
+            btnDesc.setActionCommand("DESCINFO_" + productId);
+            buyNowButtons.add(btnDesc);
+            pricePanel.add(btnDesc);
+        }
         
         JButton btnBuy = new JButton("BUY NOW") {
             @Override
@@ -212,10 +251,10 @@ public class MenuPrincipalPanel extends JPanel {
         buttonsPanel.add(btnBuy);
         buttonsPanel.add(btnInfo);
 
-        bottom.add(lblPrice, BorderLayout.CENTER);
+        bottom.add(pricePanel, BorderLayout.CENTER);
         bottom.add(buttonsPanel, BorderLayout.EAST);
 
-        card.add(lblName, BorderLayout.NORTH);
+        card.add(headerProd, BorderLayout.NORTH);
         card.add(imagePlaceholder, BorderLayout.CENTER);
         card.add(bottom, BorderLayout.SOUTH);
 

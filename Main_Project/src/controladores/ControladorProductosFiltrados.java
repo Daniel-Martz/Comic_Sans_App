@@ -74,6 +74,19 @@ public class ControladorProductosFiltrados implements ActionListener {
             } catch (NumberFormatException ex) {
                 vista.mostrarMensaje("Invalid product id.", "Error");
             }
+        } else if (cmd.startsWith("DESCINFO_")) {
+            String idStr = cmd.substring(9);
+            try {
+                int id = Integer.parseInt(idStr);
+                LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
+                if (p != null) {
+                    Window parentWindow = SwingUtilities.getWindowAncestor(vista);
+                    vista.clienteWindows.DiscountInfoWindow dialog = new vista.clienteWindows.DiscountInfoWindow(parentWindow, p);
+                    dialog.setVisible(true);
+                }
+            } catch (NumberFormatException ex) {
+                vista.mostrarMensaje("Invalid product id.", "Error");
+            }
         }
     }
 
@@ -86,4 +99,12 @@ public class ControladorProductosFiltrados implements ActionListener {
         vista.actualizarProductos(resultados, this);
     }
 
+    /** Helper que consulta el catálogo y actualiza la vista con los productos destacados (valoración entre 4 y 5). */
+    public void buscarYActualizarOutstanding() {
+        List<LineaProductoVenta> resultados = new java.util.ArrayList<>(Catalogo.getInstancia().getProductosNuevos());
+        resultados = resultados.stream()
+                .filter(p -> p.obtenerPuntuacionMedia() >= 4.0 && p.obtenerPuntuacionMedia() <= 5.0)
+                .toList();
+        vista.actualizarProductos(resultados, this);
+    }
 }

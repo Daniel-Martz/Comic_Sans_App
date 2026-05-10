@@ -212,6 +212,17 @@ public class MainController {
                 } catch (NumberFormatException ex) {
                     ex.printStackTrace();
                 }
+            } else if (cmd != null && cmd.startsWith("DESCINFO_")) {
+                try {
+                    int id = Integer.parseInt(cmd.substring(9));
+                    modelo.producto.LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
+                    if (p != null) {
+                        vista.clienteWindows.DiscountInfoWindow dialog = new vista.clienteWindows.DiscountInfoWindow(mainFrame, p);
+                        dialog.setVisible(true);
+                    }
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                }
             } else {
                 navegarA(MainFrame.PANEL_PRODUCTOS_FILTRADOS);
             }
@@ -449,9 +460,15 @@ public class MainController {
     }
   
     public void mostrarProductosDescontados() {
-        vista.userPanels.DiscountedPanel panel = mainFrame.getDiscountedPanel();
-        new ControladorDiscounted(panel);
-        mainFrame.mostrarPanel(MainFrame.PANEL_DISCOUNTED);
+        if (this.dialogFiltros == null) {
+            this.dialogFiltros = new vista.clienteWindows.FiltrosWindow(mainFrame);
+            this.controladorFiltros = new ControladorFiltros(this.dialogFiltros);
+        }
+        
+        this.dialogFiltros.resetFiltros();
+        this.dialogFiltros.activarFiltrosDescuento();
+        
+        mostrarProductosFiltrados("");
     }
     
     /**

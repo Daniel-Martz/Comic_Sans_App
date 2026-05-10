@@ -663,6 +663,23 @@ public class FiltrosWindow extends JDialog {
         return pnlDescuentos;
     }
 
+    public void activarFiltrosDescuento() {
+        if (pnlDescuentos == null) return;
+        for (Component c : pnlDescuentos.getComponents()) {
+            if (c instanceof JScrollPane) {
+                JViewport viewport = ((JScrollPane) c).getViewport();
+                Component view = viewport.getView();
+                if (view instanceof JPanel) {
+                    for (Component chk : ((JPanel) view).getComponents()) {
+                        if (chk instanceof JCheckBox) {
+                            ((JCheckBox) chk).setSelected(true);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // ==========================================
     // GETTERS PARA EL CONTROLADOR
     // ==========================================

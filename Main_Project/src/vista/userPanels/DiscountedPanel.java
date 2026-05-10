@@ -83,10 +83,16 @@ public class DiscountedPanel extends JPanel {
         tarjeta.setBackground(Color.WHITE);
         tarjeta.setPreferredSize(new Dimension(220, 290));
 
+        JPanel headerProd = new JPanel(new BorderLayout(5, 0));
+        headerProd.setOpaque(false);
+        headerProd.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        headerProd.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
         JLabel lblNombre = new JLabel(prod.getNombre());
         lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-        lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
-        tarjeta.add(lblNombre);
+        headerProd.add(lblNombre, BorderLayout.CENTER);
+        
+        tarjeta.add(headerProd);
 
         tarjeta.add(Box.createVerticalStrut(5));
 
@@ -110,8 +116,42 @@ public class DiscountedPanel extends JPanel {
 
         JLabel lblPrecio = new JLabel(String.format("%.2f €", prod.getPrecio()));
         lblPrecio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-        lblPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
-        tarjeta.add(lblPrecio);
+        lblPrecio.setForeground(Color.BLACK);
+        
+        JPanel pricePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        pricePanel.setOpaque(false);
+        pricePanel.add(lblPrecio);
+        
+        modelo.descuento.Descuento d = prod.getDescuento();
+        if (d == null) {
+            for (modelo.categoria.Categoria c : prod.getCategorias()) {
+                if (c.getDescuento() != null && !c.getDescuento().haCaducado()) {
+                    d = c.getDescuento();
+                    break;
+                }
+            }
+        }
+        if (d != null && !d.haCaducado()) {
+            lblPrecio.setForeground(Color.RED);
+            String descText = "%";
+            if (d instanceof modelo.descuento.Precio) descText = "-" + ((modelo.descuento.Precio)d).getPorcentajeRebaja() + "%";
+            else if (d instanceof modelo.descuento.RebajaUmbral) descText = "-" + ((modelo.descuento.RebajaUmbral)d).getPorcentajeRebaja() + "%";
+            else if (d instanceof modelo.descuento.Cantidad) descText = ((modelo.descuento.Cantidad)d).getNumeroComprados() + "x" + ((modelo.descuento.Cantidad)d).getNumeroRecibidos();
+            else if (d instanceof modelo.descuento.Regalo) descText = "GIFT";
+            
+            JButton btnDesc = new JButton(descText);
+            btnDesc.setBackground(Color.RED);
+            btnDesc.setForeground(Color.YELLOW);
+            btnDesc.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
+            btnDesc.setMargin(new java.awt.Insets(2, 4, 2, 4));
+            btnDesc.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            btnDesc.setFocusPainted(false);
+            btnDesc.setActionCommand("DESCINFO_" + prod.getID());
+            btnDesc.addActionListener(controlador);
+            pricePanel.add(btnDesc);
+        }
+        pricePanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        tarjeta.add(pricePanel);
 
         tarjeta.add(Box.createVerticalStrut(8));
 
