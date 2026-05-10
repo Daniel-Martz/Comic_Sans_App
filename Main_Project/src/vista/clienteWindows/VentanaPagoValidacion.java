@@ -141,7 +141,7 @@ public class VentanaPagoValidacion extends JDialog {
             getOwner(), 
             "Successful Payment", 
             "SUCCESSFUL PAYMENT!!", 
-            "Your product will be validated and priced soon"
+            "Your product can now be interchanged"
         );
         exito.mostrar();
     }
@@ -152,7 +152,7 @@ public class VentanaPagoValidacion extends JDialog {
             getOwner(), 
             "Error", 
             "THERE WAS AN ERROR DURING THE PAYMENT", 
-            motivo + "\nYou will get payed back."
+            motivo + "\nYou will get paid back."
         );
         error.mostrar();
     }

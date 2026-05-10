@@ -35,6 +35,7 @@ public class InterchangeCardPanel extends JPanel {
     private ActionButtonPanel actionButtonPanel;
 
     private ActionListener infoListener;
+    private boolean hasButtons = true;
 
     /**
     /* Constructor principal
@@ -52,6 +53,19 @@ public class InterchangeCardPanel extends JPanel {
                                  Modo modo,
                                  String customGivenTitle,
                                  String customReceivedTitle) {
+        initComponents(headerLabel, balance, givenData, receivedData, modo, customGivenTitle, customReceivedTitle);
+        initLayout();
+    }
+    
+    public InterchangeCardPanel(String headerLabel,
+                                 double balance,
+                                 ProductoSegundaMano[] givenData,
+                                 ProductoSegundaMano[] receivedData,
+                                 Modo modo,
+                                 String customGivenTitle,
+                                 String customReceivedTitle,
+                                boolean hasButtons) {
+        this.hasButtons = hasButtons;
         initComponents(headerLabel, balance, givenData, receivedData, modo, customGivenTitle, customReceivedTitle);
         initLayout();
     }
@@ -105,7 +119,7 @@ public class InterchangeCardPanel extends JPanel {
         add(Box.createVerticalStrut(8));
         add(panelReceived);
         add(Box.createVerticalStrut(8));
-        add(actionButtonPanel);
+        if(hasButtons) add(actionButtonPanel);
     }
 
     // -------------------------------------------------------

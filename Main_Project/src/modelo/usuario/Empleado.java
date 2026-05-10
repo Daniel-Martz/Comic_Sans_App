@@ -115,7 +115,7 @@ public class Empleado extends UsuarioGestion {
 		System.out.println("La solicitud ha sido validada correctamente. Se le ha asociado un precio " + precioProducto
 				+ " y un estado " + estadoProducto);
 		
-		NotificacionValidacion noti = new NotificacionValidacion("La solicitud ha sido validada correctamente", new DateTimeSimulado(),s);
+		NotificacionValidacion noti = new NotificacionValidacion("Su producto ha sido validado correctamente", new DateTimeSimulado(),s);
 		s.getCliente().anadirNotificacion(noti);
 	}
 
@@ -138,7 +138,7 @@ public class Empleado extends UsuarioGestion {
 		p.actualizarEstadoPedidoEmpleado(nuevoEstado);
 		System.out.println("El estado del pedido se ha actualizado a: " + nuevoEstado);
 		
-		NotificacionPedido noti = new NotificacionPedido("El estado del pedido se ha actualizado a " + nuevoEstado, new DateTimeSimulado(), p);
+		NotificacionPedido noti = new NotificacionPedido("El estado del pedido se ha actualizado a " + nuevoEstado.toString(), new DateTimeSimulado(), p);
 		p.getCliente().anadirNotificacion(noti);
 	}
 

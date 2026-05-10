@@ -34,7 +34,7 @@ public class ControladorNotificaciones implements ActionListener{
 
  
 
-  private void refrescarNotificaciones(){
+  public void refrescarNotificaciones(){
     notificacionesPanel.clearNotificaciones(); 
     Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual();
     if((usuarioActual instanceof Empleado e)){

@@ -1,13 +1,12 @@
 package vista.userPanels;
 
-import modelo.producto.LineaProductoVenta;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.Map;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import modelo.producto.LineaProductoVenta;
 
 /**
  * Panel que muestra el carrito de la compra.
@@ -252,7 +251,7 @@ public class CarritoPanel extends JPanel {
         panelScrollPedidos.repaint();
     }
 
-    private JPanel crearTarjetaPedido(modelo.solicitud.SolicitudPedido pedido, ActionListener controlador) {
+    public JPanel crearTarjetaPedido(modelo.solicitud.SolicitudPedido pedido, ActionListener controlador) {
         JPanel tarjeta = new JPanel();
         tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
         tarjeta.setBorder(BorderFactory.createCompoundBorder(

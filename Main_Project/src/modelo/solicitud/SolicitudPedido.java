@@ -6,6 +6,7 @@ import java.util.AbstractMap.SimpleEntry;
 import modelo.aplicacion.Aplicacion;
 import modelo.categoria.Categoria;
 import modelo.descuento.*;
+import modelo.notificacion.NotificacionPedido;
 import modelo.producto.LineaProductoVenta;
 import modelo.usuario.ClienteRegistrado;
 import modelo.tiempo.DateTimeSimulado;

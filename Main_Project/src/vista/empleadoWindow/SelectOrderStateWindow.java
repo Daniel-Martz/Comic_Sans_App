@@ -1,18 +1,21 @@
 package vista.empleadoWindow;
 
 import controladores.ControladorManageOrders;
+import java.awt.*;
+import javax.swing.*;
+
+import modelo.aplicacion.Aplicacion;
 import modelo.solicitud.EstadoPedido;
 import modelo.solicitud.SolicitudPedido;
+import modelo.usuario.Empleado;
 import vista.clienteWindows.VentanaExitoWindow;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class SelectOrderStateWindow extends JDialog {
 
     private SolicitudPedido pedido;
     private ControladorManageOrders controlador;
     private JComboBox<String> comboEstados;
+    private EstadoPedido estadoActual;
 
     public SelectOrderStateWindow(JFrame parent, SolicitudPedido pedido, ControladorManageOrders controlador) {
         super(parent, "Select Order State", true);
@@ -30,20 +33,26 @@ public class SelectOrderStateWindow extends JDialog {
         lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
         panelCentro.add(lblInfo);
 
-        String[] estados = {"Payment pending", "Paid", "Ready for pickup", "Picked Up"};
-        comboEstados = new JComboBox<>(estados);
+        // Determinar los estados disponibles según el estado actual
+        String[] estados;
+        this.estadoActual = pedido.getEstado();
         
-        // Seleccionar el estado actual
-        EstadoPedido estadoActual = pedido.getEstado();
-        if (estadoActual == EstadoPedido.PENDIENTE_DE_PAGO) {
-            comboEstados.setSelectedIndex(0);
-        } else if (estadoActual == EstadoPedido.PAGADO) {
-            comboEstados.setSelectedIndex(1);
-        } else if (estadoActual == EstadoPedido.LISTO_PARA_RECOGER) {
-            comboEstados.setSelectedIndex(2);
-        } else if (estadoActual == EstadoPedido.RECOGIDO) {
-            comboEstados.setSelectedIndex(3);
+        if (this.estadoActual == EstadoPedido.PENDIENTE_DE_PAGO) {
+            // Si está pendiente de pago: mostrar Pagado, Listo para recoger, Recogido
+            estados = new String[]{"Paid", "Ready for pickup", "Picked Up"};
+        } else if (this.estadoActual == EstadoPedido.PAGADO) {
+            // Si está pagado: mostrar Listo para recoger, Recogido (no mostrar Pagado)
+            estados = new String[]{"Ready for pickup", "Picked Up"};
+        } else if (this.estadoActual == EstadoPedido.LISTO_PARA_RECOGER) {
+            // Si está listo para recoger: mostrar solo Recogido (no mostrar Pagado)
+            estados = new String[]{"Picked Up"};
+        } else {
+            // Si está recogido: no hay más estados posibles
+            estados = new String[]{"Picked Up"};
         }
+        
+        comboEstados = new JComboBox<>(estados);
+        comboEstados.setSelectedIndex(0);
         
         panelCentro.add(comboEstados);
         add(panelCentro, BorderLayout.CENTER);
@@ -58,15 +67,33 @@ public class SelectOrderStateWindow extends JDialog {
     private void confirmarCambios() {
         int index = comboEstados.getSelectedIndex();
         EstadoPedido nuevoEstado = null;
-        switch (index) {
-            case 0: nuevoEstado = EstadoPedido.PENDIENTE_DE_PAGO; break;
-            case 1: nuevoEstado = EstadoPedido.PAGADO; break;
-            case 2: nuevoEstado = EstadoPedido.LISTO_PARA_RECOGER; break;
-            case 3: nuevoEstado = EstadoPedido.RECOGIDO; break;
+        
+        // Mapear el índice al estado según el estado actual
+        if (estadoActual == EstadoPedido.PENDIENTE_DE_PAGO) {
+            // Estados disponibles: Pagado, Listo para recoger, Recogido
+            switch (index) {
+                case 0: nuevoEstado = EstadoPedido.PAGADO; break;
+                case 1: nuevoEstado = EstadoPedido.LISTO_PARA_RECOGER; break;
+                case 2: nuevoEstado = EstadoPedido.RECOGIDO; break;
+            }
+        } else if (estadoActual == EstadoPedido.PAGADO) {
+            // Estados disponibles: Listo para recoger, Recogido
+            switch (index) {
+                case 0: nuevoEstado = EstadoPedido.LISTO_PARA_RECOGER; break;
+                case 1: nuevoEstado = EstadoPedido.RECOGIDO; break;
+            }
+        } else if (estadoActual == EstadoPedido.LISTO_PARA_RECOGER) {
+            // Estados disponibles: Solo Recogido
+            switch (index) {
+                case 0: nuevoEstado = EstadoPedido.RECOGIDO; break;
+            }
+        } else if (estadoActual == EstadoPedido.RECOGIDO) {
+            // No hay más estados disponibles
+            nuevoEstado = EstadoPedido.RECOGIDO;
         }
         
         if (nuevoEstado != null) {
-            pedido.actualizarEstadoPedidoEmpleado(nuevoEstado);
+            ((Empleado)Aplicacion.getInstancia().getUsuarioActual()).actualizarEstadoPedido(pedido, nuevoEstado);
             controlador.actualizarPedidos(); // Refrescar la vista
             dispose();
             VentanaExitoWindow exito = new VentanaExitoWindow(null, "Success", "State Updated", "Order state updated successfully");

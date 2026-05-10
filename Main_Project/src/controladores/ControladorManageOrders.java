@@ -1,15 +1,16 @@
 package controladores;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.JOptionPane;
 import modelo.aplicacion.Aplicacion;
+import modelo.solicitud.EstadoPedido;
 import modelo.solicitud.SolicitudPedido;
 import vista.empleadoPanel.ManageOrdersPanel;
 import vista.empleadoWindow.SelectOrderStateWindow;
 import vista.empleadoWindow.ViewOrderWindow;
 import vista.main.MainFrame;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
 public class ControladorManageOrders implements ActionListener {
 
@@ -36,6 +37,15 @@ public class ControladorManageOrders implements ActionListener {
     }
 
     public void cambiarEstadoPedido(SolicitudPedido pedido) {
+        if(pedido.getEstado() == EstadoPedido.PENDIENTE_DE_PAGO){
+            JOptionPane.showMessageDialog(
+                mainFrame, 
+                "The order cannot be managed until it is paid", 
+                "Payment required from user", 
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
         SelectOrderStateWindow dialog = new SelectOrderStateWindow(mainFrame, pedido, this);
         dialog.setVisible(true);
     }

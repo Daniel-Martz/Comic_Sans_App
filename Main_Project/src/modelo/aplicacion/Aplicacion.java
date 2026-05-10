@@ -1,18 +1,13 @@
 package modelo.aplicacion;
 
-import modelo.producto.*; 
-
-
-import modelo.usuario.*;
-import modelo.solicitud.*;
-import modelo.tiempo.DateTimeSimulado;
-import modelo.notificacion.*;
 import java.io.*;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.*;
-import modelo.aplicacion.*;
+import modelo.notificacion.*;
+import modelo.producto.*;
+import modelo.solicitud.*;
+import modelo.tiempo.DateTimeSimulado;
+import modelo.usuario.*;
 /**
  * Clase principal que agrupa y gestiona los datos globales de la aplicación.
  * Implementa el patrón singleton para asegurar una única instancia en
@@ -863,7 +858,7 @@ public class Aplicacion implements Serializable {
 
 		// Determinamos los detalles del intercambio
 		String lugarIntercambio = "Tienda física";
-		DateTimeSimulado fechaIntercambio = new DateTimeSimulado();
+		DateTimeSimulado fechaIntercambio = DateTimeSimulado.DateTimeDiasDespues(7);
 		DetallesIntercambio detalles = new DetallesIntercambio(fechaIntercambio, lugarIntercambio);
 
 		// Creamos la solicitud de intercambio

@@ -233,14 +233,7 @@ public class MainController {
         header.addHomeListener(e -> mostrarMenuPrincipal());
         header.addPerfilListener(e -> navegarBotonPerfil());
         header.addNotificacionesListener(e ->
-        { navegarA(MainFrame.PANEL_NOTIFICACIONES); 
-          Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual();
-          if((usuarioActual instanceof Empleado emp)){
-            emp.getNotificaciones().forEach(n -> mainFrame.getNotificacionesPanel().agregarNotificacion(n)); 
-          }
-          if((usuarioActual instanceof ClienteRegistrado c)){
-            c.getNotificaciones().forEach(n -> mainFrame.getNotificacionesPanel().agregarNotificacion(n)); 
-          }
+        { gestionarAccesoNotificaciones();
       });
     }
 
@@ -274,15 +267,8 @@ public class MainController {
         header.addIntercambiosListener(e -> mostrarVentanaOpcionesIntercambio());
         header.addPerfilListener(e -> navegarBotonPerfil());
         header.addNotificacionesListener(e -> 
-        { navegarA(MainFrame.PANEL_NOTIFICACIONES); 
-          Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual();
-          if((usuarioActual instanceof Empleado emp)){
-            emp.getNotificaciones().forEach(n -> mainFrame.getNotificacionesPanel().agregarNotificacion(n)); 
-          }
-          if((usuarioActual instanceof ClienteRegistrado c)){
-            c.getNotificaciones().forEach(n -> mainFrame.getNotificacionesPanel().agregarNotificacion(n)); 
-          }
-      });
+        { gestionarAccesoNotificaciones();
+        });
     }
     
     // -------------------------------------------------------
@@ -488,6 +474,21 @@ public class MainController {
         return true;
     }
 
+    private boolean verificarAccesoUsuarioRegistrado() {
+        if (modelo.getUsuarioActual() == null) {
+            VentanaRegistroRequeridoWindow dialogoRequerido = new VentanaRegistroRequeridoWindow(mainFrame);
+            int eleccion = dialogoRequerido.mostrarVentana();
+
+            if (eleccion == VentanaRegistroRequeridoWindow.INICIAR_SESION) {
+                abrirVentanaLogIn();
+            } else if (eleccion == VentanaRegistroRequeridoWindow.REGISTRARSE) {
+                abrirVentanaCrearUsuario();
+            }
+            return false;
+        }
+        return true;
+    }
+
     public void mostrarVentanaOpcionesIntercambio() {
         if (!verificarAccesoClienteRegistrado()) {
             return;
@@ -520,6 +521,17 @@ public class MainController {
         if (verificarAccesoClienteRegistrado()) {
             ctrlCarrito.refrescarVista();
             navegarA(MainFrame.PANEL_CARRITO);
+        }
+    }
+
+    /**
+     * Gestiona el flujo de entrada al panel de notificaciones.
+     * @param ctrlCarrito El controlador de las notificaciones para refrescar los datos.
+     */
+    public void gestionarAccesoNotificaciones() {
+        if (verificarAccesoUsuarioRegistrado()) {
+            mainFrame.getNotificacionesPanel().getControladorPrincipal().refrescarNotificaciones();
+            navegarA(MainFrame.PANEL_NOTIFICACIONES);
         }
     }
 
@@ -706,7 +718,7 @@ public class MainController {
 
 
     public void abrirVentanaNotificacion(Notificacion n){
-    	this.notificacionDialog = new NotificacionWindow(mainFrame, n);
+    	this.notificacionDialog = new NotificacionWindow(mainFrame, n, this);
       this.notificacionDialog.setVisible(true);
     } 
 

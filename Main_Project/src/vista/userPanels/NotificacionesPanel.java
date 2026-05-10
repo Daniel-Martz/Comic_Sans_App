@@ -111,4 +111,6 @@ public class NotificacionesPanel extends JPanel{
       configurarColumnasInteractivas(c);
     }
 
+    public ControladorNotificaciones getControladorPrincipal(){return controlador;}
+
 }

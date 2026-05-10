@@ -1,8 +1,6 @@
 package modelo.solicitud;
-import java.util.*;
-import modelo.tiempo.DateTimeSimulado;
-
 import java.io.Serializable;
+import modelo.tiempo.DateTimeSimulado;
 /**
  * Representa los detalles especificos de un intercambio, 
  * incluyendo la fecha y el lugar donde se llevara a cabo.
@@ -34,6 +32,14 @@ public class DetallesIntercambio implements Serializable{
 	public String toString() {
 	    return "Lugar: " + lugarIntercambio +
 	           " | Fecha: " + (fechaIntercambio != null ? fechaIntercambio.toStringFecha() : "sin fecha");
+	}
+	
+	public DateTimeSimulado getFechaIntercambio() {
+		return fechaIntercambio;
+	}
+	
+	public String getLugarIntercambio() {
+		return lugarIntercambio;
 	}
 
 }
