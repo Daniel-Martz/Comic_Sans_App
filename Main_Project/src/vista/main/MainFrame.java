@@ -106,7 +106,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
       super("Comic Sans App");
-//      cargarEstadoAplicacion();
+    //  cargarEstadoAplicacion();
       
       // 0. Hacemos que se guarde el estado de la aplicación al cerrarla
       this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
