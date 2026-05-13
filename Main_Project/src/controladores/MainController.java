@@ -273,9 +273,18 @@ public class MainController {
         conectarHeaderGlobal(header);
         header.addSearchListener(e -> {
             String prompt = e.getActionCommand();
+            // Reseteamos los filtros para que la lupa funcione como una búsqueda global en todo el catálogo
+            if (this.dialogFiltros != null) {
+                this.dialogFiltros.resetFiltros();
+            }
+            modelo.getCatalogo().limpiarFiltros();
             mostrarProductosFiltrados(prompt);
         });
-        header.addFiltrosListener(e -> abrirVentanaFiltros());
+        header.addFiltrosListener(e -> {
+            abrirVentanaFiltros();
+            // Al cerrarse la ventana modal de filtros, actualizamos la vista con el texto actual
+            mostrarProductosFiltrados(header.getSearchText());
+        });
     }
 
     /**
@@ -303,6 +312,14 @@ public class MainController {
      * Cambia el panel visible en el CardLayout del MainFrame.
      */
     public void navegarA(String nombrePanel) {
+        // Resetear los filtros si salimos de las vistas de búsqueda
+        if (!nombrePanel.equals(MainFrame.PANEL_PRODUCTOS_FILTRADOS) && !nombrePanel.equals(MainFrame.PANEL_SEARCH_INTERCHANGES)) {
+            if (this.dialogFiltros != null) {
+                this.dialogFiltros.resetFiltros();
+            }
+            modelo.getCatalogo().limpiarFiltros();
+        }
+        
         if (nombrePanel.equals(MainFrame.PANEL_MENU_PRINCIPAL)) {
             // Actualizar recomendaciones al volver al menú principal
             java.util.Set<modelo.producto.LineaProductoVenta> rec = modelo.getConfiguracionRecomendacion().getRecomendacion();
@@ -440,6 +457,7 @@ public class MainController {
         
         // Reset old filters first
         this.dialogFiltros.resetFiltros();
+        modelo.getCatalogo().limpiarFiltros();
         
         // Check the requested category
         if ("COMICS".equals(categoria)) {
@@ -486,6 +504,7 @@ public class MainController {
         }
         
         this.dialogFiltros.resetFiltros();
+        modelo.getCatalogo().limpiarFiltros();
         this.dialogFiltros.activarFiltrosDescuento();
         
         mostrarProductosFiltrados("");

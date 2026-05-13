@@ -702,7 +702,7 @@ public class Catalogo implements Serializable {
 				// ponemos en minusculas todo
 				String palabra = prompt.toLowerCase();
 				boolean boolNombre = p.getNombre().toLowerCase().contains(palabra);
-				boolean boolDescripcion = p.getDescripcion().toLowerCase().contains(palabra);
+				boolean boolDescripcion = p.getDescripcion() != null && p.getDescripcion().toLowerCase().contains(palabra);
 				// si no hay ninguna relacion entre el prompt con el nombre ni la descripcion
 				// pasamos al siguiente producto
 				if (!boolNombre && !boolDescripcion)
@@ -735,8 +735,27 @@ public class Catalogo implements Serializable {
 				}
 
 				// Filtramos por precio
-				if (p.getPrecio() < filtroProductosVenta.getPrecioMin()
-						|| p.getPrecio() > filtroProductosVenta.getPrecioMax())
+				double precioFinal = p.getPrecio();
+				Descuento descFiltroPrecio = p.getDescuento();
+				if (descFiltroPrecio == null || descFiltroPrecio.haCaducado()) {
+					for (Categoria c : p.getCategorias()) {
+						if (c.getDescuento() != null && !c.getDescuento().haCaducado()) {
+							descFiltroPrecio = c.getDescuento();
+							break;
+						}
+					}
+				}
+				if (descFiltroPrecio != null && !descFiltroPrecio.haCaducado()) {
+					if (descFiltroPrecio instanceof Precio) {
+						precioFinal = precioFinal * (1 - ((Precio) descFiltroPrecio).getPorcentajeRebaja() / 100.0);
+					} else if (descFiltroPrecio instanceof RebajaUmbral) {
+						if (precioFinal >= ((RebajaUmbral) descFiltroPrecio).getUmbral()) {
+							precioFinal = precioFinal * (1 - ((RebajaUmbral) descFiltroPrecio).getPorcentajeRebaja() / 100.0);
+						}
+					}
+				}
+				if (precioFinal < filtroProductosVenta.getPrecioMin()
+						|| precioFinal > filtroProductosVenta.getPrecioMax())
 					continue;
 
 				// Filtramos por puntacion
@@ -749,7 +768,16 @@ public class Catalogo implements Serializable {
 				Set<TipoDescuento> filtroDescuentos = filtroProductosVenta.getDescuentoFiltrado();
 				if (!filtroDescuentos.isEmpty()) {
 					Descuento descuentoP = p.getDescuento();
-					if (descuentoP == null)
+					if (descuentoP == null || descuentoP.haCaducado()) {
+						descuentoP = null;
+						for (Categoria c : p.getCategorias()) {
+							if (c.getDescuento() != null && !c.getDescuento().haCaducado()) {
+								descuentoP = c.getDescuento();
+								break;
+							}
+						}
+					}
+					if (descuentoP == null || descuentoP.haCaducado())
 						continue;
 					boolean coincideDescuento = (filtroDescuentos.contains(TipoDescuento.CANTIDAD)
 							&& descuentoP instanceof Cantidad)
