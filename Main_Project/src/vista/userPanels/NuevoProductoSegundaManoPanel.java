@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Panel containing the form to add a new second-hand product.
+ * Panel con el formulario para subir tus propios trastos.
  */
 public class NuevoProductoSegundaManoPanel extends JPanel {
 
@@ -15,8 +15,11 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
     private FormPanel formPanel;
     private ActionPanel actionPanel;
 
+    // -------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------
     /**
-     * Initializes the panel and its layout.
+     * Instancia el panel y sus cosas.
      */
     public NuevoProductoSegundaManoPanel() {
         initComponents();
@@ -45,12 +48,22 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
         add(actionPanel, BorderLayout.SOUTH);
     }
 
+    // -------------------------------------------------------
+    // Métodos públicos para el CONTROLADOR (Delegación)
+    // -------------------------------------------------------
+    /** @return el texto del nombre */
     public String getNombre() { return formPanel.getNombre(); }
+    /** @return el texto de la descripción */
     public String getDescripcion() { return formPanel.getDescripcion(); }
+    /** 
+     * Pone el nombre de la foto que has subido.
+     * @param nombre nombre del archivo
+     */
     public void setNombreImagen(String nombre) { formPanel.setNombreImagen(nombre); }
 
     /**
-     * Assigns the controller to the different interactive components.
+     * Enchufa el controlador a los botones.
+     * @param c controlador
      */
     public void setControlador(ActionListener c) {
         formPanel.addImagenListener(c);

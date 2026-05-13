@@ -4,6 +4,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * Panel de inicio de sesión.
+ *
+ * Muestra los campos de usuario/contraseña y botones para iniciar sesión o
+ * crear cuenta. Comentario en estilo natural: es la UI que aparece cuando el
+ * usuario quiere autenticarse.
+ */
 public class LogInPanel extends JPanel {
 
   // ── Paleta de colores ────────────────────────────────────────────

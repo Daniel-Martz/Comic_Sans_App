@@ -2,14 +2,12 @@ package modelo.aplicacion.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.File;
 import java.util.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import modelo.aplicacion.*;
-import modelo.categoria.Categoria;
 import modelo.notificacion.*;
 import modelo.producto.*;
 import modelo.solicitud.*;
@@ -330,7 +328,6 @@ class AplicacionTest {
     void testEliminarEmpleadoNoEliminaOtros() {
         app.iniciarSesion("gestor", "123456");
         Empleado temporal2 = app.añadirEmpleado("EmpTemporal2", "8888888881", "123456");
-        int tamanioAntes = app.getUsuariosRegistrados().size();
         app.eliminarEmpleado(temporal2);
         // El gestor y los demás usuarios siguen estando
         assertTrue(app.getUsuariosRegistrados().stream()
@@ -599,8 +596,6 @@ class AplicacionTest {
     void testEnviarNotificacionAEmpleado() {
         NotificacionEmpleado notif =
             new NotificacionEmpleado("Nuevo pedido", new DateTimeSimulado());
-        int antes = empleadoGlobal.getNotificaciones() == null ? 0
-            : empleadoGlobal.getNotificaciones().size();
         // empleado.getNotificaciones() es un campo privado; usamos el método de Aplicacion
         app.enviarNotificacion(empleadoGlobal, notif);
         // Si llegamos aquí sin excepción, el envío fue correcto
@@ -699,8 +694,6 @@ class AplicacionTest {
         app.iniciarSesion("ClienteUno", "Passw0rd!");
         clienteGlobal1.añadirProductoACarrito(prod, 1);
         SolicitudPedido pedido = clienteGlobal1.realizarPedido();
-        // el stock baja al realizar el pedido
-        int stockDurantePedido = prod.getStock();
         app.cancelarPedido(pedido);
         // tras cancelar debe volver al valor anterior
         assertEquals(stockAntes, prod.getStock());

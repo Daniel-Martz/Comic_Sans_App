@@ -12,6 +12,9 @@ import java.io.File;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Pantalla donde montas tu oferta: eliges de tu inventario y del otro pavo.
+ */
 public class MakeOfferPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -22,6 +25,9 @@ public class MakeOfferPanel extends JPanel {
     private SelectionColumn panelOffered;
     private JButton btnSubmitOffer;
 
+    /**
+     * Prepara el panel con las dos columnas grandes.
+     */
     public MakeOfferPanel() {
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
@@ -71,14 +77,24 @@ public class MakeOfferPanel extends JPanel {
     }
 
     // --- MÉTODOS PARA EL CONTROLADOR ---
+    /** @return el header principal */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    /** @return la columna de la izq con lo que pides */
     public SelectionColumn getPanelRequested() { return panelRequested; }
+    /** @return la columna de la derecha con lo tuyo */
     public SelectionColumn getPanelOffered() { return panelOffered; }
+    /** 
+     * Mete un listener al boton gigante.
+     * @param l listener
+     */
     public void addSubmitListener(ActionListener l) { btnSubmitOffer.addActionListener(l); }
 
     // =========================================================================
     // CLASE INTERNA: COLUMNA DE SELECCIÓN (Buscador + Grid + Status)
     // =========================================================================
+    /**
+     * Un minipanel que hace de columna completa (buscador, rejilla, footer).
+     */
     public class SelectionColumn extends JPanel {
         private JTextField txtSearch;
         private JButton btnSearch;
@@ -86,6 +102,10 @@ public class MakeOfferPanel extends JPanel {
         private JLabel lblStatus;
         private String commandPrefix;
 
+        /**
+         * @param title titulo de la columna
+         * @param commandPrefix prefijo para identificar de qué columna viene el click
+         */
         public SelectionColumn(String title, String commandPrefix) {
             this.commandPrefix = commandPrefix;
             setLayout(new BorderLayout(0, 10));
@@ -151,6 +171,13 @@ public class MakeOfferPanel extends JPanel {
             add(bottom, BorderLayout.SOUTH);
         }
 
+        /**
+         * Rellena el grid de esta columna.
+         * @param productos lo que quieres meter
+         * @param seleccionados conjunto de items marcados
+         * @param actionCtrl listener de botones
+         * @param itemCtrl listener de casillas
+         */
         public void actualizarProductos(List<ProductoSegundaMano> productos, Set<ProductoSegundaMano> seleccionados, ActionListener actionCtrl, ItemListener itemCtrl) {
             gridProductos.removeAll();
             if (productos.isEmpty()) {
@@ -164,15 +191,26 @@ public class MakeOfferPanel extends JPanel {
             gridProductos.repaint();
         }
 
+        /**
+         * Actualiza los textillos numéricos.
+         * @param count número de cosas
+         * @param total perras estimadas
+         */
         public void updateStatus(int count, double total) {
             lblStatus.setText(String.format("Selected: %d | Total: %.2f €", count, total));
         }
 
+        /**
+         * @param l listener pal buscador
+         */
         public void addSearchListener(ActionListener l) {
             btnSearch.addActionListener(l);
             txtSearch.addActionListener(e -> btnSearch.doClick());
         }
         
+        /**
+         * @return texto del buscador
+         */
         public String getSearchText() { 
             String text = txtSearch.getText().trim(); 
             return text.equals("Search...") ? "" : text;

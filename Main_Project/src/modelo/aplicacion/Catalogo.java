@@ -1042,6 +1042,10 @@ public class Catalogo implements Serializable {
 	    instancia = this;
 	}
 	
+	/**
+	 * Añadir producto segunda mano.
+	 * @param producto el producto de segunda mano a añadir
+	 */
 	public void añadirProductoSegundaMano(ProductoSegundaMano producto) {
 		if (producto == null) {
 			throw new IllegalArgumentException("El producto de segunda mano no puede ser nulo.");

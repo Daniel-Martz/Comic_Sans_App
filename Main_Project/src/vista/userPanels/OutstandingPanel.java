@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Panel that displays outstanding products.
+ * Panel para listar los productos más top de la tienda.
  */
 public class OutstandingPanel extends JPanel {
 
@@ -22,7 +22,7 @@ public class OutstandingPanel extends JPanel {
     private JPanel panelScrollProductos;
 
     /**
-     * Initializes the panel and its components.
+     * Monta el panel con el título y el grid.
      */
     public OutstandingPanel() {
         setLayout(new BorderLayout());
@@ -58,7 +58,9 @@ public class OutstandingPanel extends JPanel {
     }
 
     /**
-     * Refreshes the product list.
+     * Refresca el grid con los productos destacados.
+     * @param productos los productos pata negra
+     * @param controlador listener pa los botones
      */
     public void actualizarProductos(List<LineaProductoVenta> productos, ActionListener controlador) {
         panelScrollProductos.removeAll();
@@ -188,10 +190,15 @@ public class OutstandingPanel extends JPanel {
         return tarjeta;
     }
 
+    /**
+     * @return la barra de arriba
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
 
     /**
-     * Displays a message dialog.
+     * Tira un pop-up por pantalla.
+     * @param msg mensaje
+     * @param titulo título de la ventana
      */
     public void mostrarMensaje(String msg, String titulo) {
         JOptionPane.showMessageDialog(this, msg, titulo, JOptionPane.INFORMATION_MESSAGE);

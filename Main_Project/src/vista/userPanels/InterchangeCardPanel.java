@@ -8,14 +8,7 @@ import javax.swing.table.*;
 import modelo.producto.ProductoSegundaMano;
 
 /**
- * Vista que muestra una tarjeta de intercambio entre dos usuarios.
- * Sigue el patrón MVC: NO contiene lógica de negocio.
- * Solo muestra datos y expone métodos para que el controlador
- * registre listeners y actualice la vista.
- *
- * Puede mostrarse en dos modos:
- *  - INCOME (oferta recibida): muestra FROM + botones ACCEPT y REJECT
- *  - SENT   (oferta enviada):  muestra TO   + botón CANCEL
+ * Tarjeta super vitaminada para ver una solicitud de intercambio entera.
  */
 public class InterchangeCardPanel extends JPanel {
 
@@ -24,7 +17,11 @@ public class InterchangeCardPanel extends JPanel {
     /**
      * Modo de visualización de la card.
      */
-    public enum Modo { INCOME, SENT, EMPLOYEE }
+    public enum Modo { 
+        /** Te lo mandaron a ti */ INCOME, 
+        /** Lo mandaste tú */ SENT, 
+        /** Lo está mirando el empleado */ EMPLOYEE 
+    }
 
     // -------------------------------------------------------
     // Subpaneles internos
@@ -38,14 +35,15 @@ public class InterchangeCardPanel extends JPanel {
     private boolean hasButtons = true;
 
     /**
-    /* Constructor principal
-    /*
-    /* @param headerLabel   texto cabecera: "FROM: <nombre>" o "TO: <nombre>"
-    /* @param balance       balance calculado por el controlador
-    /* @param givenData     {nombre, categoría, estado, precio} de productos dados
-    /* @param receivedData  {nombre, categoría, estado, precio} de productos recibidos
-    /* @param modo          INCOME (accept+reject) o SENT (cancel)
-    */
+     * Constructor con todos los parámetros pa montar la tarjeta de una.
+     * @param headerLabel texto del banner arriba
+     * @param balance dineros a favor
+     * @param givenData lista con las cosas dadas
+     * @param receivedData lista con las pedidas
+     * @param modo modo de vista
+     * @param customGivenTitle título 1
+     * @param customReceivedTitle título 2
+     */
     public InterchangeCardPanel(String headerLabel,
                                  double balance,
                                  ProductoSegundaMano[] givenData,
@@ -57,6 +55,10 @@ public class InterchangeCardPanel extends JPanel {
         initLayout();
     }
     
+    /**
+     * Igual que el otro pero te deja ocultar la botonera.
+     * @param hasButtons si quieres o no botones
+     */
     public InterchangeCardPanel(String headerLabel,
                                  double balance,
                                  ProductoSegundaMano[] givenData,
@@ -71,8 +73,7 @@ public class InterchangeCardPanel extends JPanel {
     }
 
     /**
-     * Constructor vacío: instancia la card sin datos.
-     * Útil para crear la vista antes de tener el modelo listo.
+     * Constructor vacío por si necesitas instanciarlo a capón.
      */
     public InterchangeCardPanel() {
         initComponents("", 0.0, new ProductoSegundaMano[0], new ProductoSegundaMano[0], Modo.INCOME, null, null);
@@ -125,29 +126,33 @@ public class InterchangeCardPanel extends JPanel {
     // -------------------------------------------------------
     // Métodos públicos para el CONTROLADOR
 
-    /** Registra listener del botón ACCEPT (solo modo INCOME). */
+    /** @param listener listener del boton Aceptar */
     public void addAcceptListener(ActionListener listener) {
         actionButtonPanel.addAcceptListener(listener);
     }
 
-    /** Registra listener del botón REJECT (solo modo INCOME). */
+    /** @param listener listener del boton Rechazar */
     public void addRejectListener(ActionListener listener) {
         actionButtonPanel.addRejectListener(listener);
     }
 
-    /** Registra listener del botón CANCEL (solo modo SENT). */
+    /** @param listener listener del boton Cancelar */
     public void addCancelListener(ActionListener listener) {
         actionButtonPanel.addCancelListener(listener);
     }
 
-    /** Registra listener genérico para el botón "+ Info" de los productos. */
+    /** @param listener listener genérico del botón más info */
     public void setInfoListener(ActionListener listener) {
         this.infoListener = listener;
     }
 
     /**
-     * Recarga todos los datos de la card.
-     * El controlador llama a este método cuando el modelo cambia.
+     * Refresca la movida con datos nuevos.
+     * @param headerLabel título
+     * @param balance saldo
+     * @param givenData productos q damos
+     * @param receivedData productos q nos dan
+     * @param modo vista a poner
      */
     public void update(String headerLabel,
                        double balance,
@@ -454,9 +459,7 @@ public class InterchangeCardPanel extends JPanel {
     // (removed custom rounded button helper — using plain JButtons with rectangular border)
 
     /**
-     * Método estático de prueba para mostrar este panel aislado.
-     * Puedes ejecutarlo desde Eclipse o desde la línea de comandos
-     * llamando a InterchangeCardPanel.mostrarPanelDePrueba();
+     * Pa testear a ver cómo queda sin arrancar el programa.
      */
     public static void mostrarPanelDePrueba() {
         SwingUtilities.invokeLater(() -> {
@@ -496,7 +499,8 @@ public class InterchangeCardPanel extends JPanel {
     }
 
     /**
-     * Pequeño main para facilitar ejecución rápida desde línea de comandos.
+     * Llama al de prueba.
+     * @param args cosas de consola
      */
     public static void main(String[] args) {
         mostrarPanelDePrueba();

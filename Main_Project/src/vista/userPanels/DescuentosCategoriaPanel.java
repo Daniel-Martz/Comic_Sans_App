@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Panel para asignar descuentos a categorías enteras.
+ */
 public class DescuentosCategoriaPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
@@ -21,6 +24,9 @@ public class DescuentosCategoriaPanel extends JPanel {
     private ColumnaDescuentos colCategorias;
     private JButton btnBack;
  
+    /**
+     * Constructor que monta la vista principal.
+     */
     public DescuentosCategoriaPanel() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -50,10 +56,16 @@ public class DescuentosCategoriaPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
+    /** @return el header */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    /** @return la columna central */
     public ColumnaDescuentos getColCategorias() { return colCategorias; }
+    /** @return el botón de volver */
     public JButton getBtnBack() { return btnBack; }
 
+    /**
+     * Minipanel que actúa como columna para listar las categorías.
+     */
     public class ColumnaDescuentos extends JPanel {
         private static final long serialVersionUID = 1L;
         private JTextField txtSearch;
@@ -61,6 +73,11 @@ public class DescuentosCategoriaPanel extends JPanel {
         private JPanel gridCategorias;
         private String commandPrefix;
 
+        /**
+         * Constructor de la columneja.
+         * @param title titulo de la columna
+         * @param commandPrefix prefijo pa los action commands
+         */
         public ColumnaDescuentos(String title, String commandPrefix) {
             this.commandPrefix = commandPrefix;
             setLayout(new BorderLayout(0, 10));
@@ -131,6 +148,11 @@ public class DescuentosCategoriaPanel extends JPanel {
             add(scroll, BorderLayout.CENTER);
         }
 
+        /**
+         * Refresca las categorías de la vista.
+         * @param categorias lista de categorias a mostrar
+         * @param actionCtrl listener de los botones
+         */
         public void actualizarCategorias(List<Categoria> categorias, ActionListener actionCtrl) {
             gridCategorias.removeAll();
             if (categorias.isEmpty()) {
@@ -148,11 +170,18 @@ public class DescuentosCategoriaPanel extends JPanel {
             gridCategorias.repaint();
         }
 
+        /**
+         * Enchufa el listener al buscador.
+         * @param l el listener
+         */
         public void addSearchListener(ActionListener l) {
             btnSearch.addActionListener(l);
             txtSearch.addActionListener(e -> btnSearch.doClick());
         }
         
+        /**
+         * @return texto del buscador
+         */
         public String getSearchText() { 
             String t = txtSearch.getText().trim();
             return t.equals("Search...") ? "" : t;

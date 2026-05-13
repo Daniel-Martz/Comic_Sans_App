@@ -10,6 +10,11 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import modelo.tiempo.DateTimeSimulado;
 
+/**
+ * La cabecera que sale en (casi) todas partes. 
+ * Tiene el logo, el buscador y los botoncitos de arriba a la derecha.
+ * Básicamente la pongo en cada panel y que los controladores le enchufen la lógica.
+ */
 public class HeaderPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
@@ -35,6 +40,9 @@ public class HeaderPanel extends JPanel {
     ImageIcon iconoSinLogIn = getSclaedIcon("src/assets/fotoperfil.png");
     ImageIcon iconoConLogIn = getSclaedIcon("src/assets/fotoperfilLoggedIn.png");
 
+    /**
+     * Monta la cabecera y pone el temporizador pa la hora simulada.
+     */
     public HeaderPanel() {
         initComponents();
         initLayout();
@@ -47,6 +55,11 @@ public class HeaderPanel extends JPanel {
         });
     }
     
+    /**
+     * Carga y escala una imagen para que quepa en un icono.
+     * @param path ruta de la imagen
+     * @return el ImageIcon escalado
+     */
     public ImageIcon getSclaedIcon(String path) {
         try {
             File imgFile = new File(path);
@@ -61,6 +74,10 @@ public class HeaderPanel extends JPanel {
         return new ImageIcon();
     }
     
+    /**
+     * Cambia el icono de perfil si el usuario se loguea.
+     * @param isLoggedIn true si hay usuario logueado
+     */
     public void refreshIconImage(boolean isLoggedIn) {
     	if(isLoggedIn) {
 			btnPerfil.setIcon(this.iconoConLogIn);
@@ -69,6 +86,9 @@ public class HeaderPanel extends JPanel {
     	}
     }
 
+    /**
+     * Actualiza la fecha y hora de la simulación.
+     */
     public void updateDate() {
         if (lblDate != null) {
             DateTimeSimulado ahora = new DateTimeSimulado();
@@ -228,8 +248,9 @@ public class HeaderPanel extends JPanel {
     }
 
     /**
-     * Añade un botón secundario al grupo de navegación central junto al HOME.
-     * Devuelve el botón creado para que el controlador pueda añadir listeners.
+     * Mete un botón extra en el menú de navegación de arriba al lado del HOME.
+     * @param text texto del botón
+     * @return el botón creado
      */
     public JButton addSecondaryTopButton(String text) {
         JButton btn = createTopNavButton(text);
@@ -239,7 +260,7 @@ public class HeaderPanel extends JPanel {
     }
 
     /**
-     * Configura la cabecera para la vista de empleados ocultando elementos de compra.
+     * Oculta las cosas de comprar cuando entra un empleado.
      */
     public void configurarMenuEmpleado() {
         btnDescuentos.setVisible(false);
@@ -258,6 +279,9 @@ public class HeaderPanel extends JPanel {
         rightPanel.setPreferredSize(new Dimension(380, rightPanel.getPreferredSize().height));
     }
 
+    /**
+     * Lo mismo pero para el gestor jefe.
+     */
     public void configurarMenuGestor() {
         configurarMenuEmpleado();
         speechBubble.setText("<html><center>MANAGER DASHBOARD<br>ADMINISTRATE THE STORE</center></html>");
@@ -265,7 +289,7 @@ public class HeaderPanel extends JPanel {
     }
 
     /**
-     * Configura la cabecera para la vista de Notificaciones: sólo muestra el botón HOME.
+     * Deja la cabecera casi vacía para no estorbar en notificaciones.
      */
     public void configurarMenuNotificaciones() {
         // Ocultamos botones de navegación secundaria
@@ -311,20 +335,32 @@ public class HeaderPanel extends JPanel {
     }
 
     // --- Delegación de Listeners ---
+    /** @param l listener para el botón de inicio */
     public void addHomeListener(ActionListener l) { btnHome.addActionListener(l); }
+    /** @param l listener para destacados */
     public void addOutstandingListener(ActionListener l) { btnOutstanding.addActionListener(l); }
+    /** @param l listener para el buscador */
     public void addSearchListener(ActionListener l) { 
         txtSearch.addActionListener(l); 
         btnSearchIcon.addActionListener(e -> {
             l.actionPerformed(new java.awt.event.ActionEvent(txtSearch, java.awt.event.ActionEvent.ACTION_PERFORMED, getSearchText()));
         });
     }
+    /** @param l listener para los filtros */
     public void addFiltrosListener(ActionListener l) { btnFilters.addActionListener(l); }
+    /** @param l listener para el carrito */
     public void addCarritoListener(ActionListener l) { btnCarrito.addActionListener(l); }
+    /** @param l listener para intercambios */
     public void addIntercambiosListener(ActionListener l) { btnIntercambios.addActionListener(l); }
+    /** @param l listener para el perfil */
     public void addPerfilListener(ActionListener l) { btnPerfil.addActionListener(l); }
+    /** @param l listener para las notificaciones */
     public void addNotificacionesListener(ActionListener l) { btnNotificaciones.addActionListener(l); }
+    /** @param l listener para los descuentos */
     public void addDiscountedListener(ActionListener l) { btnDescuentos.addActionListener(l); }
+    /**
+     * @return lo que haya escrito el usuario en el buscador
+     */
     public String getSearchText() { 
         String text = txtSearch.getText().trim(); 
         return text.equals("Search...") ? "" : text;

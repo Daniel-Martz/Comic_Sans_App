@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * Pantalla para editar tus datos de usuario (contraseña, etc).
+ */
 public class EditProfilePanel extends JPanel {
 
   // ── Paleta de colores ────────────────────────────────────────────
@@ -30,23 +33,43 @@ public class EditProfilePanel extends JPanel {
   private JLabel statusLabel;
   private JButton buttonChangeData;
 
+    /**
+     * Constructor por defecto, inicializa todo.
+     */
   public EditProfilePanel() {
     initComponents();
     initLayout();
   }
 
     
+  /** @return pilla el nombre de usuario */
   public String getUsername()          { return usernameField.getText().trim(); }
+  /** @return pilla el dni */
   public String getDni()          { return dniField.getText().trim(); }
+  /** @return pilla la contraseña vieja */
   public String getOldPassword()          { return String.valueOf(oldPasswordField.getPassword()).trim(); }
+  /** @return pilla la contraseña nueva */
   public String getPassword()          { return String.valueOf(passwordField.getPassword()).trim(); }
+  /** 
+   * Actualiza el textillo de abajo.
+   * @param text mensaje
+   */
   public void setStatusLabelText(String text)   {statusLabel.setText(text);}
 
 
+  /**
+   * Mete listener al boton de guardar cambios.
+   * @param a el listener
+   */
   public void añadirListenerBotonChangeData(ActionListener a){
     buttonChangeData.addActionListener(a);
   }
   
+  /**
+   * Deja los campos prellenados.
+   * @param username el nombre del pavo
+   * @param password ojo, que aqui se usa pa meter el DNI
+   */
   public void inicializarCampos(String username, String password) {
 	  usernameField.setText(username);
 	  dniField.setText(password);

@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
  
 public class AddDiscountWindow extends JDialog {
 
@@ -35,10 +36,15 @@ public class AddDiscountWindow extends JDialog {
     private JTextField txtGiftId;
     private JTextField txtGiftQty;
     private JTextField txtGiftThresh;
+    
+    private Descuento oldDiscount;
+    private List<LineaProductoVenta> productos;
 
-    public AddDiscountWindow(JFrame parent, LineaProductoVenta p, ControladorDescuentos ctrl) {
-        super(parent, "Add Discount", true);
-        setSize(680, 480);
+    public AddDiscountWindow(JFrame parent, List<LineaProductoVenta> productos, Descuento oldDiscount, ControladorDescuentos ctrl) {
+        super(parent, oldDiscount == null ? "Add Discount" : "Edit Discount", true);
+        this.productos = productos;
+        this.oldDiscount = oldDiscount;
+        setSize(680, 560);
         setLocationRelativeTo(parent);
         setResizable(false);
         setLayout(new BorderLayout());
@@ -52,7 +58,8 @@ public class AddDiscountWindow extends JDialog {
         headerPanel.setBackground(new Color(54, 119, 189));
         headerPanel.setBorder(new EmptyBorder(15, 20, 15, 20));
         
-        JLabel lblTitulo = new JLabel("Discount for: " + p.getNombre());
+        String titleTxt = oldDiscount == null ? "Create Discount for " + productos.size() + " product(s)" : "Edit Existing Discount";
+        JLabel lblTitulo = new JLabel(titleTxt);
         lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 16));
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -65,6 +72,28 @@ public class AddDiscountWindow extends JDialog {
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setBackground(new Color(245, 247, 250));
         formPanel.setBorder(new EmptyBorder(20, 30, 20, 30));
+
+        JPanel affectedPanel = new JPanel(new BorderLayout());
+        affectedPanel.setOpaque(false);
+        affectedPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
+        JLabel lblAffected = new JLabel("Affected Products (" + productos.size() + "):");
+        lblAffected.setFont(new Font("SansSerif", Font.BOLD, 12));
+        affectedPanel.add(lblAffected, BorderLayout.NORTH);
+        
+        StringBuilder sb = new StringBuilder();
+        for (LineaProductoVenta prod : productos) {
+            sb.append("- ").append(prod.getNombre()).append("\n");
+        }
+        JTextArea txtAffected = new JTextArea(sb.toString());
+        txtAffected.setEditable(false);
+        txtAffected.setOpaque(false);
+        txtAffected.setFont(new Font("SansSerif", Font.ITALIC, 12));
+        JScrollPane scrollAffected = new JScrollPane(txtAffected);
+        scrollAffected.setPreferredSize(new Dimension(600, 60));
+        scrollAffected.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        affectedPanel.add(scrollAffected, BorderLayout.CENTER);
+        
+        formPanel.add(affectedPanel);
 
         JPanel commonPanel = new JPanel();
         commonPanel.setLayout(new BoxLayout(commonPanel, BoxLayout.Y_AXIS));
@@ -219,30 +248,24 @@ public class AddDiscountWindow extends JDialog {
                 }
 
                 String type = (String) comboType.getSelectedItem();
-                Descuento d = null;
+                int perc = 0, threshPerc = 0, buyQty = 0, recvQty = 0, giftId = 0, giftQty = 0;
+                double thresh = 0.0, giftThresh = 0.0;
+
                 if (type.contains("Percentage")) {
-                    int perc = Integer.parseInt(txtPercentage.getText().trim());
-                    d = new Precio(inicio, fin, perc);
+                    perc = Integer.parseInt(txtPercentage.getText().trim());
                 } else if (type.contains("Threshold")) {
-                    double thresh = Double.parseDouble(txtThreshold.getText().trim());
-                    int perc = Integer.parseInt(txtThreshPerc.getText().trim());
-                    d = new RebajaUmbral(inicio, fin, thresh, perc);
+                    thresh = Double.parseDouble(txtThreshold.getText().trim());
+                    threshPerc = Integer.parseInt(txtThreshPerc.getText().trim());
                 } else if (type.contains("Quantity")) {
-                    int buy = Integer.parseInt(txtBuyQty.getText().trim());
-                    int recv = Integer.parseInt(txtReceiveQty.getText().trim());
-                    d = new Cantidad(inicio, fin, buy, recv);
+                    buyQty = Integer.parseInt(txtBuyQty.getText().trim());
+                    recvQty = Integer.parseInt(txtReceiveQty.getText().trim());
                 } else if (type.contains("Gift")) {
-                    double thresh = Double.parseDouble(txtGiftThresh.getText().trim());
-                    int giftId = Integer.parseInt(txtGiftId.getText().trim());
-                    int giftQty = Integer.parseInt(txtGiftQty.getText().trim());
-                    LineaProductoVenta giftProd = Catalogo.getInstancia().buscarProductoNuevo(giftId);
-                    if (giftProd == null) throw new IllegalArgumentException("Gift Product ID not found in Catalog");
-                    Map<LineaProductoVenta, Integer> gifts = new HashMap<>();
-                    gifts.put(giftProd, giftQty);
-                    d = new Regalo(inicio, fin, thresh, gifts);
+                    giftThresh = Double.parseDouble(txtGiftThresh.getText().trim());
+                    giftId = Integer.parseInt(txtGiftId.getText().trim());
+                    giftQty = Integer.parseInt(txtGiftQty.getText().trim());
                 }
 
-                ctrl.confirmarAñadirDescuento(p, d);
+                ctrl.confirmarDescuentosMulti(productos, oldDiscount, type, inicio, fin, perc, thresh, threshPerc, buyQty, recvQty, giftThresh, giftId, giftQty);
                 dispose();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Invalid input: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -255,7 +278,9 @@ public class AddDiscountWindow extends JDialog {
 
         setContentPane(mainPanel);
         
-        prefillData(p);
+        if (oldDiscount != null) {
+            prefillData(oldDiscount);
+        }
         updateDynamicFields();
     }
 
@@ -287,17 +312,7 @@ public class AddDiscountWindow extends JDialog {
         cl.show(dynamicPanel, (String) comboType.getSelectedItem());
     }
 
-    private void prefillData(LineaProductoVenta p) {
-        Descuento d = p.getDescuento();
-        if (d == null) {
-            for (modelo.categoria.Categoria c : p.getCategorias()) {
-                if (c.getDescuento() != null && !c.getDescuento().haCaducado()) {
-                    d = c.getDescuento();
-                    break;
-                }
-            }
-        }
-        
+    private void prefillData(Descuento d) {
         if (d == null) return;
         
         // Rellenar las fechas del descuento existente

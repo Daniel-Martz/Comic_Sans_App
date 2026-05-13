@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Panel que muestra los productos destacados.
+ * Panel para escupir los productos rebajados (OBSOLETO pero aún por aquí).
  */
 public class DiscountedPanel extends JPanel {
 
@@ -21,6 +21,9 @@ public class DiscountedPanel extends JPanel {
     private HeaderPanel headerPanel;
     private JPanel panelScrollProductos;
 
+    /**
+     * Constructor que monta la estructura base.
+     */
     public DiscountedPanel() {
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
@@ -55,6 +58,11 @@ public class DiscountedPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
+    /**
+     * Rellena las tarjetas con los productos pasados.
+     * @param productos lista rebajados
+     * @param controlador el master listener
+     */
     public void actualizarProductos(List<LineaProductoVenta> productos, ActionListener controlador) {
         panelScrollProductos.removeAll();
 
@@ -172,8 +180,16 @@ public class DiscountedPanel extends JPanel {
         return tarjeta;
     }
 
+    /**
+     * @return header top
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
 
+    /**
+     * Mensajillo por si ocurre algún fallo.
+     * @param msg el fail
+     * @param titulo title bar
+     */
     public void mostrarMensaje(String msg, String titulo) {
         JOptionPane.showMessageDialog(this, msg, titulo, JOptionPane.INFORMATION_MESSAGE);
     }

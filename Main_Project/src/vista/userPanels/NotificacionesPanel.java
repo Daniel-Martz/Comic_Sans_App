@@ -8,11 +8,10 @@ import vista.elements.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-
 /**
- * Panel that displays the user's notification inbox.
+ * Pantalla que simula una bandeja de entrada para notificaciones.
  */
-public class NotificacionesPanel extends JPanel {
+public class NotificacionesPanel extends JPanel{
 
     private JTable tablaNotificaciones;
     private DefaultTableModel modeloTabla;
@@ -24,10 +23,11 @@ public class NotificacionesPanel extends JPanel {
     private DeleteButtonEditor editorDelete;
     private Set<Notificacion> notifsEnLaTabla = new HashSet<>();
 
-    public HeaderPanel getHeaderPanel() { return headerPanel; }
+    /** @return el header modificado pa que no haya tanto lio visual */
+    public HeaderPanel getHeaderPanel()	{return headerPanel;}
 
     /**
-     * Constructs the panel and initializes the notifications table.
+     * Monta la tabla y sus movidas.
      */
     public NotificacionesPanel() {
         setLayout(new BorderLayout(0, 15));
@@ -65,16 +65,38 @@ public class NotificacionesPanel extends JPanel {
         tablaNotificaciones.getColumnModel().getColumn(1).setPreferredWidth(100);
         tablaNotificaciones.getColumnModel().getColumn(2).setPreferredWidth(100);
 
-        JScrollPane scrollPane = new JScrollPane(tablaNotificaciones);
-        scrollPane.getViewport().setBackground(Color.WHITE);
-        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
+    JScrollPane scrollPane = new JScrollPane(tablaNotificaciones);
+    scrollPane.getViewport().setBackground(Color.WHITE);
+    scrollPane.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
+
+    // Añadimos el scrollPane al CENTRO del panel intermedio
+    centroPanel.add(scrollPane, BorderLayout.CENTER);
+
+    // 4. Añadimos el panel intermedio al CENTRO del panel principal
+    add(centroPanel, BorderLayout.CENTER);
+}
+
+    /**
+     * Registra los custom renderers de las filas.
+     * @param c el controlador que escucha
+     */
+    public void configurarColumnasInteractivas(ControladorNotificaciones c) { 
+      rendererRead = new ButtonRendererNotification();
+      editorRead = new ButtonEditor(new JCheckBox(), c);
+      rendererDelete = new DeleteButtonRendererNotifications();
+      editorDelete = new DeleteButtonEditor(new JCheckBox(), c);
+      tablaNotificaciones.getColumnModel().getColumn(0).setCellRenderer(this.rendererRead);
+      tablaNotificaciones.getColumnModel().getColumn(0).setCellEditor(this.editorRead);    
+      tablaNotificaciones.getColumnModel().getColumn(2).setCellRenderer(this.rendererDelete);
+      tablaNotificaciones.getColumnModel().getColumn(2).setCellEditor(this.editorDelete);    
 
         centroPanel.add(scrollPane, BorderLayout.CENTER);
         add(centroPanel, BorderLayout.CENTER);
     }
 
     /**
-     * Configures the custom renderers and editors for the table columns.
+     * Enchufa una notificación nueva al final de la tabla.
+     * @param n la notificacion a meter
      */
     public void configurarColumnasInteractivas(ControladorNotificaciones c) { 
         rendererRead = new ButtonRendererNotification();
@@ -100,7 +122,7 @@ public class NotificacionesPanel extends JPanel {
     }
     
     /**
-     * Clears all notifications from the table.
+     * Borra todo de la tabla.
      */
     public void clearNotificaciones() {
         modeloTabla.setRowCount(0);
@@ -108,12 +130,17 @@ public class NotificacionesPanel extends JPanel {
     }
 
     /**
-     * Sets the controller and initializes interactive columns.
+     * Guarda el controlador para configurar la tabla.
+     * @param c controlador
      */
     public void addListenerForElements(ControladorNotificaciones c){
         this.controlador = c;
         configurarColumnasInteractivas(c);
     }
 
-    public ControladorNotificaciones getControladorPrincipal() { return controlador; }
+    /**
+     * @return el controlador
+     */
+    public ControladorNotificaciones getControladorPrincipal(){return controlador;}
+
 }

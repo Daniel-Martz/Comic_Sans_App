@@ -9,7 +9,13 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
+/**
+ * Panel donde gestionamos los descuentos.
+ * Tiene dos columnas, una para productos y otra para packs.
+ */
 public class DescuentosPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
@@ -22,6 +28,9 @@ public class DescuentosPanel extends JPanel {
     private ColumnaDescuentos colPacks;
     private JButton btnBack;
  
+    /**
+     * Constructor por defecto que monta todo el panel.
+     */
     public DescuentosPanel() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -61,21 +70,44 @@ public class DescuentosPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
+    /**
+     * Pilla el panel de arriba.
+     * @return la cabecera
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    /**
+     * @return la columna de productos sueltos
+     */
     public ColumnaDescuentos getColIndividuales() { return colIndividuales; }
+    /**
+     * @return la columna de los packs
+     */
     public ColumnaDescuentos getColPacks() { return colPacks; }
+    /**
+     * @return el botón para volver atrás
+     */
     public JButton getBtnBack() { return btnBack; }
 
     // =========================================================================
     // CLASE INTERNA: COLUMNA DE DESCUENTOS
     // =========================================================================
+    /**
+     * Clase para montar cada una de las columnas con su buscador y lista.
+     */
     public class ColumnaDescuentos extends JPanel {
         private static final long serialVersionUID = 1L;
         private JTextField txtSearch;
         private JButton btnSearch;
         private JPanel gridProductos;
         private String commandPrefix;
+        private Map<LineaProductoVenta, JCheckBox> checkboxes = new HashMap<>();
+        private JButton btnApply;
 
+        /**
+         * Constructor de la columna.
+         * @param title título de la columna
+         * @param commandPrefix prefijo para identificar los botones
+         */
         public ColumnaDescuentos(String title, String commandPrefix) {
             this.commandPrefix = commandPrefix;
             setLayout(new BorderLayout(0, 10));
@@ -147,10 +179,25 @@ public class DescuentosPanel extends JPanel {
             scroll.setBorder(null);
             scroll.getVerticalScrollBar().setUnitIncrement(16);
             add(scroll, BorderLayout.CENTER);
+
+            JPanel bottomCol = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            bottomCol.setBackground(BG_COLOR);
+            btnApply = new JButton("Apply Discount to Selected");
+            btnApply.setFont(new Font("SansSerif", Font.BOLD, 14));
+            btnApply.setBackground(new Color(46, 204, 113));
+            btnApply.setForeground(Color.WHITE);
+            bottomCol.add(btnApply);
+            add(bottomCol, BorderLayout.SOUTH);
         }
 
+        /**
+         * Actualiza la lista de productos que se ven.
+         * @param productos los productos a meter
+         * @param actionCtrl el controlador que los maneja
+         */
         public void actualizarProductos(List<LineaProductoVenta> productos, ActionListener actionCtrl) {
             gridProductos.removeAll();
+            checkboxes.clear();
             if (productos.isEmpty()) {
                 JLabel vacio = new JLabel("No active discounts found.");
                 vacio.setForeground(Color.WHITE);
@@ -166,11 +213,31 @@ public class DescuentosPanel extends JPanel {
             gridProductos.repaint();
         }
 
+        public JButton getBtnApply() {
+            return btnApply;
+        }
+
+        public List<LineaProductoVenta> getSelectedProducts() {
+            List<LineaProductoVenta> sel = new java.util.ArrayList<>();
+            for (Map.Entry<LineaProductoVenta, JCheckBox> e : checkboxes.entrySet()) {
+                if (e.getValue().isSelected()) sel.add(e.getKey());
+            }
+            return sel;
+        }
+
+        /**
+         * Mete un listener para la barra de búsqueda.
+         * @param l el listener
+         */
         public void addSearchListener(ActionListener l) {
             btnSearch.addActionListener(l);
             txtSearch.addActionListener(e -> btnSearch.doClick());
         }
         
+        /**
+         * Devuelve el texto que hay en el buscador.
+         * @return el texto escrito
+         */
         public String getSearchText() { 
             String t = txtSearch.getText().trim();
             return t.equals("Search...") ? "" : t;
@@ -257,24 +324,33 @@ public class DescuentosPanel extends JPanel {
                 }
             }
             
-            JButton btnAdd = new JButton("ADD");
-            btnAdd.setFont(new Font("SansSerif", Font.BOLD, 14));
-            btnAdd.setBackground(new Color(46, 204, 113));
-            btnAdd.setForeground(Color.WHITE);
-            btnAdd.setFocusPainted(false);
-            btnAdd.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            btnAdd.setActionCommand("ADD_" + prod.getID());
-            btnAdd.addActionListener(actionCtrl);
-             
-            if (d != null) {
-                btnAdd.setText("REPLACE");
-                btnAdd.setBackground(new Color(243, 156, 18));
-            }
+            JCheckBox chkSelect = new JCheckBox(d != null ? "Selected (Has %)" : "Select");
+            chkSelect.setFont(new Font("SansSerif", Font.BOLD, 12));
+            chkSelect.setBackground(CARD_BG);
+            chkSelect.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            if (d != null) chkSelect.setForeground(new Color(243, 156, 18));
+            checkboxes.put(prod, chkSelect);
 
             JPanel btnPanel = new JPanel(new GridBagLayout());
             btnPanel.setOpaque(false);
             btnPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
-            btnPanel.add(btnAdd);
+            btnPanel.add(chkSelect);
+
+            if (d != null) {
+                JButton btnEdit = new JButton("EDIT DISCOUNT");
+                btnEdit.setFont(new Font("SansSerif", Font.BOLD, 11));
+                btnEdit.setBackground(new Color(243, 156, 18));
+                btnEdit.setForeground(Color.WHITE);
+                btnEdit.setFocusPainted(false);
+                btnEdit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                btnEdit.setActionCommand("EDIT_" + prod.getID());
+                btnEdit.addActionListener(actionCtrl);
+                
+                GridBagConstraints gbcBtn = new GridBagConstraints();
+                gbcBtn.gridy = 1;
+                gbcBtn.insets = new Insets(10, 0, 0, 0);
+                btnPanel.add(btnEdit, gbcBtn);
+            }
 
             tarjeta.add(btnPanel, BorderLayout.EAST);
 

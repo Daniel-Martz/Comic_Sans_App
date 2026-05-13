@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * User Main Menu Panel.
+ * La página principal que se abre nada más arrancar la app.
  */
 public class MenuPrincipalPanel extends JPanel {
 
@@ -32,7 +32,7 @@ public class MenuPrincipalPanel extends JPanel {
     private ActionListener buyNowListener;
 
     /**
-     * Constructs the panel and initializes components.
+     * Constructor que monta la ventana de inicio.
      */
     public MenuPrincipalPanel() {
         buyNowButtons = new ArrayList<>();
@@ -283,12 +283,20 @@ public class MenuPrincipalPanel extends JPanel {
         return card;
     }
 
+    // ==========================================
+    // MÉTODOS PARA REGISTRAR LISTENERS
+    // ==========================================
+    
+    /**
+     * @return la barra superior
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
 
     /**
-     * Assigns action listeners to product buttons.
+     * Registra el listener para cuando compran algo desde las recomendaciones.
+     * @param l el listener
      */
     public void addBuyNowListener(ActionListener l) {
         this.buyNowListener = l;
@@ -298,7 +306,8 @@ public class MenuPrincipalPanel extends JPanel {
     }
 
     /**
-     * Updates the recommended products list.
+     * Pinta en pantalla los productos sugeridos por el algoritmo.
+     * @param recomendados los productos a recomendar
      */
     public void actualizarRecomendados(Set<LineaProductoVenta> recomendados) {
         recommendedPanel.removeAll();
@@ -327,7 +336,8 @@ public class MenuPrincipalPanel extends JPanel {
     }
 
     /**
-     * Assigns action listeners to category buttons.
+     * Le chuta un listener a los botones de categorías.
+     * @param l el listener
      */
     public void addCategoryListener(ActionListener l) {
         for (JButton btn : categoryButtons) {
