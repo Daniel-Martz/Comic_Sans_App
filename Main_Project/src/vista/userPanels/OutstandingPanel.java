@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Panel que muestra los productos destacados.
+ * Panel that displays outstanding products.
  */
 public class OutstandingPanel extends JPanel {
 
@@ -21,6 +21,9 @@ public class OutstandingPanel extends JPanel {
     private HeaderPanel headerPanel;
     private JPanel panelScrollProductos;
 
+    /**
+     * Initializes the panel and its components.
+     */
     public OutstandingPanel() {
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
@@ -32,8 +35,7 @@ public class OutstandingPanel extends JPanel {
         contentWrapper.setBackground(COLOR_FONDO);
         contentWrapper.setBorder(new EmptyBorder(0, 20, 20, 20));
 
-        // Titulo
-        JLabel lblTitulo = new JLabel("PRODUCTOS DESTACADOS ⭐", SwingConstants.CENTER);
+        JLabel lblTitulo = new JLabel("FEATURED PRODUCTS ⭐", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblTitulo.setForeground(Color.DARK_GRAY);
         lblTitulo.setBorder(new EmptyBorder(10, 0, 20, 0));
@@ -55,11 +57,14 @@ public class OutstandingPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
+    /**
+     * Refreshes the product list.
+     */
     public void actualizarProductos(List<LineaProductoVenta> productos, ActionListener controlador) {
         panelScrollProductos.removeAll();
 
         if (productos == null || productos.isEmpty()) {
-            JLabel vacio = new JLabel("No hay productos destacados en este momento.");
+            JLabel vacio = new JLabel("No featured products available at this moment.");
             vacio.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
             panelScrollProductos.add(vacio);
         } else {
@@ -110,7 +115,7 @@ public class OutstandingPanel extends JPanel {
         img.setPreferredSize(new Dimension(160, 90));
         img.setMaximumSize(new Dimension(160,90));
         img.setAlignmentX(Component.CENTER_ALIGNMENT);
-        // If the product has a photo file, load and scale it
+
         try {
             if (prod.getFoto() != null && prod.getFoto().exists()) {
                 ImageIcon iconoOriginal = new ImageIcon(prod.getFoto().getPath());
@@ -119,7 +124,6 @@ public class OutstandingPanel extends JPanel {
                 img.setText("");
             }
         } catch (Exception ex) {
-            // keep placeholder text if image loading fails
             img.setText("IMAGE");
         }
         tarjeta.add(img);
@@ -186,6 +190,9 @@ public class OutstandingPanel extends JPanel {
 
     public HeaderPanel getHeaderPanel() { return headerPanel; }
 
+    /**
+     * Displays a message dialog.
+     */
     public void mostrarMensaje(String msg, String titulo) {
         JOptionPane.showMessageDialog(this, msg, titulo, JOptionPane.INFORMATION_MESSAGE);
     }

@@ -7,44 +7,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Panel principal de propuestas de intercambio.
- *
+ * Main panel for interchange proposals.
  */
 public class ProposalsPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    // -------------------------------------------------------
-    // Contenedores internos de las cards
-    // -------------------------------------------------------
-    private JPanel contenedorIncome;   // columna izquierda (ofertas recibidas)
-    private JPanel contenedorSent;     // columna derecha (ofertas enviadas)
+    private JPanel incomeContainer;
+    private JPanel sentContainer;
 
-    // Listas para que el controlador pueda acceder a cada card
-    private final List<InterchangeCardPanel> cardsIncome = new ArrayList<>();
-    private final List<InterchangeCardPanel> cardsSent   = new ArrayList<>();
+    private final List<InterchangeCardPanel> incomeCards = new ArrayList<>();
+    private final List<InterchangeCardPanel> sentCards = new ArrayList<>();
 
-    // -------------------------------------------------------
-    // Constructor
-    // -------------------------------------------------------
+    /**
+     * Instantiates a new proposals panel.
+     */
     public ProposalsPanel() {
         initComponents();
         initLayout();
     }
 
-    // -------------------------------------------------------
-    // Inicialización
-    // -------------------------------------------------------
+    /**
+     * Initializes the components.
+     */
     private void initComponents() {
-        contenedorIncome = crearContenedorCards();
-        contenedorSent   = crearContenedorCards();
+        incomeContainer = createCardsContainer();
+        sentContainer = createCardsContainer();
     }
 
     /**
-     * Crea un panel vertical que irá dentro del JScrollPane de cada columna.
-     * BoxLayout Y_AXIS apila las cards verticalmente.
+     * Creates a vertical panel that goes inside the JScrollPane of each column.
+     *
+     * @return the container panel
      */
-    private JPanel crearContenedorCards() {
+    private JPanel createCardsContainer() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(new Color(153, 180, 209));
@@ -52,111 +48,114 @@ public class ProposalsPanel extends JPanel {
         return panel;
     }
 
+    /**
+     * Initializes the layout.
+     */
     private void initLayout() {
         setBackground(new Color(153, 180, 209));
         setLayout(new BorderLayout());
 
-        // ── Título superior ──────────────────────────────────
-        JLabel titulo = new JLabel("PROPOSALS", SwingConstants.CENTER);
-        titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
-        titulo.setForeground(Color.WHITE);
-        titulo.setOpaque(true);
-        titulo.setBackground(new Color(74, 118, 201));
-        titulo.setBorder(new EmptyBorder(15, 0, 15, 0));
-        add(titulo, BorderLayout.NORTH);
+        JLabel title = new JLabel("PROPOSALS", SwingConstants.CENTER);
+        title.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
+        title.setForeground(Color.WHITE);
+        title.setOpaque(true);
+        title.setBackground(new Color(74, 118, 201));
+        title.setBorder(new EmptyBorder(15, 0, 15, 0));
+        add(title, BorderLayout.NORTH);
 
-        // ── Cuerpo: dos columnas ─────────────────────────────
-        JPanel cuerpo = new JPanel(new GridLayout(1, 2, 10, 0));
-        cuerpo.setBackground(new Color(153, 180, 209));
-        cuerpo.setBorder(new EmptyBorder(10, 10, 10, 10));
+        JPanel body = new JPanel(new GridLayout(1, 2, 10, 0));
+        body.setBackground(new Color(153, 180, 209));
+        body.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        cuerpo.add(crearColumna("INCOME", contenedorIncome));
-        cuerpo.add(crearColumna("SENT",   contenedorSent));
+        body.add(createColumn("INCOME", incomeContainer));
+        body.add(createColumn("SENT", sentContainer));
 
-        add(cuerpo, BorderLayout.CENTER);
+        add(body, BorderLayout.CENTER);
     }
 
     /**
-     * Crea una columna completa con su cabecera y su scroll.
+     * Creates a complete column with its header and scroll pane.
+     *
+     * @param title the column title
+     * @param container the container panel
+     * @return the complete column panel
      */
-    private JPanel crearColumna(String titulo, JPanel contenedor) {
-        JPanel columna = new JPanel(new BorderLayout(0, 5));
-        columna.setBackground(new Color(153, 180, 209));
+    private JPanel createColumn(String title, JPanel container) {
+        JPanel column = new JPanel(new BorderLayout(0, 5));
+        column.setBackground(new Color(153, 180, 209));
 
-        // Cabecera de columna
-        JLabel cabecera = new JLabel(titulo, SwingConstants.CENTER);
-        cabecera.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-        cabecera.setForeground(Color.WHITE);
-        cabecera.setOpaque(true);
-        cabecera.setBackground(new Color(74, 118, 201));
-        cabecera.setBorder(new EmptyBorder(8, 0, 8, 0));
+        JLabel header = new JLabel(title, SwingConstants.CENTER);
+        header.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
+        header.setForeground(Color.WHITE);
+        header.setOpaque(true);
+        header.setBackground(new Color(74, 118, 201));
+        header.setBorder(new EmptyBorder(8, 0, 8, 0));
 
-        // ScrollPane que envuelve el contenedor de cards
-        JScrollPane scroll = new JScrollPane(contenedor,
+        JScrollPane scroll = new JScrollPane(container,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scroll.getVerticalScrollBar().setUnitIncrement(16);
         scroll.setBorder(null);
 
-        columna.add(cabecera, BorderLayout.NORTH);
-        columna.add(scroll,   BorderLayout.CENTER);
-        return columna;
-    }
-
-    // -------------------------------------------------------
-    // Métodos públicos para el CONTROLADOR
-    // -------------------------------------------------------
-
-    /**
-     * Añade una card a la columna INCOME (ofertas recibidas).
-     * El controlador llama a este método por cada oferta recibida.
-     */
-    public void añadirCardIncome(InterchangeCardPanel card) {
-        cardsIncome.add(card);
-        contenedorIncome.add(card);
-        contenedorIncome.add(Box.createVerticalStrut(10));
-        contenedorIncome.revalidate();
-        contenedorIncome.repaint();
+        column.add(header, BorderLayout.NORTH);
+        column.add(scroll, BorderLayout.CENTER);
+        return column;
     }
 
     /**
-     * Añade una card a la columna SENT (ofertas enviadas).
-     * El controlador llama a este método por cada oferta enviada.
+     * Adds a card to the income column.
+     *
+     * @param card the interchange card panel to add
      */
-    public void añadirCardSent(InterchangeCardPanel card) {
-        cardsSent.add(card);
-        contenedorSent.add(card);
-        contenedorSent.add(Box.createVerticalStrut(10));
-        contenedorSent.revalidate();
-        contenedorSent.repaint();
+    public void addIncomeCard(InterchangeCardPanel card) {
+        incomeCards.add(card);
+        incomeContainer.add(card);
+        incomeContainer.add(Box.createVerticalStrut(10));
+        incomeContainer.revalidate();
+        incomeContainer.repaint();
     }
 
     /**
-     * Elimina todas las cards de ambas columnas.
-     * Útil para recargar cuando cambian las ofertas.
+     * Adds a card to the sent column.
+     *
+     * @param card the interchange card panel to add
      */
-    public void limpiar() {
-        cardsIncome.clear();
-        cardsSent.clear();
-        contenedorIncome.removeAll();
-        contenedorSent.removeAll();
-        contenedorIncome.revalidate();
-        contenedorSent.revalidate();
+    public void addSentCard(InterchangeCardPanel card) {
+        sentCards.add(card);
+        sentContainer.add(card);
+        sentContainer.add(Box.createVerticalStrut(10));
+        sentContainer.revalidate();
+        sentContainer.repaint();
+    }
+
+    /**
+     * Clears all cards from both columns.
+     */
+    public void clear() {
+        incomeCards.clear();
+        sentCards.clear();
+        incomeContainer.removeAll();
+        sentContainer.removeAll();
+        incomeContainer.revalidate();
+        sentContainer.revalidate();
         repaint();
     }
 
     /**
-     * Devuelve las cards de INCOME (para que el controlador
-     * pueda registrar listeners en cada una).
+     * Gets the income cards.
+     *
+     * @return the list of income cards
      */
-    public List<InterchangeCardPanel> getCardsIncome() {
-        return cardsIncome;
+    public List<InterchangeCardPanel> getIncomeCards() {
+        return incomeCards;
     }
 
     /**
-     * Devuelve las cards de SENT.
+     * Gets the sent cards.
+     *
+     * @return the list of sent cards
      */
-    public List<InterchangeCardPanel> getCardsSent() {
-        return cardsSent;
+    public List<InterchangeCardPanel> getSentCards() {
+        return sentCards;
     }
 }

@@ -17,26 +17,42 @@ import java.util.List;
  */
 public class SearchInterchangesPanel extends JPanel {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The color fondo. */
     private final Color COLOR_FONDO = new Color(153, 180, 209);
 
+    /** The panel scroll productos. */
     private JPanel panelScrollProductos;
+    
+    /** The lbl status. */
     private JLabel lblStatus;
+    
+    /** The btn reset. */
     private JButton btnReset;
+    
+    /** The btn proceed. */
     private JButton btnProceed;
     
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The checkboxes seleccion. */
     private List<JCheckBox> checkboxesSeleccion = new ArrayList<>();
 
+    /**
+     * Instantiates a new search interchanges panel.
+     */
     public SearchInterchangesPanel() {
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
 
         // --- HEADER ---
         headerPanel = new HeaderPanel();
-        add(headerPanel, BorderLayout.NORTH); // Añadimos la cabecera en el límite superior absoluto
+        add(headerPanel, BorderLayout.NORTH); 
         
-        // Envoltorio para el resto de la vista, manteniendo el margen lateral original
+    
         JPanel contentWrapper = new JPanel(new BorderLayout());
         contentWrapper.setBackground(COLOR_FONDO);
         contentWrapper.setBorder(new EmptyBorder(0, 20, 0, 20));
@@ -95,6 +111,13 @@ public class SearchInterchangesPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
+    /**
+     * Actualizar productos.
+     *
+     * @param productos the productos
+     * @param actionCtrl the action ctrl
+     * @param itemCtrl the item ctrl
+     */
     public void actualizarProductos(List<ProductoSegundaMano> productos, ActionListener actionCtrl, ItemListener itemCtrl) {
         panelScrollProductos.removeAll();
         checkboxesSeleccion.clear();
@@ -116,6 +139,14 @@ public class SearchInterchangesPanel extends JPanel {
         panelScrollProductos.repaint();
     }
 
+    /**
+     * Crear tarjeta.
+     *
+     * @param prod the prod
+     * @param actionCtrl the action ctrl
+     * @param itemCtrl the item ctrl
+     * @return the j panel
+     */
     private JPanel crearTarjeta(ProductoSegundaMano prod, ActionListener actionCtrl, ItemListener itemCtrl) {
         JPanel tarjeta = new JPanel();
         tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
@@ -175,9 +206,31 @@ public class SearchInterchangesPanel extends JPanel {
         return tarjeta;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     // --- Métodos de interacción (MVC) ---
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    
+    /**
+     * Sets the controlador inferior.
+     *
+     * @param l the new controlador inferior
+     */
     public void setControladorInferior(ActionListener l) { btnReset.addActionListener(l); btnProceed.addActionListener(l); btnReset.setActionCommand("RESET"); btnProceed.setActionCommand("PROCEED"); }
+    
+    /**
+     * Update selection info.
+     *
+     * @param count the count
+     * @param total the total
+     */
     public void updateSelectionInfo(int count, double total) { lblStatus.setText(String.format("Selected items: %d | Total Estimated Value: %.2f €", count, total)); }
+    
+    /**
+     * Desmarcar todos.
+     */
     public void desmarcarTodos() { for (JCheckBox chk : checkboxesSeleccion) { chk.setSelected(false); } }
 }

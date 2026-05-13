@@ -6,26 +6,18 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Panel para el formulario de añadir un nuevo producto de segunda mano.
- * Actúa como VISTA. No contiene lógica de negocio.
- * * Estructura modular:
- * - Titulo (JLabel)
- * - FormPanel (GridBagLayout con los inputs)
- * - ActionPanel (FlowLayout con los botones)
+ * Panel containing the form to add a new second-hand product.
  */
 public class NuevoProductoSegundaManoPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    // -------------------------------------------------------
-    // Subpaneles internos
-    // -------------------------------------------------------
     private FormPanel formPanel;
     private ActionPanel actionPanel;
 
-    // -------------------------------------------------------
-    // Constructor
-    // -------------------------------------------------------
+    /**
+     * Initializes the panel and its layout.
+     */
     public NuevoProductoSegundaManoPanel() {
         initComponents();
         initLayout();
@@ -41,7 +33,6 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // ── Título ──────────────────────────────────────────────
         JLabel lblTitulo = new JLabel("NEW SECOND-HAND PRODUCT", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
         lblTitulo.setForeground(Color.WHITE);
@@ -49,31 +40,26 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
         lblTitulo.setBackground(new Color(74, 118, 201));
         lblTitulo.setBorder(new EmptyBorder(15, 0, 15, 0));
 
-        // ── Ensamblaje ──────────────────────────────────────────
         add(lblTitulo, BorderLayout.NORTH);
         add(formPanel, BorderLayout.CENTER);
         add(actionPanel, BorderLayout.SOUTH);
     }
 
-    // -------------------------------------------------------
-    // Métodos públicos para el CONTROLADOR (Delegación)
-    // -------------------------------------------------------
     public String getNombre() { return formPanel.getNombre(); }
     public String getDescripcion() { return formPanel.getDescripcion(); }
     public void setNombreImagen(String nombre) { formPanel.setNombreImagen(nombre); }
 
+    /**
+     * Assigns the controller to the different interactive components.
+     */
     public void setControlador(ActionListener c) {
         formPanel.addImagenListener(c);
         actionPanel.addConfirmarListener(c);
         actionPanel.addCancelarListener(c);
     }
 
-    // =======================================================
-    // CLASES INTERNAS (SUBPANELES)
-    // =======================================================
-
     /**
-     * Subpanel central: Contiene el formulario (Nombre, Descripción, Imagen).
+     * Internal panel for form inputs.
      */
     private class FormPanel extends JPanel {
         private static final long serialVersionUID = 1L;
@@ -92,7 +78,6 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.insets = new Insets(10, 10, 10, 10);
 
-            // Fila 0: Nombre
             gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.2;
             JLabel lblNombre = new JLabel("Product Name:");
             lblNombre.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -103,7 +88,6 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             txtNombre.setFont(new Font("Comic Sans MS", Font.PLAIN, 14));
             add(txtNombre, gbc);
 
-            // Fila 1: Descripción
             gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0.2; gbc.anchor = GridBagConstraints.NORTH;
             JLabel lblDesc = new JLabel("Description:");
             lblDesc.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -117,7 +101,6 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             JScrollPane scrollDesc = new JScrollPane(txtDescripcion);
             add(scrollDesc, gbc);
 
-            // Fila 2: Imagen
             gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0.2; gbc.anchor = GridBagConstraints.CENTER;
             JLabel lblImagen = new JLabel("Product Image:");
             lblImagen.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -147,7 +130,7 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
     }
 
     /**
-     * Subpanel sur: Contiene los botones de acción.
+     * Internal panel for action buttons.
      */
     private class ActionPanel extends JPanel {
         private static final long serialVersionUID = 1L;

@@ -1,11 +1,10 @@
 package vista.userPanels;
+
 import java.util.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-
 import modelo.producto.LineaProductoVenta;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,30 +12,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Panel principal de usuario (Menu Principal).
-*/
+ * User Main Menu Panel.
+ */
 public class MenuPrincipalPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    // --- Colores de la paleta del Mockup ---
     private final Color BG_COLOR = new Color(162, 187, 210);      
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
     private final Color BANNER_SUB_COLOR = new Color(131, 117, 181); 
     private final Color BUY_NOW_COLOR = new Color(255, 204, 0);      
 
-    // --- Componentes de la Cabecera ---
     private HeaderPanel headerPanel;
-
-    // --- Contenedores Principales ---
     private JPanel recommendedPanel;
     private JPanel categoriesPanel;
 
-    // --- Listas para gestión eficiente de Listeners ---
     private List<JButton> buyNowButtons;
     private List<JButton> categoryButtons;
     private ActionListener buyNowListener;
 
+    /**
+     * Constructs the panel and initializes components.
+     */
     public MenuPrincipalPanel() {
         buyNowButtons = new ArrayList<>();
         categoryButtons = new ArrayList<>();
@@ -44,7 +41,6 @@ public class MenuPrincipalPanel extends JPanel {
         initComponents();
         initLayout();
     }
-    
 
     private void initComponents() {
         headerPanel = new HeaderPanel();
@@ -54,14 +50,8 @@ public class MenuPrincipalPanel extends JPanel {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
 
-        // ==========================================
-        // 1. HEADER (NORTE)
-        // ==========================================
         add(headerPanel, BorderLayout.NORTH);
 
-        // ==========================================
-        // 2. BODY (CENTRO)
-        // ==========================================
         JPanel bodyContent = new JPanel();
         bodyContent.setLayout(new BoxLayout(bodyContent, BoxLayout.Y_AXIS));
         bodyContent.setBackground(BG_COLOR);
@@ -69,15 +59,13 @@ public class MenuPrincipalPanel extends JPanel {
 
         bodyContent.add(createBanner("MAIN MENU", BANNER_MAIN_COLOR, 34));
         bodyContent.add(Box.createVerticalStrut(10));
-        bodyContent.add(createBanner("¡¡¡YOU SHOULD BUY THESE PRODUCTS!!!", BANNER_SUB_COLOR, 25));
+        bodyContent.add(createBanner("YOU SHOULD BUY THESE PRODUCTS!!!", BANNER_SUB_COLOR, 25));
         bodyContent.add(Box.createVerticalStrut(15));
 
         recommendedPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
         recommendedPanel.setBackground(BANNER_MAIN_COLOR); 
         recommendedPanel.setBorder(new LineBorder(Color.DARK_GRAY, 1));
         
-        // Los productos se añaden dinámicamente mediante actualizarRecomendados()
-
         JPanel recWrapper = new JPanel(new BorderLayout());
         recWrapper.setBackground(BANNER_MAIN_COLOR);
         recWrapper.add(recommendedPanel, BorderLayout.CENTER);
@@ -91,7 +79,7 @@ public class MenuPrincipalPanel extends JPanel {
         bodyContent.add(scrollProducts);
         bodyContent.add(Box.createVerticalStrut(20));
 
-        bodyContent.add(createBanner("TYPE OF PRODUCTS", BANNER_SUB_COLOR, 25));
+        bodyContent.add(createBanner("PRODUCT CATEGORIES", BANNER_SUB_COLOR, 25));
         bodyContent.add(Box.createVerticalStrut(15));
 
         categoriesPanel = new JPanel(new GridLayout(1, 3, 20, 0));
@@ -108,10 +96,6 @@ public class MenuPrincipalPanel extends JPanel {
         mainScroll.getVerticalScrollBar().setUnitIncrement(16);
         add(mainScroll, BorderLayout.CENTER);
     }
-
-    // ==========================================
-    // MÉTODOS AUXILIARES DE CREACIÓN DE UI
-    // ==========================================
 
     private JPanel createBanner(String text, Color bgColor, int fontSize) {
         JPanel panel = new JPanel(new BorderLayout());
@@ -145,7 +129,6 @@ public class MenuPrincipalPanel extends JPanel {
         lblName.setForeground(Color.DARK_GRAY);
         lblName.setBorder(new EmptyBorder(0, 0, 5, 0));
         headerProd.add(lblName, BorderLayout.CENTER);
-        
 
         JLabel imagePlaceholder = new JLabel();
         imagePlaceholder.setHorizontalAlignment(SwingConstants.CENTER);
@@ -223,7 +206,6 @@ public class MenuPrincipalPanel extends JPanel {
         btnBuy.setBorder(new EmptyBorder(5, 10, 5, 10));
         btnBuy.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBuy.setActionCommand("ADD_" + productId);
-        
         buyNowButtons.add(btnBuy);
 
         JButton btnInfo = new JButton("INFO") {
@@ -243,7 +225,6 @@ public class MenuPrincipalPanel extends JPanel {
         btnInfo.setBorder(new EmptyBorder(5, 10, 5, 10));
         btnInfo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnInfo.setActionCommand("INFO_" + productId);
-
         buyNowButtons.add(btnInfo);
 
         JPanel buttonsPanel = new JPanel(new GridLayout(2, 1, 0, 5));
@@ -288,8 +269,6 @@ public class MenuPrincipalPanel extends JPanel {
                 if (img != null) {
                     Image scaledImg = img.getScaledInstance(180, 140, Image.SCALE_SMOOTH);
                     imgLabel.setIcon(new ImageIcon(scaledImg));
-                } else {
-                    imgLabel.setText("NO IMAGE");
                 }
             } else {
                 imgLabel.setText("NO IMAGE");
@@ -304,14 +283,13 @@ public class MenuPrincipalPanel extends JPanel {
         return card;
     }
 
-    // ==========================================
-    // MÉTODOS PARA REGISTRAR LISTENERS
-    // ==========================================
-    
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
 
+    /**
+     * Assigns action listeners to product buttons.
+     */
     public void addBuyNowListener(ActionListener l) {
         this.buyNowListener = l;
         for (JButton btn : buyNowButtons) {
@@ -319,6 +297,9 @@ public class MenuPrincipalPanel extends JPanel {
         }
     }
 
+    /**
+     * Updates the recommended products list.
+     */
     public void actualizarRecomendados(Set<LineaProductoVenta> recomendados) {
         recommendedPanel.removeAll();
         buyNowButtons.clear();
@@ -345,10 +326,12 @@ public class MenuPrincipalPanel extends JPanel {
         recommendedPanel.repaint();
     }
 
+    /**
+     * Assigns action listeners to category buttons.
+     */
     public void addCategoryListener(ActionListener l) {
         for (JButton btn : categoryButtons) {
             btn.addActionListener(l);
         }
     }
-    
 }
