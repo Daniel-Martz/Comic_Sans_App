@@ -16,17 +16,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Controlador para aplicar descuentos por categoría.
+ *
+ * Lista las categorías de la tienda y abre la ventana para crear un descuento
+ * aplicado a una categoría concreta.
+ */
 public class ControladorDescuentosCategoria implements ActionListener {
 
     private final DescuentosCategoriaPanel panel;
     private final MainFrame mainFrame;
-    private final MainController mainController;
-
+    /**
+     * Inicializa el controlador.
+     *
+     * @param panel panel de categorías/ descuentos
+     * @param mainFrame ventana principal
+     * @param mainController controlador principal
+     */
     public ControladorDescuentosCategoria(DescuentosCategoriaPanel panel, MainFrame mainFrame, MainController mainController) {
         this.panel = panel;
         this.mainFrame = mainFrame;
-        this.mainController = mainController;
-
         this.panel.getHeaderPanel().addHomeListener(e -> mainController.mostrarMenuPrincipal());
         this.panel.getColCategorias().addSearchListener(this);
 
@@ -43,6 +52,9 @@ public class ControladorDescuentosCategoria implements ActionListener {
         });
     }
 
+    /**
+     * Carga y filtra las categorías mostradas según el campo de búsqueda.
+     */
     private void cargarDatos() {
         String search = panel.getColCategorias().getSearchText().toLowerCase();
         List<Categoria> resultado = new ArrayList<>();
@@ -57,6 +69,11 @@ public class ControladorDescuentosCategoria implements ActionListener {
         panel.getColCategorias().actualizarCategorias(resultado, this);
     }
 
+    /**
+     * Maneja eventos de la UI (buscar, añadir descuento sobre una categoría).
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -74,6 +91,12 @@ public class ControladorDescuentosCategoria implements ActionListener {
         }
     }
 
+    /**
+     * Confirma y aplica un descuento a una categoría.
+     *
+     * @param c categoría a la que se aplica el descuento
+     * @param d descuento que se aplicará
+     */
     public void confirmarAñadirDescuento(Categoria c, Descuento d) {
         try {
             if (c.getDescuento() != null && !c.getDescuento().haCaducado()) {

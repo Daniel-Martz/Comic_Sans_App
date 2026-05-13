@@ -14,8 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.io.File;
-import controladores.ControladorNuevoProductoSegundaMano;
 import utils.DialogUtils;
 
 /**
@@ -31,6 +29,12 @@ public class ControladorMySecondHandProducts implements ActionListener {
     private final MySecondHandProductsPanel vista;
     private final MainFrame parent; 
 
+    /**
+     * Crea el controlador para la vista de productos de segunda mano del usuario.
+     *
+     * @param vista panel que muestra los productos del usuario
+     * @param parent ventana padre para diálogos modales
+     */
     public ControladorMySecondHandProducts(MySecondHandProductsPanel vista, MainFrame parent) {
         this.vista = vista;
         this.parent = parent;
@@ -53,6 +57,11 @@ public class ControladorMySecondHandProducts implements ActionListener {
         });
     }
 
+    /**
+     * Maneja acciones generales de la vista (p. ej. pago de validación).
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -75,7 +84,7 @@ public class ControladorMySecondHandProducts implements ActionListener {
 
     /**
      * Abre la ventana para crear un nuevo producto de segunda mano.
-     * La ventana es modal, y al cerrarse, este método recarga la lista de productos.
+     * La ventana es modal; al cerrarla se recarga la lista de productos.
      */
     private void onAddNewProduct() {
         if (!(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado)) {
@@ -96,7 +105,11 @@ public class ControladorMySecondHandProducts implements ActionListener {
         cargarProductosDesdeModelo();
     }
 
-    /** Abre la ventana de pago para la solicitud asociada al producto indicado por id. */
+    /**
+     * Abre la ventana de pago para la solicitud asociada al producto dado.
+     *
+     * @param productoId id del producto cuya validación se quiere pagar
+     */
     private void onPayValidation(int productoId) {
         if (!(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado)) {
             DialogUtils.showWideMessage(parent, "Only registered clients can pay validations.", "Access denied", JOptionPane.WARNING_MESSAGE);
@@ -129,9 +142,10 @@ public class ControladorMySecondHandProducts implements ActionListener {
         cargarProductosDesdeModelo();
     }
 
-    /** Carga los productos del usuario actual desde el modelo y los añade a la vista.
-     *  Toda la lógica de negocio queda en el controlador; la vista solo expone
-     *  métodos para añadir tarjetas y mostrar placeholders. */
+    /**
+     * Carga los productos del usuario desde el modelo y los muestra en la vista.
+     * La vista solo recibe llamadas para añadir tarjetas; la lógica queda aquí.
+     */
     private void cargarProductosDesdeModelo() {
         vista.clearProducts();
 

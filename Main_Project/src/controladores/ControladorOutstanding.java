@@ -13,17 +13,30 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Controlador para la vista de productos destacados.
+ * Controlador de la vista de productos destacados.
+ *
+ * Muestra productos con buena valoración y permite ver detalles o añadir al
+ * carrito si el usuario está logueado.
  */
 public class ControladorOutstanding implements ActionListener {
 
     private final OutstandingPanel vista;
 
+    /**
+     * Crea el controlador y carga inicialmente los productos destacados.
+     *
+     * @param vista panel donde se muestran los productos destacados
+     */
     public ControladorOutstanding(OutstandingPanel vista) {
         this.vista = vista;
         buscarYActualizarOutstanding();
     }
 
+    /**
+     * Maneja acciones de la vista: añadir al carrito, ver detalles o ver info de descuento.
+     *
+     * @param e evento de acción recibido
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -84,7 +97,9 @@ public class ControladorOutstanding implements ActionListener {
         }
     }
 
-    /** Helper que consulta el catálogo y actualiza la vista con los productos destacados (valoración entre 4 y 5). */
+    /**
+     * Busca en el catálogo los productos con valoración entre 4 y 5 y actualiza la vista.
+     */
     public void buscarYActualizarOutstanding() {
         List<LineaProductoVenta> resultados = new java.util.ArrayList<>(Catalogo.getInstancia().getProductosNuevos());
         resultados = resultados.stream()

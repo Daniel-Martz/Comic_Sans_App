@@ -12,11 +12,22 @@ import vista.empleadoWindow.SelectOrderStateWindow;
 import vista.empleadoWindow.ViewOrderWindow;
 import vista.main.MainFrame;
 
+/**
+ * Controlador para la gestión de pedidos desde la perspectiva del empleado.
+ *
+ * Permite listar pedidos, ver detalles y cambiar su estado (cuando procede).
+ */
 public class ControladorManageOrders implements ActionListener {
 
     private ManageOrdersPanel panel;
     private MainFrame mainFrame;
 
+    /**
+     * Inicializa el controlador y asocia la vista.
+     *
+     * @param panel panel de gestión de pedidos
+     * @param mainFrame ventana principal
+     */
     public ControladorManageOrders(ManageOrdersPanel panel, MainFrame mainFrame) {
         this.panel = panel;
         this.mainFrame = mainFrame;
@@ -26,16 +37,29 @@ public class ControladorManageOrders implements ActionListener {
         this.panel.getHeaderPanel().addHomeListener(e -> mainFrame.mostrarPanel(MainFrame.PANEL_MENU_EMPLEADO));
     }
 
+    /**
+     * Recupera los pedidos del gestor de solicitudes y actualiza la vista.
+     */
     public void actualizarPedidos() {
         List<SolicitudPedido> pedidos = Aplicacion.getInstancia().getGestorSolicitud().getPedidos();
         panel.actualizarPedidos(pedidos);
     }
 
+    /**
+     * Muestra una ventana con la información detallada del pedido.
+     *
+     * @param pedido pedido a mostrar
+     */
     public void mostrarInformacionPedido(SolicitudPedido pedido) {
         ViewOrderWindow dialog = new ViewOrderWindow(mainFrame, pedido);
         dialog.setVisible(true);
     }
 
+    /**
+     * Abre el diálogo para cambiar el estado del pedido si está gestionable.
+     *
+     * @param pedido pedido cuyo estado se quiere cambiar
+     */
     public void cambiarEstadoPedido(SolicitudPedido pedido) {
         if(pedido.getEstado() == EstadoPedido.PENDIENTE_DE_PAGO){
             JOptionPane.showMessageDialog(
@@ -52,6 +76,7 @@ public class ControladorManageOrders implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // En caso de necesitar manejar otros eventos
+        // Implementado solo por compatibilidad; aquí se podrían manejar
+        // eventos adicionales si la vista los emite.
     }
 }

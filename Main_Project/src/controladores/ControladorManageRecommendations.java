@@ -7,38 +7,44 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
 import modelo.aplicacion.Aplicacion;
 import modelo.aplicacion.ConfiguracionRecomendacion;
 import vista.GestorPanel.ManageRecommendationsPanel;
 import vista.main.MainFrame;
 
+/**
+ * Controlador para ajustar la configuración de recomendaciones.
+ *
+ * Permite cambiar el número de recomendaciones y reordenar los criterios
+ * (intereses, puntuaciones, novedades). Actualiza tanto la vista como el
+ * modelo de configuración.
+ */
 public class ControladorManageRecommendations implements ActionListener {
 
     private ManageRecommendationsPanel vista;
-    private MainFrame mainFrame;
-    private MainController mainController;
     private ConfiguracionRecomendacion configRec;
 
-    // We maintain the logical order of criteria:
+    // Mantiene el orden lógico de criterios:
     // "Interests of User", "Puntuations", "New Products"
     private List<String> currentOrder;
 
+    /**
+     * Controlador para la gestión de recomendaciones. Inicializa el orden de criterios
+     * @param vista
+     * @param mainFrame
+     * @param mainController
+     */
     public ControladorManageRecommendations(ManageRecommendationsPanel vista, MainFrame mainFrame, MainController mainController) {
         this.vista = vista;
-        this.mainFrame = mainFrame;
-        this.mainController = mainController;
         this.configRec = Aplicacion.getInstancia().getConfiguracionRecomendacion();
         
-        // Logical default order, could be extracted from configRec if it exposed getters for importance
+        // Orden por defecto de criterios
         this.currentOrder = new ArrayList<>();
         this.currentOrder.add("Interests of User");
         this.currentOrder.add("Puntuations");
         this.currentOrder.add("New Products");
 
-        // Set initial number of recommendations to whatever the model has (not exposed? defaults to 5 in model, 3 in view)
-        // We'll trust the view's current selectedNumber or just let it start at 3.
+        // Establece el número inicial de recomendaciones usando lo seleccionado en la vista
         int initialNum = vista.getSelectedNumber();
         configRec.configurarUnidades(initialNum);
 
@@ -62,7 +68,8 @@ public class ControladorManageRecommendations implements ActionListener {
             }
         });
 
-        // Add reorder logic for the rows. Each row has a button to swap with the one above it, or cycle.
+        // Añade la lógica para reordenar las filas. Cada botón intercambia la fila
+        // con la anterior (si es la primera, rota con la última).
         List<JButton> reorderBtns = vista.getReorderButtons();
         for (int i = 0; i < reorderBtns.size(); i++) {
             final int index = i;
@@ -79,17 +86,14 @@ public class ControladorManageRecommendations implements ActionListener {
     }
     
     private void actualizarVistaYModelo() {
-        // Since ManageRecommendationsPanel doesn't expose a method to update texts yet, we might need to update the panel.
-        // Wait, the panel has the labels hardcoded in an array in initLayout.
-        // Let's modify ManageRecommendationsPanel to allow setting texts.
+        // Actualiza la vista con los textos en el nuevo orden
         vista.updateRowTexts(currentOrder);
-        
-        // Update Model
-        // Highest importance = 3, lowest = 1
+
+        // Actualiza el modelo con la importancia relativa (3 = más importante)
         int impInteres = 3 - currentOrder.indexOf("Interests of User");
         int impResena = 3 - currentOrder.indexOf("Puntuations");
         int impNovedad = 3 - currentOrder.indexOf("New Products");
-        
+
         configRec.configurarImportancia(impInteres, impResena, impNovedad);
     }
 

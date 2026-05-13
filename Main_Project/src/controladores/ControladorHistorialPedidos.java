@@ -13,17 +13,33 @@ import modelo.aplicacion.Aplicacion;
 import modelo.aplicacion.Catalogo;
 import vista.userPanels.HistorialPedidosPanel;
 
+/**
+ * Controlador para el historial de pedidos del usuario.
+ *
+ * Permite ver detalles de productos comprados y escribir reseñas cuando procede.
+ */
 public class ControladorHistorialPedidos implements ActionListener{
   HistorialPedidosPanel historialPedidosPanel;
   MainController mainController;
 	
-	public ControladorHistorialPedidos(HistorialPedidosPanel historialPedidosPanel, MainController m) {
-		this.mainController = m;
+  /**
+   * Crea el controlador del historial de pedidos.
+   *
+   * @param historialPedidosPanel panel de historial
+   * @param m controlador principal (para navegación)
+   */
+  public ControladorHistorialPedidos(HistorialPedidosPanel historialPedidosPanel, MainController m) {
+    this.mainController = m;
     this.historialPedidosPanel = historialPedidosPanel;
-	}
+  }
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
+  /**
+   * Maneja eventos desde el panel (ver info, reseñar producto, etc.).
+   *
+   * @param e evento de acción
+   */
+  @Override
+  public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         if (cmd == null) return;
         
@@ -48,6 +64,12 @@ public class ControladorHistorialPedidos implements ActionListener{
         }
 	}
 	
+    /**
+     * Abre la ventana para añadir una reseña si el usuario puede reseñar el
+     * producto (no lo haya reseñado ya).
+     *
+     * @param productId id del producto a reseñar
+     */
     private void manejarReseña(int productId) {
         modelo.usuario.Usuario u = Aplicacion.getInstancia().getUsuarioActual();
         if (!(u instanceof modelo.usuario.ClienteRegistrado)) return;
@@ -71,6 +93,14 @@ public class ControladorHistorialPedidos implements ActionListener{
         }
     }
     
+    /**
+     * Confirma y guarda la reseña escrita por el cliente.
+     *
+     * @param producto producto reseñado
+     * @param descripcion texto de la reseña
+     * @param puntuacion nota asignada
+     * @param window ventana de reseña que se cerrará al terminar
+     */
     public void confirmarReseña(modelo.producto.LineaProductoVenta producto, String descripcion, double puntuacion, vista.clienteWindows.AddReviewWindow window) {
         modelo.usuario.Usuario u = Aplicacion.getInstancia().getUsuarioActual();
         if (u instanceof modelo.usuario.ClienteRegistrado) {

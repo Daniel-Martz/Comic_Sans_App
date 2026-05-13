@@ -10,8 +10,10 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- * Controlador encargado de enlazar la lógica del modelo de Categorías
- * con las vistas ManageCategoriesWindow y AddCategoryWindow.
+ * Controlador para gestionar categorías de producto (ventanas de gestión/crear).
+ *
+ * Abre la ventana de gestión, permite crear y eliminar categorías y mantiene
+ * la vista sincronizada con el catálogo.
  */
 public class ManageCategoriesController {
 
@@ -20,11 +22,19 @@ public class ManageCategoriesController {
     private Catalogo catalogo;
     private JFrame parentFrame;
 
+    /**
+     * Crea el controlador con la ventana padre donde se mostrarán los dialogs.
+     *
+     * @param parentFrame ventana padre
+     */
     public ManageCategoriesController(JFrame parentFrame) {
         this.parentFrame = parentFrame;
         this.catalogo = Aplicacion.getInstancia().getCatalogo();
     }
 
+    /**
+     * Muestra la ventana de gestión de categorías (la crea si hace falta).
+     */
     public void mostrarVentana() {
         if (manageCategoriesWindow == null) {
             manageCategoriesWindow = new ManageCategoriesWindow(parentFrame);
@@ -34,6 +44,9 @@ public class ManageCategoriesController {
         manageCategoriesWindow.setVisible(true);
     }
 
+    /**
+     * Registra listeners para crear y borrar categorías desde la ventana.
+     */
     private void inicializarManageListeners() {
         manageCategoriesWindow.addCreateListener(e -> {
             abrirVentanaCrearCategoria();
@@ -52,6 +65,10 @@ public class ManageCategoriesController {
         });
     }
 
+    /**
+     * Abre la ventana modal para crear una nueva categoría y procesa la
+     * confirmación (validación y actualización del catálogo).
+     */
     private void abrirVentanaCrearCategoria() {
         addCategoryWindow = new AddCategoryWindow(manageCategoriesWindow);
         addCategoryWindow.addConfirmListener(e -> {
@@ -72,6 +89,9 @@ public class ManageCategoriesController {
         addCategoryWindow.setVisible(true);
     }
 
+    /**
+     * Actualiza la lista de categorías mostrada en la ventana.
+     */
     private void actualizarVistaCategorias() {
         if (manageCategoriesWindow != null) {
             manageCategoriesWindow.setCategorias(new ArrayList<>(catalogo.getCategoriasTienda()));

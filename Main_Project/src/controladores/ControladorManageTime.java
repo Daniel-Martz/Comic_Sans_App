@@ -10,12 +10,25 @@ import vista.GestorPanel.ManageTimePanel;
 import vista.main.MainFrame;
 import modelo.tiempo.TiempoSimulado;
 
+/**
+ * Controlador para ajustar el tiempo simulado de la aplicación.
+ *
+ * Permite cambiar días/meses, velocidad del tiempo y avanzar días manualmente.
+ */
 public class ControladorManageTime implements ActionListener, ChangeListener {
     
     private ManageTimePanel vista;
     private MainFrame mainFrame;
     private MainController mainController;
 
+    /**
+     * Crea el controlador y inicializa los componentes con los valores actuales
+     * del tiempo simulado.
+     *
+     * @param vista panel de gestión de tiempo
+     * @param mainFrame ventana principal
+     * @param mainController controlador principal para refrescar la fecha global
+     */
     public ControladorManageTime(ManageTimePanel vista, MainFrame mainFrame, MainController mainController) {
         this.vista = vista;
         this.mainFrame = mainFrame;
@@ -32,6 +45,12 @@ public class ControladorManageTime implements ActionListener, ChangeListener {
         vista.getLblSpeedValue().setText(String.format("%.1fx", ts.getVelocidad()));
     }
 
+    /**
+     * Maneja acciones del panel: actualizar calendario, cambiar velocidad o
+     * avanzar tiempo.
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();

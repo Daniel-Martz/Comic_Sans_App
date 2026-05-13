@@ -12,28 +12,46 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Controlador para la gestión de solicitudes de intercambio (empleados).
+ *
+ * Muestra las solicitudes pendientes y permite aprobar o ver detalles.
+ */
 public class ControladorManageInterchanges implements ActionListener {
 
     private ManageInterchangesPanel panel;
     private MainFrame mainFrame;
-    private MainController mainController;
     private List<SolicitudIntercambio> pendientes;
 
+    /**
+     * Crea el controlador y enlaza la vista y el controlador principal.
+     *
+     * @param panel panel de gestión de intercambios
+     * @param mainFrame ventana principal
+     * @param mainController controlador principal
+     */
     public ControladorManageInterchanges(ManageInterchangesPanel panel, MainFrame mainFrame, MainController mainController) {
         this.panel = panel;
         this.mainFrame = mainFrame;
-        this.mainController = mainController;
-        
         this.panel.setControlador(this);
         
         this.panel.getHeaderPanel().addHomeListener(e -> mainController.mostrarMenuPrincipal());
     }
 
+    /**
+     * Obtiene las solicitudes pendientes del modelo y actualiza la vista.
+     */
     public void actualizarSolicitudes() {
         pendientes = Aplicacion.getInstancia().getGestorSolicitud().getIntercambiosPendientes();
         panel.actualizarIntercambios(pendientes, this);
     }
 
+    /**
+     * Maneja acciones de la vista: aprobar una solicitud o ver información del
+     * producto asociado.
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -60,11 +78,23 @@ public class ControladorManageInterchanges implements ActionListener {
         }
     }
 
+    /**
+     * Abre la ventana para aprobar una solicitud concreta.
+     *
+     * @param solicitud solicitud a aprobar
+     */
     private void abrirVentanaAprobacion(SolicitudIntercambio solicitud) {
         ApproveInterchangeWindow dialog = new ApproveInterchangeWindow(mainFrame, solicitud, this);
         dialog.setVisible(true);
     }
 
+    /**
+     * Confirma la aprobación de la solicitud usando los códigos proporcionados.
+     *
+     * @param s solicitud a aprobar
+     * @param code1 código del primer producto
+     * @param code2 código del segundo producto
+     */
     public void confirmarAprobacion(SolicitudIntercambio s, String code1, String code2) {
         try {
             Empleado emp = (Empleado) Aplicacion.getInstancia().getUsuarioActual();

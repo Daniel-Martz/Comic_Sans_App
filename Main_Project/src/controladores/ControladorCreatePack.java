@@ -19,10 +19,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * Controlador para la creación de packs (paquetes) de productos.
+ *
+ * Permite seleccionar productos, ajustar cantidades y crear un Pack que se
+ * añadirá al catálogo. Coordina la vista del panel y las ventanas de detalles.
+ */
 public class ControladorCreatePack implements ActionListener, ItemListener, ChangeListener {
 
     private final CreatePackPanel vista;
@@ -30,6 +35,13 @@ public class ControladorCreatePack implements ActionListener, ItemListener, Chan
     private final MainController mainController;
     private final Map<LineaProductoVenta, Integer> seleccionados;
 
+    /**
+     * Inicializa el controlador y sus listeners básicos.
+     *
+     * @param vista panel donde se muestran los productos
+     * @param mainFrame ventana principal
+     * @param mainController controlador principal para navegación
+     */
     public ControladorCreatePack(CreatePackPanel vista, MainFrame mainFrame, MainController mainController) {
         this.vista = vista;
         this.mainFrame = mainFrame;
@@ -49,6 +61,10 @@ public class ControladorCreatePack implements ActionListener, ItemListener, Chan
         });
     }
 
+    /**
+     * Recarga la lista de productos que pueden añadirse al pack según el texto
+     * de búsqueda. Excluye ya los packs para evitar packs dentro de packs.
+     */
     public void recargar() {
         String prompt = vista.getSearchText().toLowerCase();
         
@@ -65,6 +81,11 @@ public class ControladorCreatePack implements ActionListener, ItemListener, Chan
         vista.updateSelectionInfo(seleccionados.size());
     }
 
+    /**
+     * Maneja eventos de acción desde la vista (por ejemplo "CONTINUE").
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -108,6 +129,11 @@ public class ControladorCreatePack implements ActionListener, ItemListener, Chan
         }
     }
 
+    /**
+     * Maneja cambios en los checkboxes de selección de productos.
+     *
+     * @param e evento de cambio de estado del item
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getSource() instanceof JCheckBox chk) {
@@ -124,6 +150,11 @@ public class ControladorCreatePack implements ActionListener, ItemListener, Chan
         }
     }
 
+    /**
+     * Maneja cambios en los spinners de cantidad y actualiza la selección.
+     *
+     * @param e evento de cambio (spinner)
+     */
     @Override
     public void stateChanged(ChangeEvent e) {
         if (e.getSource() instanceof JSpinner spn) {

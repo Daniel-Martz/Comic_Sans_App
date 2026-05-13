@@ -3,25 +3,18 @@ package controladores;
 import modelo.aplicacion.Aplicacion;
 import modelo.aplicacion.Catalogo;
 import modelo.notificacion.Notificacion;
-import modelo.solicitud.Oferta;
-import modelo.*;
 import modelo.usuario.*;
 import modelo.usuario.Empleado;
 import modelo.usuario.Gestor;
 import modelo.usuario.Usuario;
 import modelo.usuario.Permiso;
 import vista.main.MainFrame;
-import vista.empleadoWindow.*;
 import javax.swing.JOptionPane;
 import vista.userPanels.HeaderPanel;
 import javax.swing.Timer;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 import vista.userPanels.*;
-import vista.empleadoPanel.*;
-import vista.*;
 import vista.clienteWindows.*;
 
 
@@ -51,14 +44,21 @@ public class MainController {
     private ControladorManageAccounts ctrlManageAccounts;
     private NotificacionWindow notificacionDialog;
 
-    // -------------------------------------------------------
-    // Constructor
-    // -------------------------------------------------------
+    /**
+     * Constructor del controlador principal. Recibe la referencia al MainFrame y
+     * obtiene la instancia del modelo (Aplicacion).
+     * @param mainFrame ventana principal de la aplicación, que este controlador gestionará
+     */
     public MainController(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.modelo    = Aplicacion.getInstancia();
     }
 
+    /**
+     * 
+     * Inicia el controlador principal: registra listeners, muestra el panel inicial
+     * y arranca un timer para refrescar la fecha en las cabeceras.
+     */
     public void iniciar() {
         registrarListeners();
         
@@ -73,6 +73,10 @@ public class MainController {
         mainFrame.setVisible(true);
     }
     
+    /**
+     * Registra los listeners globales de la interfaz y crea los controladores
+     * secundarios que necesita la aplicación.
+     */
     private void registrarListeners() {
         // --- Conectar Cabeceras de Navegación Global ---
         conectarHeaderEmpleado(mainFrame.getMenuEmpleadoPanel().getHeaderPanel());
@@ -238,7 +242,9 @@ public class MainController {
     }
 
     /**
-     * Asigna la lógica global básica para un empleado/gestor.
+     * Configura los handlers comunes para una cabecera en modo empleado.
+     *
+     * @param header cabecera a configurar
      */
     private void conectarHeaderEmpleado(HeaderPanel header) {
         header.addHomeListener(e -> mostrarMenuPrincipal());
@@ -249,7 +255,9 @@ public class MainController {
     }
 
     /**
-     * Asigna la lógica global básica para un gestor.
+     * Configura los handlers comunes para una cabecera en modo gestor.
+     *
+     * @param header cabecera a configurar
      */
     private void conectarHeaderGestor(HeaderPanel header) {
         header.addHomeListener(e -> mostrarMenuPrincipal());
@@ -257,7 +265,9 @@ public class MainController {
     }
 
     /**
-     * Asigna la lógica global junto con el buscador y filtros del catálogo.
+     * Configura una cabecera "normal" con buscador y filtros.
+     *
+     * @param header cabecera a configurar
      */
     private void conectarHeaderNormal(HeaderPanel header) {
         conectarHeaderGlobal(header);
@@ -269,7 +279,10 @@ public class MainController {
     }
 
     /**
-     * Asigna la lógica de navegación a todas las opciones de una cabecera global.
+     * Configura acciones comunes a todas las cabeceras globales (navegación
+     * rápida, notificaciones, etc.).
+     *
+     * @param header cabecera a configurar
      */
     private void conectarHeaderGlobal(HeaderPanel header) {
         header.addHomeListener(e -> mostrarMenuPrincipal());
@@ -362,6 +375,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Abre la ventana de gestión de categorías.
+     */
     public void mostrarManageCategories() {
         ManageCategoriesController mcc = new ManageCategoriesController(mainFrame);
         mcc.mostrarVentana();
@@ -372,8 +388,7 @@ public class MainController {
     // -------------------------------------------------------
 
     /**
-     * Muestra la ventana modal con todas las propuestas de intercambio (enviadas y recibidas).
-     * Este es ahora el punto central para gestionar los intercambios.
+     * Crea y muestra el dialog de propuestas (intercambios) para el cliente.
      */
     public void mostrarVentanaPropuestas() {
         // 1. Creamos la vista (JDialog)
@@ -388,9 +403,7 @@ public class MainController {
     }
 
     /**
-     * Muestra la lista de ofertas del cliente. 
-     * Puedes mantener este método para ser llamado desde los botones del menú,
-     * delegando directamente en la apertura de la ventana.
+     * Abre la ventana de propuestas si el usuario actual es cliente registrado.
      */
     public void mostrarMisIntercambios() {
         if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
@@ -398,9 +411,9 @@ public class MainController {
         }
         mostrarVentanaPropuestas();
     }
-    
+
     /**
-     * Instancia y muestra el JDialog de los filtros avanzados.
+     * Muestra la ventana modal de filtros avanzados (la crea si hace falta).
      */
     public void abrirVentanaFiltros() {
         if (this.dialogFiltros == null) {
@@ -415,7 +428,9 @@ public class MainController {
     }
 
     /**
-     * Configura el filtro para una categoría y muestra los productos.
+     * Prepara y muestra el panel de productos filtrados para una categoría.
+     *
+     * @param categoria identificador de categoría (COMICS, FIGURES, BOARD_GAMES)
      */
     public void mostrarProductosPorCategoria(String categoria) {
         if (this.dialogFiltros == null) {
@@ -440,18 +455,20 @@ public class MainController {
     }
 
     /**
-     * Muestra el panel de productos filtrados y lo actualiza con el prompt dado.
+     * Muestra el panel de productos filtrados y lo rellena con el texto dado.
+     *
+     * @param prompt texto de búsqueda
      */
     public void mostrarProductosFiltrados(String prompt) {
         ProductosFiltradosPanel panel = mainFrame.getProductosFiltradosPanel();
         // Creamos un controlador específico para manejar acciones dentro del panel
         ControladorProductosFiltrados controlador = new ControladorProductosFiltrados(panel, this.dialogFiltros);
         controlador.buscarYActualizar(prompt);
-        mainFrame.mostrarPanel(mainFrame.PANEL_PRODUCTOS_FILTRADOS);
+        mainFrame.mostrarPanel(MainFrame.PANEL_PRODUCTOS_FILTRADOS);
     }
 
     /**
-     * Muestra el panel de productos filtrados pero solo con los productos destacados (valoración 4-5).
+     * Muestra los productos destacados (alto rating) en su panel.
      */
     public void mostrarProductosOutstanding() {
         vista.userPanels.OutstandingPanel panel = mainFrame.getOutstandingPanel();
@@ -459,6 +476,9 @@ public class MainController {
         mainFrame.mostrarPanel(MainFrame.PANEL_OUTSTANDING);
     }
   
+    /**
+     * Muestra el panel de productos con descuento (aplica filtros de descuento).
+     */
     public void mostrarProductosDescontados() {
         if (this.dialogFiltros == null) {
             this.dialogFiltros = new vista.clienteWindows.FiltrosWindow(mainFrame);
@@ -472,9 +492,10 @@ public class MainController {
     }
     
     /**
-     * Verifica si el usuario actual es un cliente registrado. 
-     * Si no lo es, muestra la ventana de aviso para iniciar sesión o registrarse.
-     * @return true si el usuario es cliente registrado, false en caso contrario.
+     * Verifica que el usuario actual sea un cliente registrado. Si no lo es,
+     * muestra un diálogo que propone iniciar sesión o registrarse.
+     *
+     * @return true si es cliente registrado, false en caso contrario
      */
     private boolean verificarAccesoClienteRegistrado() {
         if (!(modelo.getUsuarioActual() instanceof ClienteRegistrado)) {
@@ -491,6 +512,12 @@ public class MainController {
         return true;
     }
 
+    /**
+     * Verifica que exista un usuario en sesión. Si no, ofrece iniciar sesión
+     * o registrarse.
+     *
+     * @return true si hay usuario en sesión, false en caso contrario
+     */
     private boolean verificarAccesoUsuarioRegistrado() {
         if (modelo.getUsuarioActual() == null) {
             VentanaRegistroRequeridoWindow dialogoRequerido = new VentanaRegistroRequeridoWindow(mainFrame);
@@ -506,6 +533,10 @@ public class MainController {
         return true;
     }
 
+    /**
+     * Muestra un diálogo con las opciones relacionadas con intercambios y
+     * navega según la elección del usuario.
+     */
     public void mostrarVentanaOpcionesIntercambio() {
         if (!verificarAccesoClienteRegistrado()) {
             return;
@@ -531,8 +562,10 @@ public class MainController {
 	}
 
     /**
-     * Gestiona el flujo de entrada al carrito.
-     * @param ctrlCarrito El controlador del carrito para refrescar los datos.
+     * Acceso centralizado al carrito: verifica permisos y, si procede,
+     * refresca la vista del carrito y navega a ella.
+     *
+     * @param ctrlCarrito controlador del carrito
      */
     public void gestionarAccesoCarrito(ControladorCarrito ctrlCarrito) {
         if (verificarAccesoClienteRegistrado()) {
@@ -542,8 +575,8 @@ public class MainController {
     }
 
     /**
-     * Gestiona el flujo de entrada al panel de notificaciones.
-     * @param ctrlCarrito El controlador de las notificaciones para refrescar los datos.
+     * Acceso centralizado a las notificaciones: verifica usuario y navega al
+     * panel de notificaciones tras refrescarlo.
      */
     public void gestionarAccesoNotificaciones() {
         if (verificarAccesoUsuarioRegistrado()) {
@@ -553,7 +586,10 @@ public class MainController {
     }
 
     /**
-     * Asigna el listener del botón del carrito de compra a todas las cabeceras.
+     * Registra el listener del botón de carrito en múltiples cabeceras para
+     * que el acceso sea consistente en toda la aplicación.
+     *
+     * @param ctrlCarrito controlador del carrito que se usará al pulsar
      */
     public void registrarListenerCarritoGlobal(ControladorCarrito ctrlCarrito) {
         mainFrame.getMenuPrincipalPanel().getHeaderPanel().addCarritoListener(e -> gestionarAccesoCarrito(ctrlCarrito));
@@ -570,14 +606,15 @@ public class MainController {
     }
 
     /**
-     * Navega al panel que muestra los productos de segunda mano del usuario.
+     * Navega al panel con los productos de segunda mano del usuario.
      */
-	public void mostrarMisProductosSegundaMano() {
+    public void mostrarMisProductosSegundaMano() {
 		navegarA(MainFrame.PANEL_MY_SECOND_HAND_PRODUCTS);
 	}
-    
+
     /**
-     * Navega al panel para buscar nuevos intercambios e instancia su controlador.
+     * Muestra el panel para buscar intercambios, creando o recargando su
+     * controlador según sea necesario.
      */
     public void mostrarBuscarIntercambios() {
         if (this.controladorSearchInterchanges == null) {
@@ -590,7 +627,10 @@ public class MainController {
     }
 
     /**
-     * Navega al panel final para conformar la oferta, pre-cargando los productos seleccionados.
+     * Navega al panel para confeccionar una oferta, precargando los
+     * productos seleccionados.
+     *
+     * @param preseleccionados conjunto de productos preseleccionados
      */
     public void mostrarMakeOffer(Set<modelo.producto.ProductoSegundaMano> preseleccionados) {
         if (this.controladorMakeOffer == null) {
@@ -602,12 +642,18 @@ public class MainController {
         navegarA(MainFrame.PANEL_MAKE_OFFER);
     }
     
+    /**
+     * Abre el diálogo para crear un nuevo usuario.
+     */
     public void abrirVentanaCrearUsuario(){
     	this.crearUsuarioDialog = new CrearUsuarioWindow(mainFrame);
       this.crearUsuarioDialog.addListener(new CreateAccountController( this));
     	crearUsuarioDialog.setVisible(true);
     }
     
+    /**
+     * Abre el diálogo de inicio de sesión.
+     */
     public void abrirVentanaLogIn(){
     	this.loginDialog = new LoginWindow(mainFrame );
       this.loginDialog.addListenerLogin(new LoginController(this));
@@ -615,6 +661,9 @@ public class MainController {
     	loginDialog.setVisible(true);
     }
     
+    /**
+     * Abre el diálogo de opciones del usuario según el tipo (cliente/empleado).
+     */
     public void abrirVentanaOpcionesUsuario(){
       if(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado){
         this.dialogOpcionesUsuario = new UsuarioOptionsWIndow(mainFrame);
@@ -630,7 +679,10 @@ public class MainController {
       }
     }
 
-	public void cerrarVentanaOpcionesUsuario(){
+    /**
+     * Cierra el diálogo de opciones del usuario que esté abierto.
+     */
+    public void cerrarVentanaOpcionesUsuario(){
       if(Aplicacion.getInstancia().getUsuarioActual() instanceof Empleado){
         dialogOpcionesEmpleado.setVisible(false);
       }
@@ -639,26 +691,42 @@ public class MainController {
       }
     }
     
+    /**
+     * Cierra el diálogo de creación de usuario si está abierto.
+     */
     public void cerrarVentanaCrearUsuario() {
     	this.crearUsuarioDialog.setVisible(false);
     }
 
+    /**
+     * Abre la ventana para editar los datos del usuario.
+     */
     public void abrirVentanaEditarUsuario(){
     	this.editProfileDialog = new EditProfileWindow(mainFrame);
     	this.editProfileDialog.addListenerChangeData(new EditProfileController( this));
     	editProfileDialog.setVisible(true);
     } 
 
+    /**
+     * Cierra la ventana de edición de usuario.
+     */
     public void cerrarVentanaEditarUsuario(){
     	editProfileDialog.setVisible(false);
     } 
 
+    /**
+     * Cierra el diálogo de login, actualiza el icono y vuelve al menú.
+     */
     public void cerrarVentanaLogIn() {
     	this.loginDialog.setVisible(false);
     	refreshIconImage(true);
     	mostrarMenuPrincipal();
     }
     
+    /**
+     * Maneja la acción del botón de perfil: abre login si no hay sesión, o
+     * las opciones del usuario si hay sesión.
+     */
     public void navegarBotonPerfil() {
     	if(Aplicacion.getInstancia().getUsuarioActual() == null) {
     		abrirVentanaLogIn();
@@ -667,6 +735,11 @@ public class MainController {
     	}
     }
     
+    /**
+     * Refresca los iconos de estado (login) en todas las cabeceras.
+     *
+     * @param isLoggedIn true si hay sesión iniciada
+     */
     public void refreshIconImage(boolean isLoggedIn) {
     	mainFrame.getMenuPrincipalPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     	mainFrame.getMySecondHandProductsPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
@@ -700,6 +773,9 @@ public class MainController {
     	mainFrame.getNotificacionesPanel().getHeaderPanel().refreshIconImage(isLoggedIn);
     }
 
+    /**
+     * Actualiza la fecha mostrada en todas las cabeceras.
+     */
     public void refreshDateGlobal() {
         mainFrame.getMenuPrincipalPanel().getHeaderPanel().updateDate();
         mainFrame.getMySecondHandProductsPanel().getHeaderPanel().updateDate();
@@ -734,11 +810,24 @@ public class MainController {
     }
 
 
+    /**
+     * Abre la ventana que muestra una notificación concreta.
+     *
+     * @param n notificación a mostrar
+     */
     public void abrirVentanaNotificacion(Notificacion n){
     	this.notificacionDialog = new NotificacionWindow(mainFrame, n, this);
       this.notificacionDialog.setVisible(true);
     } 
 
+    /**
+     * Verifica que el usuario actual tenga el permiso requerido (o sea Gestor).
+     * Si no lo tiene, muestra un diálogo informativo.
+     *
+     * @param p permiso requerido
+     * @param nombrePermiso texto para mostrar en el diálogo si falta permiso
+     * @return true si tiene permiso, false en caso contrario
+     */
     private boolean verificarPermisoEmpleado(Permiso p, String nombrePermiso) {
         Usuario u = modelo.getUsuarioActual();
         if (u instanceof Gestor) return true;

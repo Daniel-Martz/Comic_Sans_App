@@ -17,11 +17,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Controlador para la gestión de cuentas de empleados.
+ *
+ * Permite buscar, crear, modificar y eliminar empleados desde la interfaz de
+ * gestión. Abre ventanas auxiliares (crear, modificar permisos) según convenga.
+ */
 public class ControladorManageAccounts {
 
     private ManageAccountsPanel manageAccountsPanel;
     private MainFrame mainFrame;
 
+    /**
+     * Inicializa el controlador y configura listeners sobre el panel.
+     *
+     * @param manageAccountsPanel panel de gestión de cuentas
+     * @param mainFrame ventana principal
+     */
     public ControladorManageAccounts(ManageAccountsPanel manageAccountsPanel, MainFrame mainFrame) {
         this.manageAccountsPanel = manageAccountsPanel;
         this.mainFrame = mainFrame;
@@ -31,12 +43,20 @@ public class ControladorManageAccounts {
         updateCreateButtonVisibility();
     }
 
+    /**
+     * Ajusta la visibilidad del botón de crear empleado según el usuario
+     * actualmente logueado (solo Gestor puede crear empleados).
+     */
     private void updateCreateButtonVisibility() {
         Usuario current = Aplicacion.getInstancia().getUsuarioActual();
         boolean isGestor = current instanceof Gestor;
         manageAccountsPanel.setCreateButtonVisible(isGestor);
     }
 
+    /**
+     * Inicializa los listeners que responden a acciones del panel (volver al
+     * menú, búsqueda, gestionar usuario, crear usuario).
+     */
     private void initListeners() {
         manageAccountsPanel.addHomeListener(new ActionListener() {
             @Override
@@ -98,6 +118,12 @@ public class ControladorManageAccounts {
         });
     }
 
+    /**
+     * Abre la ventana de gestión de un empleado concreto (borrar, modificar
+     * permisos). Comprueba permisos y evita gestionar la propia cuenta.
+     *
+     * @param dni DNI del empleado a gestionar
+     */
     private void abrirManageUserWindow(String dni) {
         // Buscamos explícitamente entre los empleados registrados para evitar
         // conflictos si hay usuarios de otros tipos con el mismo DNI.
@@ -171,10 +197,18 @@ public class ControladorManageAccounts {
         manageWindow.setVisible(true);
     }
 
+    /**
+     * Recarga la lista de cuentas sin filtro.
+     */
     public void cargarCuentas() {
         cargarCuentas("");
     }
 
+    /**
+     * Carga y filtra la lista de empleados mostrada en el panel.
+     *
+     * @param query texto de búsqueda (nombre o DNI)
+     */
     public void cargarCuentas(String query) {
         manageAccountsPanel.clearAccounts();
         Usuario current = Aplicacion.getInstancia().getUsuarioActual();

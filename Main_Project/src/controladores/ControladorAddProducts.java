@@ -16,6 +16,11 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Controlador para la pantalla de añadir productos.
+ * Este controlador solo conecta botones y
+ * realiza conversiones simples antes de delegar en el modelo.
+ */
 public class ControladorAddProducts implements ActionListener {
 
     private final MainFrame mainFrame;
@@ -24,6 +29,13 @@ public class ControladorAddProducts implements ActionListener {
     private AddProductsPanel addProductsPanel;
     private AddProductManuallyWindow windowAddSingle;
 
+    /**
+     * Crea el controlador con las referencias a la ventana principal y al
+     * controlador principal.
+     *
+     * @param mainFrame ventana principal de la aplicación
+     * @param mainController controlador principal usado para navegar entre paneles
+     */
     public ControladorAddProducts(MainFrame mainFrame, MainController mainController) {
         this.mainFrame = mainFrame;
         this.mainController = mainController;
@@ -33,6 +45,11 @@ public class ControladorAddProducts implements ActionListener {
         registrarListeners();
     }
 
+    /**
+     * Registra los listeners en los componentes de la vista relacionados con
+     * añadir productos (botones para añadir manualmente y para cargar desde
+     * fichero). No recibe parámetros y no devuelve nada.
+     */
     private void registrarListeners() {
         // Desde AddProductsPanel
         addProductsPanel.getBtnAddManually().addActionListener(e -> {
@@ -87,6 +104,13 @@ public class ControladorAddProducts implements ActionListener {
         });
     }
 
+    /**
+     * Maneja acciones de los botones que delegaron este ActionListener.
+     * Se usa la acción "CONFIRM_ADD" para confirmar la creación manual de
+     * un producto.
+     *
+     * @param e evento de acción (se consulta actionCommand)
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -97,11 +121,16 @@ public class ControladorAddProducts implements ActionListener {
         }
     }
 
+    /**
+     * Lee los campos de la ventana de añadir producto (si está abierta),
+     * crea la instancia del producto apropiada y la añade al catálogo.
+     *
+     * Realiza parsing de números y muestra diálogos en caso de error.
+     */
     private void añadirProducto() {
         if (windowAddSingle == null) return;
         
         try {
-            int newId = Integer.parseInt(windowAddSingle.getNewId());
             String newName = windowAddSingle.getNewName();
             double newPrice = Double.parseDouble(windowAddSingle.getNewPrice().replace(",", "."));
             String newDescription = windowAddSingle.getNewDescription();
@@ -139,8 +168,6 @@ public class ControladorAddProducts implements ActionListener {
                 int edadMax = Integer.parseInt(windowAddSingle.getNewEdadMax());
                 modelo.producto.TipoJuegoMesa tipoJuego = windowAddSingle.getNewTipoJuego();
 
-                // Constructor: JuegoDeMesa(String nombre, String descripcion, File foto, int stock, double precio,
-                //                          int numeroJugadores, int edadMinima, int edadMaxima, TipoJuegoMesa tipo)
                 nuevoProducto = new JuegoDeMesa(newName, newDescription, windowAddSingle.getSelectedPhotoFile(), newStock, newPrice,
                         numJugadores, edadMin, edadMax, tipoJuego);
             }

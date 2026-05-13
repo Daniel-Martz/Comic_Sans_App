@@ -3,24 +3,35 @@ package controladores;
 import modelo.aplicacion.Aplicacion;
 import modelo.solicitud.SolicitudPedido;
 import modelo.tiempo.DateTimeSimulado;
-import modelo.usuario.ClienteRegistrado;
 import vista.clienteWindows.VentanaPagoPedidoWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Controlador para la VentanaPagoPedido.
- * Implementa ActionListener para capturar los eventos de la vista.
+ * Controlador de la ventana de pago de pedidos (cliente).
+ *
+ * Lee los datos de la tarjeta en la vista, los valida mínimamente y delega en
+ * el modelo para procesar el pago del pedido asociado a la ventana.
  */
 public class ControladorPagoPedido implements ActionListener {
 
     private VentanaPagoPedidoWindow vista;
 
+    /**
+     * Crea el controlador para la ventana de pago.
+     *
+     * @param vista ventana de pago que maneja este controlador
+     */
     public ControladorPagoPedido(VentanaPagoPedidoWindow vista) {
         this.vista = vista;
     }
 
+    /**
+     * Escucha el botón de confirmación de pago y lanza la lógica de pago.
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("CONFIRMAR_PAGO_PEDIDO")) {
@@ -28,6 +39,10 @@ public class ControladorPagoPedido implements ActionListener {
         }
     }
 
+    /**
+     * Valida los campos de la vista, parsea la fecha de caducidad y llama al
+     * modelo para procesar el pago. Muestra ventanas de éxito/error según el caso.
+     */
     private void gestionarConfirmar() {
         // 1. Leer datos de la vista mediante getters
         String numTarjeta = vista.getNumeroTarjeta();
@@ -64,6 +79,13 @@ public class ControladorPagoPedido implements ActionListener {
         }
     }
 
+    /**
+     * Parsea la fecha de caducidad en formato MM/AA y devuelve un objeto
+     * DateTimeSimulado con el primer día del mes.
+     *
+     * @param texto cadena en formato MM/AA
+     * @return DateTimeSimulado o null si el formato es inválido
+     */
     private DateTimeSimulado parsearFecha(String texto) {
         try {
             String[] partes = texto.split("/");

@@ -16,6 +16,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Controlador para crear ofertas de intercambio entre usuarios.
+ *
+ * Permite seleccionar productos propios (ofrecidos) y ajenos (solicitados),
+ * componer una oferta y enviarla al propietario correspondiente.
+ */
 public class ControladorMakeOffer implements ActionListener, ItemListener {
 
     private final MakeOfferPanel vista;
@@ -24,6 +30,13 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
     private Set<ProductoSegundaMano> requestedSelected;
     private Set<ProductoSegundaMano> offeredSelected;
 
+    /**
+     * Crea el controlador y prepara las listas de productos mostradas.
+     *
+     * @param vista panel donde se construye la oferta
+     * @param mainController controlador principal (para navegación)
+     * @param preseleccionados productos preseleccionados como solicitados
+     */
     public ControladorMakeOffer(MakeOfferPanel vista, MainController mainController, Set<ProductoSegundaMano> preseleccionados) {
         this.vista = vista;
         this.mainController = mainController;
@@ -37,17 +50,31 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
         cargarColumnas();
     }
 
+    /**
+     * Recarga el estado del controlador con una nueva lista de preseleccionados.
+     *
+     * @param preseleccionados productos solicitados preseleccionados
+     */
     public void recargar(Set<ProductoSegundaMano> preseleccionados) {
         this.requestedSelected = new HashSet<>(preseleccionados);
         this.offeredSelected.clear();
         cargarColumnas();
     }
 
+    /**
+     * Carga las dos columnas (requested / offered) desde las fuentes de datos.
+     */
     private void cargarColumnas() {
         cargarRequested(vista.getPanelRequested().getSearchText());
         cargarOffered(vista.getPanelOffered().getSearchText());
     }
 
+    /**
+     * Carga y muestra los productos solicitados (ajenos al usuario) filtrados
+     * por el texto proporcionado.
+     *
+     * @param prompt texto de búsqueda (puede estar vacío)
+     */
     private void cargarRequested(String prompt) {
         ClienteRegistrado yo = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
         yo.actualizarOfertas();
@@ -73,6 +100,11 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
         actualizarStatusReq();
     }
 
+    /**
+     * Carga y muestra los productos del usuario que pueden ofrecerse.
+     *
+     * @param prompt texto de búsqueda (puede estar vacío)
+     */
     private void cargarOffered(String prompt) {
         ClienteRegistrado yo = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
         
@@ -98,6 +130,11 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
         actualizarStatusOff();
     }
 
+    /**
+     * Maneja acciones de la vista (buscar, enviar oferta, ver info de producto).
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -120,6 +157,12 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
         }
     }
 
+    /**
+     * Maneja selección/deselección de checkboxes para productos ofrecidos o
+     * solicitados.
+     *
+     * @param e evento de cambio de estado de item
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getSource() instanceof JCheckBox chk) {
@@ -142,6 +185,10 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
         }
     }
 
+    /**
+     * Valida y envía la oferta compuesta por el usuario. Muestra mensajes en
+     * caso de error o éxito.
+     */
     private void gestionarSubmit() {
         if (requestedSelected.isEmpty() || offeredSelected.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "You must select at least one requested product and one offered product.", "Incomplete Offer", JOptionPane.WARNING_MESSAGE);
@@ -167,11 +214,19 @@ public class ControladorMakeOffer implements ActionListener, ItemListener {
         }
     }
 
+    /**
+     * Actualiza el estado (contador y suma estimada) de los productos
+     * solicitados mostrados en la UI.
+     */
     private void actualizarStatusReq() {
         double total = requestedSelected.stream().mapToDouble(p -> p.getDatosValidacion().getPrecioEstimadoProducto()).sum();
         vista.getPanelRequested().updateStatus(requestedSelected.size(), total);
     }
 
+    /**
+     * Actualiza el estado (contador y suma estimada) de los productos
+     * ofrecidos mostrados en la UI.
+     */
     private void actualizarStatusOff() {
         double total = offeredSelected.stream().mapToDouble(p -> p.getDatosValidacion().getPrecioEstimadoProducto()).sum();
         vista.getPanelOffered().updateStatus(offeredSelected.size(), total);

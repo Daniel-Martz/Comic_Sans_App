@@ -10,36 +10,51 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Controlador para la VentanaPago.
- * Implementa ActionListener para capturar los eventos de la vista. [cite: 8, 80]
+ * Controlador de la ventana de pago de validación (producto de segunda mano).
+ *
+ * Lee los datos de la tarjeta de la vista, valida campos básicos y llama al
+ * modelo para procesar el pago de la solicitud de validación.
  */
 public class ControladorPagoValidacion implements ActionListener {
 
     private VentanaPagoValidacion vista;
     private SolicitudValidacion solicitudModelo;
 
+    /**
+     * Crea el controlador con la vista y la solicitud a pagar.
+     *
+     * @param vista ventana de pago
+     * @param solicitudModelo solicitud de validación asociada
+     */
     public ControladorPagoValidacion(VentanaPagoValidacion vista, SolicitudValidacion solicitudModelo) {
         this.vista = vista;
         this.solicitudModelo = solicitudModelo;
     }
 
+    /**
+     * Maneja el evento de confirmación de pago.
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Si se ha pulsado el botón Confirmar [cite: 95]
         if (e.getActionCommand().equals("CONFIRMAR_PAGO")) {
             gestionarConfirmar();
         }
     }
 
+    /**
+     * Valida campos, parsea la fecha y llama al modelo para pagar la validación.
+     * Muestra ventanas de éxito o error según corresponda.
+     */
     private void gestionarConfirmar() {
-        // 1. Validar valores en la vista leyendo a través de sus getters [cite: 101, 102]
         String numTarjeta = vista.getNumeroTarjeta();
         String cvv = vista.getCVV();
         String caducidad = vista.getCaducidad();
 
         if (numTarjeta.isEmpty() || cvv.isEmpty() || caducidad.isEmpty()) {
             vista.mostrarAvisoIncompleto("Por favor, rellena todos los campos.", "Campos incompletos");
-            return; // [cite: 105]
+            return;
         }
 
         DateTimeSimulado fechaCaducidad = parsearFecha(caducidad);
@@ -48,21 +63,24 @@ public class ControladorPagoValidacion implements ActionListener {
             return;
         }
 
-        // 2. Modificar el modelo (Procesar el pago) [cite: 106]
         try {
             ClienteRegistrado cliente = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
             cliente.pagarValidacion(solicitudModelo, numTarjeta, cvv, fechaCaducidad);
 
-            // 3. Generar / mostrar la nueva vista (Éxito) [cite: 109]
             vista.mostrarVentanaExito();
-            vista.dispose(); // Cierra la ventana de pago
+            vista.dispose();
 
         } catch (Exception ex) {
-            // Mostrar vista de error
             vista.mostrarVentanaError(ex.getMessage());
         }
     }
 
+    /**
+     * Parsea una fecha en formato MM/AA y devuelve un DateTimeSimulado.
+     *
+     * @param texto cadena MM/AA
+     * @return objeto DateTimeSimulado o null si el formato no es válido
+     */
     private DateTimeSimulado parsearFecha(String texto) {
         try {
             String[] partes = texto.split("/");

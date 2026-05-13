@@ -14,17 +14,26 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controlador para modificar packs existentes.
+ *
+ * Lista los packs, abre la ventana de modificación y aplica los cambios
+ * guardados por el usuario.
+ */
 public class ControladorModifyPacks implements ActionListener {
 
     private final ModifyPacksPanel panel;
     private final MainFrame mainFrame;
-    private final MainController mainController;
-
+    /**
+     * Inicializa el controlador y registra listeners para búsqueda y navegación.
+     *
+     * @param panel panel de modificación de packs
+     * @param mainFrame ventana principal
+     * @param mainController controlador principal
+     */
     public ControladorModifyPacks(ModifyPacksPanel panel, MainFrame mainFrame, MainController mainController) {
         this.panel = panel;
         this.mainFrame = mainFrame;
-        this.mainController = mainController;
-
         this.panel.getBtnBack().addActionListener(e -> mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS));
         this.panel.addSearchListener(e -> cargarPacks());
         
@@ -36,6 +45,10 @@ public class ControladorModifyPacks implements ActionListener {
         });
     }
 
+    /**
+     * Recupera los packs del catálogo y actualiza la vista según el filtro de
+     * búsqueda.
+     */
     private void cargarPacks() {
         String prompt = panel.getSearchText().toLowerCase();
         List<LineaProductoVenta> todos = Catalogo.getInstancia().getProductosNuevos().stream().toList();
@@ -51,6 +64,11 @@ public class ControladorModifyPacks implements ActionListener {
         panel.actualizarPacks(packs, this);
     }
 
+    /**
+     * Maneja eventos de la vista: búsqueda y petición de modificar un pack.
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -72,6 +90,17 @@ public class ControladorModifyPacks implements ActionListener {
         }
     }
     
+    /**
+     * Aplica las modificaciones al pack y actualiza la vista.
+     *
+     * @param pack pack a modificar
+     * @param name nombre nuevo
+     * @param desc descripción nueva
+     * @param price precio nuevo
+     * @param stock stock nuevo
+     * @param photo posible foto nueva (null si no cambia)
+     * @param nuevosProductos mapa de productos y cantidades del pack
+     */
     public void confirmarModificacion(Pack pack, String name, String desc, double price, int stock, java.io.File photo, java.util.Map<LineaProductoVenta, Integer> nuevosProductos) {
         try {
             pack.setNombre(name);

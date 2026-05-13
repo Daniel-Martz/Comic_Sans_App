@@ -13,12 +13,27 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 import javax.swing.SwingUtilities;
 
+/**
+ * Controlador del panel de carrito de compra.
+ *
+ * Se encarga de leer las acciones del usuario en el carrito (pagar, cancelar,
+ * aumentar/disminuir cantidades, ver información) y de actualizar la vista.
+ *
+ * Coordina la vista y el modelo, y abre ventanas de pago cuando
+ * hace falta.
+ */
 public class ControladorCarrito implements ActionListener {
 
     private CarritoPanel vista;
     private MainFrame mainFrame;
     private ClienteRegistrado clienteActual;
 
+    /**
+     * Crea el controlador y configura la vista inicial.
+     *
+     * @param vista instancia del panel de carrito que maneja este controlador
+     * @param mainFrame ventana principal de la aplicación
+     */
     public ControladorCarrito(CarritoPanel vista, MainFrame mainFrame) {
         this.vista = vista;
         this.mainFrame = mainFrame;
@@ -26,6 +41,15 @@ public class ControladorCarrito implements ActionListener {
         refrescarVista();
     }
 
+    /**
+     * Maneja los eventos de la UI enviados desde el panel de carrito.
+     *
+     * Soporta comandos como "PROCESS_ORDER", "PAY_PEDIDO_<id>",
+     * "INFO_PEDIDO_<id>", "CANCEL_PEDIDO_<id>", y acciones sobre productos
+     * ("INC_", "DEC_", "DEL_").
+     *
+     * @param e evento de acción recibido
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();
@@ -107,6 +131,11 @@ public class ControladorCarrito implements ActionListener {
         }
     }
 
+    /**
+     * Genera el pedido a partir del carrito del cliente actual.
+     *
+     * Muestra mensajes en la vista según el resultado.
+     */
     private void procesarPedido() {
         if (clienteActual == null || clienteActual.getCarrito().getProductos().isEmpty()) {
             vista.mostrarMensaje("Your cart is empty. Add some products first!", "Empty Cart");
@@ -122,6 +151,11 @@ public class ControladorCarrito implements ActionListener {
         }
     }
 
+    /**
+     * Abre la ventana de pago para el pedido indicado.
+     *
+     * @param pedido pedido para el que se muestra la ventana de pago
+     */
     private void abrirVentanaPagoParaPedido(SolicitudPedido pedido) {
         try {
             VentanaPagoPedidoWindow ventanaPago = new VentanaPagoPedidoWindow(
@@ -136,6 +170,10 @@ public class ControladorCarrito implements ActionListener {
         }
     }
 
+    /**
+     * Actualiza la vista del carrito y la lista de pedidos pendientes según el
+     * usuario actualmente logueado.
+     */
     public void refrescarVista() {
         modelo.usuario.Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual();
 
@@ -160,6 +198,12 @@ public class ControladorCarrito implements ActionListener {
         vista.actualizarPedidos(pendientes, this);
     }
 
+    /**
+     * Busca en el carrito del cliente el producto con el nombre dado.
+     *
+     * @param nombre nombre del producto a buscar
+     * @return la línea de producto si se encuentra, o null si no está en el carrito
+     */
     private LineaProductoVenta buscarProductoPorNombre(String nombre) {
         if (clienteActual == null) return null;
         for (LineaProductoVenta p : clienteActual.getCarrito().getProductos().keySet()) {

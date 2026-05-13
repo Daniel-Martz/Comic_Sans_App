@@ -13,21 +13,36 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Controlador para generar informes estadísticos (solo Gestor).
+ *
+ * Permite elegir un rango de fechas y generar varios tipos de reportes que se
+ * guardan en fichero.
+ */
 public class ControladorManageStatistics implements ActionListener {
 
     private final ManageStatisticsPanel panel;
     private final MainFrame mainFrame;
-    private final MainController mainController;
-
+    /**
+     * Inicializa el controlador y enlaza la vista con el controlador principal.
+     *
+     * @param panel panel de estadísticas
+     * @param mainFrame ventana principal
+     * @param mainController controlador principal
+     */
     public ControladorManageStatistics(ManageStatisticsPanel panel, MainFrame mainFrame, MainController mainController) {
         this.panel = panel;
         this.mainFrame = mainFrame;
-        this.mainController = mainController;
-
         this.panel.setControlador(this);
         this.panel.getHeaderPanel().addHomeListener(e -> mainController.mostrarMenuPrincipal());
     }
 
+    /**
+     * Maneja la acción de generar un reporte. El actionCommand indica el tipo
+     * de reporte (MONTHLY, AMBIT, PRODUCT, CLIENT).
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -36,6 +51,12 @@ public class ControladorManageStatistics implements ActionListener {
         }
     }
 
+    /**
+     * Genera el reporte del tipo indicado dentro del rango de fechas seleccionado
+     * por el usuario y lo guarda en un fichero elegido por el usuario.
+     *
+     * @param tipo tipo de reporte (ej. "MONTHLY", "AMBIT", "PRODUCT", "CLIENT")
+     */
     private void generarReporte(String tipo) {
         // 1. Extraer y validar fechas
         DateTimeSimulado inicio = new DateTimeSimulado(

@@ -1,7 +1,6 @@
  package controladores;
 
 import modelo.aplicacion.Catalogo;
-import modelo.categoria.Categoria;
 import modelo.descuento.Descuento;
 import modelo.producto.LineaProductoVenta;
 import modelo.producto.Pack;
@@ -18,17 +17,26 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controlador para la gestión de descuentos.
+ *
+ * Permite listar productos y packs, abrir la ventana para añadir un descuento
+ * y aplicar/eliminar descuentos sobre productos.
+ */
 public class ControladorDescuentos implements ActionListener {
 
     private final DescuentosPanel panel;
     private final MainFrame mainFrame;
-    private final MainController mainController;
-
+    /**
+     * Inicializa el controlador y configura listeners básicos.
+     *
+     * @param panel panel de descuentos en la UI
+     * @param mainFrame ventana principal
+     * @param mainController controlador principal para navegación
+     */
     public ControladorDescuentos(DescuentosPanel panel, MainFrame mainFrame, MainController mainController) {
         this.panel = panel;
         this.mainFrame = mainFrame;
-        this.mainController = mainController;
-
         this.panel.getHeaderPanel().addHomeListener(e -> mainController.mostrarMenuPrincipal());
         this.panel.getColIndividuales().addSearchListener(this);
         this.panel.getColPacks().addSearchListener(this);
@@ -46,6 +54,11 @@ public class ControladorDescuentos implements ActionListener {
         });
     }
 
+    /**
+     * Carga los datos de productos y packs aplicando filtros de búsqueda.
+     *
+     * Actualiza las columnas de la vista con los resultados.
+     */
     private void cargarDatos() {
         String searchInd = panel.getColIndividuales().getSearchText().toLowerCase();
         String searchPacks = panel.getColPacks().getSearchText().toLowerCase();
@@ -69,6 +82,12 @@ public class ControladorDescuentos implements ActionListener {
         panel.getColPacks().actualizarProductos(packs, this);
     }
 
+    /**
+     * Maneja acciones de la UI: búsquedas, ver información y abrir ventana de
+     * añadir descuento.
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -94,6 +113,12 @@ public class ControladorDescuentos implements ActionListener {
         }
     }
 
+    /**
+     * Confirma y aplica un descuento sobre un producto.
+     *
+     * @param p producto al que se aplicará el descuento
+     * @param d descuento a aplicar
+     */
     public void confirmarAñadirDescuento(LineaProductoVenta p, Descuento d) {
         try {
             if (p.getDescuento() != null) {

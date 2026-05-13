@@ -17,19 +17,31 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Controlador para buscar productos disponibles para intercambio.
+ *
+ * Permite filtrar productos, seleccionarlos y proceder a crear una oferta con
+ * los elementos seleccionados.
+ */
 public class ControladorSearchInterchanges implements ActionListener, ItemListener {
 
     private final SearchInterchangesPanel vista;
     private final MainController mainController;
     private final Set<ProductoSegundaMano> seleccionados;
 
+    /**
+     * Crea el controlador y enlaza los listeners básicos de búsqueda y filtros.
+     *
+     * @param vista panel de búsqueda de intercambios
+     * @param mainController controlador principal para abrir ventanas
+     */
     public ControladorSearchInterchanges(SearchInterchangesPanel vista, MainController mainController) {
         this.vista = vista;
         this.mainController = mainController;
         this.seleccionados = new HashSet<>();
         // Enlazamos los botones fijos de abajo
         this.vista.setControladorInferior(this);
-        
+
         // Enlazamos el buscador y los filtros
         this.vista.getHeaderPanel().addSearchListener(e -> cargarProductosDisponibles(this.vista.getHeaderPanel().getSearchText()));
         this.vista.getHeaderPanel().addFiltrosListener(e -> {
@@ -37,7 +49,7 @@ public class ControladorSearchInterchanges implements ActionListener, ItemListen
             // Al cerrarse la ventana modal de filtros, actualizamos la vista
             cargarProductosDisponibles(this.vista.getHeaderPanel().getSearchText());
         });
-        
+
         cargarProductosDisponibles("");
         actualizarBarraEstado();
     }

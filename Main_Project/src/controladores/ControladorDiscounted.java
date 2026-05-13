@@ -6,8 +6,6 @@ import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Usuario;
 import vista.clienteWindows.VentanaDetallesProductoWindow;
 import vista.userPanels.DiscountedPanel;
-import vista.userPanels.OutstandingPanel;
-
 import javax.swing.SwingUtilities;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -17,15 +15,32 @@ import java.util.List;
 /**
  * Controlador para la vista de productos destacados.
  */
+/**
+ * Controlador para la vista de productos con descuento.
+ *
+ * Muestra los productos que tienen descuentos y permite ver detalles o añadir
+ * al carrito si el usuario está logueado.
+ */
 public class ControladorDiscounted implements ActionListener {
 
     private final DiscountedPanel vista;
 
+    /**
+     * Crea el controlador y carga inicialmente los productos con descuento.
+     *
+     * @param vista panel de la UI donde se muestran los productos
+     */
     public ControladorDiscounted(DiscountedPanel vista) {
         this.vista = vista;
         buscarYActualizarDiscounted();
     }
 
+    /**
+     * Maneja acciones de la vista: añadir al carrito, ver información o ver
+     * información específica del descuento.
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -86,7 +101,9 @@ public class ControladorDiscounted implements ActionListener {
         }
     }
 
-    /** Helper que consulta el catálogo y actualiza la vista con los productos descontados  */
+    /**
+     * Busca los productos con descuento en el catálogo y actualiza la vista.
+     */
     public void buscarYActualizarDiscounted() {
         List<LineaProductoVenta> resultados = new java.util.ArrayList<>(Catalogo.getInstancia().getProductosNuevos());
         resultados = resultados.stream()

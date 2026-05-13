@@ -12,39 +12,26 @@ import vista.userPanels.ProposalsPanel;
 import java.util.Set;
 
 /**
- * Controlador para ProposalsWindow + ProposalsPanel.
+ * Controlador para la ventana y panel de propuestas (intercambios).
  *
- * Responsabilidades:
- *  1. Obtener las ofertas recibidas y enviadas del modelo.
- *  2. Convertir cada Oferta en datos String[][] para la vista.
- *  3. Crear una InterchangeCardPanel por cada oferta y añadirla al panel.
- *  4. Registrar listeners en cada card (accept, reject, cancel).
- *  5. Ejecutar la lógica de negocio cuando el usuario pulsa un botón.
- *  6. Recargar la vista cuando algo cambia.
+ * Hace de puente entre el modelo (ofertas) y la vista: crea las cards para
+ * cada oferta, registra listeners y delega las acciones en el modelo.
  */
 public class ControladorProposals {
-
-    // -------------------------------------------------------
-    // Referencias MVC
-    // -------------------------------------------------------
+	
     private final ProposalsWindow ventana;
     private final ProposalsPanel  panel;
-    private final MainController  mainController;
-
-    // -------------------------------------------------------
-    // Constructor
-    // -------------------------------------------------------
+    /**
+     * Inicializa el controlador, carga las ofertas del cliente actual y crea las
+     * cards correspondientes en la vista.
+     * @param ventana
+     * @param mainController
+     */
     public ControladorProposals(ProposalsWindow ventana, MainController mainController) {
         this.ventana        = ventana;
         this.panel          = ventana.getProposalsPanel();
-        this.mainController = mainController;
-
         cargarOfertas();
     }
-
-    // -------------------------------------------------------
-    // Carga inicial de datos
-    // -------------------------------------------------------
 
     /**
      * Obtiene las ofertas del modelo y crea una card por cada una.
@@ -80,8 +67,8 @@ public class ControladorProposals {
 
     /**
      * Construye una InterchangeCardPanel a partir de una Oferta.
-     * Toda la extracción de datos del modelo ocurre aquí,
-     * la vista solo recibe String[][].
+     * La extracción de datos del modelo se realiza aquí; la vista recibe
+     * únicamente arrays de String con la información ya formateada.
      */
     private InterchangeCardPanel crearCard(Oferta oferta, Modo modo) {
         String headerLabel;
@@ -108,16 +95,15 @@ public class ControladorProposals {
     }
 
     /**
-     * Convierte un Set de ProductoSegundaMano a array de ProductoSegundaMano.
+     * Convierte un Set de ProductoSegundaMano a array.
      */
     private ProductoSegundaMano[] convertirProductos(Set<ProductoSegundaMano> productos) {
         return productos.toArray(new ProductoSegundaMano[0]);
     }
 
     /**
-     * Calcula el balance económico desde el punto de vista del usuario actual.
-     * INCOME: lo que recibo - lo que doy.
-     * SENT:   lo que recibo - lo que doy (mismo cálculo, distinto signo conceptual).
+     * Calcula el balance económico desde el punto de vista del usuario.
+     * Para INCOME se calcula (recibo - doy); para SENT se invierte la lógica.
      */
     private double calcularBalance(Set<ProductoSegundaMano> ofertados,
                                     Set<ProductoSegundaMano> solicitados,
@@ -149,7 +135,7 @@ public class ControladorProposals {
     // -------------------------------------------------------
 
     /**
-     * Registra ACCEPT y REJECT en una card de tipo INCOME.
+     * Registra ACCEPT y REJECT en una card de tipo INCOME (ofertas recibidas).
      */
     private void registrarListenersIncome(InterchangeCardPanel card,
                                            Oferta oferta,
@@ -160,7 +146,7 @@ public class ControladorProposals {
     }
 
     /**
-     * Registra CANCEL en una card de tipo SENT.
+     * Registra CANCEL en una card de tipo SENT (ofertas enviadas).
      */
     private void registrarListenersSent(InterchangeCardPanel card,
                                          Oferta oferta,
@@ -204,7 +190,8 @@ public class ControladorProposals {
     }
 
     /**
-     * Procesa el evento de la vista para mostrar los detalles de un producto.
+     * Procesa el evento de la vista para mostrar los detalles de un producto
+     * contenido en una oferta.
      */
     private void procesarClickInfo(String command, ClienteRegistrado cliente) {
         if (command != null && command.startsWith("INFO_")) {
@@ -218,7 +205,8 @@ public class ControladorProposals {
     }
 
     /**
-     * Busca el producto en las ofertas y delega la apertura de la ventana (MVC correcto).
+     * Busca el producto en las ofertas (recibidas y enviadas) y abre la ventana
+     * de detalles si se encuentra.
      */
     private void mostrarDetallesProducto(int idProducto, ClienteRegistrado cliente) {
         ProductoSegundaMano target = null;
@@ -252,8 +240,8 @@ public class ControladorProposals {
     }
 
     /**
-     * Recarga todas las cards desde el modelo.
-     * Se llama tras cualquier acción que cambie el estado de las ofertas.
+     * Recarga todas las cards desde el modelo. Se llama después de acciones
+     * que cambien el estado de las ofertas.
      */
     private void recargar() {
         cargarOfertas();

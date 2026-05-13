@@ -15,8 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Controlador específico para la gestión de productos del empleado (Manage Products).
- * Aplica el patrón MVC separando la lógica de navegación de los paneles.
+ * Controlador para la gestión de productos (empleado).
+ *
+ * Coordina las vistas de "Manage Products" y "Modify Products", abre ventanas
+ * auxiliares (modificar, seleccionar packs, descuentos) y gestiona la lógica
+ * de guardar cambios en productos.
  */
 public class ControladorManageProducts implements ActionListener {
 
@@ -27,6 +30,12 @@ public class ControladorManageProducts implements ActionListener {
     private ModifyProductsPanel panelModifyList;
     private ModifyAProductWindow windowModifySingle;
 
+    /**
+     * Inicializa el controlador y registra los listeners de navegación.
+     *
+     * @param mainFrame ventana principal
+     * @param mainController controlador principal (para navegar entre paneles)
+     */
     public ControladorManageProducts(MainFrame mainFrame, MainController mainController) {
         this.mainFrame = mainFrame;
         this.mainController = mainController;
@@ -37,6 +46,10 @@ public class ControladorManageProducts implements ActionListener {
         registrarListeners();
     }
 
+    /**
+     * Registra los listeners de los botones y acciones de los paneles relacionados
+     * con la gestión de productos.
+     */
     private void registrarListeners() {
         // Desde el Menú Principal del Gestor -> Manage Products
         mainFrame.getMenuGestorPanel().addManageProductsListener(e -> 
@@ -107,6 +120,12 @@ public class ControladorManageProducts implements ActionListener {
         });
     }
 
+    /**
+     * Recupera los productos desde el catálogo (modo gestión) y los clasifica
+     * por tipo para actualizar la vista de modificación.
+     *
+     * @param prompt texto de búsqueda para filtrar por nombre
+     */
     private void cargarProductos(String prompt) {
         // Obtener productos (sin importar si están ocultos o no, ya que el empleado gestiona el catálogo)
         List<LineaProductoVenta> todos = modelo.aplicacion.Catalogo.getInstancia().obtenerProductosNuevosGestion(prompt);
@@ -130,6 +149,12 @@ public class ControladorManageProducts implements ActionListener {
         panelModifyList.actualizarProductos(comics, boardGames, figures, this);
     }
 
+    /**
+     * Maneja eventos emitidos por la UI relacionados con modificar productos
+     * (abrir ventana de modificación, confirmar cambios, etc.).
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -157,6 +182,10 @@ public class ControladorManageProducts implements ActionListener {
         }
     }
     
+    /**
+     * Lee los campos de la ventana de modificación y aplica los cambios al
+     * producto seleccionado. Muestra diálogos en caso de error.
+     */
     private void guardarCambios() {
         if (windowModifySingle == null) return;
         LineaProductoVenta p = windowModifySingle.getCurrentProduct();

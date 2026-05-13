@@ -13,31 +13,48 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Controlador para gestionar las solicitudes de validación de productos
+ * (panel de empleados).
+ *
+ * Lista las solicitudes pendientes y abre la ventana para validar cada
+ * producto, delegando la validación al modelo.
+ */
 public class ControladorValidationRequests implements ActionListener {
 
     private ValidationRequestsPanel panel;
     private MainFrame mainFrame;
-    private MainController mainController;
-
+    /**
+     * Crea el controlador y enlaza la vista y navegación.
+     *
+     * @param panel panel de solicitudes de validación
+     * @param mainFrame ventana principal
+     * @param mainController controlador principal
+     */
     public ControladorValidationRequests(ValidationRequestsPanel panel, MainFrame mainFrame, MainController mainController) {
         this.panel = panel;
         this.mainFrame = mainFrame;
-        this.mainController = mainController;
-        
         // Enlazar controlador con la vista
         this.panel.setControlador(this);
-        
+
         // Configurar navegación de vuelta al HOME desde el header
         this.panel.getHeaderPanel().addHomeListener(e -> mainController.mostrarMenuPrincipal());
     }
 
+    /**
+     * Recupera las solicitudes pendientes del modelo y actualiza la vista.
+     */
     public void actualizarSolicitudes() {
-        // Obtener directamente las solicitudes pendientes de validar del modelo
         List<SolicitudValidacion> pendientes = Aplicacion.getInstancia().getGestorSolicitud().getValidacionesPendientes();
-        
+
         panel.actualizarSolicitudes(pendientes, this);
     }
 
+    /**
+     * Maneja acciones de la vista (editar/validar una solicitud concreta).
+     *
+     * @param e evento de acción
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -51,6 +68,11 @@ public class ControladorValidationRequests implements ActionListener {
         }
     }
 
+    /**
+     * Abre la ventana modal para validar el producto con el id dado.
+     *
+     * @param idProducto id del producto a validar
+     */
     private void abrirVentanaValidacion(int idProducto) {
         List<SolicitudValidacion> pendientes = Aplicacion.getInstancia().getGestorSolicitud().getValidacionesPendientes();
         SolicitudValidacion target = null;
@@ -67,6 +89,13 @@ public class ControladorValidationRequests implements ActionListener {
         }
     }
 
+    /**
+     * Confirma la validación del producto con los datos proporcionados, delegando
+     * @param s solicitud de validación a procesar
+     * @param precioVal precio de validación (sugerido por el cliente)
+     * @param precioProd precio final del producto (decisión del empleado)
+     * @param estado estado de conservación del producto (decisión del empleado)
+     */
     public void confirmarValidacion(SolicitudValidacion s, double precioVal, double precioProd, EstadoConservacion estado) {
         try {
             Empleado emp = (Empleado) Aplicacion.getInstancia().getUsuarioActual();
