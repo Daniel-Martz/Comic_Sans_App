@@ -77,24 +77,6 @@ public class NotificacionesPanel extends JPanel{
 }
 
     /**
-     * Registra los custom renderers de las filas.
-     * @param c el controlador que escucha
-     */
-    public void configurarColumnasInteractivas(ControladorNotificaciones c) { 
-      rendererRead = new ButtonRendererNotification();
-      editorRead = new ButtonEditor(new JCheckBox(), c);
-      rendererDelete = new DeleteButtonRendererNotifications();
-      editorDelete = new DeleteButtonEditor(new JCheckBox(), c);
-      tablaNotificaciones.getColumnModel().getColumn(0).setCellRenderer(this.rendererRead);
-      tablaNotificaciones.getColumnModel().getColumn(0).setCellEditor(this.editorRead);    
-      tablaNotificaciones.getColumnModel().getColumn(2).setCellRenderer(this.rendererDelete);
-      tablaNotificaciones.getColumnModel().getColumn(2).setCellEditor(this.editorDelete);    
-
-        centroPanel.add(scrollPane, BorderLayout.CENTER);
-        add(centroPanel, BorderLayout.CENTER);
-    }
-
-    /**
      * Enchufa una notificación nueva al final de la tabla.
      * @param n la notificacion a meter
      */
