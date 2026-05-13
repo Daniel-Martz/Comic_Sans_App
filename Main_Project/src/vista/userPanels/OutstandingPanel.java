@@ -188,6 +188,9 @@ public class OutstandingPanel extends JPanel {
         return tarjeta;
     }
 
+    /**
+     * @return
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
 
     /**

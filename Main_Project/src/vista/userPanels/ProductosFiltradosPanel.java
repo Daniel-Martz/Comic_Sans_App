@@ -173,6 +173,9 @@ public class ProductosFiltradosPanel extends JPanel {
         return card;
     }
 
+    /**
+     * @return
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
 
     /**

@@ -1,6 +1,7 @@
-package vista.userPanels;
+package vista.empleadoPanel;
 
 import modelo.producto.LineaProductoVenta;
+import vista.userPanels.HeaderPanel;
 import modelo.descuento.*;
 
 import javax.swing.*;

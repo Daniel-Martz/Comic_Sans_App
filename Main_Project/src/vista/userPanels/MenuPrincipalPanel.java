@@ -283,6 +283,9 @@ public class MenuPrincipalPanel extends JPanel {
         return card;
     }
 
+    /**
+     * @return
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }

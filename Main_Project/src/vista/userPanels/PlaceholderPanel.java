@@ -4,17 +4,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
 /**
  * Panel placeholder simple para zonas no implementadas aún.
  * Muestra un título y un botón "Volver" que puede recibir un listener.
  */
 public class PlaceholderPanel extends JPanel {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The lbl title. */
     private JLabel lblTitle;
+    
+    /** The header panel. */
     private HeaderPanel headerPanel;
 
+    /**
+     * Instantiates a new placeholder panel.
+     *
+     * @param title the title
+     */
     public PlaceholderPanel(String title) {
         setLayout(new BorderLayout());
         
@@ -31,6 +41,11 @@ public class PlaceholderPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }

@@ -5,14 +5,19 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
 /**
  * Panel containing the form to add a new second-hand product.
  */
 public class NuevoProductoSegundaManoPanel extends JPanel {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The form panel. */
     private FormPanel formPanel;
+    
+    /** The action panel. */
     private ActionPanel actionPanel;
 
     /**
@@ -23,11 +28,17 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
         initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         formPanel = new FormPanel();
         actionPanel = new ActionPanel();
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setBackground(new Color(153, 180, 209));
         setLayout(new BorderLayout());
@@ -45,12 +56,31 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
         add(actionPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Gets the nombre.
+     *
+     * @return the nombre
+     */
     public String getNombre() { return formPanel.getNombre(); }
+    
+    /**
+     * Gets the descripcion.
+     *
+     * @return the descripcion
+     */
     public String getDescripcion() { return formPanel.getDescripcion(); }
+    
+    /**
+     * Sets the nombre imagen.
+     *
+     * @param nombre the new nombre imagen
+     */
     public void setNombreImagen(String nombre) { formPanel.setNombreImagen(nombre); }
 
     /**
      * Assigns the controller to the different interactive components.
+     *
+     * @param c the new controlador
      */
     public void setControlador(ActionListener c) {
         formPanel.addImagenListener(c);
@@ -62,13 +92,25 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
      * Internal panel for form inputs.
      */
     private class FormPanel extends JPanel {
+        
+        /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
+        /** The txt nombre. */
         private JTextField txtNombre;
+        
+        /** The txt descripcion. */
         private JTextArea txtDescripcion;
+        
+        /** The btn subir imagen. */
         private JButton btnSubirImagen;
+        
+        /** The lbl nombre imagen. */
         private JLabel lblNombreImagen;
 
+        /**
+         * Instantiates a new form panel.
+         */
         public FormPanel() {
             setLayout(new GridBagLayout());
             setBackground(new Color(153, 180, 209));
@@ -119,10 +161,32 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             add(panelImagen, gbc);
         }
 
+        /**
+         * Gets the nombre.
+         *
+         * @return the nombre
+         */
         public String getNombre() { return txtNombre.getText().trim(); }
+        
+        /**
+         * Gets the descripcion.
+         *
+         * @return the descripcion
+         */
         public String getDescripcion() { return txtDescripcion.getText().trim(); }
+        
+        /**
+         * Sets the nombre imagen.
+         *
+         * @param nombre the new nombre imagen
+         */
         public void setNombreImagen(String nombre) { lblNombreImagen.setText(" " + nombre); }
 
+        /**
+         * Adds the imagen listener.
+         *
+         * @param l the l
+         */
         public void addImagenListener(ActionListener l) {
             btnSubirImagen.addActionListener(l);
             btnSubirImagen.setActionCommand("SUBIR_IMAGEN");
@@ -133,11 +197,19 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
      * Internal panel for action buttons.
      */
     private class ActionPanel extends JPanel {
+        
+        /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
+        /** The btn confirmar. */
         private JButton btnConfirmar;
+        
+        /** The btn cancelar. */
         private JButton btnCancelar;
 
+        /**
+         * Instantiates a new action panel.
+         */
         public ActionPanel() {
             setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
             setBackground(new Color(153, 180, 209));
@@ -158,11 +230,21 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             add(btnCancelar);
         }
 
+        /**
+         * Adds the confirmar listener.
+         *
+         * @param l the l
+         */
         public void addConfirmarListener(ActionListener l) {
             btnConfirmar.addActionListener(l);
             btnConfirmar.setActionCommand("CONFIRMAR");
         }
 
+        /**
+         * Adds the cancelar listener.
+         *
+         * @param l the l
+         */
         public void addCancelarListener(ActionListener l) {
             btnCancelar.addActionListener(l);
             btnCancelar.setActionCommand("CANCELAR");

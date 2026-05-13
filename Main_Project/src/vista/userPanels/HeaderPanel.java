@@ -10,31 +10,75 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import modelo.tiempo.DateTimeSimulado;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class HeaderPanel.
+ */
 public class HeaderPanel extends JPanel {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The logo label. */
     private JLabel logoLabel;
+    
+    /** The btn home. */
     private JButton btnHome;
+    
+    /** The btn descuentos. */
     private JButton btnDescuentos;
+    
+    /** The btn outstanding. */
     private JButton btnOutstanding;
+    
+    /** The txt search. */
     private JTextField txtSearch;
+    
+    /** The btn filters. */
     private JButton btnFilters;
+    
+    /** The btn carrito. */
     private JButton btnCarrito;
+    
+    /** The btn intercambios. */
     private JButton btnIntercambios;
+    
+    /** The btn perfil. */
     private JButton btnPerfil;
+    
+    /** The btn notificaciones. */
     private JButton btnNotificaciones;
+    
+    /** The btn search icon. */
     private JButton btnSearchIcon;
+    
+    /** The speech bubble. */
     private JLabel speechBubble;
+    
+    /** The lbl date. */
     private JLabel lblDate;
+    
+    /** The search box. */
     private JPanel searchBox;
+    
+    /** The left panel. */
     private JPanel leftPanel;
+    
+    /** The right panel. */
     private JPanel rightPanel;
+    
+    /** The center nav panel. */
     private JPanel centerNavPanel;
 
+    /** The icono sin log in. */
     ImageIcon iconoSinLogIn = getSclaedIcon("src/assets/fotoperfil.png");
+    
+    /** The icono con log in. */
     ImageIcon iconoConLogIn = getSclaedIcon("src/assets/fotoperfilLoggedIn.png");
 
+    /**
+     * Instantiates a new header panel.
+     */
     public HeaderPanel() {
         initComponents();
         initLayout();
@@ -47,6 +91,12 @@ public class HeaderPanel extends JPanel {
         });
     }
     
+    /**
+     * Gets the sclaed icon.
+     *
+     * @param path the path
+     * @return the sclaed icon
+     */
     public ImageIcon getSclaedIcon(String path) {
         try {
             File imgFile = new File(path);
@@ -61,6 +111,11 @@ public class HeaderPanel extends JPanel {
         return new ImageIcon();
     }
     
+    /**
+     * Refresh icon image.
+     *
+     * @param isLoggedIn the is logged in
+     */
     public void refreshIconImage(boolean isLoggedIn) {
     	if(isLoggedIn) {
 			btnPerfil.setIcon(this.iconoConLogIn);
@@ -69,6 +124,9 @@ public class HeaderPanel extends JPanel {
     	}
     }
 
+    /**
+     * Update date.
+     */
     public void updateDate() {
         if (lblDate != null) {
             DateTimeSimulado ahora = new DateTimeSimulado();
@@ -77,6 +135,9 @@ public class HeaderPanel extends JPanel {
         }
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         logoLabel = new JLabel();
         try {
@@ -156,6 +217,9 @@ public class HeaderPanel extends JPanel {
         updateDate();
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setOpaque(false);
@@ -230,6 +294,9 @@ public class HeaderPanel extends JPanel {
     /**
      * Añade un botón secundario al grupo de navegación central junto al HOME.
      * Devuelve el botón creado para que el controlador pueda añadir listeners.
+     *
+     * @param text the text
+     * @return the j button
      */
     public JButton addSecondaryTopButton(String text) {
         JButton btn = createTopNavButton(text);
@@ -258,6 +325,9 @@ public class HeaderPanel extends JPanel {
         rightPanel.setPreferredSize(new Dimension(380, rightPanel.getPreferredSize().height));
     }
 
+    /**
+     * Configurar menu gestor.
+     */
     public void configurarMenuGestor() {
         configurarMenuEmpleado();
         speechBubble.setText("<html><center>MANAGER DASHBOARD<br>ADMINISTRATE THE STORE</center></html>");
@@ -293,6 +363,12 @@ public class HeaderPanel extends JPanel {
         rightPanel.setPreferredSize(new Dimension(380, rightPanel.getPreferredSize().height));
     }
 
+    /**
+     * Creates the top nav button.
+     *
+     * @param text the text
+     * @return the j button
+     */
     private JButton createTopNavButton(String text) {
         JButton btn = new JButton(text) {
             @Override protected void paintComponent(Graphics g) { Graphics2D g2 = (Graphics2D) g.create(); g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); g2.setColor(getBackground()); g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20); super.paintComponent(g); g2.dispose(); }
@@ -301,30 +377,104 @@ public class HeaderPanel extends JPanel {
         btn.setContentAreaFilled(false); btn.setBackground(Color.WHITE); btn.setFocusPainted(false); btn.setFont(new Font("Comic Sans MS", Font.BOLD, 14)); btn.setBorder(new EmptyBorder(10, 25, 10, 25)); btn.setCursor(new Cursor(Cursor.HAND_CURSOR)); return btn;
     }
 
+    /**
+     * Creates the image icon button.
+     *
+     * @param imagePath the image path
+     * @param width the width
+     * @param height the height
+     * @param fallbackText the fallback text
+     * @return the j button
+     */
     private JButton createImageIconButton(String imagePath, int width, int height, String fallbackText) {
         JButton btn = new JButton(); btn.setContentAreaFilled(false); btn.setBorderPainted(false); btn.setFocusPainted(false); btn.setCursor(new Cursor(Cursor.HAND_CURSOR)); btn.setMargin(new Insets(0, 0, 0, 0)); btn.setPreferredSize(new Dimension(width + 5, height + 5)); 
         try { File imgFile = new File(imagePath); if (!imgFile.exists()) { setFallback(btn, fallbackText); return btn; } Image img = javax.imageio.ImageIO.read(imgFile); if (img == null) { setFallback(btn, fallbackText); return btn; } Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH); btn.setIcon(new ImageIcon(scaledImg)); } catch (Exception e) { setFallback(btn, fallbackText); } return btn;
     }
 
+    /**
+     * Sets the fallback.
+     *
+     * @param btn the btn
+     * @param text the text
+     */
     private void setFallback(JButton btn, String text) {
         btn.setText(text); btn.setFont(new Font("Comic Sans MS", Font.BOLD, 10)); btn.setForeground(Color.RED);
     }
 
+    /**
+     * Adds the home listener.
+     *
+     * @param l the l
+     */
     // --- Delegación de Listeners ---
     public void addHomeListener(ActionListener l) { btnHome.addActionListener(l); }
+    
+    /**
+     * Adds the outstanding listener.
+     *
+     * @param l the l
+     */
     public void addOutstandingListener(ActionListener l) { btnOutstanding.addActionListener(l); }
+    
+    /**
+     * Adds the search listener.
+     *
+     * @param l the l
+     */
     public void addSearchListener(ActionListener l) { 
         txtSearch.addActionListener(l); 
         btnSearchIcon.addActionListener(e -> {
             l.actionPerformed(new java.awt.event.ActionEvent(txtSearch, java.awt.event.ActionEvent.ACTION_PERFORMED, getSearchText()));
         });
     }
+    
+    /**
+     * Adds the filtros listener.
+     *
+     * @param l the l
+     */
     public void addFiltrosListener(ActionListener l) { btnFilters.addActionListener(l); }
+    
+    /**
+     * Adds the carrito listener.
+     *
+     * @param l the l
+     */
     public void addCarritoListener(ActionListener l) { btnCarrito.addActionListener(l); }
+    
+    /**
+     * Adds the intercambios listener.
+     *
+     * @param l the l
+     */
     public void addIntercambiosListener(ActionListener l) { btnIntercambios.addActionListener(l); }
+    
+    /**
+     * Adds the perfil listener.
+     *
+     * @param l the l
+     */
     public void addPerfilListener(ActionListener l) { btnPerfil.addActionListener(l); }
+    
+    /**
+     * Adds the notificaciones listener.
+     *
+     * @param l the l
+     */
     public void addNotificacionesListener(ActionListener l) { btnNotificaciones.addActionListener(l); }
+    
+    /**
+     * Adds the discounted listener.
+     *
+     * @param l the l
+     */
     public void addDiscountedListener(ActionListener l) { btnDescuentos.addActionListener(l); }
+    
+    /**
+     * Gets the search text.
+     *
+     * @return the search text
+     */
     public String getSearchText() { 
         String text = txtSearch.getText().trim(); 
         return text.equals("Search...") ? "" : text;

@@ -8,41 +8,56 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
-import java.io.File;
 import java.util.List;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
+/**
+ * Panel to create a trade offer between users.
+ * Allows selecting requested products and offered products.
+ */
 public class MakeOfferPanel extends JPanel {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-    private final Color COLOR_FONDO = new Color(153, 180, 209);
+    
+    /** The background color. */
+    private final Color BACKGROUND_COLOR = new Color(153, 180, 209);
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The panel requested. */
     private SelectionColumn panelRequested;
+    
+    /** The panel offered. */
     private SelectionColumn panelOffered;
+    
+    /** The btn submit offer. */
     private JButton btnSubmitOffer;
 
+    /**
+     * Constructs the panel and initializes UI components.
+     */
     public MakeOfferPanel() {
         setLayout(new BorderLayout());
-        setBackground(COLOR_FONDO);
+        setBackground(BACKGROUND_COLOR);
 
-        // --- CABECERA ---
         headerPanel = new HeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
 
         JPanel contentWrapper = new JPanel(new BorderLayout());
-        contentWrapper.setBackground(COLOR_FONDO);
+        contentWrapper.setBackground(BACKGROUND_COLOR);
         contentWrapper.setBorder(new EmptyBorder(10, 20, 20, 20));
 
-        JLabel lblTitulo = new JLabel("MAKE AN OFFER", SwingConstants.CENTER);
-        lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
-        lblTitulo.setForeground(Color.DARK_GRAY);
-        lblTitulo.setBorder(new EmptyBorder(0, 0, 15, 0));
-        contentWrapper.add(lblTitulo, BorderLayout.NORTH);
+        JLabel lblTitle = new JLabel("MAKE AN OFFER", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 22));
+        lblTitle.setForeground(Color.DARK_GRAY);
+        lblTitle.setBorder(new EmptyBorder(0, 0, 15, 0));
+        contentWrapper.add(lblTitle, BorderLayout.NORTH);
 
-        // --- CUERPO (DOS COLUMNAS) ---
         JPanel columnsContainer = new JPanel(new GridLayout(1, 2, 20, 0));
-        columnsContainer.setBackground(COLOR_FONDO);
+        columnsContainer.setBackground(BACKGROUND_COLOR);
 
         panelRequested = new SelectionColumn("REQUESTED PRODUCTS (Other users)", "REQ");
         panelOffered = new SelectionColumn("OFFERED PRODUCTS (My portfolio)", "OFF");
@@ -51,9 +66,8 @@ public class MakeOfferPanel extends JPanel {
         columnsContainer.add(panelOffered);
         contentWrapper.add(columnsContainer, BorderLayout.CENTER);
 
-        // --- BOTÓN INFERIOR ---
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        bottomPanel.setBackground(COLOR_FONDO);
+        bottomPanel.setBackground(BACKGROUND_COLOR);
         bottomPanel.setBorder(new EmptyBorder(15, 0, 0, 0));
 
         btnSubmitOffer = new JButton("SUBMIT OFFER 🤝");
@@ -70,43 +84,80 @@ public class MakeOfferPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
-    // --- MÉTODOS PARA EL CONTROLADOR ---
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    
+    /**
+     * Gets the panel requested.
+     *
+     * @return the panel requested
+     */
     public SelectionColumn getPanelRequested() { return panelRequested; }
+    
+    /**
+     * Gets the panel offered.
+     *
+     * @return the panel offered
+     */
     public SelectionColumn getPanelOffered() { return panelOffered; }
+    
+    /**
+     * Adds the submit listener.
+     *
+     * @param l the l
+     */
     public void addSubmitListener(ActionListener l) { btnSubmitOffer.addActionListener(l); }
 
-    // =========================================================================
-    // CLASE INTERNA: COLUMNA DE SELECCIÓN (Buscador + Grid + Status)
-    // =========================================================================
+    /**
+     * Inner class representing a selection column with search and status bar.
+     */
     public class SelectionColumn extends JPanel {
+        
+        private static final long serialVersionUID = 1L;
+
+		/** The txt search. */
         private JTextField txtSearch;
+        
+        /** The btn search. */
         private JButton btnSearch;
-        private JPanel gridProductos;
+        
+        /** The grid products. */
+        private JPanel gridProducts;
+        
+        /** The lbl status. */
         private JLabel lblStatus;
+        
+        /** The command prefix. */
         private String commandPrefix;
 
+        /**
+         * Instantiates a new selection column.
+         *
+         * @param title the title
+         * @param commandPrefix the command prefix
+         */
         public SelectionColumn(String title, String commandPrefix) {
             this.commandPrefix = commandPrefix;
             setLayout(new BorderLayout(0, 10));
-            setBackground(COLOR_FONDO);
+            setBackground(BACKGROUND_COLOR);
             setBorder(new LineBorder(Color.DARK_GRAY, 2));
 
-            // Header de la columna
             JPanel top = new JPanel(new BorderLayout());
             top.setBackground(new Color(74, 118, 201));
             top.setBorder(new EmptyBorder(8, 10, 8, 10));
-            JLabel lblTitle = new JLabel(title, SwingConstants.CENTER);
-            lblTitle.setForeground(Color.WHITE);
-            lblTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
-            top.add(lblTitle, BorderLayout.NORTH);
+            JLabel lblColTitle = new JLabel(title, SwingConstants.CENTER);
+            lblColTitle.setForeground(Color.WHITE);
+            lblColTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+            top.add(lblColTitle, BorderLayout.NORTH);
 
-            // Buscador interno
             JPanel searchPanel = new JPanel(new BorderLayout(5, 0));
             searchPanel.setOpaque(false);
             searchPanel.setBorder(new EmptyBorder(10, 0, 0, 0));
-            txtSearch = new JTextField();
-            txtSearch.setText("Search...");
+            txtSearch = new JTextField("Search...");
             txtSearch.setForeground(Color.GRAY);
             txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
                 public void focusGained(java.awt.event.FocusEvent evt) {
@@ -129,19 +180,17 @@ public class MakeOfferPanel extends JPanel {
             top.add(searchPanel, BorderLayout.SOUTH);
             add(top, BorderLayout.NORTH);
 
-            // Grid
-            gridProductos = new JPanel(new GridLayout(0, 2, 10, 10));
-            gridProductos.setBackground(Color.WHITE);
-            gridProductos.setBorder(new EmptyBorder(10, 10, 10, 10));
+            gridProducts = new JPanel(new GridLayout(0, 2, 10, 10));
+            gridProducts.setBackground(Color.WHITE);
+            gridProducts.setBorder(new EmptyBorder(10, 10, 10, 10));
             JPanel gridWrapper = new JPanel(new BorderLayout());
             gridWrapper.setBackground(Color.WHITE);
-            gridWrapper.add(gridProductos, BorderLayout.NORTH);
+            gridWrapper.add(gridProducts, BorderLayout.NORTH);
             JScrollPane scroll = new JScrollPane(gridWrapper);
             scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
             scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             add(scroll, BorderLayout.CENTER);
 
-            // Status Bar
             JPanel bottom = new JPanel(new FlowLayout(FlowLayout.CENTER));
             bottom.setBackground(Color.DARK_GRAY);
             lblStatus = new JLabel("Selected: 0 | Total: 0.00 €");
@@ -151,40 +200,72 @@ public class MakeOfferPanel extends JPanel {
             add(bottom, BorderLayout.SOUTH);
         }
 
+        /**
+         * Actualizar productos.
+         *
+         * @param productos the productos
+         * @param seleccionados the seleccionados
+         * @param actionCtrl the action ctrl
+         * @param itemCtrl the item ctrl
+         */
         public void actualizarProductos(List<ProductoSegundaMano> productos, Set<ProductoSegundaMano> seleccionados, ActionListener actionCtrl, ItemListener itemCtrl) {
-            gridProductos.removeAll();
+            gridProducts.removeAll();
             if (productos.isEmpty()) {
-                gridProductos.add(new JLabel("No products found."));
+                gridProducts.add(new JLabel("No products found."));
             } else {
                 for (ProductoSegundaMano p : productos) {
-                    gridProductos.add(crearTarjetaMini(p, seleccionados.contains(p), actionCtrl, itemCtrl));
+                    gridProducts.add(crearTarjetaMini(p, seleccionados.contains(p), actionCtrl, itemCtrl));
                 }
             }
-            gridProductos.revalidate();
-            gridProductos.repaint();
+            gridProducts.revalidate();
+            gridProducts.repaint();
         }
 
+        /**
+         * Update status.
+         *
+         * @param count the count
+         * @param total the total
+         */
         public void updateStatus(int count, double total) {
             lblStatus.setText(String.format("Selected: %d | Total: %.2f €", count, total));
         }
 
+        /**
+         * Adds the search listener.
+         *
+         * @param l the l
+         */
         public void addSearchListener(ActionListener l) {
             btnSearch.addActionListener(l);
             txtSearch.addActionListener(e -> btnSearch.doClick());
         }
         
+        /**
+         * Gets the search text.
+         *
+         * @return the search text
+         */
         public String getSearchText() { 
             String text = txtSearch.getText().trim(); 
             return text.equals("Search...") ? "" : text;
         }
 
+        /**
+         * Crear tarjeta mini.
+         *
+         * @param prod the prod
+         * @param isSelected the is selected
+         * @param actionCtrl the action ctrl
+         * @param itemCtrl the item ctrl
+         * @return the j panel
+         */
         private JPanel crearTarjetaMini(ProductoSegundaMano prod, boolean isSelected, ActionListener actionCtrl, ItemListener itemCtrl) {
             JPanel tarjeta = new JPanel();
             tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
             tarjeta.setBorder(BorderFactory.createCompoundBorder(new LineBorder(Color.LIGHT_GRAY, 1), new EmptyBorder(5,5,5,5)));
             tarjeta.setBackground(Color.WHITE);
 
-            // Imagen del producto
             JLabel img = new JLabel("", SwingConstants.CENTER);
             img.setOpaque(true);
             img.setBackground(new Color(220, 220, 220));
@@ -220,17 +301,17 @@ public class MakeOfferPanel extends JPanel {
             tarjeta.add(lblPrecio);
 
             if (prod.isPendienteAprobacionIntercambio()) {
-                JLabel lblStatus = new JLabel("⏳ PENDING");
-                lblStatus.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
-                lblStatus.setForeground(new Color(180, 100, 0));
-                lblStatus.setAlignmentX(Component.CENTER_ALIGNMENT);
-                tarjeta.add(lblStatus);
+                JLabel lblStatusIcon = new JLabel("⏳ PENDING");
+                lblStatusIcon.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
+                lblStatusIcon.setForeground(new Color(180, 100, 0));
+                lblStatusIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+                tarjeta.add(lblStatusIcon);
             } else if (prod.estaEnOferta()) {
-                JLabel lblStatus = new JLabel("📌 INCLUDED IN OFFER");
-                lblStatus.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
-                lblStatus.setForeground(new Color(200, 80, 30));
-                lblStatus.setAlignmentX(Component.CENTER_ALIGNMENT);
-                tarjeta.add(lblStatus);
+                JLabel lblStatusIcon = new JLabel("📌 INCLUDED IN OFFER");
+                lblStatusIcon.setFont(new Font("Comic Sans MS", Font.BOLD, 10));
+                lblStatusIcon.setForeground(new Color(200, 80, 30));
+                lblStatusIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
+                tarjeta.add(lblStatusIcon);
             }
 
             JCheckBox chkSelect = new JCheckBox("Select");

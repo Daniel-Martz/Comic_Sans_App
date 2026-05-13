@@ -4,9 +4,9 @@ import modelo.aplicacion.Catalogo;
 import modelo.descuento.Descuento;
 import modelo.producto.LineaProductoVenta;
 import modelo.producto.Pack;
+import vista.empleadoPanel.DescuentosPanel;
 import vista.empleadoWindow.AddDiscountWindow;
 import vista.main.MainFrame;
-import vista.userPanels.DescuentosPanel;
 
 import javax.swing.SwingUtilities;
 import java.awt.Window;

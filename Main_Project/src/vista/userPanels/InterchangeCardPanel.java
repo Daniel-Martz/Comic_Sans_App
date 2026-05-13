@@ -7,6 +7,7 @@ import javax.swing.border.*;
 import javax.swing.table.*;
 import modelo.producto.ProductoSegundaMano;
 
+// TODO: Auto-generated Javadoc
 /**
  * Vista que muestra una tarjeta de intercambio entre dos usuarios.
  * Sigue el patrón MVC: NO contiene lógica de negocio.
@@ -19,33 +20,58 @@ import modelo.producto.ProductoSegundaMano;
  */
 public class InterchangeCardPanel extends JPanel {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /**
      * Modo de visualización de la card.
      */
-    public enum Modo { INCOME, SENT, EMPLOYEE }
+    public enum Modo { 
+ /** The income. */
+ INCOME, 
+ /** The sent. */
+ SENT, 
+ /** The employee. */
+ EMPLOYEE }
 
     // -------------------------------------------------------
     // Subpaneles internos
+    /** The header panel. */
     // -------------------------------------------------------
     private HeaderPanel       headerPanel;
+    
+    /** The panel given. */
     private PanelDesplegable  panelGiven;
+    
+    /** The panel received. */
     private PanelDesplegable  panelReceived;
+    
+    /** The action button panel. */
     private ActionButtonPanel actionButtonPanel;
 
+    /** The info listener. */
     private ActionListener infoListener;
+    
+    /** The has buttons. */
     private boolean hasButtons = true;
 
     /**
-    /* Constructor principal
-    /*
-    /* @param headerLabel   texto cabecera: "FROM: <nombre>" o "TO: <nombre>"
-    /* @param balance       balance calculado por el controlador
-    /* @param givenData     {nombre, categoría, estado, precio} de productos dados
-    /* @param receivedData  {nombre, categoría, estado, precio} de productos recibidos
-    /* @param modo          INCOME (accept+reject) o SENT (cancel)
-    */
+     *     /* Constructor principal
+     *     /*
+     *     /* @param headerLabel   texto cabecera: "FROM: <nombre>" o "TO: <nombre>"
+     *     /* @param balance       balance calculado por el controlador
+     *     /* @param givenData     {nombre, categoría, estado, precio} de productos dados
+     *     /* @param receivedData  {nombre, categoría, estado, precio} de productos recibidos
+     *     /* @param modo          INCOME (accept+reject) o SENT (cancel).
+     *
+     * @param headerLabel the header label
+     * @param balance the balance
+     * @param givenData the given data
+     * @param receivedData the received data
+     * @param modo the modo
+     * @param customGivenTitle the custom given title
+     * @param customReceivedTitle the custom received title
+     */
     public InterchangeCardPanel(String headerLabel,
                                  double balance,
                                  ProductoSegundaMano[] givenData,
@@ -57,6 +83,18 @@ public class InterchangeCardPanel extends JPanel {
         initLayout();
     }
     
+    /**
+     * Instantiates a new interchange card panel.
+     *
+     * @param headerLabel the header label
+     * @param balance the balance
+     * @param givenData the given data
+     * @param receivedData the received data
+     * @param modo the modo
+     * @param customGivenTitle the custom given title
+     * @param customReceivedTitle the custom received title
+     * @param hasButtons the has buttons
+     */
     public InterchangeCardPanel(String headerLabel,
                                  double balance,
                                  ProductoSegundaMano[] givenData,
@@ -79,9 +117,18 @@ public class InterchangeCardPanel extends JPanel {
         initLayout();
     }
 
-    // -------------------------------------------------------
-    // Inicialización interna
-    // -------------------------------------------------------
+
+    /**
+     * Inits the components.
+     *
+     * @param headerLabel the header label
+     * @param balance the balance
+     * @param givenData the given data
+     * @param receivedData the received data
+     * @param modo the modo
+     * @param customGivenTitle the custom given title
+     * @param customReceivedTitle the custom received title
+     */
     private void initComponents(String headerLabel,
                                   double balance,
                                   ProductoSegundaMano[] givenData,
@@ -103,14 +150,15 @@ public class InterchangeCardPanel extends JPanel {
         actionButtonPanel = new ActionButtonPanel(modo);
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setBackground(new Color(153, 180, 209));
         setBorder(new CompoundBorder(
                 new LineBorder(Color.DARK_GRAY, 2),
                 new EmptyBorder(10, 10, 10, 10)));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        // No fijar una altura máxima rígida: permitir que la card se encoja/expanda
-        // cuando se oculta/mostrar el contenido desplegable.
         setAlignmentX(Component.LEFT_ALIGNMENT);
 
         add(headerPanel);
@@ -125,22 +173,38 @@ public class InterchangeCardPanel extends JPanel {
     // -------------------------------------------------------
     // Métodos públicos para el CONTROLADOR
 
-    /** Registra listener del botón ACCEPT (solo modo INCOME). */
+    /**
+     * Registra listener del botón ACCEPT (solo modo INCOME).
+     *
+     * @param listener the listener
+     */
     public void addAcceptListener(ActionListener listener) {
         actionButtonPanel.addAcceptListener(listener);
     }
 
-    /** Registra listener del botón REJECT (solo modo INCOME). */
+    /**
+     * Registra listener del botón REJECT (solo modo INCOME).
+     *
+     * @param listener the listener
+     */
     public void addRejectListener(ActionListener listener) {
         actionButtonPanel.addRejectListener(listener);
     }
 
-    /** Registra listener del botón CANCEL (solo modo SENT). */
+    /**
+     * Registra listener del botón CANCEL (solo modo SENT).
+     *
+     * @param listener the listener
+     */
     public void addCancelListener(ActionListener listener) {
         actionButtonPanel.addCancelListener(listener);
     }
 
-    /** Registra listener genérico para el botón "+ Info" de los productos. */
+    /**
+     * Registra listener genérico para el botón "+ Info" de los productos.
+     *
+     * @param listener the new info listener
+     */
     public void setInfoListener(ActionListener listener) {
         this.infoListener = listener;
     }
@@ -148,6 +212,12 @@ public class InterchangeCardPanel extends JPanel {
     /**
      * Recarga todos los datos de la card.
      * El controlador llama a este método cuando el modelo cambia.
+     *
+     * @param headerLabel the header label
+     * @param balance the balance
+     * @param givenData the given data
+     * @param receivedData the received data
+     * @param modo the modo
      */
     public void update(String headerLabel,
                        double balance,
@@ -160,13 +230,21 @@ public class InterchangeCardPanel extends JPanel {
         revalidate();
         repaint();
     }
-
-    // -------------------------------------------------------
-    // Subpanel: cabecera (FROM/TO + balance)
-    // -------------------------------------------------------
+    
+    /**
+     * The Class HeaderPanel.
+     */
     private class HeaderPanel extends JPanel {
+        
+        /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
+        /**
+         * Instantiates a new header panel.
+         *
+         * @param headerLabel the header label
+         * @param balance the balance
+         */
         public HeaderPanel(String headerLabel, double balance) {
             JLabel lblHeader = new JLabel(headerLabel);
             JLabel lblPrice;
@@ -192,22 +270,34 @@ public class InterchangeCardPanel extends JPanel {
         }
     }
 
-    // -------------------------------------------------------
-    // Subpanel: botones de acción
-    // -------------------------------------------------------
+
+    /**
+     * The Class ActionButtonPanel.
+     */
     private class ActionButtonPanel extends JPanel {
+        
+        /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
+        /** The btn accept. */
         private JButton btnAccept;
+        
+        /** The btn reject. */
         private JButton btnReject;
+        
+        /** The btn cancel. */
         private JButton btnCancel;
 
+        /**
+         * Instantiates a new action button panel.
+         *
+         * @param modo the modo
+         */
         public ActionButtonPanel(Modo modo) {
             setLayout(new FlowLayout(FlowLayout.CENTER, 20, 5));
             setOpaque(false);
 
             if (modo == Modo.INCOME) {
-                // ACCEPT button (simple rectangular style)
                 btnAccept = new JButton("ACCEPT");
                 btnAccept.setBackground(new Color(50, 205, 50));
                 btnAccept.setForeground(Color.WHITE);
@@ -219,7 +309,7 @@ public class InterchangeCardPanel extends JPanel {
                 btnAccept.setMargin(new Insets(4, 10, 4, 10));
                 btnAccept.setBorder(new LineBorder(new Color(120, 120, 120), 1));
 
-                // REJECT button (simple rectangular style)
+
                 btnReject = new JButton("REJECT");
                 btnReject.setBackground(new Color(178, 34, 34));
                 btnReject.setForeground(Color.WHITE);
@@ -233,15 +323,12 @@ public class InterchangeCardPanel extends JPanel {
 
                 add(btnAccept);
                 add(btnReject);
-
-                // Hover effect: change border color and slightly darken background (no shadows)
                 Border normalBorder = new LineBorder(new Color(120, 120, 120), 1);
                 Border hoverBorder = new LineBorder(new Color(80, 80, 80), 1);
 
                 applyHoverEffectToButton(btnAccept, btnAccept.getBackground(), normalBorder, hoverBorder);
                 applyHoverEffectToButton(btnReject, btnReject.getBackground(), normalBorder, hoverBorder);
 
-                // Si por alguna razón no existe btnReject, marcar ACCEPT en rojo
                 if (btnReject == null && btnAccept != null) {
                     btnAccept.setBackground(new Color(178, 34, 34));
                 }
@@ -281,6 +368,14 @@ public class InterchangeCardPanel extends JPanel {
             }
         }
 
+        /**
+         * Apply hover effect to button.
+         *
+         * @param btn the btn
+         * @param baseColor the base color
+         * @param normal the normal
+         * @param hover the hover
+         */
         private void applyHoverEffectToButton(final AbstractButton btn, final Color baseColor, final Border normal, final Border hover) {
             if (btn == null) return;
             btn.setBorder(normal);
@@ -300,39 +395,65 @@ public class InterchangeCardPanel extends JPanel {
             });
         }
 
+        /**
+         * Adds the accept listener.
+         *
+         * @param l the l
+         */
         public void addAcceptListener(ActionListener l) {
             if (btnAccept != null) btnAccept.addActionListener(l);
         }
 
+        /**
+         * Adds the reject listener.
+         *
+         * @param l the l
+         */
         public void addRejectListener(ActionListener l) {
             if (btnReject != null) btnReject.addActionListener(l);
         }
 
+        /**
+         * Adds the cancel listener.
+         *
+         * @param l the l
+         */
         public void addCancelListener(ActionListener l) {
             if (btnCancel != null) btnCancel.addActionListener(l);
         }
     }
 
-    // -------------------------------------------------------
-    // Subpanel: sección desplegable con tabla
-    // -------------------------------------------------------
+
+    /**
+     * The Class PanelDesplegable.
+     */
     private class PanelDesplegable extends JPanel {
+        
+        /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
+        /** The titulo. */
         private final String            titulo;
+        
+        /** The toggle button. */
         private JButton                 toggleButton;
+        
+        /** The contenido panel. */
         private TablaProductosPanel     contenidoPanel;
 
+        /**
+         * Instantiates a new panel desplegable.
+         *
+         * @param titulo the titulo
+         * @param data the data
+         */
         public PanelDesplegable(String titulo, ProductoSegundaMano[] data) {
             this.titulo = titulo;
 
             toggleButton   = new JButton(titulo);
             contenidoPanel = new TablaProductosPanel(data);
-
-            // Iniciar el panel desplegable cerrado por defecto para un aspecto
-            // más compacto y predecible.
             contenidoPanel.setVisible(false);
-            // Actualizar el texto del botón para mostrar el símbolo de cerrado
+
             toggleButton.setText(this.titulo.replace("▼", "▶"));
 
             toggleButton.setBackground(new Color(100, 149, 237));
@@ -343,12 +464,9 @@ public class InterchangeCardPanel extends JPanel {
             toggleButton.addActionListener(e -> {
                 boolean visible = contenidoPanel.isVisible();
                 contenidoPanel.setVisible(!visible);
-                // Mostrar la flecha correcta en función del nuevo estado
                 toggleButton.setText(contenidoPanel.isVisible()
                         ? this.titulo.replace("▶", "▼")
                         : this.titulo.replace("▼", "▶"));
-                // Revalidar / repintar la card contenedora para que el JScrollPane
-                // en el padre actualice correctamente su tamaño.
                 InterchangeCardPanel.this.revalidate();
                 InterchangeCardPanel.this.repaint();
             });
@@ -360,13 +478,20 @@ public class InterchangeCardPanel extends JPanel {
         }
     }
 
-    // -------------------------------------------------------
-    // Subpanel: tabla de productos
-    // Columnas: Product | Condition | Price | + Info
-    // -------------------------------------------------------
+
+    /**
+     * The Class TablaProductosPanel.
+     */
     private class TablaProductosPanel extends JPanel {
+        
+        /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
+        /**
+         * Instantiates a new tabla productos panel.
+         *
+         * @param data the data
+         */
         public TablaProductosPanel(ProductoSegundaMano[] data) {
             // 1. Nombres de columnas sin "Category"
             String[] columnNames = {"Product", "Condition", "Price", "+ Info"};
@@ -382,7 +507,7 @@ public class InterchangeCardPanel extends JPanel {
                 tableData[i][2] = data[i] != null && data[i].getDatosValidacion() != null
                         ? String.format("%.2f €", data[i].getDatosValidacion().getPrecioEstimadoProducto())
                         : "N/A";
-                tableData[i][3] = "+"; // El botón
+                tableData[i][3] = "+"; 
             }
 
             DefaultTableModel model = new DefaultTableModel(tableData, columnNames) {
@@ -394,7 +519,6 @@ public class InterchangeCardPanel extends JPanel {
             table.getTableHeader().setBackground(new Color(240, 128, 128));
             table.getTableHeader().setFont(new Font("Comic Sans MS", Font.BOLD, 11));
             
-            // 3. La columna del botón ahora es la de índice 3 (0, 1, 2, 3)
             table.getColumnModel().getColumn(3).setMaxWidth(50);
             table.getColumn("+ Info").setCellRenderer(new ButtonRenderer());
 
@@ -403,8 +527,6 @@ public class InterchangeCardPanel extends JPanel {
                 public void mouseClicked(MouseEvent e) {
                     int col = table.columnAtPoint(e.getPoint());
                     int row = table.rowAtPoint(e.getPoint());
-                    
-                    // 4. Escuchamos el clic en el nuevo índice 3
                     if (row >= 0 && col == 3) {
                         if (InterchangeCardPanel.this.infoListener != null && data[row] != null) {
                             InterchangeCardPanel.this.infoListener.actionPerformed(
@@ -423,12 +545,18 @@ public class InterchangeCardPanel extends JPanel {
             add(scroll, BorderLayout.CENTER);
         }
     }
-    // -------------------------------------------------------
-    // Renderer: botón verde "+" en la columna "+ Info"
-    // -------------------------------------------------------
+
+    /**
+     * The Class ButtonRenderer.
+     */
     private static class ButtonRenderer extends JButton implements TableCellRenderer {
+        
+        /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
 
+        /**
+         * Instantiates a new button renderer.
+         */
         public ButtonRenderer() {
             setOpaque(true);
             setBackground(new Color(50, 205, 50));
@@ -436,6 +564,17 @@ public class InterchangeCardPanel extends JPanel {
             setFont(new Font("Comic Sans MS", Font.BOLD, 12));
         }
 
+        /**
+         * Gets the table cell renderer component.
+         *
+         * @param table the table
+         * @param value the value
+         * @param isSelected the is selected
+         * @param hasFocus the has focus
+         * @param row the row
+         * @param column the column
+         * @return the table cell renderer component
+         */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
@@ -444,61 +583,17 @@ public class InterchangeCardPanel extends JPanel {
         }
     }
 
+    /**
+     * Adjust color.
+     *
+     * @param c the c
+     * @param factor the factor
+     * @return the color
+     */
     private static Color adjustColor(Color c, float factor) {
         int r = Math.min(255, Math.max(0, Math.round(c.getRed() * factor)));
         int g = Math.min(255, Math.max(0, Math.round(c.getGreen() * factor)));
         int b = Math.min(255, Math.max(0, Math.round(c.getBlue() * factor)));
         return new Color(r, g, b, c.getAlpha());
-    }
-
-    // (removed custom rounded button helper — using plain JButtons with rectangular border)
-
-    /**
-     * Método estático de prueba para mostrar este panel aislado.
-     * Puedes ejecutarlo desde Eclipse o desde la línea de comandos
-     * llamando a InterchangeCardPanel.mostrarPanelDePrueba();
-     */
-    public static void mostrarPanelDePrueba() {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Prueba InterchangeCardPanel");
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-            InterchangeCardPanel p1 = new InterchangeCardPanel(
-                    "FROM: Alice", 12.50,
-                    new ProductoSegundaMano[0],
-                    new ProductoSegundaMano[0],
-                    Modo.INCOME, null, null);
-
-            InterchangeCardPanel p2 = new InterchangeCardPanel(
-                    "TO: Bob", 0.0,
-                    new ProductoSegundaMano[0],
-                    new ProductoSegundaMano[0],
-                    Modo.SENT, null, null);
-
-            JPanel container = new JPanel();
-            container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-            container.setBackground(new Color(153, 180, 209));
-            container.setBorder(new EmptyBorder(10, 10, 10, 10));
-            container.add(p1);
-            container.add(Box.createVerticalStrut(10));
-            container.add(p2);
-
-            JScrollPane scroll = new JScrollPane(container,
-                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            scroll.getVerticalScrollBar().setUnitIncrement(16);
-
-            frame.getContentPane().add(scroll);
-            frame.setSize(700, 500);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
-    }
-
-    /**
-     * Pequeño main para facilitar ejecución rápida desde línea de comandos.
-     */
-    public static void main(String[] args) {
-        mostrarPanelDePrueba();
     }
 }
