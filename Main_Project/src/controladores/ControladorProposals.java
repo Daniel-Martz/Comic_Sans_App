@@ -37,7 +37,7 @@ public class ControladorProposals {
      * Obtiene las ofertas del modelo y crea una card por cada una.
      */
     private void cargarOfertas() {
-        panel.limpiar();
+        panel.clear();
 
         if (!(Aplicacion.getInstancia().getUsuarioActual() instanceof ClienteRegistrado)) {
             return;
@@ -50,14 +50,14 @@ public class ControladorProposals {
         for (Oferta oferta : cliente.getOfertasRecibidas()) {
             InterchangeCardPanel card = crearCard(oferta, Modo.INCOME);
             registrarListenersIncome(card, oferta, cliente);
-            panel.añadirCardIncome(card);
+            panel.addIncomeCard(card);
         }
 
         // ── Ofertas ENVIADAS (columna SENT)
         for (Oferta oferta : cliente.getOfertasRealizadas()) {
             InterchangeCardPanel card = crearCard(oferta, Modo.SENT);
             registrarListenersSent(card, oferta, cliente);
-            panel.añadirCardSent(card);
+            panel.addSentCard(card);
         }
     }
 
