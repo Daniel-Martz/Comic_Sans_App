@@ -306,7 +306,7 @@ public class HeaderPanel extends JPanel {
     }
 
     /**
-     * Configura la cabecera para la vista de empleados ocultando elementos de compra.
+     * Oculta las cosas de comprar cuando entra un empleado.
      */
     public void configurarMenuEmpleado() {
         btnDescuentos.setVisible(false);
@@ -335,7 +335,7 @@ public class HeaderPanel extends JPanel {
     }
 
     /**
-     * Configura la cabecera para la vista de Notificaciones: sólo muestra el botón HOME.
+     * Deja la cabecera casi vacía para no estorbar en notificaciones.
      */
     public void configurarMenuNotificaciones() {
         // Ocultamos botones de navegación secundaria
@@ -407,6 +407,7 @@ public class HeaderPanel extends JPanel {
      * @param l the l
      */
     // --- Delegación de Listeners ---
+    /** @param l listener para el botón de inicio */
     public void addHomeListener(ActionListener l) { btnHome.addActionListener(l); }
     
     /**

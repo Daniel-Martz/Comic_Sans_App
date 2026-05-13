@@ -702,7 +702,7 @@ public class MainController {
      * Cierra el diálogo de opciones del usuario que esté abierto.
      */
     public void cerrarVentanaOpcionesUsuario(){
-      if(Aplicacion.getInstancia().getUsuarioActual() instanceof Empleado){
+      if(Aplicacion.getInstancia().getUsuarioActual() instanceof Empleado || Aplicacion.getInstancia().getUsuarioActual() instanceof Gestor){
         dialogOpcionesEmpleado.setVisible(false);
       }
       else{

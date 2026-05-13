@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 
 // TODO: Auto-generated Javadoc
 /**
- * Panel placeholder simple para zonas no implementadas aún.
- * Muestra un título y un botón "Volver" que puede recibir un listener.
+ * Un panel provisional para rellenar huecos mientras no los programamos.
  */
 public class PlaceholderPanel extends JPanel {
 
@@ -21,9 +20,8 @@ public class PlaceholderPanel extends JPanel {
     private HeaderPanel headerPanel;
 
     /**
-     * Instantiates a new placeholder panel.
-     *
-     * @param title the title
+     * Constructor que pone un título en el centro.
+     * @param title título de la zona
      */
     public PlaceholderPanel(String title) {
         setLayout(new BorderLayout());

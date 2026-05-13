@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 // TODO: Auto-generated Javadoc
 /**
- * Panel containing the form to add a new second-hand product.
+ * Panel con el formulario para subir tus propios trastos.
  */
 public class NuevoProductoSegundaManoPanel extends JPanel {
 
@@ -20,8 +20,11 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
     /** The action panel. */
     private ActionPanel actionPanel;
 
+    // -------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------
     /**
-     * Initializes the panel and its layout.
+     * Instancia el panel y sus cosas.
      */
     public NuevoProductoSegundaManoPanel() {
         initComponents();

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Main panel for interchange proposals.
+ * Panel para gestionar los trueques, los que te llegan y los que mandas.
  */
 public class ProposalsPanel extends JPanel {
 
@@ -19,8 +19,11 @@ public class ProposalsPanel extends JPanel {
     private final List<InterchangeCardPanel> incomeCards = new ArrayList<>();
     private final List<InterchangeCardPanel> sentCards = new ArrayList<>();
 
+    // -------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------
     /**
-     * Instantiates a new proposals panel.
+     * Constructor para montar las dos columnas.
      */
     public ProposalsPanel() {
         initComponents();
@@ -97,15 +100,30 @@ public class ProposalsPanel extends JPanel {
         scroll.getVerticalScrollBar().setUnitIncrement(16);
         scroll.setBorder(null);
 
-        column.add(header, BorderLayout.NORTH);
-        column.add(scroll, BorderLayout.CENTER);
-        return column;
+        columna.add(cabecera, BorderLayout.NORTH);
+        columna.add(scroll,   BorderLayout.CENTER);
+        return columna;
+    }
+
+    // -------------------------------------------------------
+    // Métodos públicos para el CONTROLADOR
+    // -------------------------------------------------------
+
+    /**
+     * Encaja una tarjeta nueva en las que has recibido.
+     * @param card la tarjeta ya montada
+     */
+    public void añadirCardIncome(InterchangeCardPanel card) {
+        cardsIncome.add(card);
+        contenedorIncome.add(card);
+        contenedorIncome.add(Box.createVerticalStrut(10));
+        contenedorIncome.revalidate();
+        contenedorIncome.repaint();
     }
 
     /**
-     * Adds a card to the income column.
-     *
-     * @param card the interchange card panel to add
+     * Encaja una tarjeta nueva en las que has enviado.
+     * @param card la tarjeta ya montada
      */
     public void addIncomeCard(InterchangeCardPanel card) {
         incomeCards.add(card);
@@ -142,18 +160,14 @@ public class ProposalsPanel extends JPanel {
     }
 
     /**
-     * Gets the income cards.
-     *
-     * @return the list of income cards
+     * @return devuelve la lista de tarjetas que nos han llegao
      */
     public List<InterchangeCardPanel> getIncomeCards() {
         return incomeCards;
     }
 
     /**
-     * Gets the sent cards.
-     *
-     * @return the list of sent cards
+     * @return devuelve la lista de tarjetas que mandamos nosotros
      */
     public List<InterchangeCardPanel> getSentCards() {
         return sentCards;

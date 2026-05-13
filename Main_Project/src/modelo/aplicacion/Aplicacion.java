@@ -519,6 +519,10 @@ public class Aplicacion implements Serializable {
 		}
 	}
 
+	/**
+	 * Elimina la cuenta de un empleado del sistema.
+	 * @param empleado el empleado a eliminar (puede ser null)
+	 */
 	public void eliminarEmpleado(Empleado empleado) {
 		// Comprobamos que el usuario actual sea el gestor
 		if (this.usuarioActual == null) {

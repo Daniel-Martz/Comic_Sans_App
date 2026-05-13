@@ -9,8 +9,7 @@ import javax.swing.border.LineBorder;
 import modelo.producto.LineaProductoVenta;
 
 /**
- * Panel que muestra el carrito de la compra.
- * Vista MVC estricta adaptada a la maqueta visual del proyecto.
+ * Panel para ver lo que has metido en el carrito y pagar.
  */
 public class CarritoPanel extends JPanel {
 
@@ -24,6 +23,9 @@ public class CarritoPanel extends JPanel {
     private JLabel labelTotal;
     private JButton botonPagar;
 
+    /**
+     * Constructor del carrito, monta todo el layout visual.
+     */
     public CarritoPanel() {
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
@@ -114,16 +116,27 @@ public class CarritoPanel extends JPanel {
     }
 
     // ── Métodos MVC ────────────────────────────────────────────────────────
+    /**
+     * @return la cabecera de arriba
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
 
-    /** Registra el controlador principal en los botones PAY NOW y VOLVER. */
+    /**
+     * Le mete un listener al botón de pagar.
+     * @param c el listener a registrar
+     */
     public void setControladorPrincipal(ActionListener c) {
         for (ActionListener al : botonPagar.getActionListeners())  botonPagar.removeActionListener(al);
         botonPagar.addActionListener(c);
         botonPagar.setActionCommand("PROCESS_ORDER");
     }
 
-    /** Actualiza el contenido del carrito. */
+    /**
+     * Pinta los productos que tienes en el carrito actual.
+     * @param productos map con el producto y su cantidad
+     * @param total precio sumado
+     * @param controlador listener pa los botones
+     */
     public void actualizarCarrito(Map<LineaProductoVenta, Integer> productos,
                                    double total,
                                    ActionListener controlador) {
@@ -235,6 +248,11 @@ public class CarritoPanel extends JPanel {
         return tarjeta;
     }
 
+    /**
+     * Pinta los pedidos que ya has hecho pero te falta soltar la pasta.
+     * @param pedidos la lista de pedidos
+     * @param controlador listener
+     */
     public void actualizarPedidos(java.util.List<modelo.solicitud.SolicitudPedido> pedidos, ActionListener controlador) {
         panelScrollPedidos.removeAll();
 
@@ -251,6 +269,12 @@ public class CarritoPanel extends JPanel {
         panelScrollPedidos.repaint();
     }
 
+    /**
+     * Pinta una tarjeta para un pedido de la lista.
+     * @param pedido el pedido en cuestión
+     * @param controlador listener
+     * @return el JPanel con la tarjeta
+     */
     public JPanel crearTarjetaPedido(modelo.solicitud.SolicitudPedido pedido, ActionListener controlador) {
         JPanel tarjeta = new JPanel();
         tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
@@ -322,6 +346,11 @@ public class CarritoPanel extends JPanel {
         return tarjeta;
     }
 
+    /**
+     * Muestra un mensaje emergente.
+     * @param msg el mensaje
+     * @param titulo el título
+     */
     public void mostrarMensaje(String msg, String titulo) {
         JOptionPane.showMessageDialog(this, msg, titulo, JOptionPane.INFORMATION_MESSAGE);
     }

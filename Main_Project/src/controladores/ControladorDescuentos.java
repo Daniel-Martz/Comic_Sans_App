@@ -44,6 +44,11 @@ public class ControladorDescuentos implements ActionListener {
         if (this.panel.getBtnBack() != null) {
             this.panel.getBtnBack().addActionListener(e -> mainController.navegarA(MainFrame.PANEL_MANAGE_PRODUCTS));
         }
+        
+        this.panel.getColIndividuales().getBtnApply().addActionListener(this);
+        this.panel.getColIndividuales().getBtnApply().setActionCommand("APPLY_INDIVIDUAL");
+        this.panel.getColPacks().getBtnApply().addActionListener(this);
+        this.panel.getColPacks().getBtnApply().setActionCommand("APPLY_PACKS");
 
         // Auto-recargar al abrir la pestaña
         this.panel.addComponentListener(new ComponentAdapter() {
@@ -103,33 +108,79 @@ public class ControladorDescuentos implements ActionListener {
                 vista.clienteWindows.VentanaDetallesProductoWindow dialog = new vista.clienteWindows.VentanaDetallesProductoWindow(parentWindow, p);
                 dialog.setVisible(true);
             }
-        } else if (cmd.startsWith("ADD_")) {
-            int id = Integer.parseInt(cmd.substring(4));
+        } else if (cmd.startsWith("EDIT_")) {
+            int id = Integer.parseInt(cmd.substring(5));
             LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
-            if (p != null) {
-                AddDiscountWindow win = new AddDiscountWindow(mainFrame, p, this);
+            if (p != null && p.getDescuento() != null) {
+                Descuento d = p.getDescuento();
+                List<LineaProductoVenta> affected = new ArrayList<>();
+                for (LineaProductoVenta prod : Catalogo.getInstancia().getProductosNuevos()) {
+                    if (prod.getDescuento() == d) affected.add(prod);
+                }
+                AddDiscountWindow win = new AddDiscountWindow(mainFrame, affected, d, this);
                 win.setVisible(true);
             }
+        } else if (cmd.startsWith("APPLY_")) {
+            List<LineaProductoVenta> seleccionados;
+            if (cmd.equals("APPLY_INDIVIDUAL")) {
+                seleccionados = panel.getColIndividuales().getSelectedProducts();
+            } else {
+                seleccionados = panel.getColPacks().getSelectedProducts();
+            }
+
+            if (seleccionados.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(mainFrame, "Please select at least one product using the checkboxes.", "Warning", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            AddDiscountWindow win = new AddDiscountWindow(mainFrame, seleccionados, null, this);
+            win.setVisible(true);
         }
     }
 
-    /**
-     * Confirma y aplica un descuento sobre un producto.
-     *
-     * @param p producto al que se aplicará el descuento
-     * @param d descuento a aplicar
-     */
-    public void confirmarAñadirDescuento(LineaProductoVenta p, Descuento d) {
+    public void confirmarDescuentosMulti(List<LineaProductoVenta> productos, Descuento oldDiscount, String type, modelo.tiempo.DateTimeSimulado inicio, modelo.tiempo.DateTimeSimulado fin, int perc, double thresh, int threshPerc, int buyQty, int recvQty, double giftThresh, int giftId, int giftQty) {
         try {
-            if (p.getDescuento() != null) {
-                Catalogo.getInstancia().eliminarDescuento(p.getDescuento(), p);
+            if (oldDiscount != null) {
+                for (LineaProductoVenta p : Catalogo.getInstancia().getProductosNuevos()) {
+                    if (p.getDescuento() == oldDiscount) {
+                        Catalogo.getInstancia().eliminarDescuento(oldDiscount, p);
+                    }
+                }
             }
-            Catalogo.getInstancia().añadirDescuento(d);
-            Catalogo.getInstancia().aplicarDescuento(p, d);
+
+            if (type.contains("Percentage") || type.contains("Quantity")) {
+                for (LineaProductoVenta p : productos) {
+                    Descuento d = null;
+                    if (type.contains("Percentage")) {
+                        d = new modelo.descuento.Precio(inicio, fin, perc);
+                    } else {
+                        d = new modelo.descuento.Cantidad(inicio, fin, buyQty, recvQty);
+                    }
+                    if (p.getDescuento() != null) Catalogo.getInstancia().eliminarDescuento(p.getDescuento(), p);
+                    Catalogo.getInstancia().añadirDescuento(d);
+                    Catalogo.getInstancia().aplicarDescuento(p, d);
+                }
+            } else {
+                Descuento d = null;
+                if (type.contains("Threshold")) {
+                    d = new modelo.descuento.RebajaUmbral(inicio, fin, thresh, threshPerc);
+                } else if (type.contains("Gift")) {
+                    LineaProductoVenta giftProd = Catalogo.getInstancia().buscarProductoNuevo(giftId);
+                    if (giftProd == null) throw new IllegalArgumentException("Gift Product ID not found");
+                    java.util.Map<LineaProductoVenta, Integer> gifts = new java.util.HashMap<>();
+                    gifts.put(giftProd, giftQty);
+                    d = new modelo.descuento.Regalo(inicio, fin, giftThresh, gifts);
+                }
+                Catalogo.getInstancia().añadirDescuento(d);
+                for (LineaProductoVenta p : productos) {
+                    if (p.getDescuento() != null) Catalogo.getInstancia().eliminarDescuento(p.getDescuento(), p);
+                    Catalogo.getInstancia().aplicarDescuento(p, d);
+                }
+            }
             cargarDatos();
-            javax.swing.JOptionPane.showMessageDialog(mainFrame, "Discount applied successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(mainFrame, "Discounts applied successfully!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
-            javax.swing.JOptionPane.showMessageDialog(mainFrame, "Error applying discount: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            javax.swing.JOptionPane.showMessageDialog(mainFrame, "Error applying discounts: " + ex.getMessage(), "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 }

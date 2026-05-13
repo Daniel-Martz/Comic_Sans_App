@@ -285,7 +285,7 @@ class SistemaEstadisticasTest {
         SistemaEstadisticas se = SistemaEstadisticas.getInstancia();
 
         // Pago de pedido
-        ClienteRegistrado cliente = app.crearCuenta("AA", "111111111A", "1234");
+        ClienteRegistrado cliente = app.crearCuenta("AA", "111111111A", "Pass@12345", "Pass@12345");
         LineaProductoVenta p = new LineaProductoVenta("Prod", "d", new File("f.png"), 100, 20.0);
         cliente.añadirProductoACarrito(p, 1);
         SolicitudPedido pedido = cliente.realizarPedido();
@@ -365,7 +365,7 @@ class SistemaEstadisticasTest {
         LineaProductoVenta p = new LineaProductoVenta("Gadget", "desc", new File("f.png"), 50, 15.0);
         cat.añadirProducto(p);
 
-        ClienteRegistrado cliente = app.crearCuenta("CC", "333333333C", "1234");
+        ClienteRegistrado cliente = app.crearCuenta("CC", "333333333C", "Clien@12345", "Clien@12345");
         cliente.añadirProductoACarrito(p, 2);
         SolicitudPedido pedido = cliente.realizarPedido();
         Pago pago = new Pago(new DateTimeSimulado(), 30.0, pedido);
@@ -387,7 +387,7 @@ class SistemaEstadisticasTest {
         LineaProductoVenta p = new LineaProductoVenta("Widget", "desc", new File("f.png"), 50, 10.0);
         cat.añadirProducto(p);
 
-        ClienteRegistrado cliente = app.crearCuenta("DD", "444444444D", "1234");
+        ClienteRegistrado cliente = app.crearCuenta("DD", "444444444D", "Clien@12356", "Clien@12356");
         cliente.añadirProductoACarrito(p, 3);
         SolicitudPedido pedido = cliente.realizarPedido();
         Pago pago = new Pago(new DateTimeSimulado(), 30.0, pedido);
@@ -409,7 +409,7 @@ class SistemaEstadisticasTest {
         LineaProductoVenta p = new LineaProductoVenta("Producto", "desc", new File("f.png"), 50, 100.0);
         cat.añadirProducto(p);
 
-        ClienteRegistrado cliente = app.crearCuenta("EE", "555555555E", "1234");
+        ClienteRegistrado cliente = app.crearCuenta("EE", "555555555E", "Clien@12357", "Clien@12357");
         cliente.añadirProductoACarrito(p, 1);
         SolicitudPedido pedido = cliente.realizarPedido();
 
@@ -489,7 +489,7 @@ class SistemaEstadisticasTest {
         LineaProductoVenta prod = new LineaProductoVenta("Libro", "desc", new File("f.png"), 100, 25.0);
         cat.añadirProducto(prod);
 
-        ClienteRegistrado cliente = app.crearCuenta("FF", "666666666F", "1234");
+        ClienteRegistrado cliente = app.crearCuenta("FF", "666666666F", "Clien@12358", "Clien@12358");
         cliente.añadirProductoACarrito(prod, 2);
         SolicitudPedido pedido = cliente.realizarPedido();
 
@@ -514,7 +514,7 @@ class SistemaEstadisticasTest {
         Aplicacion app = Aplicacion.getInstancia();
         SistemaEstadisticas se = SistemaEstadisticas.getInstancia();
 
-        ClienteRegistrado cliente = app.crearCuenta("GG", "777777777G", "1234");
+        ClienteRegistrado cliente = app.crearCuenta("GG", "777777777G", "Clien@12359", "Clien@12359");
         ProductoSegundaMano psm = cliente.añadirProductoACarteraDeIntercambio("Muñeca", "d", null);
 
         Empleado emp = new Empleado("emp2", "888888888H", "123456");
@@ -544,8 +544,8 @@ class SistemaEstadisticasTest {
         cat.añadirProducto(prod1);
         cat.añadirProducto(prod2);
 
-        ClienteRegistrado c1 = app.crearCuenta("Rico",   "101010101A", "1234");
-        ClienteRegistrado c2 = app.crearCuenta("Pobre",  "202020202B", "1234");
+        ClienteRegistrado c1 = app.crearCuenta("Rico",   "101010101A", "Clien@12360", "Clien@12360");
+        ClienteRegistrado c2 = app.crearCuenta("Pobre",  "202020202B", "Clien@12361", "Clien@12361");
 
         c1.añadirProductoACarrito(prod1, 1);
         SolicitudPedido pedido1 = c1.realizarPedido();
@@ -587,7 +587,7 @@ class SistemaEstadisticasTest {
         LineaProductoVenta prod = new LineaProductoVenta("Item", "d", new File("f.png"), 100, 40.0);
         cat.añadirProducto(prod);
 
-        ClienteRegistrado c = app.crearCuenta("Medio", "303030303C", "1234");
+        ClienteRegistrado c = app.crearCuenta("Medio", "303030303C", "Clien@12362", "Clien@12362");
         c.añadirProductoACarrito(prod, 1);
         SolicitudPedido pedido = c.realizarPedido();
         Pago pago = app.getSistemaPago().procesarPago(40.0, "1234567890123456", "123",

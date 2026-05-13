@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 /**
- * Panel that displays products based on search results or filters.
+ * Panel genérico donde escupimos los resultados de las búsquedas y filtros.
  */
 public class ProductosFiltradosPanel extends JPanel {
 
@@ -21,7 +21,7 @@ public class ProductosFiltradosPanel extends JPanel {
     private JPanel productScrollPanel;
 
     /**
-     * Constructs the panel and initializes the UI components.
+     * Lo básico, monta la vista.
      */
     public ProductosFiltradosPanel() {
         setLayout(new BorderLayout());
@@ -52,7 +52,9 @@ public class ProductosFiltradosPanel extends JPanel {
     }
 
     /**
-     * Updates the product list displayed in the grid.
+     * Mete en el panel todos los resultados que hemos encontrado.
+     * @param productos la lista que pasaron el filtro
+     * @param controlador pa manejar el añadir y eso
      */
     public void actualizarProductos(List<LineaProductoVenta> productos, ActionListener controlador) {
         productScrollPanel.removeAll();
@@ -174,12 +176,14 @@ public class ProductosFiltradosPanel extends JPanel {
     }
 
     /**
-     * @return
+     * @return el header
      */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
 
     /**
-     * Displays an information message dialog.
+     * Mensajito emergente.
+     * @param msg lo que le quieres decir al notas
+     * @param titulo el title
      */
     public void mostrarMensaje(String msg, String titulo) {
         JOptionPane.showMessageDialog(this, msg, titulo, JOptionPane.INFORMATION_MESSAGE);

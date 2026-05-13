@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /**
- * Panel para buscar productos de segunda mano y seleccionarlos para intercambiar.
+ * Buscador de trastos de otra peña para ver qué les ofreces.
  */
 public class SearchInterchangesPanel extends JPanel {
 
@@ -41,7 +41,7 @@ public class SearchInterchangesPanel extends JPanel {
     private List<JCheckBox> checkboxesSeleccion = new ArrayList<>();
 
     /**
-     * Instantiates a new search interchanges panel.
+     * Constructor que prepara la movida.
      */
     public SearchInterchangesPanel() {
         setLayout(new BorderLayout());
@@ -111,11 +111,10 @@ public class SearchInterchangesPanel extends JPanel {
     }
 
     /**
-     * Actualizar productos.
-     *
-     * @param productos the productos
-     * @param actionCtrl the action ctrl
-     * @param itemCtrl the item ctrl
+     * Limpia la vista y vuelve a pintar los productos disponibles.
+     * @param productos productos que hay por ahí sueltos
+     * @param actionCtrl listener de botones
+     * @param itemCtrl listener de casillas
      */
     public void actualizarProductos(List<ProductoSegundaMano> productos, ActionListener actionCtrl, ItemListener itemCtrl) {
         panelScrollProductos.removeAll();
@@ -211,25 +210,21 @@ public class SearchInterchangesPanel extends JPanel {
      * @return the header panel
      */
     // --- Métodos de interacción (MVC) ---
+    /** @return cabecera */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
-    
     /**
-     * Sets the controlador inferior.
-     *
-     * @param l the new controlador inferior
+     * @param l listener para los botones de abajo
      */
     public void setControladorInferior(ActionListener l) { btnReset.addActionListener(l); btnProceed.addActionListener(l); btnReset.setActionCommand("RESET"); btnProceed.setActionCommand("PROCEED"); }
-    
     /**
-     * Update selection info.
-     *
-     * @param count the count
-     * @param total the total
+     * Cambia los textillos de estado de abajo.
+     * @param count cant seleccionada
+     * @param total suma en euros
      */
     public void updateSelectionInfo(int count, double total) { lblStatus.setText(String.format("Selected items: %d | Total Estimated Value: %.2f €", count, total)); }
     
     /**
-     * Desmarcar todos.
+     * Le quita la cruz a todos los checkboxes.
      */
     public void desmarcarTodos() { for (JCheckBox chk : checkboxesSeleccion) { chk.setSelected(false); } }
 }

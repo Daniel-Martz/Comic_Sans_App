@@ -9,8 +9,8 @@ import java.awt.event.*;
 import java.io.File;
 
 /**
- * Panel that displays the user's second-hand products.
- * Divided into products ready for interchange and those awaiting validation.
+ * Aquí se listan tus cachivaches de segunda mano.
+ * Los separa en validados y en los que faltan por validar/pagar.
  */
 public class MySecondHandProductsPanel extends JPanel {
 
@@ -43,8 +43,11 @@ public class MySecondHandProductsPanel extends JPanel {
 
     private ActionListener payValidationListener;
 
+    // =====================================================================
+    //  Constructor
+    // =====================================================================
     /**
-     * Constructs the panel and initializes the UI components.
+     * Llama a los inits para pintar la vista.
      */
     public MySecondHandProductsPanel() {
         initComponents();
@@ -143,7 +146,22 @@ public class MySecondHandProductsPanel extends JPanel {
     }
 
     /**
-     * Clears all product lists.
+     * Obsoleto, limpiar a saco.
+     */
+    public void cargarProductos() {
+        // NOTE: Este método quedará obsoleto en favor de la responsabilidad del controlador.
+        // Mantenerlo por compatibilidad llamando a los nuevos helpers.
+        readyContainer.removeAll();
+        validationContainer.removeAll();
+        readyContainer.revalidate();
+        validationContainer.revalidate();
+    }
+
+    // ------------------------------------------------------------------
+    // API que el controlador usará para poblar la vista (sin lógica de negocio)
+    // ------------------------------------------------------------------
+    /**
+     * Vacía las columnas de productos.
      */
     public void clearProducts() {
         readyContainer.removeAll();
@@ -151,7 +169,8 @@ public class MySecondHandProductsPanel extends JPanel {
     }
 
     /**
-     * Adds a validated product to the ready list.
+     * Añade un producto listo en la parte izq.
+     * @param producto el trasto a meter
      */
     public void addReadyProduct(ProductoSegundaMano producto) {
         readyContainer.add(buildReadyCard(producto));
@@ -159,7 +178,9 @@ public class MySecondHandProductsPanel extends JPanel {
     }
 
     /**
-     * Adds a product to the validation list.
+     * Añade un producto en proceso en la derecha.
+     * @param producto el trasto a meter
+     * @param pagado si ya soltaste la manteca de la validacion
      */
     public void addValidationProduct(ProductoSegundaMano producto, boolean pagado) {
         validationContainer.add(buildValidationCard(producto, pagado));
@@ -167,7 +188,7 @@ public class MySecondHandProductsPanel extends JPanel {
     }
 
     /**
-     * Displays empty placeholders if containers have no products.
+     * Si no hay na', te pinta unos textos por defecto muy cucos.
      */
     public void ensurePlaceholdersIfEmpty() {
         if (readyContainer.getComponentCount() == 0) {
@@ -335,8 +356,12 @@ public class MySecondHandProductsPanel extends JPanel {
         return p;
     }
 
+    // =====================================================================
+    //  Métodos para registrar listeners (MVC)
+    // =====================================================================
+
     /**
-     * Registers a listener for adding a new product.
+     * @param l listener pal boton gordo de añadir producto nuevo
      */
     public void addAddProductListener(ActionListener l) {
         btnAddProduct.addActionListener(l);
@@ -344,14 +369,124 @@ public class MySecondHandProductsPanel extends JPanel {
     }
 
     /**
-     * Registers a global listener for validation payment.
+     * Guarda el listener pa cuando dinámicamente creamos los botones de pago.
+     * @param l listener
      */
     public void addPayValidationListener(ActionListener l) {
         this.payValidationListener = l;
     }
 
+    private void attachListenerToButtons(Container parent, ActionListener l, String commandPrefix) {
+        for (Component c : parent.getComponents()) {
+            if (c instanceof JButton btn) {
+                String cmd = btn.getActionCommand();
+                if (cmd != null && cmd.startsWith(commandPrefix)) {
+                    btn.addActionListener(l);
+                }
+            }
+            if (c instanceof Container sub) {
+                attachListenerToButtons(sub, l, commandPrefix);
+            }
+        }
+    }
+
+    // =====================================================================
+    //  Acceso a subpaneles (por si el controlador necesita referencias)
+    // =====================================================================
+    /** @return el header */
     public HeaderPanel getHeaderPanel()    { return headerPanel; }
+    /** @return columna izq */
     public JPanel getReadyContainer()      { return readyContainer; }
+    /** @return columna der */
     public JPanel getValidationContainer() { return validationContainer; }
+    /** @return el boton de añadir */
     public JButton getBtnAddProduct()      { return btnAddProduct; }
+
+    // =====================================================================
+    //  Main de prueba rápida
+    // =====================================================================
+    /**
+     * Main de prueba pa ver que no está roto visualmente.
+     * @param args argumentos
+     */
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("My Second-Hand Products – preview");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(1280, 760);
+
+            MySecondHandProductsPanel panel = new MySecondHandProductsPanel();
+
+            // Datos de demo (sin modelo real)
+            panel.readyContainer.add(panel.buildDemoReadyCard("Peluche de perro", "VERY_GOOD", "Un peluche suave", "10.00 €"));
+            panel.readyContainer.add(Box.createVerticalStrut(10));
+            panel.readyContainer.add(panel.buildDemoReadyCard("Comic Spiderman", "PERFECT", "Primera edición", "25.00 €"));
+            panel.readyContainer.add(Box.createVerticalStrut(10));
+
+            panel.validationContainer.add(panel.buildDemoValidationCard("Camión de bomberos", "Juguete infantil", "PENDING", false));
+            panel.validationContainer.add(Box.createVerticalStrut(10));
+            panel.validationContainer.add(panel.buildDemoValidationCard("Figura Iron Man", "Edición limitada", "PAY", false));
+            panel.validationContainer.add(Box.createVerticalStrut(10));
+            panel.validationContainer.add(panel.buildDemoValidationCard("Juego de mesa", "Casi nuevo", "PAID", true));
+            panel.validationContainer.add(Box.createVerticalStrut(10));
+
+            frame.setContentPane(panel);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
+    }
+
+    // Helpers solo para el main de demo
+    private JPanel buildDemoReadyCard(String name, String condition, String desc, String value) {
+        JPanel card = createCardPanel();
+        card.add(createImagePanel(null), BorderLayout.WEST);
+        JPanel info = new JPanel(new GridLayout(0, 1, 2, 2));
+        info.setOpaque(false);
+        info.setBorder(new EmptyBorder(6, 10, 6, 6));
+        addInfoRow(info, "PRODUCT NAME:", name);
+        addInfoRow(info, "CONDITION:", condition);
+        addInfoRow(info, "DESCRIPTION:", desc);
+        addInfoRow(info, "VALUE:", value);
+        card.add(info, BorderLayout.CENTER);
+        return card;
+    }
+
+    private JPanel buildDemoValidationCard(String name, String desc, String state, boolean paid) {
+        JPanel card = createCardPanel();
+        card.add(createImagePanel(null), BorderLayout.WEST);
+        JPanel right = new JPanel(new BorderLayout(0, 6));
+        right.setOpaque(false);
+        right.setBorder(new EmptyBorder(6, 10, 6, 6));
+        JPanel info = new JPanel(new GridLayout(0, 1, 2, 2));
+        info.setOpaque(false);
+        addInfoRow(info, "PRODUCT NAME:", name);
+        addInfoRow(info, "CONDITION:", state.equals("PENDING") ? "Pending" : state);
+        addInfoRow(info, "DESCRIPTION:", desc);
+        right.add(info, BorderLayout.CENTER);
+        JPanel action = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        action.setOpaque(false);
+        if (state.equals("PENDING")) {
+            JLabel lbl = new JLabel("⏳ Awaiting validation...");
+            lbl.setFont(LABEL_FONT);
+            lbl.setForeground(new Color(180, 100, 0));
+            action.add(lbl);
+        } else if (state.equals("PAY")) {
+            JButton btn = new JButton("PAY VALIDATION");
+            btn.setFont(BTN_PAY_FONT);
+            btn.setBackground(BTN_PAY_BG);
+            btn.setForeground(Color.WHITE);
+            btn.setFocusPainted(false);
+            btn.setBorder(new LineBorder(Color.DARK_GRAY, 1));
+            btn.setPreferredSize(new Dimension(140, 28));
+            action.add(btn);
+        } else {
+            JLabel lbl = new JLabel("✔ VALIDATION PAID");
+            lbl.setFont(new Font("Comic Sans MS", Font.BOLD, 11));
+            lbl.setForeground(PAID_FG);
+            action.add(lbl);
+        }
+        right.add(action, BorderLayout.SOUTH);
+        card.add(right, BorderLayout.CENTER);
+        return card;
+    }
 }

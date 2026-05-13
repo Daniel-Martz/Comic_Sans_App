@@ -11,9 +11,9 @@ import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
- * Panel that displays the user's notification inbox.
+ * Pantalla que simula una bandeja de entrada para notificaciones.
  */
-public class NotificacionesPanel extends JPanel {
+public class NotificacionesPanel extends JPanel{
 
     /** The tabla notificaciones. */
     private JTable tablaNotificaciones;
@@ -50,7 +50,7 @@ public class NotificacionesPanel extends JPanel {
     public HeaderPanel getHeaderPanel() { return headerPanel; }
 
     /**
-     * Constructs the panel and initializes the notifications table.
+     * Monta la tabla y sus movidas.
      */
     public NotificacionesPanel() {
         setLayout(new BorderLayout(0, 15));
@@ -88,13 +88,16 @@ public class NotificacionesPanel extends JPanel {
         tablaNotificaciones.getColumnModel().getColumn(1).setPreferredWidth(100);
         tablaNotificaciones.getColumnModel().getColumn(2).setPreferredWidth(100);
 
-        JScrollPane scrollPane = new JScrollPane(tablaNotificaciones);
-        scrollPane.getViewport().setBackground(Color.WHITE);
-        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
+    JScrollPane scrollPane = new JScrollPane(tablaNotificaciones);
+    scrollPane.getViewport().setBackground(Color.WHITE);
+    scrollPane.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
 
-        centroPanel.add(scrollPane, BorderLayout.CENTER);
-        add(centroPanel, BorderLayout.CENTER);
-    }
+    // Añadimos el scrollPane al CENTRO del panel intermedio
+    centroPanel.add(scrollPane, BorderLayout.CENTER);
+
+    // 4. Añadimos el panel intermedio al CENTRO del panel principal
+    add(centroPanel, BorderLayout.CENTER);
+}
 
     /**
      * Configures the custom renderers and editors for the table columns.
@@ -127,7 +130,7 @@ public class NotificacionesPanel extends JPanel {
     }
     
     /**
-     * Clears all notifications from the table.
+     * Borra todo de la tabla.
      */
     public void clearNotificaciones() {
         modeloTabla.setRowCount(0);

@@ -9,14 +9,7 @@ import modelo.producto.ProductoSegundaMano;
 
 // TODO: Auto-generated Javadoc
 /**
- * Vista que muestra una tarjeta de intercambio entre dos usuarios.
- * Sigue el patrón MVC: NO contiene lógica de negocio.
- * Solo muestra datos y expone métodos para que el controlador
- * registre listeners y actualice la vista.
- *
- * Puede mostrarse en dos modos:
- *  - INCOME (oferta recibida): muestra FROM + botones ACCEPT y REJECT
- *  - SENT   (oferta enviada):  muestra TO   + botón CANCEL
+ * Tarjeta super vitaminada para ver una solicitud de intercambio entera.
  */
 public class InterchangeCardPanel extends JPanel {
 
@@ -109,8 +102,7 @@ public class InterchangeCardPanel extends JPanel {
     }
 
     /**
-     * Constructor vacío: instancia la card sin datos.
-     * Útil para crear la vista antes de tener el modelo listo.
+     * Constructor vacío por si necesitas instanciarlo a capón.
      */
     public InterchangeCardPanel() {
         initComponents("", 0.0, new ProductoSegundaMano[0], new ProductoSegundaMano[0], Modo.INCOME, null, null);
