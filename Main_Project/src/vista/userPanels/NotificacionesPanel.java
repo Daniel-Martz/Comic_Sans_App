@@ -98,7 +98,6 @@ public class NotificacionesPanel extends JPanel{
     // 4. Añadimos el panel intermedio al CENTRO del panel principal
     add(centroPanel, BorderLayout.CENTER);
 }
-
     /**
      * Configures the custom renderers and editors for the table columns.
      *

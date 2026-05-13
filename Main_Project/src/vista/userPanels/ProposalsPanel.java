@@ -100,26 +100,15 @@ public class ProposalsPanel extends JPanel {
         scroll.getVerticalScrollBar().setUnitIncrement(16);
         scroll.setBorder(null);
 
-        columna.add(cabecera, BorderLayout.NORTH);
-        columna.add(scroll,   BorderLayout.CENTER);
-        return columna;
+        column.add(header, BorderLayout.NORTH);
+        column.add(scroll,   BorderLayout.CENTER);
+        return column;
     }
 
     // -------------------------------------------------------
     // Métodos públicos para el CONTROLADOR
     // -------------------------------------------------------
 
-    /**
-     * Encaja una tarjeta nueva en las que has recibido.
-     * @param card la tarjeta ya montada
-     */
-    public void añadirCardIncome(InterchangeCardPanel card) {
-        cardsIncome.add(card);
-        contenedorIncome.add(card);
-        contenedorIncome.add(Box.createVerticalStrut(10));
-        contenedorIncome.revalidate();
-        contenedorIncome.repaint();
-    }
 
     /**
      * Encaja una tarjeta nueva en las que has enviado.
