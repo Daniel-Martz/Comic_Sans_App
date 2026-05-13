@@ -9,21 +9,44 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Panel that displays the user's notification inbox.
  */
 public class NotificacionesPanel extends JPanel {
 
+    /** The tabla notificaciones. */
     private JTable tablaNotificaciones;
+    
+    /** The modelo tabla. */
     private DefaultTableModel modeloTabla;
+    
+    /** The header panel. */
     private HeaderPanel headerPanel = new HeaderPanel();
+    
+    /** The controlador. */
     private ControladorNotificaciones controlador;
+    
+    /** The renderer read. */
     private ButtonRendererNotification rendererRead;
+    
+    /** The editor read. */
     private ButtonEditor editorRead;
+    
+    /** The renderer delete. */
     private DeleteButtonRendererNotifications rendererDelete;
+    
+    /** The editor delete. */
     private DeleteButtonEditor editorDelete;
+    
+    /** The notifs en la tabla. */
     private Set<Notificacion> notifsEnLaTabla = new HashSet<>();
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
 
     /**
@@ -75,6 +98,8 @@ public class NotificacionesPanel extends JPanel {
 
     /**
      * Configures the custom renderers and editors for the table columns.
+     *
+     * @param c the c
      */
     public void configurarColumnasInteractivas(ControladorNotificaciones c) { 
         rendererRead = new ButtonRendererNotification();
@@ -90,6 +115,8 @@ public class NotificacionesPanel extends JPanel {
 
     /**
      * Adds a new notification to the table if it's not already present.
+     *
+     * @param n the n
      */
     public void agregarNotificacion(Notificacion n) {
         if(!notifsEnLaTabla.contains(n)) {
@@ -109,11 +136,18 @@ public class NotificacionesPanel extends JPanel {
 
     /**
      * Sets the controller and initializes interactive columns.
+     *
+     * @param c the c
      */
     public void addListenerForElements(ControladorNotificaciones c){
         this.controlador = c;
         configurarColumnasInteractivas(c);
     }
 
+    /**
+     * Gets the controlador principal.
+     *
+     * @return the controlador principal
+     */
     public ControladorNotificaciones getControladorPrincipal() { return controlador; }
 }
