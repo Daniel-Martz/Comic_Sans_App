@@ -186,7 +186,7 @@ class CatalogoTest {
     void testEliminarProductoEliminaDeRankingsCliente() {
         Aplicacion app = Aplicacion.getInstancia();
         Catalogo c = Catalogo.getInstancia();
-        ClienteRegistrado cliente = app.crearCuenta("cli1", "111111111A", "1234", "1234");
+        ClienteRegistrado cliente = app.crearCuenta("cli1", "111111111A", "Holahola1@", "Holahola1@");
         LineaProductoVenta p = new LineaProductoVenta("Rank", "d", new File("f.png"), 5, 5.0);
         c.añadirProducto(p);
         c.eliminarProducto(p);

@@ -268,8 +268,8 @@ class ConfiguracionRecomendacionTest {
 
         app.getConfiguracionRecomendacion().configurarUnidades(2);
 
-        app.crearCuenta("ClienteC", "333333333C", "1234");
-        app.iniciarSesion("ClienteC", "1234");
+        app.crearCuenta("ClienteC", "333333333C", "Holahola1@", "Holahola1@");
+        app.iniciarSesion("ClienteC", "Holahola1@");
 
         Set<LineaProductoVenta> rec = app.getConfiguracionRecomendacion().getRecomendacion();
         assertEquals(2, rec.size());
@@ -291,7 +291,7 @@ class ConfiguracionRecomendacionTest {
 
         app.getConfiguracionRecomendacion().configurarUnidades(3);
 
-        app.crearCuenta("ClienteD", "444444444D", "1234");
+        app.crearCuenta("ClienteD", "444444444D", "Holahola1@", "Holahola1@");
         app.iniciarSesion("ClienteD", "1234");
 
         Set<LineaProductoVenta> rec = app.getConfiguracionRecomendacion().getRecomendacion();
@@ -327,7 +327,7 @@ class ConfiguracionRecomendacionTest {
         app.getConfiguracionRecomendacion().configurarImportancia(0, 0, 1);
         app.getConfiguracionRecomendacion().configurarUnidades(1);
 
-        app.crearCuenta("ClienteE", "555555555E", "1234");
+        app.crearCuenta("ClienteE", "555555555E", "Holahola1@", "Holahola1@");
         app.iniciarSesion("ClienteE", "1234");
 
         Set<LineaProductoVenta> rec = app.getConfiguracionRecomendacion().getRecomendacion();
@@ -350,8 +350,8 @@ class ConfiguracionRecomendacionTest {
         Catalogo cat = app.getCatalogo();
         cat.añadirProducto(new LineaProductoVenta("P", "d", new File("f.png"), 5, 9.0));
 
-        app.crearCuenta("ClienteF", "666666666F", "1234");
-        app.iniciarSesion("ClienteF", "1234");
+        app.crearCuenta("ClienteF", "666666666F", "Holahola1@", "Holahola1@");
+        app.iniciarSesion("ClienteF", "Holahola1@");
 
         assertNotNull(app.getConfiguracionRecomendacion().getRecomendacion());
         app.cerrarSesion();
@@ -369,8 +369,8 @@ class ConfiguracionRecomendacionTest {
         LineaProductoVenta p1 = new LineaProductoVenta("Nuevo", "d", new File("f.png"), 5, 12.0);
         cat.añadirProducto(p1);
 
-        app.crearCuenta("ClienteG", "777777777G", "1234");
-        app.iniciarSesion("ClienteG", "1234");
+        app.crearCuenta("ClienteG", "777777777G", "Holahola1@", "Holahola1@");
+        app.iniciarSesion("ClienteG", "Holahola1@");
 
         Set<LineaProductoVenta> rec = app.getConfiguracionRecomendacion().getRecomendacion();
         // Todos los recomendados deben ser LineaProductoVenta (productos nuevos)
@@ -405,8 +405,8 @@ class ConfiguracionRecomendacionTest {
         app.getConfiguracionRecomendacion().configurarImportancia(1, 0, 0);
         app.getConfiguracionRecomendacion().configurarUnidades(1);
 
-        app.crearCuenta("ClienteH", "888888888H", "1234");
-        app.iniciarSesion("ClienteH", "1234");
+        app.crearCuenta("ClienteH", "888888888H", "Holahola1@", "Holahola1@");
+        app.iniciarSesion("ClienteH", "Holahola1@");
 
         // Buscar varias veces el producto para acumular interés (PESO_BUSQUEDA = 5)
         app.buscarProductosNuevos("Figura Goku");
