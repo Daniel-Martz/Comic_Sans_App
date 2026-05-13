@@ -5,20 +5,44 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class NewEmployeeWindow.
+ */
 public class NewEmployeeWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The txt name. */
     private JTextField txtName;
+    
+    /** The txt dni. */
     private JTextField txtDni;
+    
+    /** The chk validaciones. */
     private JCheckBox chkValidaciones;
+    
+    /** The chk intercambios. */
     private JCheckBox chkIntercambios;
+    
+    /** The chk pedidos. */
     private JCheckBox chkPedidos;
+    
+    /** The btn accept. */
     private JButton btnAccept;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(245, 247, 250);
+    
+    /** The btn blue. */
     private final Color BTN_BLUE = new Color(74, 144, 226);
 
+    /**
+     * Instantiates a new new employee window.
+     *
+     * @param parent the parent
+     */
     public NewEmployeeWindow(Frame parent) {
         super(parent, "New Employee", true);
         initComponents();
@@ -27,6 +51,9 @@ public class NewEmployeeWindow extends JDialog {
         setLocationRelativeTo(parent);
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         txtName = new JTextField(15);
         txtDni = new JTextField(15);
@@ -52,6 +79,9 @@ public class NewEmployeeWindow extends JDialog {
         ));
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -96,26 +126,56 @@ public class NewEmployeeWindow extends JDialog {
         setContentPane(panel);
     }
 
+    /**
+     * Adds the accept listener.
+     *
+     * @param l the l
+     */
     public void addAcceptListener(ActionListener l) {
         btnAccept.addActionListener(l);
     }
 
+    /**
+     * Gets the employee name.
+     *
+     * @return the employee name
+     */
     public String getEmployeeName() {
         return txtName.getText().trim();
     }
 
+    /**
+     * Gets the employee dni.
+     *
+     * @return the employee dni
+     */
     public String getEmployeeDni() {
         return txtDni.getText().trim();
     }
 
+    /**
+     * Checks for validaciones.
+     *
+     * @return true, if successful
+     */
     public boolean hasValidaciones() {
         return chkValidaciones.isSelected();
     }
 
+    /**
+     * Checks for intercambios.
+     *
+     * @return true, if successful
+     */
     public boolean hasIntercambios() {
         return chkIntercambios.isSelected();
     }
 
+    /**
+     * Checks for pedidos.
+     *
+     * @return true, if successful
+     */
     public boolean hasPedidos() {
         return chkPedidos.isSelected();
     }

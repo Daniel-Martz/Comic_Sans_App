@@ -8,27 +8,53 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ManageAccountsPanel.
+ */
 public class ManageAccountsPanel extends JPanel {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The search field. */
     private JTextField searchField;
+    
+    /** The btn search. */
     private JButton btnSearch;
+    
+    /** The list container. */
     private JPanel listContainer;
+    
+    /** The btn add user. */
     private JButton btnAddUser;
     
+    /** The manage user listener. */
     private ActionListener manageUserListener;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);
+    
+    /** The banner color. */
     private final Color BANNER_COLOR = new Color(20, 60, 100); 
+    
+    /** The center bg. */
     private final Color CENTER_BG = new Color(54, 119, 189); 
 
+    /**
+     * Instantiates a new manage accounts panel.
+     */
     public ManageAccountsPanel() {
         initComponents();
         initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuGestor(); 
@@ -93,6 +119,9 @@ public class ManageAccountsPanel extends JPanel {
         btnAddUser.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -158,12 +187,21 @@ public class ManageAccountsPanel extends JPanel {
         add(bodyContent, BorderLayout.CENTER);
     }
 
+    /**
+     * Clear accounts.
+     */
     public void clearAccounts() {
         listContainer.removeAll();
         listContainer.revalidate();
         listContainer.repaint();
     }
 
+    /**
+     * Adds the account row.
+     *
+     * @param name the name
+     * @param dni the dni
+     */
     public void addAccountRow(String name, String dni) {
         JPanel row = createUserRow(name, dni);
         listContainer.add(row);
@@ -172,6 +210,13 @@ public class ManageAccountsPanel extends JPanel {
         listContainer.repaint();
     }
 
+    /**
+     * Creates the user row.
+     *
+     * @param name the name
+     * @param dni the dni
+     * @return the j panel
+     */
     private JPanel createUserRow(String name, String dni) {
         JPanel row = new JPanel(new BorderLayout(15, 0));
         row.setBackground(new Color(173, 216, 230)); // Fondo azul claro que destaca
@@ -220,36 +265,69 @@ public class ManageAccountsPanel extends JPanel {
         return row;
     }
 
+    /**
+     * Adds the home listener.
+     *
+     * @param l the l
+     */
     // --- Métodos de suscripción para el Controlador ---
     public void addHomeListener(ActionListener l) {
         headerPanel.addHomeListener(l);
     }
 
+    /**
+     * Adds the search listener.
+     *
+     * @param l the l
+     */
     public void addSearchListener(ActionListener l) {
         btnSearch.addActionListener(l);
         searchField.addActionListener(l);
     }
 
+    /**
+     * Adds the manage user listener.
+     *
+     * @param l the l
+     */
     public void addManageUserListener(ActionListener l) {
         this.manageUserListener = l;
     }
 
+    /**
+     * Adds the create user listener.
+     *
+     * @param l the l
+     */
     public void addCreateUserListener(ActionListener l) {
         btnAddUser.addActionListener(l);
     }
 
-    /** Permite al Controlador mostrar/ocultar el botón de crear usuario.
+    /**
+     * Permite al Controlador mostrar/ocultar el botón de crear usuario.
      *  Útil para ocultarlo cuando el usuario actual no tiene permisos (por ejemplo: no es Gestor).
+     *
+     * @param visible the new creates the button visible
      */
     public void setCreateButtonVisible(boolean visible) {
         btnAddUser.setVisible(visible);
     }
     
+    /**
+     * Gets the search text.
+     *
+     * @return the search text
+     */
     public String getSearchText() {
         String text = searchField.getText().trim();
         return text.equals("Search") ? "" : text;
     }
     
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }

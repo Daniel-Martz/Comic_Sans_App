@@ -63,7 +63,7 @@ public class DiscountedPanel extends JPanel {
      * @param products the list of products to display
      * @param controller the action listener handling interactions
      */
-    public void updateProducts(List<LineaProductoVenta> products, ActionListener controller) {
+    public void actualizarProductos(List<LineaProductoVenta> products, ActionListener controller) {
         productsScrollPanel.removeAll();
 
         if (products == null || products.isEmpty()) {
@@ -194,7 +194,7 @@ public class DiscountedPanel extends JPanel {
      * @param msg the message to display
      * @param title the title of the dialog
      */
-    public void showMessage(String msg, String title) {
+    public void mostrarMensaje(String msg, String title) {
         JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);
     }
 }

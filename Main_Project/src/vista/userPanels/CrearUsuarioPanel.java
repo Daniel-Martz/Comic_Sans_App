@@ -7,25 +7,51 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import controladores.NewPasswordController;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CrearUsuarioPanel.
+ */
 public class CrearUsuarioPanel extends JPanel {
 
+  /** The Constant BG. */
   // ── Paleta de colores ────────────────────────────────────────────
   static final Color BG           = new Color(74, 144, 210);
+  
+  /** The Constant FIELD_LINE. */
   static final Color FIELD_LINE   = new Color(220, 235, 255);
+  
+  /** The Constant WHITE. */
   static final Color WHITE        = Color.WHITE;
+  
+  /** The Constant RED. */
   static final Color RED        =  new Color(220, 70, 70);
+  
+  /** The Constant GREEN. */
   static final Color GREEN        =  new Color(90, 210, 90);
+  
+  /** The Constant REQ_HEADER. */
   static final Color REQ_HEADER   = new Color(60, 100, 200);
 
+  /** The title label. */
   private JLabel titleLabel;
+  
+  /** The panel inferior. */
   private PanelInferior panelInferior;
+  
+  /** The panel intermedio. */
   private PanelIntermedio panelIntermedio;
 
+  /**
+   * Instantiates a new crear usuario panel.
+   */
   public CrearUsuarioPanel() {
     initComponents();
     initLayout();
   }
 
+  /**
+   * Inits the components.
+   */
   private void initComponents() {
     titleLabel = new JLabel("Create Account");
     titleLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 30));
@@ -34,6 +60,9 @@ public class CrearUsuarioPanel extends JPanel {
     panelInferior   = new PanelInferior();
   }
 
+  /**
+   * Inits the layout.
+   */
   private void initLayout() {
     setBackground(BG);
     setLayout(new BorderLayout());
@@ -51,56 +80,136 @@ public class CrearUsuarioPanel extends JPanel {
     add(panelInferior, BorderLayout.SOUTH);
   }
 
+  /**
+   * Gets the username.
+   *
+   * @return the username
+   */
   public String getUsername()          { return panelIntermedio.fieldsPanel.usernameField.getText().trim(); }
+  
+  /**
+   * Gets the dni.
+   *
+   * @return the dni
+   */
   public String getDni()               { return panelIntermedio.fieldsPanel.dniField.getText().trim(); }
+  
+  /**
+   * Gets the password.
+   *
+   * @return the password
+   */
   public String getPassword()          { return panelIntermedio.fieldsPanel.passwordField.getText().trim(); }
+  
+  /**
+   * Gets the confirmed password.
+   *
+   * @return the confirmed password
+   */
   public String getConfirmedPassword() { return panelIntermedio.fieldsPanel.confirmPasswordField.getText().trim(); }
 
+  /**
+   * Sets the status label text.
+   *
+   * @param text the new status label text
+   */
   public void setStatusLabelText(String text)     { 
 	  panelInferior.statusLabel.setText(text); 
   }
+  
+  /**
+   * Sets the ten characters box.
+   *
+   * @param status the new ten characters box
+   */
   public void setTenCharactersBox(boolean status) { 
 	  panelIntermedio.tenCharacters.setSelected(status); 
 	  panelIntermedio.applyCheckboxStyle(panelIntermedio.tenCharacters, status ? new Color(90, 210, 90) : new Color(220, 70, 70));
   }
+  
+  /**
+   * Sets the upper and lower box.
+   *
+   * @param status the new upper and lower box
+   */
   public void setUpperAndLowerBox(boolean status) { 
 	  panelIntermedio.upperAndLowerCase.setSelected(status); 
 	  panelIntermedio.applyCheckboxStyle(panelIntermedio.upperAndLowerCase, status ? new Color(90, 210, 90) : new Color(220, 70, 70));
   }
+  
+  /**
+   * Sets the symbol box.
+   *
+   * @param status the new symbol box
+   */
   public void setSymbolBox(boolean status)        { 
 	  panelIntermedio.symbol.setSelected(status); 
 	  panelIntermedio.applyCheckboxStyle(panelIntermedio.symbol, status ? new Color(90, 210, 90) : new Color(220, 70, 70));
   }
+  
+  /**
+   * Sets the number box.
+   *
+   * @param status the new number box
+   */
   public void setNumberBox(boolean status)        { 
 	  panelIntermedio.number.setSelected(status); 
 	  panelIntermedio.applyCheckboxStyle(panelIntermedio.number, status ? new Color(90, 210, 90) : new Color(220, 70, 70));
   }
 
+  /**
+   * Añadir listener boton crear.
+   *
+   * @param a the a
+   */
   public void añadirListenerBotonCrear(ActionListener a){
     panelInferior.botonCrear.addActionListener(a);
   }
 
   // ════════════════════════════════════════════════════════════════
   //  PANEL INTERMEDIO
+  /**
+   * The Class PanelIntermedio.
+   */
   // ════════════════════════════════════════════════════════════════
   public class PanelIntermedio extends JPanel {
 
+    /** The fields panel. */
     FieldsPanel      fieldsPanel;
+    
+    /** The requirements panel. */
     RequirementsPanel requirementsPanel;
 
+    /** The ten characters. */
     // Checkboxes (mismos nombres que en el original para que los setters funcionen)
     JCheckBox tenCharacters   = new JCheckBox("10 characters");
+    
+    /** The upper and lower case. */
     JCheckBox upperAndLowerCase = new JCheckBox("Uppercase and lowercase letters.");
+    
+    /** The number. */
     JCheckBox number          = new JCheckBox("Number");
+    
+    /** The symbol. */
     JCheckBox symbol          = new JCheckBox("Symbol");
+    
+    /** The c. */
     CrearUsuarioPanel c;
 
+    /**
+     * Instantiates a new panel intermedio.
+     *
+     * @param c the c
+     */
     public PanelIntermedio(CrearUsuarioPanel c) {
       this.c = c;
       initComponents();
       initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     void initComponents() {
       fieldsPanel      = new FieldsPanel(c);
       requirementsPanel = new RequirementsPanel();
@@ -112,7 +221,12 @@ public class CrearUsuarioPanel extends JPanel {
       applyCheckboxStyle(symbol,     RED);
     }
 
-    /** Aplica estilos visuales al JCheckBox usando iconos de colores. */
+    /**
+     * Aplica estilos visuales al JCheckBox usando iconos de colores.
+     *
+     * @param cb the cb
+     * @param uncheckedColor the unchecked color
+     */
     public void applyCheckboxStyle(JCheckBox cb, Color uncheckedColor) {
       cb.setBackground(new Color(50, 100, 180));
       cb.setForeground(WHITE);
@@ -123,6 +237,9 @@ public class CrearUsuarioPanel extends JPanel {
       cb.setOpaque(false);
     }
 
+    /**
+     * Inits the layout.
+     */
     void initLayout() {
       setBackground(BG);
       setLayout(new BorderLayout(30, 0));
@@ -131,30 +248,61 @@ public class CrearUsuarioPanel extends JPanel {
       add(requirementsPanel, BorderLayout.EAST);
     }
 
+    /**
+     * The Class FieldsPanel.
+     */
     // ── FieldsPanel ─────────────────────────────────────────────
     public class FieldsPanel extends JPanel {
 
+      private static final long serialVersionUID = 1L;
+
+	  /** The username label. */
       private JLabel usernameLabel;
+      
+      /** The dni label. */
       private JLabel dniLabel;
+      
+      /** The password label. */
       private JLabel passwordLabel;
+      
+      /** The confirm password label. */
       private JLabel confirmPasswordLabel;
 
+      /** The username field. */
       JTextField usernameField;
+      
+      /** The dni field. */
       JTextField dniField;
+      
+      /** The password field. */
       JPasswordField passwordField;
+      
+      /** The confirm password field. */
       JPasswordField confirmPasswordField;
 
+      /** The show password button. */
       JButton showPasswordButton;
+      
+      /** The is password visible. */
       boolean isPasswordVisible = false;
 
+      /** The c. */
       CrearUsuarioPanel c;
 
+      /**
+       * Instantiates a new fields panel.
+       *
+       * @param c the c
+       */
       public FieldsPanel(CrearUsuarioPanel c) {
         this.c = c;
         initComponents();
         initLayout();
       }
 
+      /**
+       * Inits the components.
+       */
       void initComponents() {
         usernameField        = styledField();
         dniField             = styledField();
@@ -188,7 +336,11 @@ public class CrearUsuarioPanel extends JPanel {
         });
       }
 
-      /** Crea un JTextField con estilo subrayado (sin borde exterior). */
+      /**
+       * Crea un JTextField con estilo subrayado (sin borde exterior).
+       *
+       * @return the j text field
+       */
       private JTextField styledField() {
         JTextField f = new JTextField(25);
         f.setBackground(new Color(74, 144, 210, 0));   // mismo color que fondo
@@ -201,7 +353,13 @@ public class CrearUsuarioPanel extends JPanel {
         return f;
       }
 
-      /** Crea una etiqueta con emoji + texto, blanca y en Comic Sans. */
+      /**
+       * Crea una etiqueta con emoji + texto, blanca y en Comic Sans.
+       *
+       * @param icon the icon
+       * @param text the text
+       * @return the j label
+       */
       private JLabel iconLabel(String icon, String text) {
         JLabel lbl = new JLabel(icon + "  " + text);
         lbl.setForeground(WHITE);
@@ -210,6 +368,9 @@ public class CrearUsuarioPanel extends JPanel {
         return lbl;
       }
 
+      /**
+       * Inits the layout.
+       */
       void initLayout() {
         setOpaque(false);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -226,6 +387,12 @@ public class CrearUsuarioPanel extends JPanel {
         add(showPasswordButton);
       }
 
+      /**
+       * Adds the row.
+       *
+       * @param label the label
+       * @param field the field
+       */
       private void addRow(JLabel label, JTextField field) {
         label.setAlignmentX(LEFT_ALIGNMENT);
         field.setAlignmentX(LEFT_ALIGNMENT);
@@ -234,6 +401,9 @@ public class CrearUsuarioPanel extends JPanel {
         add(field);
       }
 
+      /**
+       * Reset.
+       */
       void reset() {
         usernameField.setText("");
         dniField.setText("");
@@ -242,6 +412,11 @@ public class CrearUsuarioPanel extends JPanel {
       }
     }
 
+      /**
+       * Styled password field.
+       *
+       * @return the j password field
+       */
       private JPasswordField styledPasswordField(){
         JPasswordField f = new JPasswordField(25);
         f.setBackground(new Color(74, 144, 210, 0));   // mismo color que fondo
@@ -255,14 +430,24 @@ public class CrearUsuarioPanel extends JPanel {
         return f;
       }
 
-    // ── RequirementsPanel ────────────────────────────────────────
+    /**
+     * The Class RequirementsPanel.
+     */
     public class RequirementsPanel extends JPanel {
 
+      private static final long serialVersionUID = 1L;
+
+	  /**
+       * Instantiates a new requirements panel.
+       */
       public RequirementsPanel() {
         initComponents();
         initLayout();
       }
 
+      /**
+       * Inits the components.
+       */
       void initComponents() {
         tenCharacters.setEnabled(false);
         upperAndLowerCase.setEnabled(false);
@@ -270,6 +455,9 @@ public class CrearUsuarioPanel extends JPanel {
         symbol.setEnabled(false);
       }
 
+      /**
+       * Inits the layout.
+       */
       void initLayout() {
         setOpaque(false);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -304,17 +492,31 @@ public class CrearUsuarioPanel extends JPanel {
 
   // ════════════════════════════════════════════════════════════════
   //  PANEL INFERIOR
+  /**
+   * The Class PanelInferior.
+   */
   // ════════════════════════════════════════════════════════════════
   public class PanelInferior extends JPanel {
 
+    private static final long serialVersionUID = 1L;
+
+	/** The boton crear. */
     private JButton botonCrear;
+    
+    /** The status label. */
     private JLabel statusLabel = new JLabel();
 
+    /**
+     * Instantiates a new panel inferior.
+     */
     public PanelInferior() {
       initComponents();
       initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     void initComponents() {
       botonCrear = new JButton("Crear");
       botonCrear.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
@@ -331,6 +533,9 @@ public class CrearUsuarioPanel extends JPanel {
       statusLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
     }
 
+    /**
+     * Inits the layout.
+     */
     void initLayout() {
       setBackground(BG);
       setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -350,15 +555,35 @@ public class CrearUsuarioPanel extends JPanel {
    * Icono cuadrado de color con o sin tilde de verificación.
    */
   private static class SquareIcon implements Icon {
+    
+    /** The color. */
     private final Color   color;
+    
+    /** The checked. */
     private final boolean checked;
+    
+    /** The Constant SIZE. */
     private static final int SIZE = 20;
 
+    /**
+     * Instantiates a new square icon.
+     *
+     * @param color the color
+     * @param checked the checked
+     */
     SquareIcon(Color color, boolean checked) {
       this.color   = color;
       this.checked = checked;
     }
 
+    /**
+     * Paint icon.
+     *
+     * @param c the c
+     * @param g the g
+     * @param x the x
+     * @param y the y
+     */
     @Override
     public void paintIcon(Component c, Graphics g, int x, int y) {
       Graphics2D g2 = (Graphics2D) g.create();
@@ -384,7 +609,18 @@ public class CrearUsuarioPanel extends JPanel {
       g2.dispose();
     }
 
+    /**
+     * Gets the icon width.
+     *
+     * @return the icon width
+     */
     @Override public int getIconWidth()  { return SIZE; }
+    
+    /**
+     * Gets the icon height.
+     *
+     * @return the icon height
+     */
     @Override public int getIconHeight() { return SIZE; }
   }
 }
