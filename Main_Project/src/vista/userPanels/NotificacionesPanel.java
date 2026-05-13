@@ -75,7 +75,6 @@ public class NotificacionesPanel extends JPanel{
     // 4. Añadimos el panel intermedio al CENTRO del panel principal
     add(centroPanel, BorderLayout.CENTER);
 }
-
     /**
      * Enchufa una notificación nueva al final de la tabla.
      * @param n la notificacion a meter
