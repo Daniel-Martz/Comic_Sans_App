@@ -175,8 +175,14 @@ public class MenuPrincipalPanel extends JPanel {
         lblPrice.setBackground(new Color(0, 204, 204));
         lblPrice.setBorder(new LineBorder(Color.BLACK, 1));
         lblPrice.setForeground(Color.BLACK);
-        
-        JPanel pricePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        // Make price slightly larger and ensure consistent sizing/alignment across cards
+        lblPrice.setFont(new Font("SansSerif", Font.BOLD, 14));
+        lblPrice.setPreferredSize(new Dimension(120, 28));
+        lblPrice.setHorizontalAlignment(SwingConstants.CENTER);
+        lblPrice.setVerticalAlignment(SwingConstants.CENTER);
+
+        // Use a bit of vertical padding so the price sits nicely within the card
+        JPanel pricePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 6));
         pricePanel.setOpaque(false);
         pricePanel.add(lblPrice);
 
