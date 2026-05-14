@@ -128,6 +128,66 @@ public class VentanaDetallesProductoWindow extends JDialog {
             addDetailRow(detailsPanel, "Age", j.getEdadMinima() + " - " + j.getEdadMaxima() + " years");
         }
 
+        // Si es un Pack, mostramos el contenido detallado del pack (productos incluídos,
+        // cantidad, precio unitario y subtotal por cada elemento).
+        if (p instanceof modelo.producto.Pack) {
+            modelo.producto.Pack pack = (modelo.producto.Pack) p;
+            addDetailRow(detailsPanel, "Tipo", "Pack");
+            addDetailRow(detailsPanel, "Componentes", String.valueOf(pack.getProductosPack().size()));
+
+            // Panel con listado de componentes
+            JPanel comps = new JPanel();
+            comps.setLayout(new BoxLayout(comps, BoxLayout.Y_AXIS));
+            comps.setBackground(Color.WHITE);
+            comps.setBorder(new EmptyBorder(8, 8, 8, 8));
+
+            double sumaSubtotales = 0.0;
+            if (pack.getProductosPack().isEmpty()) {
+                JLabel empty = new JLabel("(Este pack no contiene productos)");
+                empty.setFont(new Font("Comic Sans MS", Font.ITALIC, 12));
+                empty.setForeground(Color.GRAY);
+                comps.add(empty);
+            } else {
+                for (java.util.Map.Entry<LineaProductoVenta, Integer> entry : pack.getProductosPack().entrySet()) {
+                    LineaProductoVenta child = entry.getKey();
+                    int qty = entry.getValue();
+                    double unit = child.getPrecio();
+                    double subtotal = unit * qty;
+                    sumaSubtotales += subtotal;
+
+                    String nombre = child.getNombre();
+                    String linea = String.format("%s (x%d) — %.2f € each — subtotal: %.2f €", nombre, qty, unit, subtotal);
+                    JLabel lbl = new JLabel(linea);
+                    lbl.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+                    lbl.setBorder(new EmptyBorder(4, 0, 4, 0));
+                    comps.add(lbl);
+                }
+            }
+
+            // Mostrar suma de subtotales e indicar si difiere del precio del pack
+            JLabel lblSum = new JLabel(String.format("Suma componentes: %.2f €", sumaSubtotales));
+            lblSum.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            lblSum.setBorder(new EmptyBorder(8, 0, 0, 0));
+            comps.add(lblSum);
+
+            if (Math.abs(sumaSubtotales - p.getPrecio()) > 0.01) {
+                JLabel lblNote = new JLabel("Nota: el precio del pack difiere de la suma de componentes (puede incluir descuento/recargo). ");
+                lblNote.setFont(new Font("Comic Sans MS", Font.ITALIC, 12));
+                lblNote.setForeground(Color.DARK_GRAY);
+                comps.add(lblNote);
+            }
+
+            // Añadimos el panel de componentes a detailsPanel como un bloque
+            detailsPanel.add(Box.createVerticalStrut(8));
+            detailsPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+            detailsPanel.add(Box.createVerticalStrut(6));
+            JLabel compTitle = new JLabel("Contenido del pack:");
+            compTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+            detailsPanel.add(compTitle);
+            detailsPanel.add(Box.createVerticalStrut(6));
+            detailsPanel.add(comps);
+        }
+
         JScrollPane scrollDetails = new JScrollPane(detailsPanel);
         scrollDetails.setBorder(null);
         centerPanel.add(scrollDetails, BorderLayout.CENTER);

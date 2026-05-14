@@ -361,7 +361,8 @@ import modelo.tiempo.*;
         // -------------------------------------------------------------------------
         
         // Oferta 1: Bob me ofrece su Comic a cambio de mi Juego (Tu oferta original)
-        ProductoSegundaMano comicBob = new ProductoSegundaMano("Spider-Man Vol.1", "Primera edición",  null, bob);
+        // Crear el producto a través del método del cliente para no saltarnos la cartera
+        ProductoSegundaMano comicBob = bob.añadirProductoACarteraDeIntercambio("Spider-Man Vol.1", "Primera edición", null);
         comicBob.getSolicitudValidacion().validarProducto(5.0, 150.0, EstadoConservacion.USO_LIGERO);
         bob.pagarValidacion(comicBob.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
         ProductoSegundaMano juegoMio = yo.añadirProductoACarteraDeIntercambio("Catan", "Casi nuevo", null);
@@ -374,8 +375,8 @@ import modelo.tiempo.*;
                 yo);
 
         for (int i = 1; i <= 6; i++) {
-            ProductoSegundaMano pDaAlice = new ProductoSegundaMano(
-                    "Figura de Anime #" + i, "Buen estado", null, alice);
+            // Usar el método del cliente para añadir a su cartera y generar correctamente la solicitud
+            ProductoSegundaMano pDaAlice = alice.añadirProductoACarteraDeIntercambio("Figura de Anime #" + i, "Buen estado", null);
             pDaAlice.getSolicitudValidacion().validarProducto(2.0, 15.0 + i * 2, EstadoConservacion.USO_LIGERO);
             alice.pagarValidacion(pDaAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
@@ -411,8 +412,7 @@ import modelo.tiempo.*;
             pDoyYo.getSolicitudValidacion().validarProducto(5.0, 40.0, EstadoConservacion.PERFECTO);
             yo.pagarValidacion(pDoyYo.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-            ProductoSegundaMano pPidoCharlie = new ProductoSegundaMano(
-                    "Juego de Rol de Charlie #" + i, "Nuevo", null, charlie);
+            ProductoSegundaMano pPidoCharlie = charlie.añadirProductoACarteraDeIntercambio("Juego de Rol de Charlie #" + i, "Nuevo", null);
             pPidoCharlie.getSolicitudValidacion().validarProducto(5.0, 35.0 + i, EstadoConservacion.PERFECTO);
             charlie.pagarValidacion(pPidoCharlie.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
