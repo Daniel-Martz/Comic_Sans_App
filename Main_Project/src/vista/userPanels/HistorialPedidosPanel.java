@@ -72,7 +72,7 @@ public class HistorialPedidosPanel extends JPanel {
                 BorderFactory.createEmptyBorder(5, 10, 10, 10)
         ));
         
-        panelPedido.setMaximumSize(new Dimension(Integer.MAX_VALUE, 470));
+        panelPedido.setMaximumSize(new Dimension(Integer.MAX_VALUE, 400));
 
         JLabel lblPrecio = new JLabel("Total paid: " + String.format("%.2f", precioTotal) + " €");
         lblPrecio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -85,7 +85,7 @@ public class HistorialPedidosPanel extends JPanel {
             JPanel panelProductoConcreto = new JPanel();
             panelProductoConcreto.setLayout(new BoxLayout(panelProductoConcreto, BoxLayout.Y_AXIS));
             
-            panelProductoConcreto.setPreferredSize(new Dimension(320, 300));
+            panelProductoConcreto.setPreferredSize(new Dimension(320, 240));
             panelProductoConcreto.setBackground(new Color(240, 248, 255));
             panelProductoConcreto.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(new Color(176, 196, 222)), 
@@ -148,7 +148,7 @@ public class HistorialPedidosPanel extends JPanel {
         scrollHorizontal.getHorizontalScrollBar().setUnitIncrement(16);
         scrollHorizontal.setBorder(BorderFactory.createEmptyBorder()); 
 
-        scrollHorizontal.setPreferredSize(new Dimension(400, 330));
+        scrollHorizontal.setPreferredSize(new Dimension(400, 260));
 
         panelPedido.add(scrollHorizontal, BorderLayout.CENTER);
 
