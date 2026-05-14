@@ -17,6 +17,7 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la gestión de descuentos.
  *
@@ -25,7 +26,10 @@ import java.util.List;
  */
 public class ControladorDescuentos implements ActionListener {
 
+    /** The panel. */
     private final DescuentosPanel panel;
+    
+    /** The main frame. */
     private final MainFrame mainFrame;
     /**
      * Inicializa el controlador y configura listeners básicos.
@@ -138,6 +142,23 @@ public class ControladorDescuentos implements ActionListener {
         }
     }
 
+    /**
+     * Confirmar descuentos multi.
+     *
+     * @param productos the productos
+     * @param oldDiscount the old discount
+     * @param type the type
+     * @param inicio the inicio
+     * @param fin the fin
+     * @param perc the perc
+     * @param thresh the thresh
+     * @param threshPerc the thresh perc
+     * @param buyQty the buy qty
+     * @param recvQty the recv qty
+     * @param giftThresh the gift thresh
+     * @param giftId the gift id
+     * @param giftQty the gift qty
+     */
     public void confirmarDescuentosMulti(List<LineaProductoVenta> productos, Descuento oldDiscount, String type, modelo.tiempo.DateTimeSimulado inicio, modelo.tiempo.DateTimeSimulado fin, int perc, double thresh, int threshPerc, int buyQty, int recvQty, double giftThresh, int giftId, int giftQty) {
         try {
             if (oldDiscount != null) {

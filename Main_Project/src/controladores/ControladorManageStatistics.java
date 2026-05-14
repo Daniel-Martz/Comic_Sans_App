@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para generar informes estadísticos (solo Gestor).
  *
@@ -21,7 +22,10 @@ import java.io.IOException;
  */
 public class ControladorManageStatistics implements ActionListener {
 
+    /** The panel. */
     private final ManageStatisticsPanel panel;
+    
+    /** The main frame. */
     private final MainFrame mainFrame;
     /**
      * Inicializa el controlador y enlaza la vista con el controlador principal.

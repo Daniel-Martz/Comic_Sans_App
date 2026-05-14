@@ -9,6 +9,7 @@ import vista.clienteWindows.ManageCategoriesWindow;
 import javax.swing.*;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para gestionar categorías de producto (ventanas de gestión/crear).
  *
@@ -17,9 +18,16 @@ import java.util.ArrayList;
  */
 public class ManageCategoriesController {
 
+    /** The manage categories window. */
     private ManageCategoriesWindow manageCategoriesWindow;
+    
+    /** The add category window. */
     private AddCategoryWindow addCategoryWindow;
+    
+    /** The catalogo. */
     private Catalogo catalogo;
+    
+    /** The parent frame. */
     private JFrame parentFrame;
 
     /**

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la gestión de solicitudes de intercambio (empleados).
  *
@@ -19,8 +20,13 @@ import java.util.List;
  */
 public class ControladorManageInterchanges implements ActionListener {
 
+    /** The panel. */
     private ManageInterchangesPanel panel;
+    
+    /** The main frame. */
     private MainFrame mainFrame;
+    
+    /** The pendientes. */
     private List<SolicitudIntercambio> pendientes;
 
     /**

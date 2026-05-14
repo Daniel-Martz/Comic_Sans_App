@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la creación de packs (paquetes) de productos.
  *
@@ -30,9 +31,16 @@ import javax.swing.event.ChangeListener;
  */
 public class ControladorCreatePack implements ActionListener, ItemListener, ChangeListener {
 
+    /** The vista. */
     private final CreatePackPanel vista;
+    
+    /** The main frame. */
     private final MainFrame mainFrame;
+    
+    /** The main controller. */
     private final MainController mainController;
+    
+    /** The seleccionados. */
     private final Map<LineaProductoVenta, Integer> seleccionados;
 
     /**

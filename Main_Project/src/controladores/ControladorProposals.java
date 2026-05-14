@@ -11,6 +11,7 @@ import vista.userPanels.ProposalsPanel;
 
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la ventana y panel de propuestas (intercambios).
  *
@@ -19,13 +20,18 @@ import java.util.Set;
  */
 public class ControladorProposals {
 	
+    /** The ventana. */
     private final ProposalsWindow ventana;
+    
+    /** The panel. */
     private final ProposalsPanel  panel;
+    
     /**
      * Inicializa el controlador, carga las ofertas del cliente actual y crea las
      * cards correspondientes en la vista.
-     * @param ventana
-     * @param mainController
+     *
+     * @param ventana the ventana
+     * @param mainController the main controller
      */
     public ControladorProposals(ProposalsWindow ventana, MainController mainController) {
         this.ventana        = ventana;
@@ -61,14 +67,16 @@ public class ControladorProposals {
         }
     }
 
-    // -------------------------------------------------------
-    // Creación de cards
-    // -------------------------------------------------------
+
 
     /**
      * Construye una InterchangeCardPanel a partir de una Oferta.
      * La extracción de datos del modelo se realiza aquí; la vista recibe
      * únicamente arrays de String con la información ya formateada.
+     *
+     * @param oferta the oferta
+     * @param modo the modo
+     * @return the interchange card panel
      */
     private InterchangeCardPanel crearCard(Oferta oferta, Modo modo) {
         String headerLabel;
@@ -96,6 +104,9 @@ public class ControladorProposals {
 
     /**
      * Convierte un Set de ProductoSegundaMano a array.
+     *
+     * @param productos the productos
+     * @return the producto segunda mano[]
      */
     private ProductoSegundaMano[] convertirProductos(Set<ProductoSegundaMano> productos) {
         return productos.toArray(new ProductoSegundaMano[0]);
@@ -104,6 +115,11 @@ public class ControladorProposals {
     /**
      * Calcula el balance económico desde el punto de vista del usuario.
      * Para INCOME se calcula (recibo - doy); para SENT se invierte la lógica.
+     *
+     * @param ofertados the ofertados
+     * @param solicitados the solicitados
+     * @param modo the modo
+     * @return the double
      */
     private double calcularBalance(Set<ProductoSegundaMano> ofertados,
                                     Set<ProductoSegundaMano> solicitados,
@@ -120,6 +136,12 @@ public class ControladorProposals {
         }
     }
 
+    /**
+     * Sumar valor.
+     *
+     * @param productos the productos
+     * @return the double
+     */
     private double sumarValor(Set<ProductoSegundaMano> productos) {
         double total = 0.0;
         for (ProductoSegundaMano p : productos) {
@@ -136,6 +158,10 @@ public class ControladorProposals {
 
     /**
      * Registra ACCEPT y REJECT en una card de tipo INCOME (ofertas recibidas).
+     *
+     * @param card the card
+     * @param oferta the oferta
+     * @param cliente the cliente
      */
     private void registrarListenersIncome(InterchangeCardPanel card,
                                            Oferta oferta,
@@ -147,6 +173,10 @@ public class ControladorProposals {
 
     /**
      * Registra CANCEL en una card de tipo SENT (ofertas enviadas).
+     *
+     * @param card the card
+     * @param oferta the oferta
+     * @param cliente the cliente
      */
     private void registrarListenersSent(InterchangeCardPanel card,
                                          Oferta oferta,
@@ -155,43 +185,61 @@ public class ControladorProposals {
         card.setInfoListener(e -> procesarClickInfo(e.getActionCommand(), cliente));
     }
 
-    // -------------------------------------------------------
-    // Lógica de negocio (delegada al modelo)
-    // -------------------------------------------------------
 
+    /**
+     * Aceptar oferta.
+     *
+     * @param oferta the oferta
+     * @param cliente the cliente
+     */
     private void aceptarOferta(Oferta oferta, ClienteRegistrado cliente) {
         try {
             cliente.aceptarOferta(oferta);
-            ventana.mostrarVentanaExito("¡Oferta aceptada! Se ha creado la solicitud de intercambio.");
+            ventana.mostrarVentanaExito("Offer accepted! An exchange request has been created.");
             recargar();
         } catch (IllegalStateException ex) {
-            ventana.mostrarVentanaError("No se pudo aceptar la oferta: " + ex.getMessage());
+            ventana.mostrarVentanaError("The offer could not be accepted: " + ex.getMessage());
         }
     }
 
+    /**
+     * Reject offer.
+     *
+     * @param oferta the offer
+     * @param cliente the customer
+     */
     private void rechazarOferta(Oferta oferta, ClienteRegistrado cliente) {
         try {
             cliente.rechazarOferta(oferta);
-            ventana.mostrarVentanaExito("Oferta rechazada.");
+            ventana.mostrarVentanaExito("Offer rejected.");
             recargar();
         } catch (IllegalStateException ex) {
-            ventana.mostrarVentanaError("No se pudo rechazar la oferta: " + ex.getMessage());
+            ventana.mostrarVentanaError("The offer could not be rejected: " + ex.getMessage());
         }
     }
 
+    /**
+     * Cancelar oferta.
+     *
+     * @param oferta the oferta
+     * @param cliente the cliente
+     */
     private void cancelarOferta(Oferta oferta, ClienteRegistrado cliente) {
         try {
             cliente.cancelarOferta(oferta);
-            ventana.mostrarVentanaExito("Oferta cancelada.");
+            ventana.mostrarVentanaExito("Canceled offer.");
             recargar();
         } catch (IllegalStateException ex) {
-            ventana.mostrarVentanaError("No se pudo cancelar la oferta: " + ex.getMessage());
+            ventana.mostrarVentanaError("The offer could not be canceled: " + ex.getMessage());
         }
     }
 
     /**
      * Procesa el evento de la vista para mostrar los detalles de un producto
      * contenido en una oferta.
+     *
+     * @param command the command
+     * @param cliente the cliente
      */
     private void procesarClickInfo(String command, ClienteRegistrado cliente) {
         if (command != null && command.startsWith("INFO_")) {
@@ -199,7 +247,7 @@ public class ControladorProposals {
                 int id = Integer.parseInt(command.substring(5));
                 mostrarDetallesProducto(id, cliente);
             } catch (NumberFormatException ex) {
-                ventana.mostrarVentanaError("ID de producto inválido.");
+                ventana.mostrarVentanaError("Invalid product ID.");
             }
         }
     }
@@ -207,6 +255,9 @@ public class ControladorProposals {
     /**
      * Busca el producto en las ofertas (recibidas y enviadas) y abre la ventana
      * de detalles si se encuentra.
+     *
+     * @param idProducto the id producto
+     * @param cliente the cliente
      */
     private void mostrarDetallesProducto(int idProducto, ClienteRegistrado cliente) {
         ProductoSegundaMano target = null;
@@ -235,7 +286,7 @@ public class ControladorProposals {
                 new vista.clienteWindows.VentanaDetallesProductoSegundaManoWindow(ventana, target);
             dialog.setVisible(true);
         } else {
-            ventana.mostrarVentanaError("Producto no encontrado.");
+            ventana.mostrarVentanaError("Product not found.");
         }
     }
 

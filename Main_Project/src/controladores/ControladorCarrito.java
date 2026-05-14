@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.Map;
 import javax.swing.SwingUtilities;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador del panel de carrito de compra.
  *
@@ -24,8 +25,13 @@ import javax.swing.SwingUtilities;
  */
 public class ControladorCarrito implements ActionListener {
 
+    /** The vista. */
     private CarritoPanel vista;
+    
+    /** The main frame. */
     private MainFrame mainFrame;
+    
+    /** The cliente actual. */
     private ClienteRegistrado clienteActual;
 
     /**

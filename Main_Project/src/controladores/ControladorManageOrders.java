@@ -12,6 +12,7 @@ import vista.empleadoWindow.SelectOrderStateWindow;
 import vista.empleadoWindow.ViewOrderWindow;
 import vista.main.MainFrame;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la gestión de pedidos desde la perspectiva del empleado.
  *
@@ -19,7 +20,10 @@ import vista.main.MainFrame;
  */
 public class ControladorManageOrders implements ActionListener {
 
+    /** The panel. */
     private ManageOrdersPanel panel;
+    
+    /** The main frame. */
     private MainFrame mainFrame;
 
     /**
@@ -74,6 +78,11 @@ public class ControladorManageOrders implements ActionListener {
         dialog.setVisible(true);
     }
 
+    /**
+     * Action performed.
+     *
+     * @param e the e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         // Implementado solo por compatibilidad; aquí se podrían manejar

@@ -5,18 +5,23 @@ import java.awt.event.ActionListener;
 
 import vista.userPanels.LogInPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador que maneja la acción de pasar desde la ventana de login a la
  * ventana de creación de cuenta.
  */
 public class LoginToCreateAccountController implements ActionListener{
+  
+  /** The login panel. */
   LogInPanel loginPanel;
+  
+  /** The main controller. */
   MainController mainController;
     
 	/**
-	 * Inicializa el controlador con una referencia al controlador principal para
+	 * Inicializa el controlador con una referencia al controlador principal para.
+	 *
 	 * @param mainController controlador principal usado para cerrar y abrir ventanas
-	 * 
 	 */
 	public LoginToCreateAccountController(MainController mainController) {
 		this.mainController = mainController;

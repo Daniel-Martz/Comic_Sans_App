@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para aplicar descuentos por categoría.
  *
@@ -24,7 +25,10 @@ import java.util.Set;
  */
 public class ControladorDescuentosCategoria implements ActionListener {
 
+    /** The panel. */
     private final DescuentosCategoriaPanel panel;
+    
+    /** The main frame. */
     private final MainFrame mainFrame;
     /**
      * Inicializa el controlador.

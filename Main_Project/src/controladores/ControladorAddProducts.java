@@ -16,6 +16,7 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la pantalla de añadir productos.
  * Este controlador solo conecta botones y
@@ -23,10 +24,16 @@ import java.awt.event.ActionListener;
  */
 public class ControladorAddProducts implements ActionListener {
 
+    /** The main frame. */
     private final MainFrame mainFrame;
+    
+    /** The main controller. */
     private final MainController mainController;
 
+    /** The add products panel. */
     private AddProductsPanel addProductsPanel;
+    
+    /** The window add single. */
     private AddProductManuallyWindow windowAddSingle;
 
     /**
@@ -153,8 +160,6 @@ public class ControladorAddProducts implements ActionListener {
                 String editorial = windowAddSingle.getNewEditorial();
                 int año = Integer.parseInt(windowAddSingle.getNewAño());
 
-                // Constructor: Comic(String nombre, String descripcion, File foto, int stock, double precio,
-                //                      int unidadesVendidas, int numeroPaginas, String autor, String editorial, int añoPublicacion)
                 nuevoProducto = new Comic(newName, newDescription, windowAddSingle.getSelectedPhotoFile(), newStock, newPrice,
                         0, numPaginas, autor, editorial, año);
 
@@ -165,8 +170,6 @@ public class ControladorAddProducts implements ActionListener {
                 double dimY = Double.parseDouble(windowAddSingle.getNewDimY().replace(",", "."));
                 double dimZ = Double.parseDouble(windowAddSingle.getNewDimZ().replace(",", "."));
 
-                // Constructor: Figura(String nombre, String descripcion, File foto, int stock, double precio,
-                //                      int unidadesVendidas, String marca, String material, double dimensionX, double dimensionY, double dimensionZ)
                 nuevoProducto = new Figura(newName, newDescription, windowAddSingle.getSelectedPhotoFile(), newStock, newPrice,
                         0, marca, material, dimX, dimY, dimZ);
 

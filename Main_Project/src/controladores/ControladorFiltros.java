@@ -4,6 +4,7 @@ import java.awt.event.ItemEvent;
 
 import vista.clienteWindows.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador de la ventana de filtros.
  *
@@ -12,6 +13,7 @@ import vista.clienteWindows.*;
  */
 public class ControladorFiltros {
 
+    /** The vista. */
     private FiltrosWindow vista;
 
     /**

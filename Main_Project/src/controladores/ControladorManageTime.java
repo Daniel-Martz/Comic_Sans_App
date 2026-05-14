@@ -10,6 +10,7 @@ import vista.GestorPanel.ManageTimePanel;
 import vista.main.MainFrame;
 import modelo.tiempo.TiempoSimulado;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para ajustar el tiempo simulado de la aplicación.
  *
@@ -17,8 +18,13 @@ import modelo.tiempo.TiempoSimulado;
  */
 public class ControladorManageTime implements ActionListener, ChangeListener {
     
+    /** The vista. */
     private ManageTimePanel vista;
+    
+    /** The main frame. */
     private MainFrame mainFrame;
+    
+    /** The main controller. */
     private MainController mainController;
 
     /**
@@ -71,13 +77,18 @@ public class ControladorManageTime implements ActionListener, ChangeListener {
                 int daysToAdvance = (Integer) vista.getSpinAdvanceDays().getValue();
                 ts.avanzarDias(daysToAdvance);
                 JOptionPane.showMessageDialog(mainFrame, "Time advanced by " + daysToAdvance + " days.", "Success", JOptionPane.INFORMATION_MESSAGE);
-                mainController.refreshDateGlobal(); // Para forzar que se actualice en toda la app al instante
+                mainController.refreshDateGlobal(); 
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(mainFrame, "Error updating time settings: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    /**
+     * State changed.
+     *
+     * @param e the e
+     */
     @Override
     public void stateChanged(ChangeEvent e) {
         double val = vista.getSliderSpeed().getValue() / 10.0;

@@ -14,6 +14,7 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para modificar packs existentes.
  *
@@ -22,7 +23,10 @@ import java.util.List;
  */
 public class ControladorModifyPacks implements ActionListener {
 
+    /** The panel. */
     private final ModifyPacksPanel panel;
+    
+    /** The main frame. */
     private final MainFrame mainFrame;
     /**
      * Inicializa el controlador y registra listeners para búsqueda y navegación.

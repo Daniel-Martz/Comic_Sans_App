@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para gestionar las solicitudes de validación de productos
  * (panel de empleados).
@@ -22,7 +23,10 @@ import java.util.List;
  */
 public class ControladorValidationRequests implements ActionListener {
 
+    /** The panel. */
     private ValidationRequestsPanel panel;
+    
+    /** The main frame. */
     private MainFrame mainFrame;
     /**
      * Crea el controlador y enlaza la vista y navegación.
@@ -90,7 +94,8 @@ public class ControladorValidationRequests implements ActionListener {
     }
 
     /**
-     * Confirma la validación del producto con los datos proporcionados, delegando
+     * Confirma la validación del producto con los datos proporcionados, delegando.
+     *
      * @param s solicitud de validación a procesar
      * @param precioVal precio de validación (sugerido por el cliente)
      * @param precioProd precio final del producto (decisión del empleado)

@@ -6,11 +6,14 @@ import javax.swing.event.DocumentListener;
 import modelo.aplicacion.Aplicacion;
 import vista.userPanels.CrearUsuarioPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador que actualiza en tiempo real los indicadores de fuerza de la
  * contraseña mientras el usuario escribe en el formulario de creación.
  */
 public class NewPasswordController implements DocumentListener {
+  
+  /** The crear usuario panel. */
   CrearUsuarioPanel crearUsuarioPanel;
 	/**
 	 * Crea el controlador y asocia el panel de creación de usuario para actualizar
@@ -20,6 +23,10 @@ public class NewPasswordController implements DocumentListener {
 	public NewPasswordController(CrearUsuarioPanel crearUsuarioPanel) {
 		this.crearUsuarioPanel = crearUsuarioPanel;
 	}
+	
+	/**
+	 * Cambio.
+	 */
 	private void cambio() {
 		Aplicacion app = Aplicacion.getInstancia();
 		String password = crearUsuarioPanel.getPassword();
@@ -52,13 +59,31 @@ public class NewPasswordController implements DocumentListener {
 			crearUsuarioPanel.setSymbolBox(false);
 		}
 	}
+	
+	/**
+	 * Changed update.
+	 *
+	 * @param arg0 the arg 0
+	 */
 	@Override
 	public void changedUpdate(DocumentEvent arg0) {
 	}
+	
+	/**
+	 * Insert update.
+	 *
+	 * @param arg0 the arg 0
+	 */
 	@Override
 	public void insertUpdate(DocumentEvent arg0) {
 		cambio();
 	}
+	
+	/**
+	 * Removes the update.
+	 *
+	 * @param arg0 the arg 0
+	 */
 	@Override
 	public void removeUpdate(DocumentEvent arg0) {
 		cambio();

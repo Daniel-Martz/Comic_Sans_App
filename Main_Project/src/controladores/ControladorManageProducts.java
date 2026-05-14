@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la gestión de productos (empleado).
  *
@@ -23,11 +24,19 @@ import java.util.List;
  */
 public class ControladorManageProducts implements ActionListener {
 
+    /** The main frame. */
     private final MainFrame mainFrame;
+    
+    /** The main controller. */
     private final MainController mainController;
 
+    /** The panel manage. */
     private ManageProductsPanel panelManage;
+    
+    /** The panel modify list. */
     private ModifyProductsPanel panelModifyList;
+    
+    /** The window modify single. */
     private ModifyAProductWindow windowModifySingle;
 
     /**

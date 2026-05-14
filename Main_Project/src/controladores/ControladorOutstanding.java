@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador de la vista de productos destacados.
  *
@@ -21,6 +22,7 @@ import java.util.List;
  */
 public class ControladorOutstanding implements ActionListener {
 
+    /** The vista. */
     private final OutstandingPanel vista;
 
     /**

@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para crear ofertas de intercambio entre usuarios.
  *
@@ -24,10 +25,16 @@ import java.util.Set;
  */
 public class ControladorMakeOffer implements ActionListener, ItemListener {
 
+    /** The vista. */
     private final MakeOfferPanel vista;
+    
+    /** The main controller. */
     private final MainController mainController;
     
+    /** The requested selected. */
     private Set<ProductoSegundaMano> requestedSelected;
+    
+    /** The offered selected. */
     private Set<ProductoSegundaMano> offeredSelected;
 
     /**

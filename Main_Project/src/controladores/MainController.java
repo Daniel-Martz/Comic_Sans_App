@@ -18,6 +18,7 @@ import vista.userPanels.*;
 import vista.clienteWindows.*;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador Principal (MainController).
  *
@@ -29,19 +30,44 @@ import vista.clienteWindows.*;
 public class MainController {
     // -------------------------------------------------------
     // Referencias
+    /** The main frame. */
     // -------------------------------------------------------
     private final MainFrame mainFrame;
+    
+    /** The modelo. */
     private final Aplicacion modelo;
+    
+    /** The crear usuario dialog. */
     private CrearUsuarioWindow crearUsuarioDialog;
+    
+    /** The login dialog. */
     private LoginWindow loginDialog;
+    
+    /** The edit profile dialog. */
     private EditProfileWindow editProfileDialog;
+    
+    /** The dialog filtros. */
     private FiltrosWindow dialogFiltros;
+    
+    /** The dialog opciones usuario. */
     private UsuarioOptionsWIndow dialogOpcionesUsuario;
+    
+    /** The dialog opciones empleado. */
     private EmpleadoOptionsDialog dialogOpcionesEmpleado;
+    
+    /** The controlador filtros. */
     private ControladorFiltros controladorFiltros;
+    
+    /** The controlador search interchanges. */
     private ControladorSearchInterchanges controladorSearchInterchanges;
+    
+    /** The controlador make offer. */
     private ControladorMakeOffer controladorMakeOffer;
+    
+    /** The ctrl manage accounts. */
     private ControladorManageAccounts ctrlManageAccounts;
+    
+    /** The notificacion dialog. */
     private NotificacionWindow notificacionDialog;
 
     /**
@@ -310,6 +336,8 @@ public class MainController {
 
     /**
      * Cambia el panel visible en el CardLayout del MainFrame.
+     *
+     * @param nombrePanel the nombre panel
      */
     public void navegarA(String nombrePanel) {
         // Resetear los filtros si salimos de las vistas de búsqueda

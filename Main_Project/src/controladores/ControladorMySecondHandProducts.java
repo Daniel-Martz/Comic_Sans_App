@@ -16,6 +16,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import utils.DialogUtils;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para `MySecondHandProductsPanel`.
  *
@@ -26,7 +27,10 @@ import utils.DialogUtils;
  */
 public class ControladorMySecondHandProducts implements ActionListener {
 
+    /** The vista. */
     private final MySecondHandProductsPanel vista;
+    
+    /** The parent. */
     private final MainFrame parent; 
 
     /**

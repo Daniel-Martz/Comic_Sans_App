@@ -34,7 +34,7 @@ public class ControladorPagoPedido implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("CONFIRMAR_PAGO_PEDIDO")) {
+        if (e.getActionCommand().equals("CONFRIM_ORDER_PAYMENT")) {
             gestionarConfirmar();
         }
     }
@@ -50,13 +50,13 @@ public class ControladorPagoPedido implements ActionListener {
         String caducidad = vista.getCaducidad();
 
         if (numTarjeta.isEmpty() || cvv.isEmpty() || caducidad.isEmpty()) {
-            vista.mostrarAvisoIncompleto("Por favor, rellena todos los campos.", "Campos incompletos");
+            vista.mostrarAvisoIncompleto("Please, fill all the fields", "Incomplete fields");
             return;
         }
 
         DateTimeSimulado fechaCaducidad = parsearFecha(caducidad);
         if (fechaCaducidad == null) {
-            vista.mostrarAvisoIncompleto("Formato de fecha incorrecto. Usa MM/AA (p.ej. 12/26).", "Fecha inválida");
+            vista.mostrarAvisoIncompleto("Incorrect format date. Use MM/AA (p.ej. 12/26)." ,"Invalid date");
             return;
         }
 
@@ -64,7 +64,7 @@ public class ControladorPagoPedido implements ActionListener {
         SolicitudPedido pedidoReal = vista.getPedido();
         try {
             if (pedidoReal == null) {
-                throw new IllegalStateException("No hay pedido asociado a la ventana de pago.");
+                throw new IllegalStateException("There is no order associated with the payment window.");
             }
 
             Aplicacion.getInstancia().gestionarPagoPedido(pedidoReal, numTarjeta, cvv, fechaCaducidad);

@@ -13,13 +13,18 @@ import modelo.aplicacion.Aplicacion;
 import modelo.aplicacion.Catalogo;
 import vista.userPanels.HistorialPedidosPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para el historial de pedidos del usuario.
  *
  * Permite ver detalles de productos comprados y escribir reseñas cuando procede.
  */
 public class ControladorHistorialPedidos implements ActionListener{
+  
+  /** The historial pedidos panel. */
   HistorialPedidosPanel historialPedidosPanel;
+  
+  /** The main controller. */
   MainController mainController;
 	
   /**

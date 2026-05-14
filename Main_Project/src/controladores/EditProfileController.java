@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import modelo.aplicacion.Aplicacion;
 import vista.userPanels.EditProfilePanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para el panel de edición de perfil de usuario.
  *
@@ -14,7 +15,11 @@ import vista.userPanels.EditProfilePanel;
  * al modelo cuando el usuario confirma la edición.
  */
 public class EditProfileController implements ActionListener{
+  
+  /** The edit profile panel. */
   EditProfilePanel editProfilePanel;
+  
+  /** The main controller. */
   MainController mainController;
     
 	/**

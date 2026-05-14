@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import modelo.aplicacion.Aplicacion;
 import vista.userPanels.CrearUsuarioPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la ventana de creación de cuenta de usuario.
  *
@@ -14,7 +15,11 @@ import vista.userPanels.CrearUsuarioPanel;
  * propio panel.
  */
 public class CreateAccountController implements ActionListener{
+  
+  /** The crear usuario panel. */
   CrearUsuarioPanel crearUsuarioPanel;
+  
+  /** The main controller. */
   MainController mainController;
     
     /**

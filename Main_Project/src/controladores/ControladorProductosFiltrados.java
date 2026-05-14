@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la vista de productos filtrados.
  *
@@ -21,7 +22,10 @@ import java.util.List;
  */
 public class ControladorProductosFiltrados implements ActionListener {
 
+    /** The vista. */
     private final ProductosFiltradosPanel vista;
+    
+    /** The filtros dialog. */
     private final vista.clienteWindows.FiltrosWindow filtrosDialog;
 
     /**

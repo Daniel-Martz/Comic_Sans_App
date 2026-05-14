@@ -11,13 +11,18 @@ import modelo.usuario.Empleado;
 import modelo.usuario.Usuario;
 import vista.userPanels.NotificacionesPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para las notificaciones del usuario.
  *
  * Permite leer, borrar y refrescar las notificaciones mostradas en la vista.
  */
 public class ControladorNotificaciones implements ActionListener{
+  
+  /** The notificaciones panel. */
   NotificacionesPanel notificacionesPanel;
+  
+  /** The main controller. */
   MainController mainController;
     
     /**
@@ -34,6 +39,8 @@ public class ControladorNotificaciones implements ActionListener{
     /**
      * Método vacío por compatibilidad; aquí se podrían manejar acciones
      * emitidas por la vista si fuera necesario.
+     *
+     * @param e the e
      */
     @Override
     public void actionPerformed(ActionEvent e) {

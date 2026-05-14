@@ -12,6 +12,7 @@ import modelo.aplicacion.ConfiguracionRecomendacion;
 import vista.GestorPanel.ManageRecommendationsPanel;
 import vista.main.MainFrame;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para ajustar la configuración de recomendaciones.
  *
@@ -21,18 +22,23 @@ import vista.main.MainFrame;
  */
 public class ControladorManageRecommendations implements ActionListener {
 
+    /** The vista. */
     private ManageRecommendationsPanel vista;
+    
+    /** The config rec. */
     private ConfiguracionRecomendacion configRec;
 
     // Mantiene el orden lógico de criterios:
+    /** The current order. */
     // "Interests of User", "Puntuations", "New Products"
     private List<String> currentOrder;
 
     /**
      * Controlador para la gestión de recomendaciones. Inicializa el orden de criterios
-     * @param vista
-     * @param mainFrame
-     * @param mainController
+     *
+     * @param vista the vista
+     * @param mainFrame the main frame
+     * @param mainController the main controller
      */
     public ControladorManageRecommendations(ManageRecommendationsPanel vista, MainFrame mainFrame, MainController mainController) {
         this.vista = vista;
@@ -51,6 +57,9 @@ public class ControladorManageRecommendations implements ActionListener {
         registrarListeners();
     }
 
+    /**
+     * Registrar listeners.
+     */
     private void registrarListeners() {
         vista.addLeftArrowListener(e -> {
             int num = vista.getSelectedNumber();
@@ -85,6 +94,9 @@ public class ControladorManageRecommendations implements ActionListener {
         }
     }
     
+    /**
+     * Actualizar vista Y modelo.
+     */
     private void actualizarVistaYModelo() {
         // Actualiza la vista con los textos en el nuevo orden
         vista.updateRowTexts(currentOrder);
@@ -97,6 +109,11 @@ public class ControladorManageRecommendations implements ActionListener {
         configRec.configurarImportancia(impInteres, impResena, impNovedad);
     }
 
+    /**
+     * Action performed.
+     *
+     * @param e the e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
     }

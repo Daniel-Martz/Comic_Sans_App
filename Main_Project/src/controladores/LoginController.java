@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import modelo.aplicacion.Aplicacion;
 import vista.userPanels.LogInPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador del formulario de login.
  *
@@ -13,7 +14,11 @@ import vista.userPanels.LogInPanel;
  * interfaz según el resultado.
  */
 public class LoginController implements ActionListener{
+  
+  /** The login panel. */
   LogInPanel loginPanel;
+  
+  /** The main controller. */
   MainController mainController;
     
 	/**

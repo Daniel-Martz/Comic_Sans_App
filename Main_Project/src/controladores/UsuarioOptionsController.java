@@ -57,7 +57,7 @@ public class UsuarioOptionsController implements ActionListener{
   private void actionPurchaseHistory() {
 	Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual(); 
 	if(!(usuarioActual instanceof ClienteRegistrado clienteActual)){
-	  throw new IllegalStateException("Solo un cliente registrado puede acceder a su historial de pedidos");
+	  throw new IllegalStateException("Only a registered customer can access their order history.");
 	}
 	mainFrame.getHistorialPedidosPanel().agregarPedido(clienteActual.getPedidos());
 

@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para la gestión de cuentas de empleados.
  *
@@ -25,7 +26,10 @@ import java.util.List;
  */
 public class ControladorManageAccounts {
 
+    /** The manage accounts panel. */
     private ManageAccountsPanel manageAccountsPanel;
+    
+    /** The main frame. */
     private MainFrame mainFrame;
 
     /**

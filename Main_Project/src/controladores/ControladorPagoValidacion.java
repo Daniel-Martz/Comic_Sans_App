@@ -9,6 +9,7 @@ import vista.clienteWindows.VentanaPagoValidacion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador de la ventana de pago de validación (producto de segunda mano).
  *
@@ -17,7 +18,10 @@ import java.awt.event.ActionListener;
  */
 public class ControladorPagoValidacion implements ActionListener {
 
+    /** The vista. */
     private VentanaPagoValidacion vista;
+    
+    /** The solicitud modelo. */
     private SolicitudValidacion solicitudModelo;
 
     /**
@@ -38,7 +42,7 @@ public class ControladorPagoValidacion implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("CONFIRMAR_PAGO")) {
+        if (e.getActionCommand().equals("CONFRIM_PAYMENT")) {
             gestionarConfirmar();
         }
     }
@@ -53,13 +57,13 @@ public class ControladorPagoValidacion implements ActionListener {
         String caducidad = vista.getCaducidad();
 
         if (numTarjeta.isEmpty() || cvv.isEmpty() || caducidad.isEmpty()) {
-            vista.mostrarAvisoIncompleto("Por favor, rellena todos los campos.", "Campos incompletos");
+            vista.mostrarAvisoIncompleto("Please, fill all the fileds.", "Incomplete data");
             return;
         }
 
         DateTimeSimulado fechaCaducidad = parsearFecha(caducidad);
         if (fechaCaducidad == null) {
-            vista.mostrarAvisoIncompleto("Formato de fecha incorrecto. Usa MM/AA (p.ej. 12/26).", "Fecha inválida");
+            vista.mostrarAvisoIncompleto("Incorrect format date. Use MM/AA (p.ej. 12/26).", "Invalid date");
             return;
         }
 

@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
 /**
  * Controlador para buscar productos disponibles para intercambio.
  *
@@ -25,8 +26,13 @@ import java.util.Set;
  */
 public class ControladorSearchInterchanges implements ActionListener, ItemListener {
 
+    /** The vista. */
     private final SearchInterchangesPanel vista;
+    
+    /** The main controller. */
     private final MainController mainController;
+    
+    /** The seleccionados. */
     private final Set<ProductoSegundaMano> seleccionados;
 
     /**
@@ -63,6 +69,11 @@ public class ControladorSearchInterchanges implements ActionListener, ItemListen
         cargarProductosDisponibles(this.vista.getHeaderPanel().getSearchText());
     }
 
+    /**
+     * Cargar productos disponibles.
+     *
+     * @param prompt the prompt
+     */
     private void cargarProductosDisponibles(String prompt) {
         ClienteRegistrado cliente = (ClienteRegistrado) Aplicacion.getInstancia().getUsuarioActual();
         cliente.actualizarOfertas(); // Limpiamos ofertas caducadas
@@ -80,6 +91,11 @@ public class ControladorSearchInterchanges implements ActionListener, ItemListen
         vista.actualizarProductos(ajenos, this, this);
     }
 
+    /**
+     * Action performed.
+     *
+     * @param e the e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
@@ -102,6 +118,11 @@ public class ControladorSearchInterchanges implements ActionListener, ItemListen
         }
     }
 
+    /**
+     * Item state changed.
+     *
+     * @param e the e
+     */
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getSource() instanceof JCheckBox chk) {
@@ -118,6 +139,9 @@ public class ControladorSearchInterchanges implements ActionListener, ItemListen
         }
     }
 
+    /**
+     * Actualizar barra estado.
+     */
     private void actualizarBarraEstado() {
         double total = 0.0;
         for (ProductoSegundaMano p : seleccionados) {
