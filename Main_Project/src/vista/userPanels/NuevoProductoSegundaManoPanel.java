@@ -149,6 +149,7 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0.2; gbc.anchor = GridBagConstraints.CENTER;
             JLabel lblImagen = new JLabel("Product Image:");
             lblImagen.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+            lblImagen.setForeground(new Color(200, 0, 0));
             add(lblImagen, gbc);
 
             gbc.gridx = 1; gbc.gridy = 2; gbc.weightx = 0.8;
@@ -158,6 +159,7 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
             btnSubirImagen = new JButton("Upload Image...");
             lblNombreImagen = new JLabel(" No file selected");
             lblNombreImagen.setFont(new Font("Comic Sans MS", Font.ITALIC, 12));
+            lblNombreImagen.setForeground(new Color(200, 0, 0)); 
             
             panelImagen.add(btnSubirImagen);
             panelImagen.add(lblNombreImagen);
@@ -183,7 +185,10 @@ public class NuevoProductoSegundaManoPanel extends JPanel {
          *
          * @param nombre the new nombre imagen
          */
-        public void setNombreImagen(String nombre) { lblNombreImagen.setText(" " + nombre); }
+        public void setNombreImagen(String nombre) { 
+            lblNombreImagen.setText(" ✓ " + nombre);
+            lblNombreImagen.setForeground(new Color(0, 150, 0)); // Verde cuando se selecciona
+        }
 
         /**
          * Adds the imagen listener.

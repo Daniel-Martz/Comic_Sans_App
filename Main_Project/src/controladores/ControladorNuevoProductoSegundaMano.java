@@ -63,10 +63,11 @@ public class ControladorNuevoProductoSegundaMano implements ActionListener {
     /**
      * Abre un selector de ficheros para escoger la imagen del producto y
      * valida que sea JPG/PNG. Actualiza la vista con el nombre del fichero.
+     * La imagen es obligatoria para poder confirmar la creación del producto.
      */
     private void seleccionarImagen() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Select Product Image");
+        fileChooser.setDialogTitle("Select Product Image (Required)");
         // Filtro visual
         fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes (JPG, PNG)", "jpg", "jpeg", "png"));
         // Quitar "Todos los archivos"
@@ -99,10 +100,7 @@ public class ControladorNuevoProductoSegundaMano implements ActionListener {
 
         // Validaciones básicas
         if (imagenSeleccionada == null) {
-            JOptionPane.showMessageDialog(null,
-                    "Debes añadir una foto del producto.",
-                    "Falta imagen",
-                    JOptionPane.WARNING_MESSAGE);
+            ventana.mostrarVentanaError("Debes añadir una foto del producto.");
             return;
         }
 
