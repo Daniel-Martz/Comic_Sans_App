@@ -347,7 +347,7 @@ public class AddProductManuallyWindow extends JDialog {
     
     private void seleccionarFoto() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes (jpg, png, gif)", "jpg", "png", "gif", "jpeg"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Images (jpg, png, gif)", "jpg", "png", "gif", "jpeg"));
         int resultado = fileChooser.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {
             selectedPhotoFile = fileChooser.getSelectedFile();

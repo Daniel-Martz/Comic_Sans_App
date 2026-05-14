@@ -11,6 +11,10 @@ import java.util.Map;
 
 public class ViewOrderWindow extends JDialog {
 
+    /**
+     * @param parent
+     * @param pedido
+     */
     public ViewOrderWindow(JFrame parent, SolicitudPedido pedido) {
         super(parent, "Order Details", true);
         setSize(500, 400);

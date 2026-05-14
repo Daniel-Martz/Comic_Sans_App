@@ -3,6 +3,7 @@ package vista.empleadoWindow;
 import javax.swing.*;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * Ventana mínima para la funcionalidad "Load From File".
  *
@@ -11,15 +12,29 @@ import java.awt.*;
  * (modelo). De esta forma mantenemos la separación vista-controlador.
  */
 public class LoadFromFileWindow extends JFrame {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The btn select file. */
     private final JButton btnSelectFile;
 
+    /**
+     * Instantiates a new load from file window.
+     *
+     * @param owner the owner
+     */
     public LoadFromFileWindow(Frame owner) {
         super("Load From File");
         btnSelectFile = new JButton("Select File");
         init(owner);
     }
 
+    /**
+     * Inits the.
+     *
+     * @param owner the owner
+     */
     private void init(Frame owner) {
         JPanel content = new JPanel(new GridBagLayout());
         content.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -41,6 +56,11 @@ public class LoadFromFileWindow extends JFrame {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+    /**
+     * Gets the btn select file.
+     *
+     * @return the btn select file
+     */
     public JButton getBtnSelectFile() {
         return btnSelectFile;
     }

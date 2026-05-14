@@ -17,54 +17,115 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ModifyAProductWindow.
+ */
 public class ModifyAProductWindow extends JDialog {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
 
+    /** The btn back. */
     private JButton btnBack;
+    
+    /** The btn confirm changes. */
     private JButton btnConfirmChanges;
+    
+    /** The btn change photo. */
     private JButton btnChangePhoto;
 
+    /** The lbl photo. */
     private JLabel lblPhoto;
     
+    /** The txt id. */
     // Campos comunes
     private JTextField txtId;
+    
+    /** The txt name. */
     private JTextField txtName;
+    
+    /** The txt price. */
     private JTextField txtPrice;
+    
+    /** The txt description. */
     private JTextField txtDescription;
+    
+    /** The txt stock. */
     private JTextField txtStock;
+    
+    /** The btn categories. */
     private JButton btnCategories;
     
+    /** The categorias seleccionadas. */
     private Set<Categoria> categoriasSeleccionadas = new HashSet<>();
     
+    /** The form panel. */
     // Contenedores dinámicos
     private JPanel formPanel;
+    
+    /** The specific fields panel. */
     private JPanel specificFieldsPanel;
 
+    /** The txt num paginas. */
     // Campos específicos Comic
     private JTextField txtNumPaginas;
+    
+    /** The txt autor. */
     private JTextField txtAutor;
+    
+    /** The txt editorial. */
     private JTextField txtEditorial;
+    
+    /** The txt año. */
     private JTextField txtAño;
 
+    /** The txt marca. */
     // Campos específicos Figura
     private JTextField txtMarca;
+    
+    /** The txt material. */
     private JTextField txtMaterial;
+    
+    /** The txt dim X. */
     private JTextField txtDimX;
+    
+    /** The txt dim Y. */
     private JTextField txtDimY;
+    
+    /** The txt dim Z. */
     private JTextField txtDimZ;
 
+    /** The txt num jugadores. */
     // Campos específicos JuegoDeMesa
     private JTextField txtNumJugadores;
+    
+    /** The txt edad min. */
     private JTextField txtEdadMin;
+    
+    /** The txt edad max. */
     private JTextField txtEdadMax;
+    
+    /** The combo tipo juego. */
     private JComboBox<TipoJuegoMesa> comboTipoJuego;
     
+    /** The current product. */
     private LineaProductoVenta currentProduct;
+    
+    /** The selected photo file. */
     private File selectedPhotoFile = null;
 
+    /**
+     * Instantiates a new modify A product window.
+     *
+     * @param parent the parent
+     */
     public ModifyAProductWindow(JFrame parent) {
         super(parent, "Modify Product", true); // Ventana modal
         setSize(1050, 850);
@@ -72,6 +133,9 @@ public class ModifyAProductWindow extends JDialog {
         initLayout();
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(BG_COLOR);
@@ -183,6 +247,14 @@ public class ModifyAProductWindow extends JDialog {
         setContentPane(mainPanel);
     }
 
+    /**
+     * Creates the form row.
+     *
+     * @param labelText the label text
+     * @param component the component
+     * @param editable the editable
+     * @return the j panel
+     */
     private JPanel createFormRow(String labelText, JComponent component, boolean editable) {
         JPanel row = new JPanel(new BorderLayout(10, 0));
         row.setOpaque(false);
@@ -206,6 +278,11 @@ public class ModifyAProductWindow extends JDialog {
         return row;
     }
 
+    /**
+     * Cargar producto.
+     *
+     * @param p the p
+     */
     public void cargarProducto(LineaProductoVenta p) {
         this.currentProduct = p;
         this.selectedPhotoFile = null;
@@ -279,6 +356,9 @@ public class ModifyAProductWindow extends JDialog {
         specificFieldsPanel.repaint();
     }
     
+    /**
+     * Actualizar texto boton categorias.
+     */
     private void actualizarTextoBotonCategorias() {
         if (categoriasSeleccionadas.isEmpty()) {
             btnCategories.setText("Select Categories");
@@ -287,6 +367,9 @@ public class ModifyAProductWindow extends JDialog {
         }
     }
 
+    /**
+     * Abrir selector categorias.
+     */
     private void abrirSelectorCategorias() {
         Set<Categoria> todas = Aplicacion.getInstancia().getCatalogo().getCategoriasTienda();
         
@@ -345,6 +428,11 @@ public class ModifyAProductWindow extends JDialog {
         dialog.setVisible(true);
     }
 
+    /**
+     * Cargar imagen.
+     *
+     * @param path the path
+     */
     private void cargarImagen(String path) {
         if (path != null && !path.isEmpty()) {
             try {
@@ -360,14 +448,20 @@ public class ModifyAProductWindow extends JDialog {
         }
     }
 
+    /**
+     * Mostrar placeholder foto.
+     */
     private void mostrarPlaceholderFoto() {
         lblPhoto.setIcon(null);
         lblPhoto.setText("<html><center>X<br>ADD PHOTO</center></html>");
     }
     
+    /**
+     * Seleccionar foto.
+     */
     private void seleccionarFoto() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes (jpg, png, gif)", "jpg", "png", "gif", "jpeg"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Images (jpg, png, gif)", "jpg", "png", "gif", "jpeg"));
         int resultado = fileChooser.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {
             selectedPhotoFile = fileChooser.getSelectedFile();
@@ -375,34 +469,166 @@ public class ModifyAProductWindow extends JDialog {
         }
     }
 
+    /**
+     * Gets the btn back.
+     *
+     * @return the btn back
+     */
     public JButton getBtnBack() { return btnBack; }
+    
+    /**
+     * Gets the btn confirm changes.
+     *
+     * @return the btn confirm changes
+     */
     public JButton getBtnConfirmChanges() { return btnConfirmChanges; }
     
+    /**
+     * Gets the current product.
+     *
+     * @return the current product
+     */
     public LineaProductoVenta getCurrentProduct() { return currentProduct; }
     
+    /**
+     * Gets the new id.
+     *
+     * @return the new id
+     */
     // Getters comunes
     public String getNewId() { return txtId.getText(); }
+    
+    /**
+     * Gets the new name.
+     *
+     * @return the new name
+     */
     public String getNewName() { return txtName.getText(); }
+    
+    /**
+     * Gets the new price.
+     *
+     * @return the new price
+     */
     public String getNewPrice() { return txtPrice.getText(); }
+    
+    /**
+     * Gets the new description.
+     *
+     * @return the new description
+     */
     public String getNewDescription() { return txtDescription.getText(); }
+    
+    /**
+     * Gets the new stock.
+     *
+     * @return the new stock
+     */
     public String getNewStock() { return txtStock.getText(); }
+    
+    /**
+     * Gets the categorias seleccionadas.
+     *
+     * @return the categorias seleccionadas
+     */
     public Set<Categoria> getCategoriasSeleccionadas() { return categoriasSeleccionadas; }
+    
+    /**
+     * Gets the selected photo file.
+     *
+     * @return the selected photo file
+     */
     public File getSelectedPhotoFile() { return selectedPhotoFile; }
     
+    /**
+     * Gets the new num paginas.
+     *
+     * @return the new num paginas
+     */
     // Getters específicos
     public String getNewNumPaginas() { return txtNumPaginas != null ? txtNumPaginas.getText() : null; }
+    
+    /**
+     * Gets the new autor.
+     *
+     * @return the new autor
+     */
     public String getNewAutor() { return txtAutor != null ? txtAutor.getText() : null; }
+    
+    /**
+     * Gets the new editorial.
+     *
+     * @return the new editorial
+     */
     public String getNewEditorial() { return txtEditorial != null ? txtEditorial.getText() : null; }
+    
+    /**
+     * Gets the new año.
+     *
+     * @return the new año
+     */
     public String getNewAño() { return txtAño != null ? txtAño.getText() : null; }
     
+    /**
+     * Gets the new marca.
+     *
+     * @return the new marca
+     */
     public String getNewMarca() { return txtMarca != null ? txtMarca.getText() : null; }
+    
+    /**
+     * Gets the new material.
+     *
+     * @return the new material
+     */
     public String getNewMaterial() { return txtMaterial != null ? txtMaterial.getText() : null; }
+    
+    /**
+     * Gets the new dim X.
+     *
+     * @return the new dim X
+     */
     public String getNewDimX() { return txtDimX != null ? txtDimX.getText() : null; }
+    
+    /**
+     * Gets the new dim Y.
+     *
+     * @return the new dim Y
+     */
     public String getNewDimY() { return txtDimY != null ? txtDimY.getText() : null; }
+    
+    /**
+     * Gets the new dim Z.
+     *
+     * @return the new dim Z
+     */
     public String getNewDimZ() { return txtDimZ != null ? txtDimZ.getText() : null; }
     
+    /**
+     * Gets the new num jugadores.
+     *
+     * @return the new num jugadores
+     */
     public String getNewNumJugadores() { return txtNumJugadores != null ? txtNumJugadores.getText() : null; }
+    
+    /**
+     * Gets the new edad min.
+     *
+     * @return the new edad min
+     */
     public String getNewEdadMin() { return txtEdadMin != null ? txtEdadMin.getText() : null; }
+    
+    /**
+     * Gets the new edad max.
+     *
+     * @return the new edad max
+     */
     public String getNewEdadMax() { return txtEdadMax != null ? txtEdadMax.getText() : null; }
+    
+    /**
+     * Gets the new tipo juego.
+     *
+     * @return the new tipo juego
+     */
     public TipoJuegoMesa getNewTipoJuego() { return comboTipoJuego != null ? (TipoJuegoMesa) comboTipoJuego.getSelectedItem() : null; }
 }

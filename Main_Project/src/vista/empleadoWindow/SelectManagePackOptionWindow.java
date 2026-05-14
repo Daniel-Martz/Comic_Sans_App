@@ -4,12 +4,26 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SelectManagePackOptionWindow.
+ */
 public class SelectManagePackOptionWindow extends JDialog {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
+    /** The btn add pack. */
     private JButton btnAddPack;
+    
+    /** The btn modify pack. */
     private JButton btnModifyPack;
 
+    /**
+     * Instantiates a new select manage pack option window.
+     *
+     * @param parent the parent
+     */
     public SelectManagePackOptionWindow(JFrame parent) {
         super(parent, "Manage Packs", true);
         setSize(400, 200);
@@ -53,6 +67,17 @@ public class SelectManagePackOptionWindow extends JDialog {
         setContentPane(panel);
     }
     
+    /**
+     * Gets the btn add pack.
+     *
+     * @return the btn add pack
+     */
     public JButton getBtnAddPack() { return btnAddPack; }
+    
+    /**
+     * Gets the btn modify pack.
+     *
+     * @return the btn modify pack
+     */
     public JButton getBtnModifyPack() { return btnModifyPack; }
 }

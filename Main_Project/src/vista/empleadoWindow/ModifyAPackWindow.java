@@ -16,33 +16,79 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ModifyAPackWindow.
+ */
 public class ModifyAPackWindow extends JDialog {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The pack. */
     private Pack pack;
+    
+    /** The controlador. */
     private ControladorModifyPacks controlador;
+    
+    /** The temp pack products. */
     private Map<LineaProductoVenta, Integer> tempPackProducts;
 
+    /** The txt id. */
     private JTextField txtId;
+    
+    /** The txt name. */
     private JTextField txtName;
+    
+    /** The txt price. */
     private JTextField txtPrice;
+    
+    /** The txt description. */
     private JTextField txtDescription;
+    
+    /** The txt stock. */
     private JTextField txtStock;
+    
+    /** The lbl photo. */
     private JLabel lblPhoto;
+    
+    /** The selected photo file. */
     private File selectedPhotoFile;
 
+    /** The panel in pack. */
     private JPanel panelInPack;
+    
+    /** The panel available. */
     private JPanel panelAvailable;
+    
+    /** The txt search available. */
     private JTextField txtSearchAvailable;
 
+    /** The checks in pack. */
     private List<JCheckBox> checksInPack = new ArrayList<>();
+    
+    /** The checks available. */
     private List<JCheckBox> checksAvailable = new ArrayList<>();
+    
+    /** The spinners in pack. */
     private List<JSpinner> spinnersInPack = new ArrayList<>();
+    
+    /** The spinners available. */
     private List<JSpinner> spinnersAvailable = new ArrayList<>();
     
+    /** The list in pack. */
     private List<LineaProductoVenta> listInPack = new ArrayList<>();
+    
+    /** The list available. */
     private List<LineaProductoVenta> listAvailable = new ArrayList<>();
 
+    /**
+     * Instantiates a new modify A pack window.
+     *
+     * @param parent the parent
+     * @param pack the pack
+     * @param ctrl the ctrl
+     */
     public ModifyAPackWindow(JFrame parent, Pack pack, ControladorModifyPacks ctrl) {
         super(parent, "Modify Pack", true);
         this.pack = pack;
@@ -56,6 +102,9 @@ public class ModifyAPackWindow extends JDialog {
         actualizarListas();
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBackground(new Color(245, 247, 250));
@@ -173,6 +222,13 @@ public class ModifyAPackWindow extends JDialog {
         setContentPane(mainPanel);
     }
 
+    /**
+     * Creates the form row.
+     *
+     * @param labelText the label text
+     * @param component the component
+     * @return the j panel
+     */
     private JPanel createFormRow(String labelText, JTextField component) {
         JPanel row = new JPanel(new BorderLayout(10, 0));
         row.setOpaque(false);
@@ -187,6 +243,9 @@ public class ModifyAPackWindow extends JDialog {
         return row;
     }
 
+    /**
+     * Cargar datos basicos.
+     */
     private void cargarDatosBasicos() {
         txtId.setText(String.valueOf(pack.getID()));
         txtName.setText(pack.getNombre());
@@ -201,6 +260,9 @@ public class ModifyAPackWindow extends JDialog {
         }
     }
 
+    /**
+     * Seleccionar foto.
+     */
     private void seleccionarFoto() {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileFilter(new FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
@@ -213,11 +275,17 @@ public class ModifyAPackWindow extends JDialog {
         }
     }
 
+    /**
+     * Actualizar listas.
+     */
     private void actualizarListas() {
         actualizarListaPack();
         actualizarListaDisponibles();
     }
 
+    /**
+     * Actualizar lista pack.
+     */
     private void actualizarListaPack() {
         panelInPack.removeAll();
         checksInPack.clear();
@@ -243,6 +311,9 @@ public class ModifyAPackWindow extends JDialog {
         panelInPack.repaint();
     }
 
+    /**
+     * Actualizar lista disponibles.
+     */
     private void actualizarListaDisponibles() {
         panelAvailable.removeAll();
         checksAvailable.clear();
@@ -270,6 +341,9 @@ public class ModifyAPackWindow extends JDialog {
         panelAvailable.repaint();
     }
 
+    /**
+     * Añadir seleccionados.
+     */
     private void añadirSeleccionados() {
         for (int i = 0; i < checksAvailable.size(); i++) {
             if (checksAvailable.get(i).isSelected()) {
@@ -283,6 +357,9 @@ public class ModifyAPackWindow extends JDialog {
         actualizarListaPack();
     }
 
+    /**
+     * Eliminar seleccionados.
+     */
     private void eliminarSeleccionados() {
         for (int i = 0; i < checksInPack.size(); i++) {
             if (checksInPack.get(i).isSelected()) {
@@ -299,6 +376,9 @@ public class ModifyAPackWindow extends JDialog {
         actualizarListaPack();
     }
 
+    /**
+     * Confirmar.
+     */
     private void confirmar() {
         try {
             String name = txtName.getText();

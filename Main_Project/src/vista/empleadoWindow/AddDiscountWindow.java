@@ -14,32 +14,77 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
  
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddDiscountWindow.
+ */
 public class AddDiscountWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The combo type. */
     private JComboBox<String> comboType;
+    
+    /** The txt start date. */
     private JTextField txtStartDate;
+    
+    /** The txt end date. */
     private JTextField txtEndDate;
+    
+    /** The cb start hour. */
     private JComboBox<Integer> cbStartHour;
+    
+    /** The cb start minute. */
     private JComboBox<Integer> cbStartMinute;
+    
+    /** The cb end hour. */
     private JComboBox<Integer> cbEndHour;
+    
+    /** The cb end minute. */
     private JComboBox<Integer> cbEndMinute;
     
+    /** The dynamic panel. */
     private JPanel dynamicPanel;
     
+    /** The txt percentage. */
     private JTextField txtPercentage;
+    
+    /** The txt threshold. */
     private JTextField txtThreshold;
+    
+    /** The txt thresh perc. */
     private JTextField txtThreshPerc;
+    
+    /** The txt buy qty. */
     private JTextField txtBuyQty;
+    
+    /** The txt receive qty. */
     private JTextField txtReceiveQty;
+    
+    /** The txt gift id. */
     private JTextField txtGiftId;
+    
+    /** The txt gift qty. */
     private JTextField txtGiftQty;
+    
+    /** The txt gift thresh. */
     private JTextField txtGiftThresh;
     
+    /** The old discount. */
     private Descuento oldDiscount;
+    
+    /** The productos. */
     private List<LineaProductoVenta> productos;
 
+    /**
+     * Instantiates a new adds the discount window.
+     *
+     * @param parent the parent
+     * @param productos the productos
+     * @param oldDiscount the old discount
+     * @param ctrl the ctrl
+     */
     public AddDiscountWindow(JFrame parent, List<LineaProductoVenta> productos, Descuento oldDiscount, ControladorDescuentos ctrl) {
         super(parent, oldDiscount == null ? "Add Discount" : "Edit Discount", true);
         this.productos = productos;
@@ -284,6 +329,13 @@ public class AddDiscountWindow extends JDialog {
         updateDynamicFields();
     }
 
+    /**
+     * Creates the form row.
+     *
+     * @param labelText the label text
+     * @param component the component
+     * @return the j panel
+     */
     private JPanel createFormRow(String labelText, JComponent component) {
         JPanel row = new JPanel(new BorderLayout(10, 0));
         row.setOpaque(false);
@@ -307,11 +359,19 @@ public class AddDiscountWindow extends JDialog {
         return row;
     }
 
+    /**
+     * Update dynamic fields.
+     */
     private void updateDynamicFields() {
         CardLayout cl = (CardLayout) dynamicPanel.getLayout();
         cl.show(dynamicPanel, (String) comboType.getSelectedItem());
     }
 
+    /**
+     * Prefill data.
+     *
+     * @param d the d
+     */
     private void prefillData(Descuento d) {
         if (d == null) return;
         

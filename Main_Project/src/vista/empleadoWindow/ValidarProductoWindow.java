@@ -9,13 +9,31 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ValidarProductoWindow.
+ */
 public class ValidarProductoWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The txt precio validacion. */
     private JTextField txtPrecioValidacion;
+    
+    /** The txt precio estimado. */
     private JTextField txtPrecioEstimado;
+    
+    /** The cb estado. */
     private JComboBox<EstadoConservacion> cbEstado;
 
+    /**
+     * Instantiates a new validar producto window.
+     *
+     * @param parent the parent
+     * @param solicitud the solicitud
+     * @param ctrl the ctrl
+     */
     public ValidarProductoWindow(JFrame parent, SolicitudValidacion solicitud, ControladorValidationRequests ctrl) {
         super(parent, "Validate Product", true);
         setSize(450, 350);

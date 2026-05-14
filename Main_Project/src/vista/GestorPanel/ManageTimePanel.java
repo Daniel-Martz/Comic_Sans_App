@@ -11,32 +11,65 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.event.ChangeListener;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ManageTimePanel.
+ */
 public class ManageTimePanel extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189);
+    
+    /** The section bg. */
     private final Color SECTION_BG = new Color(225, 240, 255);
+    
+    /** The dark btn. */
     private final Color DARK_BTN = new Color(15, 45, 85);
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
     
+    /** The spin days per month. */
     private JSpinner spinDaysPerMonth;
+    
+    /** The spin months per year. */
     private JSpinner spinMonthsPerYear;
+    
+    /** The btn update calendar. */
     private JButton btnUpdateCalendar;
 
+    /** The slider speed. */
     private JSlider sliderSpeed;
+    
+    /** The lbl speed value. */
     private JLabel lblSpeedValue;
+    
+    /** The btn update speed. */
     private JButton btnUpdateSpeed;
 
+    /** The spin advance days. */
     private JSpinner spinAdvanceDays;
+    
+    /** The btn advance days. */
     private JButton btnAdvanceDays;
 
+    /**
+     * Instantiates a new manage time panel.
+     */
     public ManageTimePanel() {
         initComponents();
         initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuGestor();
@@ -65,6 +98,9 @@ public class ManageTimePanel extends JPanel {
         spinAdvanceDays.setFont(spinFont);
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -100,6 +136,12 @@ public class ManageTimePanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates the section wrapper.
+     *
+     * @param title the title
+     * @return the j panel
+     */
     private JPanel createSectionWrapper(String title) {
         JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 15));
         p.setBackground(SECTION_BG);
@@ -113,6 +155,11 @@ public class ManageTimePanel extends JPanel {
         return p;
     }
 
+    /**
+     * Creates the calendar section.
+     *
+     * @return the j panel
+     */
     private JPanel createCalendarSection() {
         JPanel p = createSectionWrapper("CALENDAR CONFIGURATION");
         JLabel l1 = new JLabel("Days/Month:"); l1.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -125,6 +172,11 @@ public class ManageTimePanel extends JPanel {
         return p;
     }
 
+    /**
+     * Creates the speed section.
+     *
+     * @return the j panel
+     */
     private JPanel createSpeedSection() {
         JPanel p = createSectionWrapper("TIME SPEED MULTIPLIER");
         JLabel l1 = new JLabel("Multiplier:"); l1.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -134,6 +186,11 @@ public class ManageTimePanel extends JPanel {
         return p;
     }
 
+    /**
+     * Creates the advance section.
+     *
+     * @return the j panel
+     */
     private JPanel createAdvanceSection() {
         JPanel p = createSectionWrapper("ADVANCE SIMULATION");
         JLabel l1 = new JLabel("Days to advance:"); l1.setFont(new Font("SansSerif", Font.BOLD, 16));
@@ -143,6 +200,14 @@ public class ManageTimePanel extends JPanel {
         return p;
     }
 
+    /**
+     * Creates the styled button.
+     *
+     * @param text the text
+     * @param baseColor the base color
+     * @param actionCommand the action command
+     * @return the j button
+     */
     private JButton createStyledButton(String text, Color baseColor, String actionCommand) {
         JButton btn = new JButton(text);
         btn.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -156,6 +221,12 @@ public class ManageTimePanel extends JPanel {
         return btn;
     }
 
+    /**
+     * Sets the controlador.
+     *
+     * @param actionCtrl the action ctrl
+     * @param changeCtrl the change ctrl
+     */
     public void setControlador(ActionListener actionCtrl, ChangeListener changeCtrl) {
         btnUpdateCalendar.addActionListener(actionCtrl);
         btnUpdateSpeed.addActionListener(actionCtrl);
@@ -163,10 +234,45 @@ public class ManageTimePanel extends JPanel {
         sliderSpeed.addChangeListener(changeCtrl);
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    
+    /**
+     * Gets the spin days per month.
+     *
+     * @return the spin days per month
+     */
     public JSpinner getSpinDaysPerMonth() { return spinDaysPerMonth; }
+    
+    /**
+     * Gets the spin months per year.
+     *
+     * @return the spin months per year
+     */
     public JSpinner getSpinMonthsPerYear() { return spinMonthsPerYear; }
+    
+    /**
+     * Gets the slider speed.
+     *
+     * @return the slider speed
+     */
     public JSlider getSliderSpeed() { return sliderSpeed; }
+    
+    /**
+     * Gets the lbl speed value.
+     *
+     * @return the lbl speed value
+     */
     public JLabel getLblSpeedValue() { return lblSpeedValue; }
+    
+    /**
+     * Gets the spin advance days.
+     *
+     * @return the spin advance days
+     */
     public JSpinner getSpinAdvanceDays() { return spinAdvanceDays; }
 }

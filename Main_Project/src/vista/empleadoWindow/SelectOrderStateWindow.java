@@ -10,13 +10,31 @@ import modelo.solicitud.SolicitudPedido;
 import modelo.usuario.Empleado;
 import vista.clienteWindows.VentanaExitoWindow;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SelectOrderStateWindow.
+ */
 public class SelectOrderStateWindow extends JDialog {
 
+    /** The pedido. */
     private SolicitudPedido pedido;
+    
+    /** The controlador. */
     private ControladorManageOrders controlador;
+    
+    /** The combo estados. */
     private JComboBox<String> comboEstados;
+    
+    /** The estado actual. */
     private EstadoPedido estadoActual;
 
+    /**
+     * Instantiates a new select order state window.
+     *
+     * @param parent the parent
+     * @param pedido the pedido
+     * @param controlador the controlador
+     */
     public SelectOrderStateWindow(JFrame parent, SolicitudPedido pedido, ControladorManageOrders controlador) {
         super(parent, "Select Order State", true);
         this.pedido = pedido;
@@ -64,6 +82,9 @@ public class SelectOrderStateWindow extends JDialog {
         add(panelSur, BorderLayout.SOUTH);
     }
 
+    /**
+     * Confirmar cambios.
+     */
     private void confirmarCambios() {
         int index = comboEstados.getSelectedIndex();
         EstadoPedido nuevoEstado = null;

@@ -9,28 +9,56 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ManageRecommendationsPanel.
+ */
 public class ManageRecommendationsPanel extends JPanel {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The btn left arrow. */
     private JButton btnLeftArrow;
+    
+    /** The btn right arrow. */
     private JButton btnRightArrow;
+    
+    /** The selected number. */
     private int selectedNumber = 5;
+    
+    /** The number labels. */
     private List<JLabel> numberLabels;
+    
+    /** The row labels. */
     private List<JLabel> rowLabels;
     
+    /** The reorder buttons. */
     private List<JButton> reorderButtons;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);
+    
+    /** The banner color. */
     private final Color BANNER_COLOR = new Color(20, 60, 100); 
+    
+    /** The section banner color. */
     private final Color SECTION_BANNER_COLOR = new Color(100, 120, 160); // purple/light blue
 
+    /**
+     * Instantiates a new manage recommendations panel.
+     */
     public ManageRecommendationsPanel() {
         initComponents();
         initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuGestor(); 
@@ -54,6 +82,9 @@ public class ManageRecommendationsPanel extends JPanel {
         btnRightArrow.setBorder(new EmptyBorder(5, 10, 5, 10));
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -222,6 +253,11 @@ public class ManageRecommendationsPanel extends JPanel {
         repaint();
     }
     
+    /**
+     * Update row texts.
+     *
+     * @param newTexts the new texts
+     */
     public void updateRowTexts(List<String> newTexts) {
         if (newTexts.size() != rowLabels.size()) return;
         for (int i = 0; i < rowLabels.size(); i++) {
@@ -231,6 +267,8 @@ public class ManageRecommendationsPanel extends JPanel {
     }
     
     /**
+     * Gets the selected number.
+     *
      * @return the currently selected number (1-7)
      */
     public int getSelectedNumber() {
@@ -239,24 +277,49 @@ public class ManageRecommendationsPanel extends JPanel {
 
     // --- Listeners for the Header ---
 
+    /**
+     * Adds the home listener.
+     *
+     * @param listener the listener
+     */
     public void addHomeListener(ActionListener listener) {
         headerPanel.addHomeListener(listener);
     }
 
+    /**
+     * Adds the notificaciones listener.
+     *
+     * @param listener the listener
+     */
     public void addNotificacionesListener(ActionListener listener) {
         headerPanel.addNotificacionesListener(listener);
     }
 
+    /**
+     * Adds the perfil listener.
+     *
+     * @param listener the listener
+     */
     public void addPerfilListener(ActionListener listener) {
         headerPanel.addPerfilListener(listener);
     }
     
     // --- Listeners for Section A ---
 
+    /**
+     * Adds the left arrow listener.
+     *
+     * @param listener the listener
+     */
     public void addLeftArrowListener(ActionListener listener) {
         btnLeftArrow.addActionListener(listener);
     }
     
+    /**
+     * Adds the right arrow listener.
+     *
+     * @param listener the listener
+     */
     public void addRightArrowListener(ActionListener listener) {
         btnRightArrow.addActionListener(listener);
     }
@@ -276,11 +339,18 @@ public class ManageRecommendationsPanel extends JPanel {
     
     /**
      * Helper to retrieve the actual reorder buttons for drag and drop setup.
+     *
+     * @return the reorder buttons
      */
     public List<JButton> getReorderButtons() {
         return reorderButtons;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
