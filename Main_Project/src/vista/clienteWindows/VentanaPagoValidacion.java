@@ -137,7 +137,7 @@ public class VentanaPagoValidacion extends JDialog {
      */
     public void setControlador(ActionListener c) {
         botonConfirmar.addActionListener(c);
-        botonConfirmar.setActionCommand("CONFIRMAR_PAGO");
+        botonConfirmar.setActionCommand("CONFIRM_PAYMENT");
     }
 
     /**
