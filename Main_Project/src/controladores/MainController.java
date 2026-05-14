@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import vista.userPanels.HeaderPanel;
 import javax.swing.Timer;
 
+import java.io.IOException;
 import java.util.Set;
 import vista.userPanels.*;
 import vista.clienteWindows.*;
@@ -70,6 +71,9 @@ public class MainController {
     /** The notificacion dialog. */
     private NotificacionWindow notificacionDialog;
 
+    /** The fichero guardado. */
+    private final String ficheroGuardado = "AppGuardada.txt";
+
     /**
      * Constructor del controlador principal. Recibe la referencia al MainFrame y
      * obtiene la instancia del modelo (Aplicacion).
@@ -77,6 +81,8 @@ public class MainController {
      */
     public MainController(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+        mainFrame.addMainController(this);
+        mainFrame.cargarEstadoAplicacion();
         this.modelo    = Aplicacion.getInstancia();
     }
 
@@ -88,6 +94,8 @@ public class MainController {
     public void iniciar() {
         registrarListeners();
         
+        refreshIconImage(Aplicacion.getInstancia().getUsuarioActual() != null);
+
         // Mostrar panel inicial
         mostrarMenuPrincipal();
         
@@ -886,6 +894,21 @@ public class MainController {
         dlg.mostrar();
         return false;
     }
+
     
-    
+    public void guardarEstadoAplicacion() {
+    	try {
+        Aplicacion.getInstancia().guardarEstadoAplicacion(ficheroGuardado);
+      } catch (IOException e) {
+        System.out.println("No hay un estado previo que cargar");
+      }
+    }
+
+    /**
+     * Cargar estado aplicacion.
+     */
+    public void cargarEstadoAplicacion() {
+      Aplicacion.getInstancia().cargarEstadoAplicacion(ficheroGuardado);
+    }
+ 
 }

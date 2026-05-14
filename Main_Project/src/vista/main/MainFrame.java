@@ -5,6 +5,7 @@ import vista.GestorPanel.*;
 import vista.empleadoPanel.*;
 import javax.swing.*;
 
+import controladores.MainController;
 import modelo.aplicacion.Aplicacion;
 
 import java.awt.*;
@@ -118,8 +119,8 @@ public class MainFrame extends JFrame {
     /** The perfil panel. */
     private PlaceholderPanel perfilPanel;
 
-    /** The fichero guardado. */
-    private final String ficheroGuardado = "AppGuardada.txt";
+    /** The main controller */
+    private MainController mainController;
 
     /** The Constant PANEL_MENU_EMPLEADO. */
     // Nombres estáticos de los paneles para el CardLayout (antes estaban en el controlador)
@@ -218,30 +219,15 @@ public class MainFrame extends JFrame {
     /** The Constant PANEL_DESCUENTOS_CATEGORIA. */
     public static final String PANEL_DESCUENTOS_CATEGORIA = "DescuentosCategoria";
 
-    /**
-     * Guardar estado aplicacion.
-     */
-    public void guardarEstadoAplicacion() {
-    	try {
-        Aplicacion.getInstancia().guardarEstadoAplicacion(ficheroGuardado);
-      } catch (IOException e) {
-        System.out.println("No hay un estado previo que cargar");
-      }
-    }
-    
-    /**
-     * Cargar estado aplicacion.
-     */
-    public void cargarEstadoAplicacion() {
-      Aplicacion.getInstancia().cargarEstadoAplicacion(ficheroGuardado);
-    }
+  public void cargarEstadoAplicacion(){
+    mainController.cargarEstadoAplicacion();
+  }
 
     /**
      * Instantiates a new main frame.
      */
     public MainFrame() {
       super("Comic Sans App");
-      cargarEstadoAplicacion();
       
       // 0. Hacemos que se guarde el estado de la aplicación al cerrarla
       this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -249,7 +235,7 @@ public class MainFrame extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
         //Cuando se cierre la ventana, queremos que se guarde el estado de la aplicación
-        guardarEstadoAplicacion();
+        mainController.guardarEstadoAplicacion();
 				
 				// Cerrar la ventana y terminar la ejecución
 				e.getWindow().dispose();
@@ -549,5 +535,10 @@ public class MainFrame extends JFrame {
      * @return the notificaciones panel
      */
     public NotificacionesPanel getNotificacionesPanel() { return notificacionesPanel; }
+
+    
+    public void addMainController(MainController m){
+      this.mainController = m;
+    }
     
 }
