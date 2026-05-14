@@ -320,39 +320,39 @@ import modelo.tiempo.*;
         // B. AÑADIR PRODUCTOS DE SEGUNDA MANO PARA EL USUARIO "yo" EN DIFERENTES ESTADOS
         
         // B1. Producto PENDIENTE DE VALIDACIÓN (recién añadido)
-        yo.añadirProductoACarteraDeIntercambio("Libro 'Elantris' de B. Sanderson", "Tapa blanda, leído una vez.", null);
-        yo.añadirProductoACarteraDeIntercambio("Libro 'Mistborn' de B. Sanderson", "Tapa dura, perfecto estado.", null);
-        yo.añadirProductoACarteraDeIntercambio("Juego de mesa 'Risk'", "Falta una pieza, pero jugable.", null);
-        yo.añadirProductoACarteraDeIntercambio("Figura de Batman", "Sin caja original.", null);
-        yo.añadirProductoACarteraDeIntercambio("Cómic 'The Sandman'", "Edición de coleccionista.", null);
-        yo.añadirProductoACarteraDeIntercambio("Teclado Razer", "Teclas mecánicas, poco uso.", null);
-        yo.añadirProductoACarteraDeIntercambio("Ratón Corsair", "Cable un poco desgastado.", null);
+        yo.añadirProductoACarteraDeIntercambio("Libro 'Elantris' de B. Sanderson", "Tapa blanda, leído una vez.", new File("src/assets/productos/segunda_mano/Elantris.jpg"));
+        yo.añadirProductoACarteraDeIntercambio("Libro 'Mistborn' de B. Sanderson", "Tapa dura, perfecto estado.", new File("src/assets/productos/segunda_mano/Mistborn.jpg"));
+        yo.añadirProductoACarteraDeIntercambio("Juego de mesa 'Risk'", "Falta una pieza, pero jugable.", new File("src/assets/productos/segunda_mano/Risk.jpeg"));
+        yo.añadirProductoACarteraDeIntercambio("Figura de Batman", "Sin caja original.", new File("src/assets/productos/segunda_mano/FiguraBatman.jpg"));
+        yo.añadirProductoACarteraDeIntercambio("Cómic 'The Sandman'", "Edición de coleccionista.", new File("src/assets/productos/segunda_mano/Sandman.jpg"));
+        yo.añadirProductoACarteraDeIntercambio("Teclado Razer", "Teclas mecánicas, poco uso.", new File("src/assets/productos/segunda_mano/tecladoRazer.jpg"));
+        yo.añadirProductoACarteraDeIntercambio("Ratón Corsair", "Cable un poco desgastado.", new File("src/assets/productos/segunda_mano/RatonCorsair.jpg"));
 
         // B2. Producto VALIDADO, PENDIENTE DE PAGO
-        ProductoSegundaMano pAwaitingPayment = yo.añadirProductoACarteraDeIntercambio("Ratón Logitech G502", "Usado pero funciona perfectamente.", null);
+        ProductoSegundaMano pAwaitingPayment = yo.añadirProductoACarteraDeIntercambio("Ratón Logitech G502", "Usado pero funciona perfectamente.", new File("src/assets/productos/segunda_mano/RatonLogitech.jpg"));
         pAwaitingPayment.getSolicitudValidacion().validarProducto(2.0, 25.0, EstadoConservacion.USO_LIGERO);
 
         // B3. Producto VALIDADO Y PAGADO (listo para intercambiar, pero no en una oferta)
-        ProductoSegundaMano pReady = yo.añadirProductoACarteraDeIntercambio("Teclado Mecánico Keychron K2", "Switches marrones, con su caja.", null);
+        ProductoSegundaMano pReady = yo.añadirProductoACarteraDeIntercambio("Teclado Mecánico Keychron K2", "Switches marrones, con su caja.", new File("src/assets/productos/segunda_mano/tecladoMecanico.jpg"));
         pReady.getSolicitudValidacion().validarProducto(3.5, 60.0, EstadoConservacion.MUY_BUENO);
         yo.pagarValidacion(pReady.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
         // -------------------------------------------------------------------------
         // C. AÑADIR PRODUCTOS DE SEGUNDA MANO DISPONIBLES DE OTROS USUARIOS 
         // (Para que aparezcan en la búsqueda de intercambios y puedas seleccionarlos)
         // -------------------------------------------------------------------------
-        ProductoSegundaMano pBob1 = bob.añadirProductoACarteraDeIntercambio("Consola Retro Portátil", "Incluye 100 juegos clásicos.", null);
+        ProductoSegundaMano pBob1 = bob.añadirProductoACarteraDeIntercambio("Consola Retro Portátil", "Incluye 100 juegos clásicos.", new File("src/assets/productos/segunda_mano/MiVideojuego.jpg"));
         pBob1.getSolicitudValidacion().validarProducto(4.5, 45.0, EstadoConservacion.MUY_BUENO);
         bob.pagarValidacion(pBob1.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        ProductoSegundaMano pBob2 = bob.añadirProductoACarteraDeIntercambio("Cómic X-Men #1", "Edición coleccionista, guardado en funda.", null);
+        ProductoSegundaMano pBob2 = bob.añadirProductoACarteraDeIntercambio("Cómic X-Men #1", "Edición coleccionista, guardado en funda.", new File("src/assets/productos/segunda_mano/batman.jpg"));
         pBob2.getSolicitudValidacion().validarProducto(5.0, 120.0, EstadoConservacion.PERFECTO);
         bob.pagarValidacion(pBob2.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        ProductoSegundaMano pAlice1 = alice.añadirProductoACarteraDeIntercambio("Juego de Mesa Dixit", "Faltan un par de cartas pero es muy jugable.", null);
+        ProductoSegundaMano pAlice1 = alice.añadirProductoACarteraDeIntercambio("Juego de Mesa Dixit", "Faltan un par de cartas pero es muy jugable.", new File("src/assets/productos/segunda_mano/catan.jpg"));
         pAlice1.getSolicitudValidacion().validarProducto(3.0, 15.0, EstadoConservacion.USO_LIGERO);
         alice.pagarValidacion(pAlice1.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        ProductoSegundaMano pCharlie1 = charlie.añadirProductoACarteraDeIntercambio("Figura Funko Pop Batman", "Caja ligeramente dañada en una esquina.", null);
+        ProductoSegundaMano pCharlie1 = charlie.añadirProductoACarteraDeIntercambio("Figura Funko Pop Batman", "Caja ligeramente dañada en una esquina.", new File("src/assets/productos/segunda_mano/FiguraBatman.jpg"));
         pCharlie1.getSolicitudValidacion().validarProducto(4.0, 12.0, EstadoConservacion.DANADO);
         charlie.pagarValidacion(pCharlie1.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
@@ -362,10 +362,10 @@ import modelo.tiempo.*;
         
         // Oferta 1: Bob me ofrece su Comic a cambio de mi Juego (Tu oferta original)
         // Crear el producto a través del método del cliente para no saltarnos la cartera
-        ProductoSegundaMano comicBob = bob.añadirProductoACarteraDeIntercambio("Spider-Man Vol.1", "Primera edición", null);
+        ProductoSegundaMano comicBob = bob.añadirProductoACarteraDeIntercambio("Spider-Man Vol.1", "Primera edición", new File("src/assets/productos/segunda_mano/batman.jpg"));
         comicBob.getSolicitudValidacion().validarProducto(5.0, 150.0, EstadoConservacion.USO_LIGERO);
         bob.pagarValidacion(comicBob.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
-        ProductoSegundaMano juegoMio = yo.añadirProductoACarteraDeIntercambio("Catan", "Casi nuevo", null);
+        ProductoSegundaMano juegoMio = yo.añadirProductoACarteraDeIntercambio("Catan", "Casi nuevo", new File("src/assets/productos/segunda_mano/catan.jpg"));
         juegoMio.getSolicitudValidacion().validarProducto(5.0, 45.0, EstadoConservacion.USO_LIGERO);
         yo.pagarValidacion(juegoMio.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
@@ -376,11 +376,11 @@ import modelo.tiempo.*;
 
         for (int i = 1; i <= 6; i++) {
             // Usar el método del cliente para añadir a su cartera y generar correctamente la solicitud
-            ProductoSegundaMano pDaAlice = alice.añadirProductoACarteraDeIntercambio("Figura de Anime #" + i, "Buen estado", null);
+            ProductoSegundaMano pDaAlice = alice.añadirProductoACarteraDeIntercambio("Figura de Anime #" + i, "Buen estado", new File("src/assets/productos/segunda_mano/MiVideojuego.jpg"));
             pDaAlice.getSolicitudValidacion().validarProducto(2.0, 15.0 + i * 2, EstadoConservacion.USO_LIGERO);
             alice.pagarValidacion(pDaAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-            ProductoSegundaMano pPideAlice = yo.añadirProductoACarteraDeIntercambio("Mi carta Magic #" + i, "Con funda", null);
+            ProductoSegundaMano pPideAlice = yo.añadirProductoACarteraDeIntercambio("Mi carta Magic #" + i, "Con funda", new File("src/assets/productos/segunda_mano/carta.jpg"));
             pPideAlice.getSolicitudValidacion().validarProducto(1.0, 12.0 + (i * 2.5), EstadoConservacion.PERFECTO);
             yo.pagarValidacion(pPideAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
@@ -395,10 +395,10 @@ import modelo.tiempo.*;
         // -------------------------------------------------------------------------
         
         // Oferta enviada 1: Yo ofrezco mi Cómic a Bob a cambio de su Figura (Tu oferta original)
-        ProductoSegundaMano comicMio = yo.añadirProductoACarteraDeIntercambio("Batman: Año Uno", "Tapa dura",  null);
+            ProductoSegundaMano comicMio = yo.añadirProductoACarteraDeIntercambio("Batman: Año Uno", "Tapa dura",  new File("src/assets/productos/segunda_mano/batman.jpg"));
         comicMio.getSolicitudValidacion().validarProducto(5.0, 20.0, EstadoConservacion.USO_LIGERO);
         yo.pagarValidacion(comicMio.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
-        ProductoSegundaMano figuraBob = bob.añadirProductoACarteraDeIntercambio("Figura Iron Man", "Sin caja", null);
+        ProductoSegundaMano figuraBob = bob.añadirProductoACarteraDeIntercambio("Figura Iron Man", "Sin caja", new File("src/assets/productos/segunda_mano/FiguraBatman.jpg"));
         figuraBob.getSolicitudValidacion().validarProducto(5.0, 30.0, EstadoConservacion.USO_LIGERO);
         bob.pagarValidacion(figuraBob.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
@@ -408,11 +408,11 @@ import modelo.tiempo.*;
                 bob);
 
         for (int i = 1; i <= 4; i++) {
-            ProductoSegundaMano pDoyYo = yo.añadirProductoACarteraDeIntercambio("Mi videojuego #" + i, "Completo", null);
+            ProductoSegundaMano pDoyYo = yo.añadirProductoACarteraDeIntercambio("Mi videojuego #" + i, "Completo", new File("src/assets/productos/segunda_mano/MiVideojuego.jpg"));
             pDoyYo.getSolicitudValidacion().validarProducto(5.0, 40.0, EstadoConservacion.PERFECTO);
             yo.pagarValidacion(pDoyYo.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-            ProductoSegundaMano pPidoCharlie = charlie.añadirProductoACarteraDeIntercambio("Juego de Rol de Charlie #" + i, "Nuevo", null);
+            ProductoSegundaMano pPidoCharlie = charlie.añadirProductoACarteraDeIntercambio("Juego de Rol de Charlie #" + i, "Nuevo", new File("src/assets/productos/segunda_mano/libroJuegoDeTronos.jpg"));
             pPidoCharlie.getSolicitudValidacion().validarProducto(5.0, 35.0 + i, EstadoConservacion.PERFECTO);
             charlie.pagarValidacion(pPidoCharlie.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
@@ -425,11 +425,11 @@ import modelo.tiempo.*;
         // -------------------------------------------------------------------------
         // 5. INTERCAMBIO ACEPTADO (PENDIENTE DE APROBACIÓN POR EMPLEADO)
         // -------------------------------------------------------------------------
-        ProductoSegundaMano miProductoEnEspera = yo.añadirProductoACarteraDeIntercambio("Monopoly Clásico", "Edición original de 1998", null);
+        ProductoSegundaMano miProductoEnEspera = yo.añadirProductoACarteraDeIntercambio("Monopoly Clásico", "Edición original de 1998", new File("src/assets/productos/segunda_mano/monopoly.jpg"));
         miProductoEnEspera.getSolicitudValidacion().validarProducto(5.0, 20.0, EstadoConservacion.MUY_BUENO);
         yo.pagarValidacion(miProductoEnEspera.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        ProductoSegundaMano productoCharlieOfrecido = charlie.añadirProductoACarteraDeIntercambio("Zelda Ocarina of Time (N64)", "Cartucho suelto", null);
+        ProductoSegundaMano productoCharlieOfrecido = charlie.añadirProductoACarteraDeIntercambio("Zelda Ocarina of Time (N64)", "Cartucho suelto", new File("src/assets/productos/segunda_mano/MiVideojuego.jpg"));
         productoCharlieOfrecido.getSolicitudValidacion().validarProducto(4.5, 35.0, EstadoConservacion.USO_LIGERO);
         charlie.pagarValidacion(productoCharlieOfrecido.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
@@ -441,11 +441,11 @@ import modelo.tiempo.*;
         yo.aceptarOferta(ofertaAceptada);
 
         // Intercambio 2: Alice me hace una oferta y yo la acepto
-        ProductoSegundaMano miLibro = yo.añadirProductoACarteraDeIntercambio("Libro Juego de Tronos", "Tapa dura", null);
+        ProductoSegundaMano miLibro = yo.añadirProductoACarteraDeIntercambio("Libro Juego de Tronos", "Tapa dura", new File("src/assets/productos/segunda_mano/libroJuegoDeTronos.jpg"));
         miLibro.getSolicitudValidacion().validarProducto(5.0, 15.0, EstadoConservacion.PERFECTO);
         yo.pagarValidacion(miLibro.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        ProductoSegundaMano figuraAlice = alice.añadirProductoACarteraDeIntercambio("Figura Pikachu", "Nueva en caja", null);
+        ProductoSegundaMano figuraAlice = alice.añadirProductoACarteraDeIntercambio("Figura Pikachu", "Nueva en caja", new File("src/assets/figuraGoku.png"));
         figuraAlice.getSolicitudValidacion().validarProducto(5.0, 20.0, EstadoConservacion.PERFECTO);
         alice.pagarValidacion(figuraAlice.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
@@ -456,11 +456,11 @@ import modelo.tiempo.*;
         yo.aceptarOferta(ofertaAceptada2);
 
         // Intercambio 3: Bob le hace una oferta a Charlie y él la acepta
-        ProductoSegundaMano juegoBob = bob.añadirProductoACarteraDeIntercambio("Carcassonne", "Casi sin uso", null);
+        ProductoSegundaMano juegoBob = bob.añadirProductoACarteraDeIntercambio("Carcassonne", "Casi sin uso", new File("src/assets/productos/segunda_mano/catan.jpg"));
         juegoBob.getSolicitudValidacion().validarProducto(5.0, 30.0, EstadoConservacion.MUY_BUENO);
         bob.pagarValidacion(juegoBob.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
-        ProductoSegundaMano comicCharlie = charlie.añadirProductoACarteraDeIntercambio("Invencible", "Comic en tomo único", null);
+        ProductoSegundaMano comicCharlie = charlie.añadirProductoACarteraDeIntercambio("Invencible", "Comic en tomo único", new File("src/assets/productos/segunda_mano/batman.jpg"));
         comicCharlie.getSolicitudValidacion().validarProducto(5.0, 35.0, EstadoConservacion.PERFECTO);
         charlie.pagarValidacion(comicCharlie.getSolicitudValidacion(), "1111222233334444", "123", new DateTimeSimulado());
 
