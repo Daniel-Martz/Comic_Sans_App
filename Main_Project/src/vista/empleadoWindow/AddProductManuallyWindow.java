@@ -32,7 +32,6 @@ public class AddProductManuallyWindow extends JDialog {
     private JComboBox<String> comboProductType;
 
     // Campos comunes
-    private JTextField txtId;
     private JTextField txtName;
     private JTextField txtPrice;
     private JTextField txtDescription;
@@ -115,14 +114,14 @@ public class AddProductManuallyWindow extends JDialog {
         photoPlaceholder.setBackground(Color.WHITE);
         photoPlaceholder.setBorder(new LineBorder(Color.DARK_GRAY, 2));
         
-        lblPhoto = new JLabel("<html><center>X<br>ADD PHOTO</center></html>", SwingConstants.CENTER);
+        lblPhoto = new JLabel("<html><center>⚠<br>ADD PHOTO<br>(REQUIRED)</center></html>", SwingConstants.CENTER);
         lblPhoto.setFont(new Font("SansSerif", Font.BOLD, 36));
-        lblPhoto.setForeground(Color.LIGHT_GRAY);
+        lblPhoto.setForeground(new Color(200, 0, 0)); // Rojo para indicar que es obligatorio
         photoPlaceholder.add(lblPhoto, BorderLayout.CENTER);
 
         leftPanel.add(photoPlaceholder, BorderLayout.CENTER);
         
-        btnChangePhoto = new JButton("ADD / CHANGE PHOTO");
+        btnChangePhoto = new JButton("ADD PHOTO (REQUIRED) *");
         btnChangePhoto.setFont(new Font("SansSerif", Font.BOLD, 14));
         btnChangePhoto.setBackground(BANNER_MAIN_COLOR);
         btnChangePhoto.setForeground(Color.WHITE);
@@ -144,7 +143,6 @@ public class AddProductManuallyWindow extends JDialog {
         comboProductType = new JComboBox<>(new String[]{"Comic", "Figure", "Board Game"});
         comboProductType.addActionListener(e -> actualizarCamposEspecificos());
 
-        txtId = new JTextField();
         txtName = new JTextField();
         txtPrice = new JTextField();
         txtDescription = new JTextField();
@@ -154,7 +152,6 @@ public class AddProductManuallyWindow extends JDialog {
         btnCategories.addActionListener(e -> abrirSelectorCategorias());
 
         formPanel.add(createFormRow("PRODUCT TYPE:", comboProductType, true));
-        formPanel.add(createFormRow("ID:", txtId, true));
         formPanel.add(createFormRow("NAME:", txtName, true));
         formPanel.add(createFormRow("PRICE:", txtPrice, true));
         formPanel.add(createFormRow("DESCRIPTION:", txtDescription, true));
@@ -331,7 +328,8 @@ public class AddProductManuallyWindow extends JDialog {
                 ImageIcon iconoOriginal = new ImageIcon(path); 
                 Image imgEscalada = iconoOriginal.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
                 lblPhoto.setIcon(new ImageIcon(imgEscalada));
-                lblPhoto.setText(""); // Ocultar el texto de placeholder
+                lblPhoto.setText("✓ PHOTO SELECTED"); // Mostrar checkmark cuando se carga
+                lblPhoto.setForeground(new Color(0, 150, 0)); // Verde
             } catch (Exception ex) {
                 mostrarPlaceholderFoto();
             }
@@ -342,7 +340,8 @@ public class AddProductManuallyWindow extends JDialog {
 
     private void mostrarPlaceholderFoto() {
         lblPhoto.setIcon(null);
-        lblPhoto.setText("<html><center>X<br>ADD PHOTO</center></html>");
+        lblPhoto.setText("<html><center>⚠<br>ADD PHOTO<br>(REQUIRED)</center></html>");
+        lblPhoto.setForeground(new Color(200, 0, 0)); // Rojo cuando no está seleccionada
     }
     
     private void seleccionarFoto() {
@@ -361,7 +360,6 @@ public class AddProductManuallyWindow extends JDialog {
     public String getProductType() { return (String) comboProductType.getSelectedItem(); }
     
     // Getters comunes
-    public String getNewId() { return txtId.getText(); }
     public String getNewName() { return txtName.getText(); }
     public String getNewPrice() { return txtPrice.getText(); }
     public String getNewDescription() { return txtDescription.getText(); }

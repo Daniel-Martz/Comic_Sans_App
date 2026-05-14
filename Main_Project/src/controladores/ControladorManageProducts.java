@@ -192,9 +192,6 @@ public class ControladorManageProducts implements ActionListener {
         if (p == null) return;
         
         try {
-            int newId = Integer.parseInt(windowModifySingle.getNewId());
-            p.setID(newId);
-            
             p.setNombre(windowModifySingle.getNewName());
             
             double newPrice = Double.parseDouble(windowModifySingle.getNewPrice().replace(",", "."));
