@@ -211,8 +211,9 @@ public class LogInPanel extends JPanel {
 		passwordRowPanel.setOpaque(false);
 		passwordRowPanel.setLayout(new BoxLayout(passwordRowPanel, BoxLayout.X_AXIS));
 		passwordRowPanel.setAlignmentX(CENTER_ALIGNMENT);
-		passwordRowPanel.setMaximumSize(new Dimension(440, 36));
+		passwordRowPanel.setMaximumSize(new Dimension(550, 36));
 		passwordRowPanel.add(Box.createHorizontalGlue());
+		passwordRowPanel.add(Box.createHorizontalStrut(108));
 		passwordRowPanel.add(passwordField);
 		passwordRowPanel.add(Box.createHorizontalStrut(8));
 		showPasswordButton.setPreferredSize(new Dimension(100, 28));
