@@ -199,7 +199,7 @@ public class HeaderPanel extends JPanel {
             btnSearchIcon.setText("🔍");
         }
 
-        btnFilters = new JButton("⚙ Filtros");
+        btnFilters = new JButton("⚙ Filters");
         btnFilters.setFont(new Font("Comic Sans MS", Font.BOLD, 14)); 
         btnFilters.setContentAreaFilled(false);
         btnFilters.setBorderPainted(false);

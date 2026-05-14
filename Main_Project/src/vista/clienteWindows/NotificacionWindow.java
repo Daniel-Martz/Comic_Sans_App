@@ -97,7 +97,7 @@ public class NotificacionWindow extends JDialog {
 
         // Botones
         JPanel botones = new JPanel();
-        JButton ok = new JButton("Accept");
+        JButton ok = new JButton("OK");
         ok.addActionListener(e -> dispose());
         botones.add(ok);
         add(botones, BorderLayout.SOUTH);

@@ -34,7 +34,7 @@ public class ControladorPagoPedido implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("CONFRIM_ORDER_PAYMENT")) {
+        if (e.getActionCommand().equals("CONFIRM_ORDER_PAYMENT")) {
             gestionarConfirmar();
         }
     }

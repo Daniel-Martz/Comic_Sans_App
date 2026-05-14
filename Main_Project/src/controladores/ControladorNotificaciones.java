@@ -2,6 +2,9 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import modelo.aplicacion.Aplicacion;
 import modelo.notificacion.Notificacion;
 import modelo.notificacion.NotificacionCliente;
@@ -68,10 +71,14 @@ public class ControladorNotificaciones implements ActionListener{
     notificacionesPanel.clearNotificaciones(); 
     Usuario usuarioActual = Aplicacion.getInstancia().getUsuarioActual();
     if((usuarioActual instanceof Empleado e)){
-      e.getNotificaciones().forEach(n -> notificacionesPanel.agregarNotificacion(n)); 
+      List<Notificacion> notificaciones = new ArrayList<>(e.getNotificaciones());
+      Collections.reverse(notificaciones);
+      notificaciones.forEach(n -> notificacionesPanel.agregarNotificacion(n)); 
     }
     if((usuarioActual instanceof ClienteRegistrado c)){
-      c.getNotificaciones().forEach(n -> notificacionesPanel.agregarNotificacion(n)); 
+      List<Notificacion> notificaciones = new ArrayList<>(c.getNotificaciones());
+      Collections.reverse(notificaciones);
+      notificaciones.forEach(n -> notificacionesPanel.agregarNotificacion(n)); 
     }
   }
 
