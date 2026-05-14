@@ -19,7 +19,6 @@ public class DeleteButtonEditor extends DefaultCellEditor {
         button.addActionListener(e -> {
             fireEditingStopped();
             if (n != null) {
-            	System.out.println("The notificaction is not null");
                 c.borrarNotificacion(n); 
             }
         });
