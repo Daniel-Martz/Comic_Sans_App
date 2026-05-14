@@ -7,15 +7,27 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * Ventana emergente (JDialog) que muestra la información detallada de un producto de segunda mano.
  */
 public class VentanaDetallesProductoSegundaManoWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The color fondo. */
     private final Color COLOR_FONDO = new Color(245, 245, 250);
+    
+    /** The color titulo. */
     private final Color COLOR_TITULO = new Color(50, 60, 100);
 
+    /**
+     * Instantiates a new ventana detalles producto segunda mano window.
+     *
+     * @param parent the parent
+     * @param p the p
+     */
     public VentanaDetallesProductoSegundaManoWindow(Window parent, ProductoSegundaMano p) {
         super(parent, "Product Details", Dialog.ModalityType.APPLICATION_MODAL);
         setSize(550, 500);
@@ -23,6 +35,11 @@ public class VentanaDetallesProductoSegundaManoWindow extends JDialog {
         initComponents(p);
     }
 
+    /**
+     * Inits the components.
+     *
+     * @param p the p
+     */
     private void initComponents(ProductoSegundaMano p) {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBackground(COLOR_FONDO);
@@ -115,6 +132,13 @@ public class VentanaDetallesProductoSegundaManoWindow extends JDialog {
         setContentPane(mainPanel);
     }
 
+    /**
+     * Adds the detail row.
+     *
+     * @param panel the panel
+     * @param label the label
+     * @param value the value
+     */
     private void addDetailRow(JPanel panel, String label, String value) {
         JPanel row = new JPanel(new BorderLayout());
         row.setBackground(Color.WHITE);

@@ -6,12 +6,28 @@ import java.awt.*;
 import modelo.solicitud.SolicitudIntercambio;
 import controladores.ControladorManageInterchanges;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ApproveInterchangeWindow.
+ */
 public class ApproveInterchangeWindow extends JDialog {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The txt code 1. */
     private JTextField txtCode1;
+    
+    /** The txt code 2. */
     private JTextField txtCode2;
 
+    /**
+     * Instantiates a new approve interchange window.
+     *
+     * @param parent the parent
+     * @param solicitud the solicitud
+     * @param ctrl the ctrl
+     */
     public ApproveInterchangeWindow(JFrame parent, SolicitudIntercambio solicitud, ControladorManageInterchanges ctrl) {
         super(parent, "Approve Interchange", true);
         setSize(400, 250);

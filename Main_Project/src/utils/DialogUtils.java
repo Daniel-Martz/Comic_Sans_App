@@ -3,6 +3,7 @@ package utils;
 import javax.swing.*;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * Pequeña utilidad para mostrar diálogos JOptionPane con tamaño personalizado.
  */

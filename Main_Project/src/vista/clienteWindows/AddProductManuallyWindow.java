@@ -9,44 +9,95 @@ import java.awt.*;
 import java.io.File;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddProductManuallyWindow.
+ */
 public class AddProductManuallyWindow extends JDialog {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The cmb tipo producto. */
     private JComboBox<String> cmbTipoProducto;
+    
+    /** The txt nombre. */
     private JTextField txtNombre;
+    
+    /** The txt descripcion. */
     private JTextArea txtDescripcion;
+    
+    /** The txt precio. */
     private JTextField txtPrecio;
+    
+    /** The txt stock. */
     private JTextField txtStock;
+    
+    /** The cmb categoria. */
     private JComboBox<String> cmbCategoria;
     
+    /** The foto seleccionada. */
     private File fotoSeleccionada;
+    
+    /** The lbl foto path. */
     private JLabel lblFotoPath;
+    
+    /** The btn select foto. */
     private JButton btnSelectFoto;
 
+    /** The panel specifics. */
     // Paneles específicos
     private JPanel panelSpecifics;
     
+    /** The txt numero paginas. */
     // Comic fields
     private JTextField txtNumeroPaginas;
+    
+    /** The txt autor. */
     private JTextField txtAutor;
+    
+    /** The txt editorial. */
     private JTextField txtEditorial;
+    
+    /** The txt año publicacion. */
     private JTextField txtAñoPublicacion;
     
+    /** The txt numero jugadores. */
     // JuegoDeMesa fields
     private JTextField txtNumeroJugadores;
+    
+    /** The txt edad minima. */
     private JTextField txtEdadMinima;
+    
+    /** The txt edad maxima. */
     private JTextField txtEdadMaxima;
+    
+    /** The cmb tipo juego. */
     private JComboBox<TipoJuegoMesa> cmbTipoJuego;
     
+    /** The txt marca. */
     // Figura fields
     private JTextField txtMarca;
+    
+    /** The txt material. */
     private JTextField txtMaterial;
+    
+    /** The txt dx. */
     private JTextField txtDx;
+    
+    /** The txt dy. */
     private JTextField txtDy;
+    
+    /** The txt dz. */
     private JTextField txtDz;
 
+    /**
+     * Instantiates a new adds the product manually window.
+     *
+     * @param parent the parent
+     */
     public AddProductManuallyWindow(JFrame parent) {
-        super(parent, "Añadir Producto Manualmente", true);
+        super(parent, "Add product manually", true);
         setSize(550, 700);
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout(10, 10));
@@ -58,27 +109,27 @@ public class AddProductManuallyWindow extends JDialog {
         // Top Panel: Tipo de Producto
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(new JLabel("Tipo de Producto:"));
-        cmbTipoProducto = new JComboBox<>(new String[]{"Comic", "JuegoDeMesa", "Figura"});
+        cmbTipoProducto = new JComboBox<>(new String[]{"Comic", "BoardGame", "Figure"});
         cmbTipoProducto.addActionListener(e -> updateSpecificFields());
         topPanel.add(cmbTipoProducto);
         mainPanel.add(topPanel);
 
         // Common fields Panel
         JPanel commonPanel = new JPanel(new GridLayout(6, 2, 8, 8));
-        commonPanel.setBorder(BorderFactory.createTitledBorder("Datos Generales"));
+        commonPanel.setBorder(BorderFactory.createTitledBorder("General Attributes"));
         
-        commonPanel.add(new JLabel("Nombre:"));
+        commonPanel.add(new JLabel("Name:"));
         txtNombre = new JTextField();
         commonPanel.add(txtNombre);
         
-        commonPanel.add(new JLabel("Descripción:"));
+        commonPanel.add(new JLabel("Description:"));
         txtDescripcion = new JTextArea(3, 20);
         txtDescripcion.setLineWrap(true);
         txtDescripcion.setWrapStyleWord(true);
         JScrollPane scrollDesc = new JScrollPane(txtDescripcion);
         commonPanel.add(scrollDesc);
         
-        commonPanel.add(new JLabel("Precio (€):"));
+        commonPanel.add(new JLabel("Price (€):"));
         txtPrecio = new JTextField();
         commonPanel.add(txtPrecio);
         
@@ -86,15 +137,15 @@ public class AddProductManuallyWindow extends JDialog {
         txtStock = new JTextField();
         commonPanel.add(txtStock);
         
-        commonPanel.add(new JLabel("Categoría:"));
+        commonPanel.add(new JLabel("Category:"));
         cmbCategoria = new JComboBox<>();
         cargarCategorias();
         commonPanel.add(cmbCategoria);
         
         commonPanel.add(new JLabel("Foto:"));
         JPanel fotoPanel = new JPanel(new BorderLayout(5, 5));
-        btnSelectFoto = new JButton("Seleccionar");
-        lblFotoPath = new JLabel("Ninguna seleccionada");
+        btnSelectFoto = new JButton("Select");
+        lblFotoPath = new JLabel("None selected");
         lblFotoPath.setFont(new Font("SansSerif", Font.ITALIC, 11));
         fotoPanel.add(btnSelectFoto, BorderLayout.WEST);
         fotoPanel.add(lblFotoPath, BorderLayout.CENTER);
@@ -104,13 +155,12 @@ public class AddProductManuallyWindow extends JDialog {
 
         mainPanel.add(commonPanel);
 
-        // Specific fields Panel (usamos CardLayout para cambiar entre atributos)
         panelSpecifics = new JPanel(new CardLayout());
-        panelSpecifics.setBorder(BorderFactory.createTitledBorder("Atributos Específicos"));
+        panelSpecifics.setBorder(BorderFactory.createTitledBorder("Specific Attributes"));
         
         panelSpecifics.add(createComicPanel(), "Comic");
-        panelSpecifics.add(createJuegoDeMesaPanel(), "JuegoDeMesa");
-        panelSpecifics.add(createFiguraPanel(), "Figura");
+        panelSpecifics.add(createJuegoDeMesaPanel(), "GameBoard");
+        panelSpecifics.add(createFiguraPanel(), "Figure");
 
         mainPanel.add(panelSpecifics);
         
@@ -131,6 +181,9 @@ public class AddProductManuallyWindow extends JDialog {
         updateSpecificFields();
     }
     
+    /**
+     * Cargar categorias.
+     */
     private void cargarCategorias() {
         Set<Categoria> categorias = Catalogo.getInstancia().getCategoriasTienda();
         for(Categoria c : categorias) {
@@ -138,18 +191,26 @@ public class AddProductManuallyWindow extends JDialog {
         }
     }
     
+    /**
+     * Update specific fields.
+     */
     private void updateSpecificFields() {
         CardLayout cl = (CardLayout) panelSpecifics.getLayout();
         cl.show(panelSpecifics, (String) cmbTipoProducto.getSelectedItem());
     }
     
+    /**
+     * Creates the comic panel.
+     *
+     * @return the j panel
+     */
     private JPanel createComicPanel() {
         JPanel p = new JPanel(new GridLayout(4, 2, 8, 8));
-        p.add(new JLabel("Número de Páginas:"));
+        p.add(new JLabel("Number of pages:"));
         txtNumeroPaginas = new JTextField();
         p.add(txtNumeroPaginas);
         
-        p.add(new JLabel("Autor:"));
+        p.add(new JLabel("Author:"));
         txtAutor = new JTextField();
         p.add(txtAutor);
         
@@ -157,32 +218,42 @@ public class AddProductManuallyWindow extends JDialog {
         txtEditorial = new JTextField();
         p.add(txtEditorial);
         
-        p.add(new JLabel("Año de Publicación:"));
+        p.add(new JLabel("Publication year:"));
         txtAñoPublicacion = new JTextField();
         p.add(txtAñoPublicacion);
         return p;
     }
     
+    /**
+     * Creates the juego de mesa panel.
+     *
+     * @return the j panel
+     */
     private JPanel createJuegoDeMesaPanel() {
         JPanel p = new JPanel(new GridLayout(4, 2, 8, 8));
-        p.add(new JLabel("Número de Jugadores:"));
+        p.add(new JLabel("Number of players:"));
         txtNumeroJugadores = new JTextField();
         p.add(txtNumeroJugadores);
         
-        p.add(new JLabel("Edad Mínima:"));
+        p.add(new JLabel("Min age:"));
         txtEdadMinima = new JTextField();
         p.add(txtEdadMinima);
         
-        p.add(new JLabel("Edad Máxima:"));
+        p.add(new JLabel("Max age:"));
         txtEdadMaxima = new JTextField();
         p.add(txtEdadMaxima);
         
-        p.add(new JLabel("Tipo de Juego:"));
+        p.add(new JLabel("Type of game:"));
         cmbTipoJuego = new JComboBox<>(TipoJuegoMesa.values());
         p.add(cmbTipoJuego);
         return p;
     }
     
+    /**
+     * Creates the figura panel.
+     *
+     * @return the j panel
+     */
     private JPanel createFiguraPanel() {
         JPanel p = new JPanel(new GridLayout(5, 2, 8, 8));
         p.add(new JLabel("Marca:"));
@@ -193,20 +264,23 @@ public class AddProductManuallyWindow extends JDialog {
         txtMaterial = new JTextField();
         p.add(txtMaterial);
         
-        p.add(new JLabel("Dimensión X:"));
+        p.add(new JLabel("Dimension X:"));
         txtDx = new JTextField();
         p.add(txtDx);
         
-        p.add(new JLabel("Dimensión Y:"));
+        p.add(new JLabel("Dimension Y:"));
         txtDy = new JTextField();
         p.add(txtDy);
         
-        p.add(new JLabel("Dimensión Z:"));
+        p.add(new JLabel("Dimension Z:"));
         txtDz = new JTextField();
         p.add(txtDz);
         return p;
     }
     
+    /**
+     * Seleccionar foto.
+     */
     private void seleccionarFoto() {
         JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
@@ -216,6 +290,9 @@ public class AddProductManuallyWindow extends JDialog {
         }
     }
     
+    /**
+     * Añadir producto.
+     */
     private void añadirProducto() {
         try {
             String tipo = (String) cmbTipoProducto.getSelectedItem();
@@ -223,7 +300,7 @@ public class AddProductManuallyWindow extends JDialog {
             String descripcion = txtDescripcion.getText().trim();
             
             if (nombre.isEmpty() || descripcion.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "El nombre y la descripción no pueden estar vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "The name and description cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
@@ -231,13 +308,13 @@ public class AddProductManuallyWindow extends JDialog {
             int stock = Integer.parseInt(txtStock.getText().trim());
             
             if (fotoSeleccionada == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar una foto.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "You must select a photo", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
             String categoriaNombre = (String) cmbCategoria.getSelectedItem();
             if (categoriaNombre == null) {
-                JOptionPane.showMessageDialog(this, "Debe seleccionar una categoría.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "You must select a category", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
@@ -275,14 +352,14 @@ public class AddProductManuallyWindow extends JDialog {
                 categoria.añadirProductoACategoria(nuevoProducto);
                 Catalogo.getInstancia().añadirProducto(nuevoProducto);
                 
-                JOptionPane.showMessageDialog(this, "Producto añadido con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Product added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
                 dispose(); // Cerrar ventana
             }
             
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Asegúrese de introducir valores numéricos válidos en los campos correspondientes.", "Error Numérico", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please make sure to enter valid numeric values in the corresponding fields.", "Numeric Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error inesperado al añadir producto: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Unexpected error while adding product " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -5,21 +5,33 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
 /**
  * Reusable modal dialog to inform the user they lack a required permission.
  */
 public class PermissionRequiredWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new permission required window.
+     *
+     * @param parent the parent
+     * @param permisoNombre the permiso nombre
+     */
     public PermissionRequiredWindow(Frame parent, String permisoNombre) {
         super(parent, "Access Denied", true);
         initComponents(permisoNombre);
-        // Aumentamos ligeramente el ancho para que el mensaje no se corte
         setSize(520, 160);
         setLocationRelativeTo(parent);
     }
 
+    /**
+     * Inits the components.
+     *
+     * @param permisoNombre the permiso nombre
+     */
     private void initComponents(String permisoNombre) {
         JPanel content = new JPanel(new BorderLayout(10, 10));
         content.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -42,6 +54,9 @@ public class PermissionRequiredWindow extends JDialog {
         setContentPane(content);
     }
 
+    /**
+     * Mostrar.
+     */
     public void mostrar() {
         setVisible(true);
     }

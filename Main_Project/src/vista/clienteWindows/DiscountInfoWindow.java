@@ -9,9 +9,21 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.Map;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DiscountInfoWindow.
+ */
 public class DiscountInfoWindow extends JDialog {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new discount info window.
+     *
+     * @param parent the parent
+     * @param p the p
+     */
     public DiscountInfoWindow(Window parent, LineaProductoVenta p) {
         super(parent, "Discount Information", ModalityType.APPLICATION_MODAL);
         setSize(400, 300);
@@ -83,6 +95,13 @@ public class DiscountInfoWindow extends JDialog {
         add(bottom, BorderLayout.SOUTH);
     }
 
+    /**
+     * Creates the row.
+     *
+     * @param label the label
+     * @param value the value
+     * @return the j panel
+     */
     private JPanel createRow(String label, String value) {
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
         row.setOpaque(false);

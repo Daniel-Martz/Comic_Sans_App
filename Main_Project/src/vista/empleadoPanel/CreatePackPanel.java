@@ -15,21 +15,48 @@ import java.util.Map;
 import java.util.HashMap;
 import javax.swing.event.ChangeListener;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CreatePackPanel.
+ */
 public class CreatePackPanel extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The color fondo. */
     private final Color COLOR_FONDO = new Color(162, 187, 210);
 
+    /** The panel scroll productos. */
     private JPanel panelScrollProductos;
+    
+    /** The lbl status. */
     private JLabel lblStatus;
+    
+    /** The btn proceed. */
     private JButton btnProceed;
+    
+    /** The btn back. */
     private JButton btnBack;
+    
+    /** The txt search. */
     private JTextField txtSearch;
+    
+    /** The btn search. */
     private JButton btnSearch;
     
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The checkboxes seleccion. */
     private List<JCheckBox> checkboxesSeleccion = new ArrayList<>();
+    
+    /** The spinners qty. */
     private Map<Integer, JSpinner> spinnersQty = new HashMap<>();
 
+    /**
+     * Instantiates a new creates the pack panel.
+     */
     public CreatePackPanel() {
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
@@ -107,6 +134,14 @@ public class CreatePackPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
+    /**
+     * Actualizar productos.
+     *
+     * @param productos the productos
+     * @param seleccionados the seleccionados
+     * @param itemCtrl the item ctrl
+     * @param changeCtrl the change ctrl
+     */
     public void actualizarProductos(List<LineaProductoVenta> productos, Map<LineaProductoVenta, Integer> seleccionados, ItemListener itemCtrl, ChangeListener changeCtrl) {
         panelScrollProductos.removeAll();
         checkboxesSeleccion.clear();
@@ -131,6 +166,16 @@ public class CreatePackPanel extends JPanel {
         panelScrollProductos.repaint();
     }
 
+    /**
+     * Crear tarjeta.
+     *
+     * @param prod the prod
+     * @param isSelected the is selected
+     * @param qty the qty
+     * @param itemCtrl the item ctrl
+     * @param changeCtrl the change ctrl
+     * @return the j panel
+     */
     private JPanel crearTarjeta(LineaProductoVenta prod, boolean isSelected, int qty, ItemListener itemCtrl, ChangeListener changeCtrl) {
         JPanel tarjeta = new JPanel();
         tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
@@ -190,17 +235,63 @@ public class CreatePackPanel extends JPanel {
         return tarjeta;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    
+    /**
+     * Gets the btn back.
+     *
+     * @return the btn back
+     */
     public JButton getBtnBack() { return btnBack; }
+    
+    /**
+     * Sets the controlador inferior.
+     *
+     * @param l the new controlador inferior
+     */
     public void setControladorInferior(ActionListener l) { btnProceed.addActionListener(l); btnProceed.setActionCommand("CONTINUE"); }
+    
+    /**
+     * Update selection info.
+     *
+     * @param count the count
+     */
     public void updateSelectionInfo(int count) { lblStatus.setText(String.format("Selected items: %d", count)); }
+    
+    /**
+     * Desmarcar todos.
+     */
     public void desmarcarTodos() { for (JCheckBox chk : checkboxesSeleccion) { chk.setSelected(false); } }
+    
+    /**
+     * Gets the quantity.
+     *
+     * @param id the id
+     * @return the quantity
+     */
     public int getQuantity(int id) {
         JSpinner spn = spinnersQty.get(id);
         if (spn != null) return (Integer) spn.getValue();
         return 1;
     }
+    
+    /**
+     * Gets the search text.
+     *
+     * @return the search text
+     */
     public String getSearchText() { return txtSearch.getText().trim(); }
+    
+    /**
+     * Adds the search listener.
+     *
+     * @param l the l
+     */
     public void addSearchListener(ActionListener l) {
         btnSearch.addActionListener(l);
         txtSearch.addActionListener(e -> btnSearch.doClick());

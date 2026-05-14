@@ -14,29 +14,70 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddCategoryDiscountWindow.
+ */
 public class AddCategoryDiscountWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
  
+    /** The combo type. */
     private JComboBox<String> comboType;
+    
+    /** The txt start date. */
     private JTextField txtStartDate;
+    
+    /** The txt end date. */
     private JTextField txtEndDate;
+    
+    /** The cb start hour. */
     private JComboBox<Integer> cbStartHour;
+    
+    /** The cb start minute. */
     private JComboBox<Integer> cbStartMinute;
+    
+    /** The cb end hour. */
     private JComboBox<Integer> cbEndHour;
+    
+    /** The cb end minute. */
     private JComboBox<Integer> cbEndMinute;
     
+    /** The dynamic panel. */
     private JPanel dynamicPanel;
     
+    /** The txt percentage. */
     private JTextField txtPercentage;
+    
+    /** The txt threshold. */
     private JTextField txtThreshold;
+    
+    /** The txt thresh perc. */
     private JTextField txtThreshPerc;
+    
+    /** The txt buy qty. */
     private JTextField txtBuyQty;
+    
+    /** The txt receive qty. */
     private JTextField txtReceiveQty;
+    
+    /** The txt gift id. */
     private JTextField txtGiftId;
+    
+    /** The txt gift qty. */
     private JTextField txtGiftQty;
+    
+    /** The txt gift thresh. */
     private JTextField txtGiftThresh;
 
+    /**
+     * Instantiates a new adds the category discount window.
+     *
+     * @param parent the parent
+     * @param cat the cat
+     * @param ctrl the ctrl
+     */
     public AddCategoryDiscountWindow(JFrame parent, Categoria cat, ControladorDescuentosCategoria ctrl) {
         super(parent, "Add Category Discount", true);
         setSize(680, 480);
@@ -260,6 +301,13 @@ public class AddCategoryDiscountWindow extends JDialog {
         updateDynamicFields();
     }
 
+    /**
+     * Creates the form row.
+     *
+     * @param labelText the label text
+     * @param component the component
+     * @return the j panel
+     */
     private JPanel createFormRow(String labelText, JComponent component) {
         JPanel row = new JPanel(new BorderLayout(10, 0));
         row.setOpaque(false);
@@ -283,11 +331,19 @@ public class AddCategoryDiscountWindow extends JDialog {
         return row;
     }
 
+    /**
+     * Update dynamic fields.
+     */
     private void updateDynamicFields() {
         CardLayout cl = (CardLayout) dynamicPanel.getLayout();
         cl.show(dynamicPanel, (String) comboType.getSelectedItem());
     }
 
+    /**
+     * Prefill data.
+     *
+     * @param c the c
+     */
     private void prefillData(Categoria c) {
         Descuento d = c.getDescuento();
         

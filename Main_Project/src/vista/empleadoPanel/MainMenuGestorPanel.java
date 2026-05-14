@@ -8,23 +8,47 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MainMenuGestorPanel.
+ */
 public class MainMenuGestorPanel extends JPanel {
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The btn manage accounts. */
     private JButton btnManageAccounts;
+    
+    /** The btn manage statistics. */
     private JButton btnManageStatistics;
+    
+    /** The btn manage recommendations. */
     private JButton btnManageRecommendations;
+    
+    /** The btn manage products. */
     private JButton btnManageProducts;
+    
+    /** The btn manage time. */
     private JButton btnManageTime;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
 
+    /**
+     * Instantiates a new main menu gestor panel.
+     */
     public MainMenuGestorPanel() {
         initComponents();
         initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuGestor(); // Ocultará notificaciones
@@ -37,6 +61,9 @@ public class MainMenuGestorPanel extends JPanel {
         btnManageTime = createStyledButton("MANAGE TIME", colorAzul);
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -83,6 +110,13 @@ public class MainMenuGestorPanel extends JPanel {
         add(bodyContent, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates the styled button.
+     *
+     * @param text the text
+     * @param baseColor the base color
+     * @return the j button
+     */
     private JButton createStyledButton(String text, Color baseColor) {
         JButton btn = new JButton(text);
         btn.setFont(new Font("SansSerif", Font.BOLD, 24));
@@ -111,10 +145,45 @@ public class MainMenuGestorPanel extends JPanel {
         return btn;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    
+    /**
+     * Adds the manage accounts listener.
+     *
+     * @param l the l
+     */
     public void addManageAccountsListener(java.awt.event.ActionListener l) { btnManageAccounts.addActionListener(l); }
+    
+    /**
+     * Adds the manage statistics listener.
+     *
+     * @param l the l
+     */
     public void addManageStatisticsListener(java.awt.event.ActionListener l) { btnManageStatistics.addActionListener(l); }
+    
+    /**
+     * Adds the manage recommendations listener.
+     *
+     * @param l the l
+     */
     public void addManageRecommendationsListener(java.awt.event.ActionListener l) { btnManageRecommendations.addActionListener(l); }
+    
+    /**
+     * Adds the manage products listener.
+     *
+     * @param l the l
+     */
     public void addManageProductsListener(java.awt.event.ActionListener l) { btnManageProducts.addActionListener(l); }
+    
+    /**
+     * Adds the manage time listener.
+     *
+     * @param l the l
+     */
     public void addManageTimeListener(java.awt.event.ActionListener l) { btnManageTime.addActionListener(l); }
 }

@@ -3,11 +3,27 @@ package vista.elements;
 import javax.swing.*;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DiscountBadge.
+ */
 public class DiscountBadge extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The text. */
     private String text;
+    
+    /** The badge color. */
     private Color badgeColor;
 
+    /**
+     * Instantiates a new discount badge.
+     *
+     * @param text the text
+     * @param badgeColor the badge color
+     */
     public DiscountBadge(String text, Color badgeColor) {
         this.text = text;
         this.badgeColor = badgeColor;
@@ -15,6 +31,11 @@ public class DiscountBadge extends JPanel {
         setPreferredSize(new Dimension(60, 60));
     }
 
+    /**
+     * Paint component.
+     *
+     * @param g the g
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

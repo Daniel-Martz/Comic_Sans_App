@@ -3,15 +3,19 @@ package vista.clienteWindows;
 import javax.swing.*;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * Ventana genérica modal para mostrar mensajes de éxito.
  * Mantiene el estilo visual verde pastel de la aplicación.
  */
 public class VentanaExitoWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
     /**
+     * Instantiates a new ventana exito window.
+     *
      * @param owner         La ventana o frame padre (para centrarla y bloquearla)
      * @param tituloVentana El texto que aparece en la barra superior de la ventana (ej: "Success")
      * @param tituloMensaje El texto en negrita del interior (ej: "SUCCESSFUL PAYMENT!!")
@@ -20,7 +24,6 @@ public class VentanaExitoWindow extends JDialog {
     public VentanaExitoWindow(Window owner, String tituloVentana, String tituloMensaje, String descripcion) {
         super(owner, tituloVentana, ModalityType.APPLICATION_MODAL);
         
-        // El 0 en filas permite que el panel crezca si metes más componentes
         JPanel panel = new JPanel(new GridLayout(0, 1, 5, 5));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         panel.setBackground(new Color(200, 240, 200)); // Verde pastel
@@ -29,7 +32,6 @@ public class VentanaExitoWindow extends JDialog {
         lblTitulo.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         panel.add(lblTitulo);
         
-        // Si quieres que la descripción soporte saltos de línea con \n, usamos HTML
         String textoFormateado = "<html><div style='text-align: center;'>" + descripcion.replace("\n", "<br>") + "</div></html>";
         JLabel lblDesc = new JLabel(textoFormateado, SwingConstants.CENTER);
         panel.add(lblDesc);
@@ -40,6 +42,9 @@ public class VentanaExitoWindow extends JDialog {
         setResizable(false);
     }
 
+    /**
+     * Mostrar.
+     */
     public void mostrar() {
         setVisible(true);
     }

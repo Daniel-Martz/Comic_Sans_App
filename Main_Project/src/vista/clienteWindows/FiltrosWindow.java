@@ -11,6 +11,7 @@ import modelo.producto.Comic;
 import modelo.producto.Figura;
 import modelo.producto.LineaProductoVenta;
 
+// TODO: Auto-generated Javadoc
 /**
  * Ventana emergente (JDialog) para los filtros avanzados.
  * Implementa un diseño de dos columnas donde la columna derecha (Filtros de Categoría)
@@ -18,33 +19,63 @@ import modelo.producto.LineaProductoVenta;
  */
 public class FiltrosWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The bg color. */
     // --- Colores de la paleta ---
-    private final Color BG_COLOR = new Color(162, 187, 210);      // Azul claro
-    private final Color HEADER_COLOR = new Color(92, 117, 181);   // Azul oscuro/morado
-    private final Color SECTION_BG = new Color(114, 158, 206);    // Azul medio
+    private final Color BG_COLOR = new Color(162, 187, 210);    
+    
+    /** The header color. */
+    private final Color HEADER_COLOR = new Color(92, 117, 181); 
+    
+    /** The section bg. */
+    private final Color SECTION_BG = new Color(114, 158, 206);  
 
+    /** The chk solo disponibles. */
     // --- Componentes Interactivos (Izquierda) ---
     private JCheckBox chkSoloDisponibles;
+    
+    /** The chk board games. */
     private JCheckBox chkBoardGames;
+    
+    /** The chk comics. */
     private JCheckBox chkComics;
+    
+    /** The chk figures. */
     private JCheckBox chkFigures;
 
+    /** The right panel. */
     // --- Componentes para Layout Dinámico ---
     private JPanel rightPanel;
+    
+    /** The card layout. */
     private CardLayout cardLayout;
+    
+    /** The txt precio min. */
     private JTextField txtPrecioMin;
+    
+    /** The txt precio max. */
     private JTextField txtPrecioMax;
+    
+    /** The cb califications. */
     private JComboBox<String> cbCalifications;
 
+    /**
+     * Instantiates a new filtros window.
+     *
+     * @param parent the parent
+     */
     public FiltrosWindow(JFrame parent) {
-        super(parent, "Advanced Filters", true); // true = Modal
+        super(parent, "Advanced Filters", true);
         setSize(800, 750);
         setLocationRelativeTo(parent);
         initComponents();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         JPanel mainContent = new JPanel(new GridLayout(1, 2, 20, 0));
         mainContent.setBackground(BG_COLOR);
@@ -64,15 +95,13 @@ public class FiltrosWindow extends JDialog {
         leftPanel.add(chkSoloDisponibles);
         leftPanel.add(Box.createVerticalStrut(15));
 
-        // Secciones Generales
-     // Secciones Generales con TOPES de tamaño para evitar espacios en blanco
-     JPanel pnlCalificaciones = createSection("RATINGS", createCalificationsContent());        // Integer.MAX_VALUE mantiene el ancho intacto. 55 es la altura (bájalo si quieres menos espacio)
+     JPanel pnlCalificaciones = createSection("RATINGS", createCalificationsContent());      
         pnlCalificaciones.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50)); 
         leftPanel.add(pnlCalificaciones);
         leftPanel.add(Box.createVerticalStrut(10));
         
         JPanel pnlPrecios = createSection("PRICES", createPricesContent());
-        // Integer.MAX_VALUE mantiene el ancho intacto. 85 es la altura para encuadrar las dos filas
+       
         pnlPrecios.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80)); 
         leftPanel.add(pnlPrecios);
         leftPanel.add(Box.createVerticalStrut(10));
@@ -89,31 +118,27 @@ public class FiltrosWindow extends JDialog {
         rightPanel = new JPanel(cardLayout);
         rightPanel.setBackground(BG_COLOR);
 
-        // Creamos un contenedor vertical para el header y el panel derecho
         JPanel headerRightPanel = new JPanel();
         headerRightPanel.setLayout(new BoxLayout(headerRightPanel, BoxLayout.Y_AXIS));
         headerRightPanel.setBackground(BG_COLOR);
         headerRightPanel.add(createMainHeader("PRODUCT TYPE FILTERS"));
         headerRightPanel.add(Box.createVerticalStrut(12));
-        // Encapsulamos rightPanel en un wrapper para que no pegue a los bordes
+      
         JPanel rightWrapper = new JPanel(new BorderLayout());
         rightWrapper.setOpaque(false);
         rightWrapper.add(rightPanel, BorderLayout.CENTER);
         headerRightPanel.add(rightWrapper);
 
-        // Añadir las "cartas" al panel derecho
         rightPanel.add(createNoCategoryCard(), "NO_CATEGORY");
         rightPanel.add(createComicsCard(), "COMICS");
         rightPanel.add(createFiguresCard(), "FIGURES");
         rightPanel.add(createBoardGamesCard(), "BOARD_GAMES");
 
-        // Mostrar por defecto la carta sin categoría seleccionada
         cardLayout.show(rightPanel, "NO_CATEGORY");
 
         mainContent.add(leftPanel);
         mainContent.add(headerRightPanel);
 
-        // Botón aplicar abajo
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBackground(BG_COLOR);
         
@@ -130,13 +155,15 @@ public class FiltrosWindow extends JDialog {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    // ==========================================
-    // CREADORES DE CARTAS DINÁMICAS (DERECHA)
-    // ==========================================
 
+    /**
+     * Creates the no category card.
+     *
+     * @return the j panel
+     */
     private JPanel createNoCategoryCard() {
         JPanel p = new JPanel(new BorderLayout());
-        p.setBackground(new Color(200, 180, 210)); // Color lila del mockup
+        p.setBackground(new Color(200, 180, 210)); 
         p.setBorder(new LineBorder(Color.DARK_GRAY));
         p.setPreferredSize(new Dimension(300, 50));
         JLabel lbl = new JLabel("NO PRODUCT TYPE SELECTED", SwingConstants.CENTER);
@@ -144,25 +171,50 @@ public class FiltrosWindow extends JDialog {
         lbl.setForeground(Color.WHITE);
         p.add(lbl, BorderLayout.CENTER);
         
-        // Lo envolvemos para que no ocupe todo el espacio
         JPanel wrapper = new JPanel(new FlowLayout(FlowLayout.CENTER));
         wrapper.setBackground(BG_COLOR);
         wrapper.add(p);
         return wrapper;
     }
 
+    /** The pnl autores. */
     private JPanel pnlAutores;
+    
+    /** The pnl editoriales. */
     private JPanel pnlEditoriales;
+    
+    /** The pnl extension. */
     private JPanel pnlExtension;
+    
+    /** The pnl epoca. */
     private JPanel pnlEpoca;
+    
+    /** The pnl marcas. */
     private JPanel pnlMarcas;
+    
+    /** The pnl materiales. */
     private JPanel pnlMateriales;
+    
+    /** The pnl tamano. */
     private JPanel pnlTamano;
+    
+    /** The pnl num jugadores. */
     private JPanel pnlNumJugadores;
+    
+    /** The pnl edad. */
     private JPanel pnlEdad;
+    
+    /** The pnl tipo juego. */
     private JPanel pnlTipoJuego;
+    
+    /** The pnl descuentos. */
     private JPanel pnlDescuentos;
 
+    /**
+     * Creates the comics card.
+     *
+     * @return the j panel
+     */
     // ... inside createComicsCard ...
     private JPanel createComicsCard() {
         JPanel p = new JPanel();
@@ -182,6 +234,11 @@ public class FiltrosWindow extends JDialog {
         return p;
     }
 
+    /**
+     * Creates the figures card.
+     *
+     * @return the j panel
+     */
     private JPanel createFiguresCard() {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -197,10 +254,15 @@ public class FiltrosWindow extends JDialog {
         return p;
     }
 
+    /**
+     * Gets the selected items.
+     *
+     * @param searchableCheckListPanel the searchable check list panel
+     * @return the selected items
+     */
     private java.util.List<String> getSelectedItems(JPanel searchableCheckListPanel) {
         java.util.List<String> selected = new java.util.ArrayList<>();
         if (searchableCheckListPanel == null) return selected;
-        // El JPanel devuelto por createSearchableCheckList es BorderLayout con JTextField al norte y JScrollPane al centro
         for (Component c : searchableCheckListPanel.getComponents()) {
             if (c instanceof JPanel) { // The wrapper
                 for (Component innerC : ((JPanel) c).getComponents()) {
@@ -221,6 +283,12 @@ public class FiltrosWindow extends JDialog {
         return selected;
     }
 
+    /**
+     * Gets the selected items from check list.
+     *
+     * @param checkListPanel the check list panel
+     * @return the selected items from check list
+     */
     private java.util.List<String> getSelectedItemsFromCheckList(JPanel checkListPanel) {
         java.util.List<String> selected = new java.util.ArrayList<>();
         if (checkListPanel == null) return selected;
@@ -241,6 +309,12 @@ public class FiltrosWindow extends JDialog {
         return selected;
     }
 
+    /**
+     * Cumple filtros avanzados.
+     *
+     * @param p the p
+     * @return true, if successful
+     */
     public boolean cumpleFiltrosAvanzados(LineaProductoVenta p) {
         // Filtro de solo disponibles
         if (chkSoloDisponibles.isSelected() && p.getStock() <= 0) return false;
@@ -284,7 +358,7 @@ public class FiltrosWindow extends JDialog {
             if (selDescuentos.contains("Quantity Discount") && tipoDesc.equals("Cantidad")) matchDesc = true;
             if (selDescuentos.contains("Price Reduction") && (tipoDesc.equals("Precio") || tipoDesc.equals("DePorcentaje"))) matchDesc = true;
             if (selDescuentos.contains("Spending Volume") && tipoDesc.equals("UmbralGasto")) matchDesc = true;
-            if (selDescuentos.contains("Threshold Gift") && tipoDesc.equals("RebajaUmbral")) matchDesc = true; // or Regalo
+            if (selDescuentos.contains("Threshold Gift") && tipoDesc.equals("RebajaUmbral")) matchDesc = true; 
             if (!matchDesc) return false;
         } else if (!selDescuentos.isEmpty() && p.getDescuento() == null) {
             return false;
@@ -373,6 +447,9 @@ public class FiltrosWindow extends JDialog {
         return true;
     }
 
+    /**
+     * Reset filtros.
+     */
     public void resetFiltros() {
         resetAllComponents(this.getContentPane());
         cambiarVistaDerecha("NO_CATEGORY");
@@ -382,6 +459,11 @@ public class FiltrosWindow extends JDialog {
         chkSoloDisponibles.setSelected(false);
     }
 
+    /**
+     * Reset all components.
+     *
+     * @param container the container
+     */
     private void resetAllComponents(Container container) {
         for (Component c : container.getComponents()) {
             if (c instanceof JCheckBox) {
@@ -405,6 +487,11 @@ public class FiltrosWindow extends JDialog {
         }
     }
 
+    /**
+     * Gets the autores.
+     *
+     * @return the autores
+     */
     private String[] getAutores() {
         return Catalogo.getInstancia().getProductosNuevos().stream()
                 .filter(p -> p instanceof Comic)
@@ -415,6 +502,11 @@ public class FiltrosWindow extends JDialog {
                 .toArray(String[]::new);
     }
 
+    /**
+     * Gets the editoriales.
+     *
+     * @return the editoriales
+     */
     private String[] getEditoriales() {
         return Catalogo.getInstancia().getProductosNuevos().stream()
                 .filter(p -> p instanceof Comic)
@@ -425,6 +517,11 @@ public class FiltrosWindow extends JDialog {
                 .toArray(String[]::new);
     }
 
+    /**
+     * Gets the marcas.
+     *
+     * @return the marcas
+     */
     private String[] getMarcas() {
         return Catalogo.getInstancia().getProductosNuevos().stream()
                 .filter(p -> p instanceof Figura)
@@ -435,6 +532,11 @@ public class FiltrosWindow extends JDialog {
                 .toArray(String[]::new);
     }
 
+    /**
+     * Gets the materiales.
+     *
+     * @return the materiales
+     */
     private String[] getMateriales() {
         return Catalogo.getInstancia().getProductosNuevos().stream()
                 .filter(p -> p instanceof Figura)
@@ -445,6 +547,11 @@ public class FiltrosWindow extends JDialog {
                 .toArray(String[]::new);
     }
 
+    /**
+     * Creates the board games card.
+     *
+     * @return the j panel
+     */
     private JPanel createBoardGamesCard() {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -460,10 +567,12 @@ public class FiltrosWindow extends JDialog {
         return p;
     }
 
-    // ==========================================
-    // COMPONENTES REUTILIZABLES
-    // ==========================================
-
+    /**
+     * Creates the main header.
+     *
+     * @param text the text
+     * @return the j label
+     */
     private JLabel createMainHeader(String text) {
         JLabel lbl = new JLabel(text, SwingConstants.CENTER);
         lbl.setOpaque(true);
@@ -477,6 +586,13 @@ public class FiltrosWindow extends JDialog {
         return lbl;
     }
 
+    /**
+     * Creates the section.
+     *
+     * @param title the title
+     * @param content the content
+     * @return the j panel
+     */
     private JPanel createSection(String title, JPanel content) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Color.WHITE);
@@ -497,6 +613,11 @@ public class FiltrosWindow extends JDialog {
         return panel;
     }
 
+    /**
+     * Creates the category content.
+     *
+     * @return the j panel
+     */
     private JPanel createCategoryContent() {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -521,6 +642,12 @@ public class FiltrosWindow extends JDialog {
         return p;
     }
 
+    /**
+     * Creates the check list.
+     *
+     * @param items the items
+     * @return the j panel
+     */
     private JPanel createCheckList(String[] items) {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -534,6 +661,12 @@ public class FiltrosWindow extends JDialog {
         return wrapInScroll(p);
     }
 
+    /**
+     * Creates the searchable check list.
+     *
+     * @param items the items
+     * @return the j panel
+     */
     private JPanel createSearchableCheckList(String[] items) {
         JPanel container = new JPanel(new BorderLayout());
         container.setBackground(Color.WHITE);
@@ -594,6 +727,12 @@ public class FiltrosWindow extends JDialog {
         return container;
     }
 
+    /**
+     * Wrap in scroll.
+     *
+     * @param content the content
+     * @return the j panel
+     */
     private JPanel wrapInScroll(JPanel content) {
         JScrollPane scroll = new JScrollPane(content);
         scroll.setPreferredSize(new Dimension(250, 90));
@@ -609,6 +748,11 @@ public class FiltrosWindow extends JDialog {
         return wrapper;
     }
 
+    /**
+     * Creates the califications content.
+     *
+     * @return the j panel
+     */
     // Mockups para las secciones estáticas de la izquierda
     private JPanel createCalificationsContent() {
         JPanel p = new JPanel(new GridLayout(2, 1));
@@ -618,8 +762,14 @@ public class FiltrosWindow extends JDialog {
         return p;
     }
 
+    /** The cb prices. */
     private JComboBox<String> cbPrices;
 
+    /**
+     * Creates the prices content.
+     *
+     * @return the j panel
+     */
     private JPanel createPricesContent() {
         JPanel p = new JPanel(new GridLayout(3, 1));
         p.setBackground(Color.WHITE);
@@ -658,11 +808,19 @@ public class FiltrosWindow extends JDialog {
         return p;
     }
 
+    /**
+     * Creates the discounts content.
+     *
+     * @return the j panel
+     */
     private JPanel createDiscountsContent() {
         pnlDescuentos = createCheckList(new String[]{"Quantity Discount", "Price Reduction", "Spending Volume", "Threshold Gift"});
         return pnlDescuentos;
     }
 
+    /**
+     * Activar filtros descuento.
+     */
     public void activarFiltrosDescuento() {
         if (pnlDescuentos == null) return;
         for (Component c : pnlDescuentos.getComponents()) {
@@ -680,13 +838,33 @@ public class FiltrosWindow extends JDialog {
         }
     }
 
-    // ==========================================
-    // GETTERS PARA EL CONTROLADOR
+    /**
+     * Gets the chk board games.
+     *
+     * @return the chk board games
+     */
     // ==========================================
     public JCheckBox getChkBoardGames() { return chkBoardGames; }
+    
+    /**
+     * Gets the chk comics.
+     *
+     * @return the chk comics
+     */
     public JCheckBox getChkComics() { return chkComics; }
+    
+    /**
+     * Gets the chk figures.
+     *
+     * @return the chk figures
+     */
     public JCheckBox getChkFigures() { return chkFigures; }
     
+    /**
+     * Cambiar vista derecha.
+     *
+     * @param vistaNombre the vista nombre
+     */
     // Método para cambiar la vista derecha
     public void cambiarVistaDerecha(String vistaNombre) {
         cardLayout.show(rightPanel, vistaNombre);

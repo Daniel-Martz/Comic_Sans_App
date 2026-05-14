@@ -4,11 +4,23 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SelectDiscountTypeWindow.
+ */
 public class SelectDiscountTypeWindow extends JDialog {
 
+    /** The btn products. */
     private JButton btnProducts;
+    
+    /** The btn categories. */
     private JButton btnCategories;
 
+    /**
+     * Instantiates a new select discount type window.
+     *
+     * @param parent the parent
+     */
     public SelectDiscountTypeWindow(JFrame parent) {
         super(parent, "Select Discount Target", true);
         setSize(400, 200);
@@ -52,6 +64,17 @@ public class SelectDiscountTypeWindow extends JDialog {
         setContentPane(panel);
     }
     
+    /**
+     * Gets the btn products.
+     *
+     * @return the btn products
+     */
     public JButton getBtnProducts() { return btnProducts; }
+    
+    /**
+     * Gets the btn categories.
+     *
+     * @return the btn categories
+     */
     public JButton getBtnCategories() { return btnCategories; }
 }

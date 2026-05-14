@@ -8,24 +8,50 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ManageProductsPanel.
+ */
 public class ManageProductsPanel extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The btn add products. */
     private JButton btnAddProducts;
+    
+    /** The btn modify products. */
     private JButton btnModifyProducts;
+    
+    /** The btn manage categories. */
     private JButton btnManageCategories;
+    
+    /** The btn manage packs. */
     private JButton btnManagePacks;
+    
+    /** The btn discounts. */
     private JButton btnDiscounts;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
 
+    /**
+     * Instantiates a new manage products panel.
+     */
     public ManageProductsPanel() {
         initComponents();
         initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuEmpleado();
@@ -38,6 +64,9 @@ public class ManageProductsPanel extends JPanel {
         btnDiscounts = createStyledButton("Discounts", colorAzul);
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -84,6 +113,13 @@ public class ManageProductsPanel extends JPanel {
         add(bodyContent, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates the styled button.
+     *
+     * @param text the text
+     * @param baseColor the base color
+     * @return the j button
+     */
     private JButton createStyledButton(String text, Color baseColor) {
         JButton btn = new JButton(text);
         btn.setFont(new Font("SansSerif", Font.BOLD, 24));
@@ -112,26 +148,56 @@ public class ManageProductsPanel extends JPanel {
         return btn;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
     
+    /**
+     * Adds the modify products listener.
+     *
+     * @param l the l
+     */
     public void addModifyProductsListener(java.awt.event.ActionListener l) {
         btnModifyProducts.addActionListener(l);
     }
 
+    /**
+     * Adds the add products listener.
+     *
+     * @param l the l
+     */
     public void addAddProductsListener(java.awt.event.ActionListener l) {
         btnAddProducts.addActionListener(l);
     }
 
+    /**
+     * Adds the manage categories listener.
+     *
+     * @param l the l
+     */
     public void addManageCategoriesListener(java.awt.event.ActionListener l) {
         btnManageCategories.addActionListener(l);
     }
 
+    /**
+     * Adds the discounts listener.
+     *
+     * @param l the l
+     */
     public void addDiscountsListener(java.awt.event.ActionListener l) {
         btnDiscounts.addActionListener(l);
     }
 
+    /**
+     * Adds the manage packs listener.
+     *
+     * @param l the l
+     */
     public void addManagePacksListener(java.awt.event.ActionListener l) {
         btnManagePacks.addActionListener(l);
     }

@@ -29,27 +29,32 @@ import modelo.solicitud.Oferta;
 import modelo.solicitud.SolicitudPedido;
 import vista.userPanels.InterchangeCardPanel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Diálogo modal que muestra el contenido de una notificación de forma formateada.
  */
 public class NotificacionWindow extends JDialog {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-    private Notificacion n;
 
-    private JButton goToPedidos;
-    private JButton goToIntercambios;
-    private JButton goToValidaciones;
-
-    private MainController mainController;
-
-
+    /**
+     * Instantiates a new notificacion window.
+     *
+     * @param owner the owner
+     * @param n the n
+     * @param mainController the main controller
+     */
     public NotificacionWindow(Window owner, Notificacion n, MainController mainController) {
         super(owner, "Notificación", ModalityType.APPLICATION_MODAL);
-        this.n = n;
-        this.mainController = mainController;
         init(n);
     }
 
+    /**
+     * Inits the.
+     *
+     * @param n the n
+     */
     private void init(Notificacion n) {
         setLayout(new BorderLayout(12, 12));
         ((JPanel) getContentPane()).setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
@@ -60,7 +65,7 @@ public class NotificacionWindow extends JDialog {
         contenido.setBackground(Color.WHITE);
 
         // Título
-        JLabel titulo = new JLabel("Detalles de la Notificación");
+        JLabel titulo = new JLabel("Notificación Details");
         titulo.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         titulo.setAlignmentX(Component.LEFT_ALIGNMENT);
         contenido.add(titulo);
@@ -71,11 +76,11 @@ public class NotificacionWindow extends JDialog {
         contenido.add(Box.createVerticalStrut(8));
 
         // Mensaje
-        contenido.add(crearFilaInfo("Mensaje:", n.getMensaje(), n));
+        contenido.add(crearFilaInfo("Message:", n.getMensaje(), n));
         contenido.add(Box.createVerticalStrut(8));
 
         // Fecha y hora
-        contenido.add(crearFilaInfo("Fecha y Hora:", n.getHoraEnvio().toStringFecha(), n));
+        contenido.add(crearFilaInfo("Date and Time:", n.getHoraEnvio().toStringFecha(), n));
         contenido.add(Box.createVerticalStrut(8));
 
         JPanel contenidoEspecifico = obtenerContenidoEspecifico(n);
@@ -92,7 +97,7 @@ public class NotificacionWindow extends JDialog {
 
         // Botones
         JPanel botones = new JPanel();
-        JButton ok = new JButton("Aceptar");
+        JButton ok = new JButton("Accept");
         ok.addActionListener(e -> dispose());
         botones.add(ok);
         add(botones, BorderLayout.SOUTH);
@@ -104,6 +109,11 @@ public class NotificacionWindow extends JDialog {
 
     /**
      * Crea una fila con etiqueta y valor formateados.
+     *
+     * @param etiqueta the etiqueta
+     * @param valor the valor
+     * @param notif the notif
+     * @return the j panel
      */
     private JPanel crearFilaInfo(String etiqueta, String valor, Notificacion notif) {
         JPanel fila = new JPanel();
@@ -130,11 +140,11 @@ public class NotificacionWindow extends JDialog {
     /**
      * Método que resuelve el tipo de notificación y devuelve el contenido específico.
      * Centraliza la lógica de instanceof.
+     *
+     * @param notif the notif
+     * @return the j panel
      */
     private JPanel obtenerContenidoEspecifico(Notificacion notif) {
-        // if (notif instanceof NotificacionEmpleado) {
-            // return contenidoPropio((NotificacionEmpleado) notif);
-        // } else 
         if (notif instanceof NotificacionOferta notificacionOferta) {
             return contenidoPropio(notificacionOferta);
         } else if (notif instanceof NotificacionPedido notificacionPedido) {
@@ -149,39 +159,12 @@ public class NotificacionWindow extends JDialog {
         return null;
     }
 
-    // private JPanel contenidoPropio(NotificacionEmpleado n) {
-    //     JPanel panel = new JPanel();
-    //     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-    //     Set<Solicitud> solicitudes = n.getSolicitudes();
-    //     for (Solicitud solicitud : solicitudes) {
-    //        if(solicitud instanceof SolicitudIntercambio){
-    //             goToIntercambios = new JButton();
-    //             goToIntercambios.setText("Ver Intercambios");
-    //             goToIntercambios.addActionListener(e -> mainController.navegarA(MainFrame.PANEL_MANAGE_INTERCHANGES)); 
-    //             panel.add(goToIntercambios);
-    //             panel.add(Box.createHorizontalStrut(8));
-    //         } 
-            
-    //         if(solicitud instanceof SolicitudPedido){
-    //             goToPedidos = new JButton();
-    //             goToPedidos.setText("Ver Pedidos");
-    //             goToPedidos.addActionListener(e -> mainController.navegarA(MainFrame.PANEL_MANAGE_ORDERS)); 
-    //             panel.add(goToPedidos);
-    //             panel.add(Box.createHorizontalStrut(8));
-    //         }
-            
-    //         if(solicitud instanceof SolicitudValidacion){
-    //             goToValidaciones = new JButton();
-    //             goToValidaciones.setText("Ver Pedidos");
-    //             goToValidaciones.addActionListener(e -> mainController.navegarA(MainFrame.PANEL_VALIDATION_REQUESTS)); 
-    //             panel.add(goToValidaciones);
-    //             panel.add(Box.createHorizontalStrut(8));
-    //         }
-
-    //     }
-    //     return panel;
-    // }
-
+    /**
+     * Contenido propio.
+     *
+     * @param n the n
+     * @return the j panel
+     */
     private JPanel contenidoPropio(NotificacionOferta n) {
         if (n == null) return new JPanel();
         
@@ -244,6 +227,11 @@ public class NotificacionWindow extends JDialog {
     
     /**
      * Busca un producto por ID en los arrays dados y recibidos.
+     *
+     * @param dados the dados
+     * @param recibidos the recibidos
+     * @param id the id
+     * @return the producto segunda mano
      */
     private ProductoSegundaMano findProductoById(ProductoSegundaMano[] dados, ProductoSegundaMano[] recibidos, int id) {
         for (ProductoSegundaMano p : dados) {
@@ -259,6 +247,12 @@ public class NotificacionWindow extends JDialog {
         return null;
     }
     
+    /**
+     * Contenido propio.
+     *
+     * @param notif the notif
+     * @return the j panel
+     */
     private JPanel contenidoPropio(NotificacionIntercambio notif) {
         if (notif == null) return new JPanel();
         
@@ -275,21 +269,21 @@ public class NotificacionWindow extends JDialog {
         ));
         
         // Título: "Detalles del Intercambio"
-        JLabel lblTituloIntercambio = new JLabel("Detalles del Intercambio");
+        JLabel lblTituloIntercambio = new JLabel("Interchange Details");
         lblTituloIntercambio.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblTituloIntercambio.setAlignmentX(Component.LEFT_ALIGNMENT);
         panelIntercambio.add(lblTituloIntercambio);
         panelIntercambio.add(Box.createVerticalStrut(10));
         
         // Código del intercambio
-        addDetailRow(panelIntercambio, "Código", codigoIntercambio != null ? codigoIntercambio : "N/A");
+        addDetailRow(panelIntercambio, "Code", codigoIntercambio != null ? codigoIntercambio : "N/A");
         
         // Lugar del intercambio
-        String lugar = detalles != null ? detalles.getLugarIntercambio() : "No especificado";
-        addDetailRow(panelIntercambio, "Lugar", lugar != null ? lugar : "No especificado");
+        String lugar = detalles != null ? detalles.getLugarIntercambio() : "Not specified";
+        addDetailRow(panelIntercambio, "Place", lugar != null ? lugar : "Not specified");
         
         // Fecha del intercambio
-        String fecha = "No especificada";
+        String fecha = "Not specified";
         if (detalles != null && detalles.getFechaIntercambio() != null) {
             fecha = detalles.getFechaIntercambio().toStringFecha();
         }
@@ -305,6 +299,12 @@ public class NotificacionWindow extends JDialog {
         return wrapper;
     }
     
+    /**
+     * Contenido propio.
+     *
+     * @param notif the notif
+     * @return the j panel
+     */
     private JPanel contenidoPropio(NotificacionValidacion notif) {
         if (notif == null || notif.getSolicitudProductoSegundaMano() == null) return new JPanel();
         
@@ -381,6 +381,10 @@ public class NotificacionWindow extends JDialog {
     
     /**
      * Crea una fila con etiqueta y valor en un panel.
+     *
+     * @param panel the panel
+     * @param label the label
+     * @param value the value
      */
     private void addDetailRow(JPanel panel, String label, String value) {
         JPanel row = new JPanel(new BorderLayout());
@@ -402,6 +406,10 @@ public class NotificacionWindow extends JDialog {
     
     /**
      * Calcula el balance entre productos dados y recibidos.
+     *
+     * @param dados the dados
+     * @param recibidos the recibidos
+     * @return the double
      */
     private double calcularBalance(ProductoSegundaMano[] dados, ProductoSegundaMano[] recibidos) {
         double precioDados = 0;
@@ -422,6 +430,12 @@ public class NotificacionWindow extends JDialog {
         return precioRecibidos - precioDados;
     }
 
+    /**
+     * Contenido propio.
+     *
+     * @param notif the notif
+     * @return the j panel
+     */
     private JPanel contenidoPropio(NotificacionPedido notif) {
         if (notif == null || notif.getPedido() == null) return new JPanel();
         
@@ -437,7 +451,7 @@ public class NotificacionWindow extends JDialog {
                 panelProductos.add(crearTarjetaProductoPedido(entry.getKey(), entry.getValue()));
             }
         } else {
-            JLabel vacio = new JLabel("No hay productos en este pedido");
+            JLabel vacio = new JLabel("There aren't any products in this order.");
             vacio.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
             panelProductos.add(vacio);
         }
@@ -463,6 +477,10 @@ public class NotificacionWindow extends JDialog {
     
     /**
      * Crea una tarjeta visual para un producto del pedido.
+     *
+     * @param prod the prod
+     * @param cantidad the cantidad
+     * @return the j panel
      */
     private JPanel crearTarjetaProductoPedido(modelo.producto.LineaProductoVenta prod, int cantidad) {
         JPanel tarjeta = new JPanel();
@@ -525,6 +543,12 @@ public class NotificacionWindow extends JDialog {
         return tarjeta;
     }
 
+    /**
+     * Contenido propio.
+     *
+     * @param notif the notif
+     * @return the j panel
+     */
     private JPanel contenidoPropio(NotificacionProducto notif) {
         if (notif == null) return new JPanel();
         
@@ -539,7 +563,7 @@ public class NotificacionWindow extends JDialog {
                 panelProductos.add(crearTarjetaProductoRecomendado(producto));
             }
         } else {
-            JLabel vacio = new JLabel("No hay productos en esta notificación");
+            JLabel vacio = new JLabel("There aren't any products in this notification");
             vacio.setFont(new Font("Comic Sans MS", Font.PLAIN, 12));
             panelProductos.add(vacio);
         }
@@ -565,6 +589,9 @@ public class NotificacionWindow extends JDialog {
     
     /**
      * Crea una tarjeta visual para un producto recomendado.
+     *
+     * @param prod the prod
+     * @return the j panel
      */
     private JPanel crearTarjetaProductoRecomendado(modelo.producto.LineaProductoVenta prod) {
         JPanel tarjeta = new JPanel();

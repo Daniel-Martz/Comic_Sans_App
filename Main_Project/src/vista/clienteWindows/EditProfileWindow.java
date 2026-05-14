@@ -9,14 +9,22 @@ import vista.userPanels.EditProfilePanel;
 import vista.userPanels.LogInPanel;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * Ventana emergente (JDialog) para los filtros avanzados.
  * Implementa un diseño de dos columnas donde la columna derecha (Filtros de Categoría)
  * cambia dinámicamente según lo seleccionado en la columna izquierda (Filtros Generales).
  */
 public class EditProfileWindow extends JDialog {
+  
+  /** The edit profile panel. */
   EditProfilePanel editProfilePanel;
 
+  /**
+   * Instantiates a new edits the profile window.
+   *
+   * @param parent the parent
+   */
   public EditProfileWindow(JFrame parent) {
       super(parent, "Log in", true); // true = Modal
       setSize(800, 750);
@@ -25,6 +33,11 @@ public class EditProfileWindow extends JDialog {
       this.setContentPane(editProfilePanel);
   }
 
+  /**
+   * Adds the listener change data.
+   *
+   * @param l the l
+   */
   public void addListenerChangeData(EditProfileController l){
     l.addListeningPanel(editProfilePanel);
       editProfilePanel.añadirListenerBotonChangeData(l); }

@@ -6,19 +6,39 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddCategoryWindow.
+ */
 public class AddCategoryWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The bg color. */
     // --- Colores de la paleta ---
     private final Color BG_COLOR = new Color(162, 187, 210);       // Azul claro
+    
+    /** The header color. */
     private final Color HEADER_COLOR = new Color(92, 117, 181);    // Azul oscuro/morado
+    
+    /** The row bg color. */
     private final Color ROW_BG_COLOR = new Color(114, 158, 206);   // Azul intermedio
+    
+    /** The btn green. */
     private final Color BTN_GREEN = new Color(46, 204, 113);       // Verde brillante
 
+    /** The txt name. */
     private JTextField txtName;
+    
+    /** The btn confirm. */
     private JButton btnConfirm;
 
+    /**
+     * Instantiates a new adds the category window.
+     *
+     * @param parent the parent
+     */
     public AddCategoryWindow(JDialog parent) {
         super(parent, "Create New Category", true); // Modal over ManageCategoriesWindow
         setSize(300, 240);
@@ -69,10 +89,20 @@ public class AddCategoryWindow extends JDialog {
         setContentPane(mainPanel);
     }
 
+    /**
+     * Gets the category name.
+     *
+     * @return the category name
+     */
     public String getCategoryName() {
         return txtName.getText();
     }
 
+    /**
+     * Adds the confirm listener.
+     *
+     * @param l the l
+     */
     public void addConfirmListener(ActionListener l) {
         btnConfirm.addActionListener(l);
     }

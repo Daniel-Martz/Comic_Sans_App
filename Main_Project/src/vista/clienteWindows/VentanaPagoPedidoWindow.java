@@ -16,23 +16,44 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 
+// TODO: Auto-generated Javadoc
 /**
  * Ventana de pago para la compra de productos del carrito.
  * Actúa puramente como VISTA en el patrón MVC.
  */
 public class VentanaPagoPedidoWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The tabla productos. */
     // ── Componentes de la vista
     private JTable tablaProductos;
+    
+    /** The label total. */
     private JLabel labelTotal;
+    
+    /** The campo numero tarjeta. */
     private JTextField campoNumeroTarjeta;
+    
+    /** The campo caducidad. */
     private JTextField campoCaducidad;
+    
+    /** The campo CVV. */
     private JPasswordField campoCVV;
+    
+    /** The boton confirmar. */
     private JButton botonConfirmar;
+    
+    /** The pedido. */
     private modelo.solicitud.SolicitudPedido pedido;
 
+    /**
+     * Instantiates a new ventana pago pedido window.
+     *
+     * @param padre the padre
+     * @param pedido the pedido
+     */
     // ── Constructor
     public VentanaPagoPedidoWindow(Window padre, SolicitudPedido pedido) {
         super(padre, "Payment Window", ModalityType.APPLICATION_MODAL);
@@ -43,6 +64,11 @@ public class VentanaPagoPedidoWindow extends JDialog {
         setResizable(false);
     }
 
+    /**
+     * Inicializar componentes.
+     *
+     * @param pedido the pedido
+     */
     // ── Construcción de la interfaz
     private void inicializarComponentes(SolicitudPedido pedido) {
         JPanel panelPrincipal = new JPanel(new BorderLayout(10, 10));
@@ -152,31 +178,57 @@ public class VentanaPagoPedidoWindow extends JDialog {
 
     // ── Métodos para el MVC
 
-    /** Asigna el controlador a los botones de la vista. */
+    /**
+     * Asigna el controlador a los botones de la vista.
+     *
+     * @param c the new controlador
+     */
     public void setControlador(ActionListener c) {
         botonConfirmar.addActionListener(c);
-        botonConfirmar.setActionCommand("CONFIRMAR_PAGO_PEDIDO");
+        botonConfirmar.setActionCommand("CONFIRM_ORDER_PAYMENT");
     }
 
-    /** Devuelve el pedido asociado a esta ventana (para que el controlador lo procese). */
+    /**
+     * Devuelve el pedido asociado a esta ventana (para que el controlador lo procese).
+     *
+     * @return the pedido
+     */
     public SolicitudPedido getPedido() {
         return pedido;
     }
 
+    /**
+     * Gets the numero tarjeta.
+     *
+     * @return the numero tarjeta
+     */
     public String getNumeroTarjeta() {
         return campoNumeroTarjeta.getText().trim();
     }
 
+    /**
+     * Gets the cvv.
+     *
+     * @return the cvv
+     */
     public String getCVV() {
         return new String(campoCVV.getPassword()).trim();
     }
 
+    /**
+     * Gets the caducidad.
+     *
+     * @return the caducidad
+     */
     public String getCaducidad() {
         return campoCaducidad.getText().trim();
     }
 
     // ── Ventanas de resultado
 
+    /**
+     * Mostrar ventana exito.
+     */
     public void mostrarVentanaExito() {
         JDialog ventanaExito = new JDialog(getOwner(), "Successful Payment", ModalityType.APPLICATION_MODAL);
         JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
@@ -194,6 +246,11 @@ public class VentanaPagoPedidoWindow extends JDialog {
         ventanaExito.setVisible(true);
     }
 
+    /**
+     * Mostrar ventana error.
+     *
+     * @param motivo the motivo
+     */
     public void mostrarVentanaError(String motivo) {
         JDialog ventanaError = new JDialog(getOwner(), "Error", ModalityType.APPLICATION_MODAL);
         JPanel panel = new JPanel(new GridLayout(3, 1, 5, 5));
@@ -212,6 +269,12 @@ public class VentanaPagoPedidoWindow extends JDialog {
         ventanaError.setVisible(true);
     }
 
+    /**
+     * Mostrar aviso incompleto.
+     *
+     * @param mensaje the mensaje
+     * @param titulo the titulo
+     */
     public void mostrarAvisoIncompleto(String mensaje, String titulo) {
         JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.WARNING_MESSAGE);
     }

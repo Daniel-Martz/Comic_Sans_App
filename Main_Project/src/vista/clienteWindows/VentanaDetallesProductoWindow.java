@@ -10,22 +10,39 @@ import java.awt.*;
 import java.io.File;
 import java.util.stream.Collectors;
 
+// TODO: Auto-generated Javadoc
 /**
  * Ventana emergente (JDialog) que muestra la información detallada de un producto de venta.
  */
 public class VentanaDetallesProductoWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The color fondo. */
     private final Color COLOR_FONDO = new Color(245, 245, 250);
+    
+    /** The color titulo. */
     private final Color COLOR_TITULO = new Color(50, 60, 100);
 
+    /**
+     * Instantiates a new ventana detalles producto window.
+     *
+     * @param parent the parent
+     * @param producto the producto
+     */
     public VentanaDetallesProductoWindow(Window parent, LineaProductoVenta producto) {
         super(parent, "Detalles del Producto", Dialog.ModalityType.APPLICATION_MODAL);
-        setSize(550, 720); // Ampliamos la ventana para hacer hueco a las reseñas
+        setSize(550, 720); 
         setLocationRelativeTo(parent);
         initComponents(producto);
     }
 
+    /**
+     * Inits the components.
+     *
+     * @param p the p
+     */
     private void initComponents(LineaProductoVenta p) {
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBackground(COLOR_FONDO);
@@ -43,7 +60,7 @@ public class VentanaDetallesProductoWindow extends JDialog {
         headerPanel.add(lblNombre);
         
         String cats = p.getCategorias().stream().map(Categoria::getNombre).collect(Collectors.joining(", "));
-        JLabel lblCats = new JLabel(cats.isEmpty() ? "Sin categoría" : "Categorías: " + cats);
+        JLabel lblCats = new JLabel(cats.isEmpty() ? "No category" : "Categories: " + cats);
         lblCats.setFont(new Font("Comic Sans MS", Font.ITALIC, 14));
         lblCats.setForeground(Color.GRAY);
         lblCats.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -77,12 +94,12 @@ public class VentanaDetallesProductoWindow extends JDialog {
                 new EmptyBorder(10, 10, 10, 10)
         ));
 
-        addDetailRow(detailsPanel, "Precio", String.format("%.2f €", p.getPrecio()));
+        addDetailRow(detailsPanel, "Price", String.format("%.2f €", p.getPrecio()));
         addDetailRow(detailsPanel, "Stock", String.valueOf(p.getStock()));
-        addDetailRow(detailsPanel, "Valoración Media", String.format("%.1f / 5", p.obtenerPuntuacionMedia()));
+        addDetailRow(detailsPanel, "Average Rating", String.format("%.1f / 5", p.obtenerPuntuacionMedia()));
         
         if (p.getDescuento() != null) {
-            addDetailRow(detailsPanel, "Descuento", "Sí (Activo)");
+            addDetailRow(detailsPanel, "Discount", "Yes (Active)");
         }
         
         detailsPanel.add(Box.createVerticalStrut(10));
@@ -92,23 +109,23 @@ public class VentanaDetallesProductoWindow extends JDialog {
         // Detalles específicos por tipo
         if (p instanceof Comic) {
             Comic c = (Comic) p;
-            addDetailRow(detailsPanel, "Tipo", "Cómic");
-            addDetailRow(detailsPanel, "Autor", c.getAutor());
+            addDetailRow(detailsPanel, "Type", "Comic");
+            addDetailRow(detailsPanel, "Author", c.getAutor());
             addDetailRow(detailsPanel, "Editorial", c.getEditorial());
-            addDetailRow(detailsPanel, "Páginas", String.valueOf(c.getNumeroPaginas()));
-            addDetailRow(detailsPanel, "Año Publicación", String.valueOf(c.getAñoPublicacion()));
+            addDetailRow(detailsPanel, "Pages", String.valueOf(c.getNumeroPaginas()));
+            addDetailRow(detailsPanel, "Publication Year", String.valueOf(c.getAñoPublicacion()));
         } else if (p instanceof Figura) {
             Figura f = (Figura) p;
-            addDetailRow(detailsPanel, "Tipo", "Figura");
-            addDetailRow(detailsPanel, "Marca", f.getMarca());
+            addDetailRow(detailsPanel, "Type", "Figure");
+            addDetailRow(detailsPanel, "Brand", f.getMarca());
             addDetailRow(detailsPanel, "Material", f.getMaterial());
-            addDetailRow(detailsPanel, "Dimensiones", f.getDimensionX() + " x " + f.getDimensionY() + " x " + f.getDimensionZ() + " cm");
+            addDetailRow(detailsPanel, "Dimensions", f.getDimensionX() + " x " + f.getDimensionY() + " x " + f.getDimensionZ() + " cm");
         } else if (p instanceof JuegoDeMesa) {
             JuegoDeMesa j = (JuegoDeMesa) p;
-            addDetailRow(detailsPanel, "Tipo", "Juego de Mesa");
-            addDetailRow(detailsPanel, "Tipo de Juego", j.getTipoJuegoDeMesa() != null ? j.getTipoJuegoDeMesa().toString() : "N/A");
-            addDetailRow(detailsPanel, "Jugadores", j.getNumeroJugadores() + " máximo");
-            addDetailRow(detailsPanel, "Edad", j.getEdadMinima() + " - " + j.getEdadMaxima() + " años");
+            addDetailRow(detailsPanel, "Type", "Game board");
+            addDetailRow(detailsPanel, "Game Type", j.getTipoJuegoDeMesa() != null ? j.getTipoJuegoDeMesa().toString() : "N/A");
+            addDetailRow(detailsPanel, "Players", j.getNumeroJugadores() + " maximum");
+            addDetailRow(detailsPanel, "Age", j.getEdadMinima() + " - " + j.getEdadMaxima() + " years");
         }
 
         JScrollPane scrollDetails = new JScrollPane(detailsPanel);
@@ -122,12 +139,12 @@ public class VentanaDetallesProductoWindow extends JDialog {
         // 1. Panel de Descripción
         JPanel descPanel = new JPanel(new BorderLayout());
         descPanel.setBackground(COLOR_FONDO);
-        JLabel lblDescTitle = new JLabel("Descripción:");
+        JLabel lblDescTitle = new JLabel("Description:");
         lblDescTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblDescTitle.setBorder(new EmptyBorder(10, 0, 5, 0));
         descPanel.add(lblDescTitle, BorderLayout.NORTH);
         
-        JTextArea txtDesc = new JTextArea(p.getDescripcion() != null ? p.getDescripcion() : "Sin descripción.");
+        JTextArea txtDesc = new JTextArea(p.getDescripcion() != null ? p.getDescripcion() : "No description.");
         txtDesc.setLineWrap(true);
         txtDesc.setWrapStyleWord(true);
         txtDesc.setEditable(false);
@@ -145,7 +162,7 @@ public class VentanaDetallesProductoWindow extends JDialog {
         // 2. Panel de Reseñas
         JPanel reviewsPanel = new JPanel(new BorderLayout());
         reviewsPanel.setBackground(COLOR_FONDO);
-        JLabel lblRevTitle = new JLabel("Reseñas:");
+        JLabel lblRevTitle = new JLabel("Reviews:");
         lblRevTitle.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         lblRevTitle.setBorder(new EmptyBorder(0, 0, 5, 0));
         reviewsPanel.add(lblRevTitle, BorderLayout.NORTH);
@@ -180,7 +197,7 @@ public class VentanaDetallesProductoWindow extends JDialog {
                 reviewsList.add(Box.createVerticalStrut(5));
             }
         } else {
-            JLabel noReviews = new JLabel("No hay reseñas aún.");
+            JLabel noReviews = new JLabel("There are no reviews for this product yet.");
             noReviews.setFont(new Font("Comic Sans MS", Font.ITALIC, 13));
             noReviews.setForeground(Color.GRAY);
             noReviews.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -201,7 +218,7 @@ public class VentanaDetallesProductoWindow extends JDialog {
         // Bottom: Cerrar
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.setBackground(COLOR_FONDO);
-        JButton btnCerrar = new JButton("Cerrar");
+        JButton btnCerrar = new JButton("Close");
         btnCerrar.addActionListener(e -> dispose());
         bottomPanel.add(btnCerrar);
 
@@ -210,6 +227,13 @@ public class VentanaDetallesProductoWindow extends JDialog {
         setContentPane(mainPanel);
     }
 
+    /**
+     * Adds the detail row.
+     *
+     * @param panel the panel
+     * @param label the label
+     * @param value the value
+     */
     private void addDetailRow(JPanel panel, String label, String value) {
         JPanel row = new JPanel(new BorderLayout());
         row.setBackground(Color.WHITE);

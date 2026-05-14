@@ -12,21 +12,37 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+// TODO: Auto-generated Javadoc
 /**
  * Ventana de opciones de intercambio con bordes estilizados, 
  * diseño plano y soporte para imagen de fondo.
  */
 public class EmpleadoOptionsDialog extends JDialog {
 
+    /** The btn cerrar sesion. */
     private JButton btnCerrarSesion;
+    
+    /** The main panel. */
     private JPanel mainPanel;
 
+    /** The color fondo. */
     // --- PALETA DE COLORES ---
-    private final Color COLOR_FONDO = new Color(245, 247, 250);     // Color de fondo (por si no hay imagen)
-    private final Color COLOR_PRIMARIO = new Color(74, 144, 226);   // Azul de los botones
-    private final Color COLOR_HOVER = new Color(53, 122, 189);      // Azul oscuro al pasar el ratón
-    private final Color COLOR_TEXTO = new Color(44, 62, 80);        // Gris oscuro para bordes y textos
+    private final Color COLOR_FONDO = new Color(245, 247, 250);    
+    
+    /** The color primario. */
+    private final Color COLOR_PRIMARIO = new Color(74, 144, 226);  
+    
+    /** The color hover. */
+    private final Color COLOR_HOVER = new Color(53, 122, 189);     
+    
+    /** The color texto. */
+    private final Color COLOR_TEXTO = new Color(44, 62, 80);       
 
+    /**
+     * Instantiates a new empleado options dialog.
+     *
+     * @param parent the parent
+     */
     public EmpleadoOptionsDialog(JFrame parent) {
         super(parent, "Profile Menu", true);
         
@@ -38,6 +54,9 @@ public class EmpleadoOptionsDialog extends JDialog {
         setupLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         mainPanel = new JPanel() {
             @Override
@@ -45,10 +64,9 @@ public class EmpleadoOptionsDialog extends JDialog {
                 super.paintComponent(g);
             }
         };
-        mainPanel.setBackground(COLOR_FONDO); // Color base por si no hay imagen
+        mainPanel.setBackground(COLOR_FONDO); 
 
-        // 2. Añadir un borde a toda la ventana (Borde exterior de color + padding interior)
-        Border bordeVentana = BorderFactory.createLineBorder(COLOR_PRIMARIO, 4); // Borde azul grueso
+        Border bordeVentana = BorderFactory.createLineBorder(COLOR_PRIMARIO, 4);
         Border paddingVentana = new EmptyBorder(25, 40, 25, 40);
         mainPanel.setBorder(BorderFactory.createCompoundBorder(bordeVentana, paddingVentana));
 
@@ -62,9 +80,8 @@ public class EmpleadoOptionsDialog extends JDialog {
         // 3. Aplicar estilos y BORDES a los botones
         JButton[] buttons = {btnCerrarSesion};
         
-        // Crear un borde redondeado para los botones
-        Border bordeBoton = BorderFactory.createLineBorder(COLOR_TEXTO, 2, true); // Borde oscuro de 2px
-        Border paddingBoton = new EmptyBorder(10, 15, 10, 15); // Espacio interno para que el texto respire
+        Border bordeBoton = BorderFactory.createLineBorder(COLOR_TEXTO, 2, true); 
+        Border paddingBoton = new EmptyBorder(10, 15, 10, 15); 
         Border bordeFinalBoton = BorderFactory.createCompoundBorder(bordeBoton, paddingBoton);
 
         for (JButton btn : buttons) {
@@ -72,15 +89,13 @@ public class EmpleadoOptionsDialog extends JDialog {
             btn.setBackground(COLOR_PRIMARIO);
             btn.setForeground(Color.WHITE);
             
-            // Aplicamos el borde que hemos creado
             btn.setBorder(bordeFinalBoton);
-            btn.setFocusPainted(false); // Quita el recuadrito punteado feo de Java
+            btn.setFocusPainted(false);
             btn.setOpaque(true);
             
             btn.setPreferredSize(new Dimension(320, 55));
             btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-            // Efecto Hover (cambia el fondo pero mantiene el borde intacto)
             btn.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
@@ -95,6 +110,9 @@ public class EmpleadoOptionsDialog extends JDialog {
         }
     }
 
+    /**
+     * Setup layout.
+     */
     private void setupLayout() {
         mainPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -120,10 +138,18 @@ public class EmpleadoOptionsDialog extends JDialog {
         setContentPane(mainPanel);
     }
 
+    /**
+     * Cerrar.
+     */
     public void cerrar() {
         this.dispose();
     }
 
+    /**
+     * Adds the listener.
+     *
+     * @param a the a
+     */
     public void addListener(UsuarioOptionsController a){
         btnCerrarSesion.addActionListener(a);
     }

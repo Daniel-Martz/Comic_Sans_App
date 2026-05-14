@@ -9,24 +9,52 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ModifyProductsPanel.
+ */
 public class ModifyProductsPanel extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
 
+    /** The grid comics. */
     private JPanel gridComics;
+    
+    /** The grid board games. */
     private JPanel gridBoardGames;
+    
+    /** The grid figures. */
     private JPanel gridFigures;
+    
+    /** The btn back. */
     private JButton btnBack;
+    
+    /** The btn back manage. */
     private JButton btnBackManage;
+    
+    /** The txt search. */
     private JTextField txtSearch;
+    
+    /** The modify buttons. */
     private java.util.List<JButton> modifyButtons = new java.util.ArrayList<>();
 
+    /**
+     * Instantiates a new modify products panel.
+     */
     public ModifyProductsPanel() {
         initLayout();
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -136,6 +164,12 @@ public class ModifyProductsPanel extends JPanel {
         add(bodyContent, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates the column title.
+     *
+     * @param title the title
+     * @return the j label
+     */
     private JLabel createColumnTitle(String title) {
         JLabel lblTitle = new JLabel(title, SwingConstants.CENTER);
         lblTitle.setFont(new Font("SansSerif", Font.BOLD, 18));
@@ -148,6 +182,12 @@ public class ModifyProductsPanel extends JPanel {
         return lblTitle;
     }
 
+    /**
+     * Creates the scroll.
+     *
+     * @param gridPanel the grid panel
+     * @return the j scroll pane
+     */
     private JScrollPane createScroll(JPanel gridPanel) {
         JScrollPane scroll = new JScrollPane(gridPanel);
         scroll.setBorder(null);
@@ -158,6 +198,14 @@ public class ModifyProductsPanel extends JPanel {
         return scroll;
     }
 
+    /**
+     * Actualizar productos.
+     *
+     * @param comics the comics
+     * @param boardGames the board games
+     * @param figures the figures
+     * @param modifyListener the modify listener
+     */
     public void actualizarProductos(List<LineaProductoVenta> comics, List<LineaProductoVenta> boardGames, List<LineaProductoVenta> figures, ActionListener modifyListener) {
         gridComics.removeAll();
         gridBoardGames.removeAll();
@@ -176,6 +224,13 @@ public class ModifyProductsPanel extends JPanel {
         gridFigures.repaint();
     }
 
+    /**
+     * Llenar grid.
+     *
+     * @param grid the grid
+     * @param productos the productos
+     * @param modifyListener the modify listener
+     */
     private void llenarGrid(JPanel grid, List<LineaProductoVenta> productos, ActionListener modifyListener) {
         if (productos != null) {
             for (LineaProductoVenta p : productos) {
@@ -184,6 +239,13 @@ public class ModifyProductsPanel extends JPanel {
         }
     }
 
+    /**
+     * Creates the card.
+     *
+     * @param p the p
+     * @param modifyListener the modify listener
+     * @return the j panel
+     */
     private JPanel createCard(LineaProductoVenta p, ActionListener modifyListener) {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(Color.WHITE);
@@ -231,20 +293,40 @@ public class ModifyProductsPanel extends JPanel {
         return card;
     }
 
+    /**
+     * Gets the btn back.
+     *
+     * @return the btn back
+     */
     public JButton getBtnBack() {
         return btnBack;
     }
 
+    /**
+     * Gets the btn back manage.
+     *
+     * @return the btn back manage
+     */
     public JButton getBtnBackManage() {
         return btnBackManage;
     }
     
+    /**
+     * Gets the search text.
+     *
+     * @return the search text
+     */
     public String getSearchText() {
         String text = txtSearch.getText().trim();
         if (text.equals("SEARCH")) return "";
         return text;
     }
     
+    /**
+     * Adds the search listener.
+     *
+     * @param l the l
+     */
     public void addSearchListener(ActionListener l) {
         txtSearch.addActionListener(l);
     }

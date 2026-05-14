@@ -12,15 +12,30 @@ import vista.userPanels.InterchangeCardPanel;
 import controladores.ControladorManageInterchanges;
 import modelo.producto.ProductoSegundaMano;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ManageInterchangesPanel.
+ */
 public class ManageInterchangesPanel extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The color fondo. */
     private final Color COLOR_FONDO = new Color(153, 180, 209);
     
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The main column. */
     private JPanel mainColumn;
     
+    /** The controlador. */
     private ControladorManageInterchanges controlador;
 
+    /**
+     * Instantiates a new manage interchanges panel.
+     */
     public ManageInterchangesPanel() {
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
@@ -81,14 +96,30 @@ public class ManageInterchangesPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
 
+    /**
+     * Sets the controlador.
+     *
+     * @param controlador the new controlador
+     */
     public void setControlador(ControladorManageInterchanges controlador) {
         this.controlador = controlador;
     }
     
+    /**
+     * Gets the controlador.
+     *
+     * @return the controlador
+     */
     public ControladorManageInterchanges getControlador() {
         return this.controlador;
     }
 
+    /**
+     * Actualizar intercambios.
+     *
+     * @param intercambios the intercambios
+     * @param actionListener the action listener
+     */
     public void actualizarIntercambios(List<SolicitudIntercambio> intercambios, ActionListener actionListener) {
         mainColumn.removeAll();
         
@@ -135,6 +166,11 @@ public class ManageInterchangesPanel extends JPanel {
         mainColumn.repaint();
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }

@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO: Auto-generated Javadoc
 /**
  * Ventana que muestra el panel de propuestas de intercambio.
  * Es un JDialog para que esté a parte respecto al MainFrame.
@@ -23,11 +24,15 @@ import java.util.Set;
  */
 public class ProposalsWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The proposals panel. */
     private ProposalsPanel proposalsPanel;
 
     /**
+     * Instantiates a new proposals window.
+     *
      * @param parent el JFrame padre (MainFrame)
      */
     public ProposalsWindow(JFrame parent) {
@@ -40,10 +45,16 @@ public class ProposalsWindow extends JDialog {
         setResizable(true);
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         proposalsPanel = new ProposalsPanel();
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         add(proposalsPanel, BorderLayout.CENTER);
@@ -52,6 +63,8 @@ public class ProposalsWindow extends JDialog {
     /**
      * Devuelve el panel interno para que el controlador pueda
      * registrar listeners y cargar datos.
+     *
+     * @return the proposals panel
      */
     public ProposalsPanel getProposalsPanel() {
         return proposalsPanel;

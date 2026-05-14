@@ -8,22 +8,44 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddProductsPanel.
+ */
 public class AddProductsPanel extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The btn back to manage. */
     private JButton btnBackToManage;
+    
+    /** The btn add manually. */
     private JButton btnAddManually;
+    
+    /** The btn load from file. */
     private JButton btnLoadFromFile;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
 
+    /**
+     * Instantiates a new adds the products panel.
+     */
     public AddProductsPanel() {
         initComponents();
         initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuEmpleado();
@@ -36,6 +58,9 @@ public class AddProductsPanel extends JPanel {
         btnLoadFromFile = createStyledButton("Load From a File", colorAzul);
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -79,6 +104,13 @@ public class AddProductsPanel extends JPanel {
         add(bodyContent, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates the styled button.
+     *
+     * @param text the text
+     * @param baseColor the base color
+     * @return the j button
+     */
     private JButton createStyledButton(String text, Color baseColor) {
         JButton btn = new JButton(text);
         btn.setFont(new Font("SansSerif", Font.BOLD, 24));
@@ -107,17 +139,37 @@ public class AddProductsPanel extends JPanel {
         return btn;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
     
+    /**
+     * Gets the btn add manually.
+     *
+     * @return the btn add manually
+     */
     public JButton getBtnAddManually() {
         return btnAddManually;
     }
     
+    /**
+     * Gets the btn load from file.
+     *
+     * @return the btn load from file
+     */
     public JButton getBtnLoadFromFile() {
         return btnLoadFromFile;
     }
 
+    /**
+     * Gets the btn back to manage.
+     *
+     * @return the btn back to manage
+     */
     public JButton getBtnBackToManage() { return btnBackToManage; }
 }

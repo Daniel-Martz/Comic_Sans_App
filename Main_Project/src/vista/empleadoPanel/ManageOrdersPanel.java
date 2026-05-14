@@ -8,11 +8,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ManageOrdersPanel.
+ */
 public class ManageOrdersPanel extends JPanel {
+    
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The contenedor pedidos. */
     private JPanel contenedorPedidos;
+    
+    /** The controlador. */
     private ControladorManageOrders controlador;
 
+    /**
+     * Instantiates a new manage orders panel.
+     */
     public ManageOrdersPanel() {
         setLayout(new BorderLayout());
 
@@ -39,18 +52,38 @@ public class ManageOrdersPanel extends JPanel {
         add(panelCentral, BorderLayout.CENTER);
     }
 
+    /**
+     * Sets the controlador.
+     *
+     * @param controlador the new controlador
+     */
     public void setControlador(ControladorManageOrders controlador) {
         this.controlador = controlador;
     }
 
+    /**
+     * Gets the controlador.
+     *
+     * @return the controlador
+     */
     public ControladorManageOrders getControlador() {
         return controlador;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
 
+    /**
+     * Actualizar pedidos.
+     *
+     * @param pedidos the pedidos
+     */
     public void actualizarPedidos(List<SolicitudPedido> pedidos) {
         contenedorPedidos.removeAll();
         for (SolicitudPedido pedido : pedidos) {
@@ -60,6 +93,11 @@ public class ManageOrdersPanel extends JPanel {
         contenedorPedidos.repaint();
     }
 
+    /**
+     * Agregar pedido.
+     *
+     * @param pedido the pedido
+     */
     private void agregarPedido(SolicitudPedido pedido) {
         JPanel panelPedido = new JPanel(new BorderLayout(10, 10));
         panelPedido.setBorder(BorderFactory.createCompoundBorder(

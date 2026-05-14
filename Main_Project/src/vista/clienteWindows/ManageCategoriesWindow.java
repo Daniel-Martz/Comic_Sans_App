@@ -9,23 +9,46 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ManageCategoriesWindow.
+ */
 public class ManageCategoriesWindow extends JDialog {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The bg color. */
     // --- Colores de la paleta (Consistentes con FiltrosDialog) ---
-    private final Color BG_COLOR = new Color(162, 187, 210);      // Azul claro
-    private final Color HEADER_COLOR = new Color(92, 117, 181);   // Azul oscuro/morado
-    private final Color ROW_BG_COLOR = new Color(114, 158, 206);  // Azul intermedio
-    private final Color BTN_RED = new Color(231, 76, 60);         // Rojo
-    private final Color BTN_GREEN = new Color(46, 204, 113);      // Verde
+    private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The header color. */
+    private final Color HEADER_COLOR = new Color(92, 117, 181);   
+    
+    /** The row bg color. */
+    private final Color ROW_BG_COLOR = new Color(114, 158, 206);  
+    
+    /** The btn red. */
+    private final Color BTN_RED = new Color(231, 76, 60);         
+    
+    /** The btn green. */
+    private final Color BTN_GREEN = new Color(46, 204, 113);      
 
+    /** The list panel. */
     private JPanel listPanel;
     
+    /** The delete listener. */
     // Listeners que inyectará el controlador
     private ActionListener deleteListener;
+    
+    /** The create listener. */
     private ActionListener createListener;
 
+    /**
+     * Instantiates a new manage categories window.
+     *
+     * @param parent the parent
+     */
     public ManageCategoriesWindow(JFrame parent) {
         super(parent, "Manage Categories", true); // Modal
         setSize(400, 500);
@@ -63,7 +86,9 @@ public class ManageCategoriesWindow extends JDialog {
     }
 
     /**
-     * Método para popular dinámicamente la lista de categorías
+     * Método para popular dinámicamente la lista de categorías.
+     *
+     * @param categorias the new categorias
      */
     public void setCategorias(List<Categoria> categorias) {
         listPanel.removeAll();
@@ -94,6 +119,12 @@ public class ManageCategoriesWindow extends JDialog {
         listPanel.repaint();
     }
 
+    /**
+     * Creates the category row.
+     *
+     * @param catName the cat name
+     * @return the j panel
+     */
     private JPanel createCategoryRow(String catName) {
         JPanel row = new JPanel(new BorderLayout());
         row.setBackground(ROW_BG_COLOR);
@@ -122,6 +153,11 @@ public class ManageCategoriesWindow extends JDialog {
         return row;
     }
 
+    /**
+     * Creates the add row.
+     *
+     * @return the j panel
+     */
     private JPanel createAddRow() {
         JPanel row = new JPanel(new BorderLayout());
         row.setBackground(ROW_BG_COLOR);
@@ -144,6 +180,17 @@ public class ManageCategoriesWindow extends JDialog {
         return row;
     }
 
+    /**
+     * Adds the delete listener.
+     *
+     * @param l the l
+     */
     public void addDeleteListener(ActionListener l) { this.deleteListener = l; }
+    
+    /**
+     * Adds the create listener.
+     *
+     * @param l the l
+     */
     public void addCreateListener(ActionListener l) { this.createListener = l; }
 }

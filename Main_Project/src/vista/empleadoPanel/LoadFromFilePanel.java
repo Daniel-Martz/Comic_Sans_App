@@ -8,20 +8,38 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LoadFromFilePanel.
+ */
 public class LoadFromFilePanel extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The btn select file. */
     private JButton btnSelectFile;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
 
+    /**
+     * Instantiates a new load from file panel.
+     */
     public LoadFromFilePanel() {
         initComponents();
         initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuEmpleado();
@@ -30,6 +48,9 @@ public class LoadFromFilePanel extends JPanel {
         btnSelectFile = createStyledButton("Select File", colorAzul);
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -78,6 +99,13 @@ public class LoadFromFilePanel extends JPanel {
         add(bodyContent, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates the styled button.
+     *
+     * @param text the text
+     * @param baseColor the base color
+     * @return the j button
+     */
     private JButton createStyledButton(String text, Color baseColor) {
         JButton btn = new JButton(text);
         btn.setFont(new Font("SansSerif", Font.BOLD, 24));
@@ -106,10 +134,20 @@ public class LoadFromFilePanel extends JPanel {
         return btn;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
     
+    /**
+     * Gets the btn select file.
+     *
+     * @return the btn select file
+     */
     public JButton getBtnSelectFile() {
         return btnSelectFile;
     }

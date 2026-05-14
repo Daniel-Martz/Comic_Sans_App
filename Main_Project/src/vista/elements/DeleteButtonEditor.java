@@ -18,9 +18,8 @@ public class DeleteButtonEditor extends DefaultCellEditor {
         button.setOpaque(true);
         button.addActionListener(e -> {
             fireEditingStopped();
-            System.out.println("He entrado en el listener");
             if (n != null) {
-            	System.out.println("La notificacion es no nula");
+            	System.out.println("The notificaction is not null");
                 c.borrarNotificacion(n); 
             }
         });
@@ -37,7 +36,6 @@ public class DeleteButtonEditor extends DefaultCellEditor {
 
     @Override
     public Object getCellEditorValue() {
-        // Devolvemos el objeto Notificacion original para no perder datos en el modelo
         return n;
     }
 }

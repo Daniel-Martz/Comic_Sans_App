@@ -13,20 +13,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+// TODO: Auto-generated Javadoc
 /**
  * Panel donde gestionamos los descuentos.
  * Tiene dos columnas, una para productos y otra para packs.
  */
 public class DescuentosPanel extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
+    
+    /** The card bg. */
     private final Color CARD_BG = new Color(245, 247, 250);
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The col individuales. */
     private ColumnaDescuentos colIndividuales;
+    
+    /** The col packs. */
     private ColumnaDescuentos colPacks;
+    
+    /** The btn back. */
     private JButton btnBack;
  
     /**
@@ -76,32 +91,52 @@ public class DescuentosPanel extends JPanel {
      * @return la cabecera
      */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    
     /**
+     * Gets the col individuales.
+     *
      * @return la columna de productos sueltos
      */
     public ColumnaDescuentos getColIndividuales() { return colIndividuales; }
+    
     /**
+     * Gets the col packs.
+     *
      * @return la columna de los packs
      */
     public ColumnaDescuentos getColPacks() { return colPacks; }
+    
     /**
+     * Gets the btn back.
+     *
      * @return el botón para volver atrás
      */
     public JButton getBtnBack() { return btnBack; }
 
-    // =========================================================================
-    // CLASE INTERNA: COLUMNA DE DESCUENTOS
-    // =========================================================================
     /**
      * Clase para montar cada una de las columnas con su buscador y lista.
      */
     public class ColumnaDescuentos extends JPanel {
+        
+        /** The Constant serialVersionUID. */
         private static final long serialVersionUID = 1L;
+        
+        /** The txt search. */
         private JTextField txtSearch;
+        
+        /** The btn search. */
         private JButton btnSearch;
+        
+        /** The grid productos. */
         private JPanel gridProductos;
+        
+        /** The command prefix. */
         private String commandPrefix;
+        
+        /** The checkboxes. */
         private Map<LineaProductoVenta, JCheckBox> checkboxes = new HashMap<>();
+        
+        /** The btn apply. */
         private JButton btnApply;
 
         /**
@@ -214,10 +249,20 @@ public class DescuentosPanel extends JPanel {
             gridProductos.repaint();
         }
 
+        /**
+         * Gets the btn apply.
+         *
+         * @return the btn apply
+         */
         public JButton getBtnApply() {
             return btnApply;
         }
 
+        /**
+         * Gets the selected products.
+         *
+         * @return the selected products
+         */
         public List<LineaProductoVenta> getSelectedProducts() {
             List<LineaProductoVenta> sel = new java.util.ArrayList<>();
             for (Map.Entry<LineaProductoVenta, JCheckBox> e : checkboxes.entrySet()) {
@@ -244,6 +289,13 @@ public class DescuentosPanel extends JPanel {
             return t.equals("Search...") ? "" : t;
         }
 
+        /**
+         * Crear tarjeta descuento.
+         *
+         * @param prod the prod
+         * @param actionCtrl the action ctrl
+         * @return the j panel
+         */
         private JPanel crearTarjetaDescuento(LineaProductoVenta prod, ActionListener actionCtrl) {
             JPanel tarjeta = new JPanel(new BorderLayout(15, 0));
             tarjeta.setBackground(CARD_BG);

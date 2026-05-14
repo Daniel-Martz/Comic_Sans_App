@@ -8,22 +8,44 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class mainMenuEmpleadoPanel.
+ */
 public class mainMenuEmpleadoPanel extends JPanel {
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The btn manage interchanges. */
     private JButton btnManageInterchanges;
+    
+    /** The btn manage products. */
     private JButton btnManageProducts;
+    
+    /** The btn manage orders. */
     private JButton btnManageOrders;
+    
+    /** The btn validation requests. */
     private JButton btnValidationRequests;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
 
+    /**
+     * Instantiates a new main menu empleado panel.
+     */
     public mainMenuEmpleadoPanel() {
         initComponents();
         initLayout();
     }
 
+    /**
+     * Inits the components.
+     */
     private void initComponents() {
         headerPanel = new HeaderPanel();
         headerPanel.configurarMenuEmpleado();
@@ -35,6 +57,9 @@ public class mainMenuEmpleadoPanel extends JPanel {
         btnValidationRequests = createStyledButton("VALIDATION REQUESTS", colorAzul);
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -80,6 +105,13 @@ public class mainMenuEmpleadoPanel extends JPanel {
         add(bodyContent, BorderLayout.CENTER);
     }
 
+    /**
+     * Creates the styled button.
+     *
+     * @param text the text
+     * @param baseColor the base color
+     * @return the j button
+     */
     private JButton createStyledButton(String text, Color baseColor) {
         JButton btn = new JButton(text);
         btn.setFont(new Font("SansSerif", Font.BOLD, 24));
@@ -108,22 +140,47 @@ public class mainMenuEmpleadoPanel extends JPanel {
         return btn;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }
     
+    /**
+     * Adds the manage products listener.
+     *
+     * @param l the l
+     */
     public void addManageProductsListener(java.awt.event.ActionListener l) {
         btnManageProducts.addActionListener(l);
     }
     
+    /**
+     * Adds the manage orders listener.
+     *
+     * @param l the l
+     */
     public void addManageOrdersListener(java.awt.event.ActionListener l) {
         btnManageOrders.addActionListener(l);
     }
 
+    /**
+     * Adds the validation requests listener.
+     *
+     * @param l the l
+     */
     public void addValidationRequestsListener(java.awt.event.ActionListener l) {
         btnValidationRequests.addActionListener(l);
     }
 
+    /**
+     * Adds the manage interchanges listener.
+     *
+     * @param l the l
+     */
     public void addManageInterchangesListener(java.awt.event.ActionListener l) {
         btnManageInterchanges.addActionListener(l);
     }

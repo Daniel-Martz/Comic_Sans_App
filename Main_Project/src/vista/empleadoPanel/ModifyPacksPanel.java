@@ -11,22 +11,46 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ArrayList;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ModifyPacksPanel.
+ */
 public class ModifyPacksPanel extends JPanel {
+    
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The bg color. */
     private final Color BG_COLOR = new Color(162, 187, 210);      
+    
+    /** The banner main color. */
     private final Color BANNER_MAIN_COLOR = new Color(54, 119, 189); 
 
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The grid packs. */
     private JPanel gridPacks;
+    
+    /** The btn back. */
     private JButton btnBack;
+    
+    /** The txt search. */
     private JTextField txtSearch;
+    
+    /** The modify buttons. */
     private List<JButton> modifyButtons = new ArrayList<>();
 
+    /**
+     * Instantiates a new modify packs panel.
+     */
     public ModifyPacksPanel() {
         initLayout();
     }
 
+    /**
+     * Inits the layout.
+     */
     private void initLayout() {
         setLayout(new BorderLayout());
         setBackground(BG_COLOR);
@@ -85,6 +109,12 @@ public class ModifyPacksPanel extends JPanel {
         add(bodyContent, BorderLayout.CENTER);
     }
 
+    /**
+     * Actualizar packs.
+     *
+     * @param packs the packs
+     * @param modifyListener the modify listener
+     */
     public void actualizarPacks(List<LineaProductoVenta> packs, ActionListener modifyListener) {
         gridPacks.removeAll();
         modifyButtons.clear();
@@ -102,6 +132,13 @@ public class ModifyPacksPanel extends JPanel {
         gridPacks.repaint();
     }
 
+    /**
+     * Creates the card.
+     *
+     * @param p the p
+     * @param modifyListener the modify listener
+     * @return the j panel
+     */
     private JPanel createCard(LineaProductoVenta p, ActionListener modifyListener) {
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(Color.WHITE);
@@ -147,9 +184,32 @@ public class ModifyPacksPanel extends JPanel {
         return card;
     }
 
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() { return headerPanel; }
+    
+    /**
+     * Gets the btn back.
+     *
+     * @return the btn back
+     */
     public JButton getBtnBack() { return btnBack; }
+    
+    /**
+     * Gets the search text.
+     *
+     * @return the search text
+     */
     public String getSearchText() { return txtSearch.getText().trim(); }
+    
+    /**
+     * Adds the search listener.
+     *
+     * @param l the l
+     */
     public void addSearchListener(ActionListener l) {
         for (Component c : ((JPanel)((JPanel)getComponent(1)).getComponent(0)).getComponents()) {
             if (c instanceof JPanel) {

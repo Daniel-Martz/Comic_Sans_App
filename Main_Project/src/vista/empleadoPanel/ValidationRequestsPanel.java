@@ -11,19 +11,30 @@ import modelo.producto.ProductoSegundaMano;
 import vista.userPanels.HeaderPanel;
 import controladores.ControladorValidationRequests;
 
+// TODO: Auto-generated Javadoc
 /**
  * Panel de gestión de validaciones para el empleado.
  */
 public class ValidationRequestsPanel extends JPanel {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+    
+    /** The color fondo. */
     private final Color COLOR_FONDO = new Color(153, 180, 209);
     
+    /** The header panel. */
     private HeaderPanel headerPanel;
+    
+    /** The main column. */
     private JPanel mainColumn;
     
+    /** The controlador. */
     private ControladorValidationRequests controlador;
 
+    /**
+     * Instantiates a new validation requests panel.
+     */
     public ValidationRequestsPanel() {
         setLayout(new BorderLayout());
         setBackground(COLOR_FONDO);
@@ -34,7 +45,7 @@ public class ValidationRequestsPanel extends JPanel {
         
         JPanel contentWrapper = new JPanel(new BorderLayout());
         contentWrapper.setBackground(COLOR_FONDO);
-        contentWrapper.setBorder(new EmptyBorder(10, 80, 20, 80)); // Margen horizontal más amplio para una sola columna
+        contentWrapper.setBorder(new EmptyBorder(10, 80, 20, 80)); 
         
         // 1. Encabezado principal (Header)
         JLabel lblTitulo = new JLabel("VALIDATION REQUESTS", SwingConstants.CENTER);
@@ -84,14 +95,30 @@ public class ValidationRequestsPanel extends JPanel {
         add(contentWrapper, BorderLayout.CENTER);
     }
     
+    /**
+     * Sets the controlador.
+     *
+     * @param controlador the new controlador
+     */
     public void setControlador(ControladorValidationRequests controlador) {
         this.controlador = controlador;
     }
     
+    /**
+     * Gets the controlador.
+     *
+     * @return the controlador
+     */
     public ControladorValidationRequests getControlador() {
         return this.controlador;
     }
 
+    /**
+     * Actualizar solicitudes.
+     *
+     * @param solicitudes the solicitudes
+     * @param actionListener the action listener
+     */
     public void actualizarSolicitudes(List<SolicitudValidacion> solicitudes, ActionListener actionListener) {
         mainColumn.removeAll();
         
@@ -114,6 +141,13 @@ public class ValidationRequestsPanel extends JPanel {
         mainColumn.repaint();
     }
     
+    /**
+     * Creates the card.
+     *
+     * @param solicitud the solicitud
+     * @param actionListener the action listener
+     * @return the j panel
+     */
     private JPanel createCard(SolicitudValidacion solicitud, ActionListener actionListener) {
         ProductoSegundaMano prod = solicitud.getProductoAValidar();
         
@@ -128,6 +162,17 @@ public class ValidationRequestsPanel extends JPanel {
         );
     }
 
+    /**
+     * Builds the card base.
+     *
+     * @param productName the product name
+     * @param condition the condition
+     * @param description the description
+     * @param imagePath the image path
+     * @param actionCommand the action command
+     * @param actionListener the action listener
+     * @return the j panel
+     */
     private JPanel buildCardBase(String productName, String condition, String description, String imagePath, String actionCommand, ActionListener actionListener) {
         JPanel card = new JPanel(new BorderLayout(15, 10));
         card.setBackground(new Color(245, 247, 250));
@@ -232,6 +277,15 @@ public class ValidationRequestsPanel extends JPanel {
         return card;
     }
     
+    /**
+     * Creates the detail row.
+     *
+     * @param label the label
+     * @param value the value
+     * @param labelFont the label font
+     * @param valueFont the value font
+     * @return the j panel
+     */
     private JPanel createDetailRow(String label, String value, Font labelFont, Font valueFont) {
         JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         row.setOpaque(false);
@@ -249,6 +303,11 @@ public class ValidationRequestsPanel extends JPanel {
         return row;
     }
     
+    /**
+     * Gets the header panel.
+     *
+     * @return the header panel
+     */
     public HeaderPanel getHeaderPanel() {
         return headerPanel;
     }

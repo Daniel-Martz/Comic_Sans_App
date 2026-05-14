@@ -7,11 +7,28 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddReviewWindow.
+ */
 public class AddReviewWindow extends JDialog {
+    
+    /** The rating spinner. */
     private JSpinner ratingSpinner;
+    
+    /** The description area. */
     private JTextArea descriptionArea;
+    
+    /** The btn confirm changes. */
     private JButton btnConfirmChanges;
 
+    /**
+     * Instantiates a new adds the review window.
+     *
+     * @param parent the parent
+     * @param producto the producto
+     * @param controlador the controlador
+     */
     public AddReviewWindow(JFrame parent, LineaProductoVenta producto, ControladorHistorialPedidos controlador) {
         super(parent, "Add Review for " + producto.getNombre(), true);
         setSize(400, 350);
@@ -35,7 +52,6 @@ public class AddReviewWindow extends JDialog {
         SpinnerNumberModel model = new SpinnerNumberModel(5.0, 0.0, 5.0, 0.5);
         ratingSpinner = new JSpinner(model);
         
-        // Aumentar el tamaño del spinner para que quepan bien los decimales
         JComponent editor = ratingSpinner.getEditor();
         if (editor instanceof JSpinner.DefaultEditor) {
             ((JSpinner.DefaultEditor) editor).getTextField().setColumns(3);
