@@ -114,6 +114,11 @@ public class ControladorCreatePack implements ActionListener, ItemListener, Chan
                     int stock = Integer.parseInt(dialog.getNewStock());
                     File photo = dialog.getSelectedPhotoFile();
                     
+                    if (photo == null || !photo.exists()) {
+                        JOptionPane.showMessageDialog(dialog, "Debes seleccionar una imagen para poder crear el pack.", "Error: Imagen requerida", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    
                     if (name.isEmpty() || desc.isEmpty()) {
                         JOptionPane.showMessageDialog(dialog, "Name and description cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
