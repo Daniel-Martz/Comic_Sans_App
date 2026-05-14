@@ -128,7 +128,7 @@ public class InterchangeCardPanel extends JPanel {
                                   Modo modo,
                                   String customGivenTitle,
                                   String customReceivedTitle) {
-        headerPanel       = new HeaderPanel(headerLabel, balance);
+        headerPanel       = new HeaderPanel(headerLabel, balance, modo);
         
         String givenTitle = customGivenTitle != null ? customGivenTitle : "PRODUCTS GIVEN ▼";
         String receivedTitle = customReceivedTitle != null ? customReceivedTitle : "PRODUCTS RECEIVED ▼";
@@ -237,28 +237,33 @@ public class InterchangeCardPanel extends JPanel {
          * @param headerLabel the header label
          * @param balance the balance
          */
-        public HeaderPanel(String headerLabel, double balance) {
+        public HeaderPanel(String headerLabel, double balance, Modo modo) {
             JLabel lblHeader = new JLabel(headerLabel);
             JLabel lblPrice;
-
-            if (balance > 0) {
-                lblPrice = new JLabel(String.format("PRICE: +%.2f €", balance));
-                lblPrice.setForeground(new Color(0, 150, 0));
-            } else if (balance < 0) {
-                lblPrice = new JLabel(String.format("PRICE: %.2f €", balance));
-                lblPrice.setForeground(Color.RED);
+            // Only show the price label when not in EMPLOYEE mode (employee manage view shows many 0€ balances)
+            if (modo != Modo.EMPLOYEE) {
+                if (balance > 0) {
+                    lblPrice = new JLabel(String.format("PRICE: +%.2f €", balance));
+                    lblPrice.setForeground(new Color(0, 150, 0));
+                } else if (balance < 0) {
+                    lblPrice = new JLabel(String.format("PRICE: %.2f €", balance));
+                    lblPrice.setForeground(Color.RED);
+                } else {
+                    lblPrice = new JLabel(String.format("PRICE: %.2f €", balance));
+                    lblPrice.setForeground(Color.BLACK);
+                }
+                lblHeader.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+                lblPrice.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+                setLayout(new GridLayout(2, 1, 0, 2));
+                setOpaque(false);
+                add(lblHeader);
+                add(lblPrice);
             } else {
-                lblPrice = new JLabel(String.format("PRICE: %.2f €", balance));
-                lblPrice.setForeground(Color.BLACK);
+                lblHeader.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
+                setLayout(new GridLayout(1, 1));
+                setOpaque(false);
+                add(lblHeader);
             }
-
-            lblHeader.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
-            lblPrice.setFont(new Font("Comic Sans MS", Font.BOLD, 13));
-
-            setLayout(new GridLayout(2, 1, 0, 2));
-            setOpaque(false);
-            add(lblHeader);
-            add(lblPrice);
         }
     }
 

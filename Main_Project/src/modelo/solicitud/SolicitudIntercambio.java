@@ -76,6 +76,30 @@ public class SolicitudIntercambio extends Solicitud {
 			p.setPendienteAprobacionIntercambio(false);
 			p.eliminarOfertaRecibida();
 		}
+
+		// 4. Eliminamos los productos de segunda mano involucrados en la oferta
+		//    de las carteras de sus respectivos propietarios para reflejar el intercambio.
+		if (this.oferta != null) {
+			// Los productos ofertados pertenecen al ofertante
+			modelo.usuario.ClienteRegistrado ofertante = this.oferta.getOfertante();
+			for (modelo.producto.ProductoSegundaMano p : this.oferta.productosOfertados()) {
+				try {
+					ofertante.eliminarProductoDeCarteraDeIntercambio(p);
+				} catch (Exception ex) {
+					// No detener el flujo por problemas puntuales al eliminar
+					System.err.println("Warning: couldn't remove offered product from cartera: " + ex.getMessage());
+				}
+			}
+			// Los productos solicitados pertenecen al destinatario
+			modelo.usuario.ClienteRegistrado destinatario = this.oferta.getDestinatario();
+			for (modelo.producto.ProductoSegundaMano p : this.oferta.productosSolicitados()) {
+				try {
+					destinatario.eliminarProductoDeCarteraDeIntercambio(p);
+				} catch (Exception ex) {
+					System.err.println("Warning: couldn't remove requested product from cartera: " + ex.getMessage());
+				}
+			}
+		}
 	}
 
     /**

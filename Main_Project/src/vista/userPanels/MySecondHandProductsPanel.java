@@ -174,7 +174,7 @@ public class MySecondHandProductsPanel extends JPanel {
      */
     public void addReadyProduct(ProductoSegundaMano producto) {
         readyContainer.add(buildReadyCard(producto));
-        readyContainer.add(Box.createVerticalStrut(10));
+        readyContainer.add(Box.createVerticalStrut(16));
     }
 
     /**
@@ -184,7 +184,7 @@ public class MySecondHandProductsPanel extends JPanel {
      */
     public void addValidationProduct(ProductoSegundaMano producto, boolean pagado) {
         validationContainer.add(buildValidationCard(producto, pagado));
-        validationContainer.add(Box.createVerticalStrut(10));
+        validationContainer.add(Box.createVerticalStrut(16));
     }
 
     /**
@@ -419,16 +419,16 @@ public class MySecondHandProductsPanel extends JPanel {
 
             // Datos de demo (sin modelo real)
             panel.readyContainer.add(panel.buildDemoReadyCard("Peluche de perro", "VERY_GOOD", "Un peluche suave", "10.00 €"));
-            panel.readyContainer.add(Box.createVerticalStrut(10));
+            panel.readyContainer.add(Box.createVerticalStrut(16));
             panel.readyContainer.add(panel.buildDemoReadyCard("Comic Spiderman", "PERFECT", "Primera edición", "25.00 €"));
-            panel.readyContainer.add(Box.createVerticalStrut(10));
+            panel.readyContainer.add(Box.createVerticalStrut(16));
 
             panel.validationContainer.add(panel.buildDemoValidationCard("Camión de bomberos", "Juguete infantil", "PENDING", false));
-            panel.validationContainer.add(Box.createVerticalStrut(10));
+            panel.validationContainer.add(Box.createVerticalStrut(16));
             panel.validationContainer.add(panel.buildDemoValidationCard("Figura Iron Man", "Edición limitada", "PAY", false));
-            panel.validationContainer.add(Box.createVerticalStrut(10));
+            panel.validationContainer.add(Box.createVerticalStrut(16));
             panel.validationContainer.add(panel.buildDemoValidationCard("Juego de mesa", "Casi nuevo", "PAID", true));
-            panel.validationContainer.add(Box.createVerticalStrut(10));
+            panel.validationContainer.add(Box.createVerticalStrut(16));
 
             frame.setContentPane(panel);
             frame.setLocationRelativeTo(null);

@@ -62,10 +62,12 @@ public class MenuPrincipalPanel extends JPanel {
         bodyContent.add(createBanner("YOU SHOULD BUY THESE PRODUCTS!!!", BANNER_SUB_COLOR, 25));
         bodyContent.add(Box.createVerticalStrut(15));
 
+        // Recommended products laid out horizontally with a horizontal scroll
+        // Use FlowLayout center so cards appear centered when there's spare space
         recommendedPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 15));
-        recommendedPanel.setBackground(BANNER_MAIN_COLOR); 
+        recommendedPanel.setBackground(BANNER_MAIN_COLOR);
         recommendedPanel.setBorder(new LineBorder(Color.DARK_GRAY, 1));
-        
+
         JPanel recWrapper = new JPanel(new BorderLayout());
         recWrapper.setBackground(BANNER_MAIN_COLOR);
         recWrapper.add(recommendedPanel, BorderLayout.CENTER);
@@ -74,7 +76,8 @@ public class MenuPrincipalPanel extends JPanel {
         scrollProducts.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollProducts.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollProducts.setBorder(null);
-        scrollProducts.setPreferredSize(new Dimension(1000, 240));
+        // Increase height to accommodate larger product cards with ratings
+        scrollProducts.setPreferredSize(new Dimension(1100, 340));
         
         bodyContent.add(scrollProducts);
         bodyContent.add(Box.createVerticalStrut(20));
@@ -118,17 +121,34 @@ public class MenuPrincipalPanel extends JPanel {
 
         JPanel card = new JPanel(new BorderLayout());
         card.setBackground(BG_COLOR);
-        card.setPreferredSize(new Dimension(180, 230));
+        card.setPreferredSize(new Dimension(220, 300));
+        card.setMaximumSize(new Dimension(220, 300));
         card.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        JPanel headerProd = new JPanel(new BorderLayout(5, 0));
+        JPanel headerProd = new JPanel();
+        headerProd.setLayout(new BoxLayout(headerProd, BoxLayout.Y_AXIS));
         headerProd.setOpaque(false);
-        
+
         JLabel lblName = new JLabel(name, SwingConstants.CENTER);
         lblName.setFont(new Font("SansSerif", Font.BOLD, 12));
         lblName.setForeground(Color.DARK_GRAY);
         lblName.setBorder(new EmptyBorder(0, 0, 5, 0));
-        headerProd.add(lblName, BorderLayout.CENTER);
+        lblName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        headerProd.add(lblName);
+
+        // Rating above the product (stars or badge)
+        double ratingVal = prod.obtenerPuntuacionMedia();
+        if (ratingVal <= 0.0) {
+            JLabel noRating = new JLabel("No ratings yet");
+            noRating.setFont(new Font("Comic Sans MS", Font.ITALIC, 12));
+            noRating.setForeground(Color.WHITE);
+            noRating.setAlignmentX(Component.CENTER_ALIGNMENT);
+            headerProd.add(noRating);
+        } else {
+            JComponent stars = createRatingStars(ratingVal);
+            stars.setAlignmentX(Component.CENTER_ALIGNMENT);
+            headerProd.add(stars);
+        }
 
         JLabel imagePlaceholder = new JLabel();
         imagePlaceholder.setHorizontalAlignment(SwingConstants.CENTER);
@@ -137,7 +157,7 @@ public class MenuPrincipalPanel extends JPanel {
         try {
             if (prod.getFoto() != null && prod.getFoto().getPath() != null) {
                 ImageIcon iconoOriginal = new ImageIcon(prod.getFoto().getPath()); 
-                Image imgEscalada = iconoOriginal.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+                Image imgEscalada = iconoOriginal.getImage().getScaledInstance(160, 120, Image.SCALE_SMOOTH);
                 imagePlaceholder.setIcon(new ImageIcon(imgEscalada));
             } else {
                 imagePlaceholder.setText("NO IMAGE");
@@ -338,6 +358,75 @@ public class MenuPrincipalPanel extends JPanel {
     public void addCategoryListener(ActionListener l) {
         for (JButton btn : categoryButtons) {
             btn.addActionListener(l);
+        }
+    }
+
+    // ==================== Rating stars rendering (copied) ====================
+    private JComponent createRatingStars(double rating) {
+        JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 0));
+        p.setOpaque(false);
+        int starSize = 14;
+        for (int i = 1; i <= 5; i++) {
+            double starValue = rating - (i - 1);
+            double fill;
+            if (starValue >= 0.75) fill = 1.0;
+            else if (starValue >= 0.25) fill = 0.5;
+            else fill = 0.0;
+            JLabel starLbl = new JLabel(new StarIcon(starSize, fill));
+            starLbl.setPreferredSize(new Dimension(starSize + 2, starSize + 2));
+            p.add(starLbl);
+        }
+        return p;
+    }
+
+    /** Simple Icon that draws a star glyph and fills it partially according to fillPercent (0..1). */
+    private static class StarIcon implements Icon {
+        private final int size;
+        private final double fillPercent;
+        private final Color fullColor = new Color(255, 140, 0);
+        private final Color emptyColor = new Color(200, 200, 200);
+
+        StarIcon(int size, double fillPercent) {
+            this.size = size;
+            this.fillPercent = Math.max(0.0, Math.min(1.0, fillPercent));
+        }
+
+        @Override
+        public int getIconWidth() { return size; }
+
+        @Override
+        public int getIconHeight() { return size; }
+
+        @Override
+        public void paintIcon(Component c, Graphics g, int x, int y) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            try {
+                g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                String star = "\u2605"; // solid star glyph
+                Font font = new Font("Dialog", Font.PLAIN, size);
+                g2.setFont(font);
+                FontMetrics fm = g2.getFontMetrics();
+                int strW = fm.stringWidth(star);
+                int strH = fm.getAscent();
+                int drawX = x + (getIconWidth() - strW) / 2;
+                int drawY = y + (getIconHeight() + strH - fm.getDescent()) / 2;
+
+                // Draw empty (background) star first
+                g2.setColor(emptyColor);
+                g2.drawString(star, drawX, drawY);
+
+                // Overlay filled portion by clipping
+                int clipW = (int) Math.round(getIconWidth() * fillPercent);
+                if (clipW > 0) {
+                    Shape oldClip = g2.getClip();
+                    g2.setClip(drawX, y, clipW, getIconHeight());
+                    g2.setColor(fullColor);
+                    g2.drawString(star, drawX, drawY);
+                    g2.setClip(oldClip);
+                }
+            } finally {
+                g2.dispose();
+            }
         }
     }
 }
