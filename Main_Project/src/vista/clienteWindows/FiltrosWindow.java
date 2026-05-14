@@ -352,16 +352,29 @@ public class FiltrosWindow extends JDialog {
 
         // Filtro Descuentos
         java.util.List<String> selDescuentos = getSelectedItemsFromCheckList(pnlDescuentos);
-        if (!selDescuentos.isEmpty() && p.getDescuento() != null) {
-            String tipoDesc = p.getDescuento().getClass().getSimpleName();
+        if (!selDescuentos.isEmpty()) {
+            // Determinamos primero el descuento efectivo (producto o categoria)
+            modelo.descuento.Descuento descuentoP = p.getDescuento();
+            if (descuentoP == null || descuentoP.haCaducado()) {
+                descuentoP = null;
+                for (modelo.categoria.Categoria c : p.getCategorias()) {
+                    if (c.getDescuento() != null && !c.getDescuento().haCaducado()) {
+                        descuentoP = c.getDescuento();
+                        break;
+                    }
+                }
+            }
+
+            // Si no hay descuento efectivo y el usuario ha seleccionado alguno, no cumple
+            if (descuentoP == null) return false;
+
             boolean matchDesc = false;
-            if (selDescuentos.contains("Quantity Discount") && tipoDesc.equals("Cantidad")) matchDesc = true;
-            if (selDescuentos.contains("Price Reduction") && (tipoDesc.equals("Precio") || tipoDesc.equals("DePorcentaje"))) matchDesc = true;
-            if (selDescuentos.contains("Spending Volume") && tipoDesc.equals("UmbralGasto")) matchDesc = true;
-            if (selDescuentos.contains("Threshold Gift") && tipoDesc.equals("RebajaUmbral")) matchDesc = true; 
+            // Comprobamos usando instanceof (más robusto que comparar nombres de clase)
+            if (selDescuentos.contains("Quantity Discount") && descuentoP instanceof modelo.descuento.Cantidad) matchDesc = true;
+            if (selDescuentos.contains("Price Reduction") && (descuentoP instanceof modelo.descuento.Precio || descuentoP instanceof modelo.descuento.DePorcentaje)) matchDesc = true;
+            if (selDescuentos.contains("Spending Volume") && descuentoP instanceof modelo.descuento.RebajaUmbral) matchDesc = true;
+            if (selDescuentos.contains("Threshold Gift") && descuentoP instanceof modelo.descuento.Regalo) matchDesc = true;
             if (!matchDesc) return false;
-        } else if (!selDescuentos.isEmpty() && p.getDescuento() == null) {
-            return false;
         }
 
         if (p instanceof Comic) {
@@ -740,8 +753,7 @@ public class FiltrosWindow extends JDialog {
         scroll.getViewport().setBackground(Color.WHITE);
         scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        // Más suave al moverse
-        scroll.getVerticalScrollBar().setUnitIncrement(12);
+        scroll.getVerticalScrollBar().setUnitIncrement(16);
         JPanel wrapper = new JPanel(new BorderLayout());
         wrapper.setBackground(Color.WHITE);
         wrapper.add(scroll, BorderLayout.CENTER);

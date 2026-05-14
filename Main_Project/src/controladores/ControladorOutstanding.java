@@ -4,6 +4,7 @@ import modelo.aplicacion.Catalogo;
 import modelo.producto.LineaProductoVenta;
 import modelo.usuario.ClienteRegistrado;
 import modelo.usuario.Usuario;
+import vista.clienteWindows.DiscountInfoWindow;
 import vista.userPanels.OutstandingPanel;
 
 import javax.swing.SwingUtilities;
@@ -88,7 +89,7 @@ public class ControladorOutstanding implements ActionListener {
                 LineaProductoVenta p = Catalogo.getInstancia().buscarProductoNuevo(id);
                 if (p != null) {
                     Window parentWindow = SwingUtilities.getWindowAncestor(vista);
-                    vista.clienteWindows.DiscountInfoWindow dialog = new vista.clienteWindows.DiscountInfoWindow(parentWindow, p);
+                    DiscountInfoWindow dialog = new DiscountInfoWindow(parentWindow, p);
                     dialog.setVisible(true);
                 }
             } catch (NumberFormatException ex) {

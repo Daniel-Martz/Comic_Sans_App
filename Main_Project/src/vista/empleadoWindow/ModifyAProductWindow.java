@@ -44,10 +44,7 @@ public class ModifyAProductWindow extends JDialog {
     /** The lbl photo. */
     private JLabel lblPhoto;
     
-    /** The txt id. */
     // Campos comunes
-    private JTextField txtId;
-    
     /** The txt name. */
     private JTextField txtName;
     
@@ -203,7 +200,6 @@ public class ModifyAProductWindow extends JDialog {
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setOpaque(false);
 
-        txtId = new JTextField();
         txtName = new JTextField();
         txtPrice = new JTextField();
         txtDescription = new JTextField();
@@ -292,14 +288,12 @@ public class ModifyAProductWindow extends JDialog {
         specificFieldsPanel.removeAll();
 
         // Campos comunes
-        formPanel.add(createFormRow("ID:", txtId, true));
         formPanel.add(createFormRow("NAME:", txtName, true));
         formPanel.add(createFormRow("PRICE:", txtPrice, true));
         formPanel.add(createFormRow("DESCRIPTION:", txtDescription, true));
         formPanel.add(createFormRow("NUMBER STOCK:", txtStock, true));
         formPanel.add(createFormRow("CATEGORIES:", btnCategories, true));
         
-        txtId.setText(String.valueOf(p.getID()));
         txtName.setText(p.getNombre());
         txtPrice.setText(String.valueOf(p.getPrecio()));
         txtDescription.setText(p.getDescripcion() != null ? p.getDescripcion() : "");
@@ -490,14 +484,8 @@ public class ModifyAProductWindow extends JDialog {
      */
     public LineaProductoVenta getCurrentProduct() { return currentProduct; }
     
-    /**
-     * Gets the new id.
-     *
-     * @return the new id
-     */
-    // Getters comunes
-    public String getNewId() { return txtId.getText(); }
     
+    // Getters comunes
     /**
      * Gets the new name.
      *

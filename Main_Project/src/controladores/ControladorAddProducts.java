@@ -131,6 +131,14 @@ public class ControladorAddProducts implements ActionListener {
         if (windowAddSingle == null) return;
         
         try {
+            // Validar que la foto sea obligatoria
+            if (windowAddSingle.getSelectedPhotoFile() == null) {
+                JOptionPane.showMessageDialog(mainFrame, 
+                        "You must select a product photo. This field is mandatory.", 
+                        "Missing Photo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
             String newName = windowAddSingle.getNewName();
             double newPrice = Double.parseDouble(windowAddSingle.getNewPrice().replace(",", "."));
             String newDescription = windowAddSingle.getNewDescription();
